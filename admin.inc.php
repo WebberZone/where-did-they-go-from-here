@@ -14,6 +14,7 @@ function wherego_options() {
 		$wherego_settings[limit] = ($_POST['limit']);
 		$wherego_settings[add_to_content] = (($_POST['add_to_content']) ? true : false);
 		$wherego_settings[add_to_feed] = (($_POST['add_to_feed']) ? true : false);
+		$wherego_settings[wg_in_admin] = (($_POST['wg_in_admin']) ? true : false);
 		$wherego_settings[show_credit] = (($_POST['show_credit']) ? true : false);
 		
 		update_option('ald_wherego_settings', $wherego_settings);
@@ -82,6 +83,12 @@ function wherego_options() {
     </p>
     <p>
       <label>
+      <input type="checkbox" name="wg_in_admin" id="wg_in_admin" <?php if ($wherego_settings[wg_in_admin]) echo 'checked="checked"' ?> />
+      <?php _e('Display list of posts in Edit Posts / Pages','ald_wherego_plugin'); ?>
+      </label>
+    </p>
+    <p>
+      <label>
       <input type="checkbox" name="show_credit" id="show_credit" <?php if ($wherego_settings[show_credit]) echo 'checked="checked"' ?> />
       <?php _e('Append link to this plugin as item. Optional, but would be nice to give me some link love','ald_wherego_plugin'); ?>
       </label>
@@ -116,8 +123,57 @@ function wherego_adminmenu() {
 		add_options_page(__("Where go", 'myald_wherego_plugin'), __("Where go", 'myald_wherego_plugin'), 9, 'wherego_options', 'wherego_options');
 		}
 }
-
-
 add_action('admin_menu', 'wherego_adminmenu');
+
+/* Display page views on the Edit Posts / Pages screen */
+// Add an extra column
+function wherego_column($cols) {
+	$wherego_settings = wherego_read_options();
+	
+	if ($wherego_settings[wg_in_admin])	$cols['wherego'] = 'Where go';
+	return $cols;
+}
+
+// Display page views for each column
+function wherego_value($column_name, $id) {
+	$wherego_settings = wherego_read_options();
+	if (($column_name == 'wherego')&&($wherego_settings[wg_in_admin])) {
+		global $wpdb, $post, $single;
+		$limit = $wherego_settings['limit'];
+		$lpids = get_post_meta($post->ID, 'wheredidtheycomefrom', true);
+
+		if ($lpids) {
+			foreach ($lpids as $lpid) {
+				$output .= '<a href="'.get_permalink($lpid).'" title="'.get_the_title($lpid).'">'.$lpid.'</a>, ';
+			}
+		} else {
+			$output = 'None';
+		}
+		
+
+		echo $output;
+	}
+}
+
+// Output CSS for width of new column
+function wherego_css() {
+?>
+<style type="text/css">
+	#wherego { width: 50px; }
+</style>
+<?php	
+}
+
+// Actions/Filters for various tables and the css output
+add_filter('manage_posts_columns', 'wherego_column');
+add_action('manage_posts_custom_column', 'wherego_value', 10, 2);
+add_filter('manage_pages_columns', 'wherego_column');
+add_action('manage_pages_custom_column', 'wherego_value', 10, 2);
+add_filter('manage_media_columns', 'wherego_column');
+add_action('manage_media_custom_column', 'wherego_value', 10, 2);
+add_filter('manage_link-manager_columns', 'wherego_column');
+add_action('manage_link_custom_column', 'wherego_value', 10, 2);
+add_action('admin_head', 'wherego_css');
+
 
 ?>

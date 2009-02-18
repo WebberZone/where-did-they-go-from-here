@@ -29,6 +29,10 @@ This plugin will show "Readers who viewed this page, also viewed" links on your 
 
 == Changelog ==
 
+* 1.1
+	- Compatible with caching plugins. Tweaks that should improve tracking.
+	- Display the list of posts in Edit pages / posts of WP-Admin
+	- Blanked out display when no related posts are found instead of #N/A
 * 1.0 - Release
 
 
