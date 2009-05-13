@@ -22,8 +22,9 @@ function where_go_add() {
 	$id = intval($_GET['id']);
 	$sitevar = attribute_escape($_GET['sitevar']);
 	$tempsitevar =  $sitevar;
-	$siteurl = str_replace("http:","",$siteurl);
-	$siteurl = str_replace("/","",$siteurl);
+	$siteurl = str_replace("http://","",$siteurl);
+	$siteurls = explode("/",$siteurl);
+	$siteurl = $siteurls[0];
 	$sitevar = str_replace("/","\/",$sitevar);
 	$matchvar = preg_match("/$siteurl/i", $sitevar);
 	if (isset($id) && $id > 0 && $matchvar) {
