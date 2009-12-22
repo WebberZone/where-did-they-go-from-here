@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Where did they go from here
-Version:     1.2
+Version:     1.2.1
 Plugin URI:  http://ajaydsouza.com/wordpress/plugins/where-did-they-go-from-here/
 Description: Show "Readers who viewed this page, also viewed" links on your page. Much like Amazon.com's product pages. Based on the plugin by <a href="http://weblogtoolscollection.com">Mark Ghosh</a>.  <a href="options-general.php?page=wherego_options">Configure...</a>
 Author:      Ajay D'Souza
@@ -65,28 +65,18 @@ function echo_ald_wherego() {
 }
 
 // Function to update Where Go count
-add_action('wp_head','add_wherego_count');
-function add_wherego_count() {
+add_filter('the_content','add_wherego_count');
+function add_wherego_count($content) {
 	global $post, $wpdb, $single;
 	
 	if(is_single() || is_page()) {
 		$id = intval($post->ID);
-?>
-		<!-- Start of Where Go JS -->
-		<?php wp_print_scripts(array('sack')); ?>
-		<script type="text/javascript">
-		//<![CDATA[
-			where_go_count = new sack("<?php bloginfo( 'wpurl' ); ?>/wp-content/plugins/where-did-they-go-from-here/where-go-add.js.php");    
-			where_go_count.setVar( "id", <?php echo $id ?> );
-			where_go_count.setVar( "sitevar", document.referrer );
-			where_go_count.method = 'GET';
-			where_go_count.onError = function() { alert('Ajax error' )};
-			where_go_count.runAJAX();
-			where_go_count = null;
-		//]]>
-		</script>
-		<!-- Start of Where Go JS -->
-<?php
+		$referer = esc_url( $_SERVER['HTTP_REFERER'] );
+		$output = '<script type="text/javascript" src="'.get_bloginfo('wpurl').'/wp-content/plugins/where-did-they-go-from-here/where-go-add.js.php?id='.$id.'&amp;sitevar='.$referer.'"></script>';
+		return $content.$output;
+	}
+	else {
+		return $content;
 	}
 }
 
