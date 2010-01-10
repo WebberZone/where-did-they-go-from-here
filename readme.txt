@@ -26,6 +26,7 @@ This plugin will show "Readers who viewed this page, also viewed" links on your 
 
 == Changelog ==
 
+* 1.3.1 - Fixed problem where plugin was not tracking visits properly
 * 1.3
 	- Added localisation support
 	- Better support for blogs where wp-content folder has been moved

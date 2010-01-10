@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Where did they go from here
-Version:     1.3
+Version:     1.3.1
 Plugin URI:  http://ajaydsouza.com/wordpress/plugins/where-did-they-go-from-here/
 Description: Show "Readers who viewed this page, also viewed" links on your page. Much like Amazon.com's product pages. Based on the plugin by <a href="http://weblogtoolscollection.com">Mark Ghosh</a>. 
 Author:      Ajay D'Souza
@@ -13,13 +13,18 @@ define('ALD_wherego_DIR', dirname(__FILE__));
 define('WHEREGO_LOCAL_NAME', 'wherego');
 
 // Pre-2.6 compatibility
-if ( !defined('WP_CONTENT_URL') )
-	define( 'WP_CONTENT_URL', get_option('siteurl') . '/wp-content');
-if ( !defined('WP_CONTENT_DIR') )
-	define( 'WP_CONTENT_DIR', ABSPATH . 'wp-content' );
+if ( ! defined( 'WP_CONTENT_URL' ) )
+      define( 'WP_CONTENT_URL', get_option( 'siteurl' ) . '/wp-content' );
+if ( ! defined( 'WP_CONTENT_DIR' ) )
+      define( 'WP_CONTENT_DIR', ABSPATH . 'wp-content' );
+if ( ! defined( 'WP_PLUGIN_URL' ) )
+      define( 'WP_PLUGIN_URL', WP_CONTENT_URL. '/plugins' );
+if ( ! defined( 'WP_PLUGIN_DIR' ) )
+      define( 'WP_PLUGIN_DIR', WP_CONTENT_DIR . '/plugins' );
+
 // Guess the location
-$wherego_path = WP_CONTENT_DIR.'/plugins/'.plugin_basename(dirname(__FILE__));
-$wherego_url = WP_CONTENT_URL.'/plugins/'.plugin_basename(dirname(__FILE__));
+$wherego_path = WP_PLUGIN_DIR.'/'.plugin_basename(dirname(__FILE__));
+$wherego_url = WP_PLUGIN_URL.'/'.plugin_basename(dirname(__FILE__));
 
 function ald_wherego_init() {
 	//* Begin Localization Code */
@@ -109,7 +114,7 @@ function echo_ald_wherego() {
 // Function to update Where Go count
 add_filter('the_content','add_wherego_count');
 function add_wherego_count($content) {
-	global $post, $wpdb, $single;
+	global $post, $wpdb, $single, $wherego_url;
 	
 	if(is_single() || is_page()) {
 		$id = intval($post->ID);
