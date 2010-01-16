@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Where did they go from here
-Version:     1.3.1
+Version:     1.4
 Plugin URI:  http://ajaydsouza.com/wordpress/plugins/where-did-they-go-from-here/
 Description: Show "Readers who viewed this page, also viewed" links on your page. Much like Amazon.com's product pages. Based on the plugin by <a href="http://weblogtoolscollection.com">Mark Ghosh</a>. 
 Author:      Ajay D'Souza
@@ -43,6 +43,7 @@ function ald_wherego() {
 	global $wpdb, $post, $single;
 	$wherego_settings = wherego_read_options();
 	$limit = $wherego_settings['limit'];
+	$count = 0;
 	$lpids = get_post_meta($post->ID, 'wheredidtheycomefrom', true);
 
 	if ($lpids) {
@@ -52,6 +53,9 @@ function ald_wherego() {
 
 		foreach ($lpids as $lpid) {
 			$lppost = &get_post($lpid);
+			if (($lppost->post_type=='page')&&($wherego_settings['exclude_pages'])) continue;
+			$count++;
+			if ($count > $limit) break;	// exit loop if we cross the max number of iterations
 			$title = trim(stripslashes(get_the_title($lpid)));
 			$output .= $wherego_settings['before_list_item'];
 
@@ -60,12 +64,16 @@ function ald_wherego() {
 				if ((function_exists('has_post_thumbnail')) && (has_post_thumbnail($lpid))) {
 					$output .= get_the_post_thumbnail( $lpid, array($wherego_settings[thumb_width],$wherego_settings[thumb_height]), array('title' => $title,'alt' => $title,'class' => 'wherego_thumb'));
 				} else {
-					$postimage = get_post_meta($lpid, 'post-image', true);
-					if ($postimage) {
-						$output .= '<img src="'.$postimage.'" alt="'.$title.'" title="'.$title.'" width="'.$wherego_settings[thumb_width].'" height="'.$wherego_settings[thumb_height].'" class="wherego_thumb" />';
-					} else {
-						$output .= '<img src="'.$wherego_settings[thumb_default].'" alt="'.$title.'" title="'.$title.'" width="'.$wherego_settings[thumb_width].'" height="'.$wherego_settings[thumb_height].'" class="wherego_thumb" />';
+					$postimage = get_post_meta($lpid, $wherego_settings['thumb_meta'], true);
+					if ((!$postimage)&&($wherego_settings['scan_images'])) {
+						preg_match_all( '|<img.*?src=[\'"](.*?)[\'"].*?>|i', $lppost->post_content, $matches );
+						// any image there?
+						if( isset( $matches ) && $matches[1][0] ) {
+							$postimage = $matches[1][0]; // we need the first one only!
+						}
 					}
+					if (!$postimage) $postimage = $wherego_settings[thumb_default];
+					$output .= '<img src="'.$postimage.'" alt="'.$title.'" title="'.$title.'" width="'.$wherego_settings[thumb_width].'" height="'.$wherego_settings[thumb_height].'" class="wherego_thumb" />';
 				}
 				$output .= '</a> ';
 			}
@@ -84,46 +92,138 @@ function ald_wherego() {
 		}
 		$output .= $wherego_settings['after_list'];
 		$output .= '</div>';
+	} else {
+		$output = '<div id="wherego_related">';
+		$output .= ($wherego_settings['blank_output']) ? ' ' : '<p>'.$wherego_settings['blank_output_text'].'</p>'; 
+		$output .= '</div>';
 	}
-	else $output = '';
 	
 	return $output;
 }
 
+// Function that adds wherego code to the post content
+add_filter('the_content', 'ald_wherego_content');
 function ald_wherego_content($content) {
-	
-	global $single;
+	global $post, $wpdb, $single, $wherego_url, $whergo_id;
 	$wherego_settings = wherego_read_options();
-	$output = ald_wherego();
+	
+	if (($wherego_settings['add_to_feed'])||($wherego_settings['add_to_content'])) $output_list = ald_wherego();	// Get the list
+	
+	if(is_single() || is_page()) {
+		$whergo_id = intval($post->ID);		// Make the $wherego_id global for detection in the footer.
+	}
 	
     if((is_feed())&&($wherego_settings['add_to_feed'])) {
-        return $content.$output;
+        return $content.$output_list;
     } elseif(($single)&&($wherego_settings['add_to_content'])) {
-        return $content.$output;
+        return $content.$output_list;
 	} else {
         return $content;
     }
 }
-add_filter('the_content', 'ald_wherego_content');
 
+// Function to display the list
 function echo_ald_wherego() {
 	$output = ald_wherego();
 	echo $output;
 }
 
 // Function to update Where Go count
-add_filter('the_content','add_wherego_count');
-function add_wherego_count($content) {
-	global $post, $wpdb, $single, $wherego_url;
+add_action('wp_footer','add_wherego_count');
+function add_wherego_count() {
+	global $post, $wpdb, $single, $whergo_id;
 	
 	if(is_single() || is_page()) {
-		$id = intval($post->ID);
-		$referer = esc_url( $_SERVER['HTTP_REFERER'] );
-		$output = '<script type="text/javascript" src="'.$wherego_url.'/where-go-add.js.php?id='.$id.'&amp;sitevar='.$referer.'"></script>';
-		return $content.$output;
+		$id = $whergo_id;
+?>
+		<!-- Start of Where Go JS -->
+		<?php wp_print_scripts(array('sack')); ?>
+		<script type="text/javascript">
+		//<![CDATA[
+			where_go_count = new sack("<?php bloginfo( 'wpurl' ); ?>/index.php");    
+			where_go_count.setVar( "wherego_id", <?php echo $id ?> );
+			where_go_count.setVar( "wherego_sitevar", document.referrer );
+			where_go_count.method = 'GET';
+			where_go_count.onError = function() { alert('Ajax error' )};
+			where_go_count.runAJAX();
+			where_go_count = null;
+		//]]>
+		</script>
+		<!-- Start of Where Go JS -->
+<?php
 	}
-	else {
-		return $content;
+}
+
+// Functions to add and read to queryvars
+add_action('wp', 'wherego_parse_request');
+add_filter('query_vars', 'wherego_query_vars');
+function wherego_query_vars($vars) {
+	//add these to the list of queryvars that WP gathers
+	$vars[] = 'wherego_id';
+	$vars[] = 'wherego_sitevar';
+	return $vars;
+}
+
+function wherego_parse_request($wp) {
+   	global $wpdb;
+	$wherego_settings = wherego_read_options();
+	$maxLinks = $wherego_settings['limit']*2;
+	$siteurl = get_option('siteurl');
+
+	//check to see if the page called has 'wherego_id' and 'wherego_sitevar' in the $_GET[] array
+    // i.e., if the URL looks like this 'http://example.com/index.php?wherego_id=28&wherego_sitevar=http://somesite.com' 
+    if (array_key_exists('wherego_id', $wp->query_vars) && array_key_exists('wherego_sitevar', $wp->query_vars) && $wp->query_vars['wherego_id'] != '') {
+		//count the page
+		$id = intval($wp->query_vars['wherego_id']);
+		$sitevar = attribute_escape($wp->query_vars['wherego_sitevar']);
+		Header("content-type: application/x-javascript");
+		//...put the rest of your count script here....
+
+		$tempsitevar =  $sitevar;
+		$siteurl = str_replace("http://","",$siteurl);
+		$siteurls = explode("/",$siteurl);
+		$siteurl = $siteurls[0];
+		$sitevar = str_replace("/","\/",$sitevar);
+		$matchvar = preg_match("/$siteurl/i", $sitevar);
+		if (isset($id) && $id > 0 && $matchvar) {
+			// Now figure out the ID of the post the author came from, this might be hokey at first
+			// Text search within code is your friend!
+			$postIDcamefrom = url_to_postid($tempsitevar);
+			if ('' != $postIDcamefrom && $id != $postIDcamefrom && '' != $id) {
+				$gotmeta = '';
+				$linkpostids = get_post_meta($postIDcamefrom, 'wheredidtheycomefrom', true);
+				if ($linkpostids && '' != $linkpostids) {
+					$gotmeta = true;
+				}
+				else {
+					$gotmeta = false;
+					$linkpostids = array();
+				}
+				
+				if (is_array($linkpostids) && !in_array($id,$linkpostids) && $gotmeta) {
+					array_unshift($linkpostids,$id);
+				}		
+				elseif (is_array($linkpostids) && !$gotmeta)    {
+					$linkpostids[0] = $id;
+				}
+
+				//Make sure we only keep maxLinks number of links
+				if (count($linkpostids) > $maxLinks) {
+					$linkpostids = array_slice($linkpostids, 0, $maxLinks);
+				}
+				$linkpostidsserialized = $linkpostids;
+				if ($gotmeta && !empty($linkpostids))
+					update_post_meta($postIDcamefrom, 'wheredidtheycomefrom', $linkpostidsserialized);
+				else
+					add_post_meta($postIDcamefrom, 'wheredidtheycomefrom', $linkpostidsserialized);
+			}		
+		}
+			
+		
+		//stop anything else from loading as it is not needed.
+		exit; 
+	}else{
+		return;
 	}
 }
 
@@ -131,6 +231,7 @@ function add_wherego_count($content) {
 function wherego_default_options() {
 	global $wherego_url;
 	$title = __('<h3>Readers who viewed this page, also viewed:</h3>',WHEREGO_LOCAL_NAME);
+	$blank_output_text = __('Visitors have not browsed from this post. Become the first by clicking one of our related posts',WHEREGO_LOCAL_NAME);
 	$thumb_default = $wherego_url.'/default.png';
 
 	$wherego_settings = 	Array (
@@ -140,6 +241,9 @@ function wherego_default_options() {
 						wg_in_admin => true,		// Add related posts to feed
 						limit => '5',				// How many posts to display?
 						show_credit => true,		// Link to this plugin's page?
+						exclude_pages => true,		// Exclude pages
+						blank_output => true,		// Blank output?
+						blank_output_text => $blank_output_text,	// Text to display in blank output
 						before_list => '<ul>',			// Before the entire list
 						after_list => '</ul>',			// After the entire list
 						before_list_item => '<li>',		// Before each list item
@@ -149,6 +253,7 @@ function wherego_default_options() {
 						thumb_width => '50',			// Width of thumbnails
 						thumb_meta => 'post-image',		// Meta field that is used to store the location of default thumbnail image
 						thumb_default => $thumb_default,	// Default thumbnail image
+						scan_images => false,			// Scan post for images
 						show_excerpt => false,			// Show description in list item
 						excerpt_length => '10',		// Length of characters
 						);

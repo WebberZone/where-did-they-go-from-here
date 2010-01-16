@@ -1,5 +1,5 @@
 === Where did they go from here ===
-Tags: related posts, visitors
+Tags: related posts, visitors, browsing, visitors, tracking
 Contributors: Ajay, Mark Ghosh
 Donate link: http://ajaydsouza.com/donate/
 Stable tag: trunk
@@ -26,6 +26,14 @@ This plugin will show "Readers who viewed this page, also viewed" links on your 
 
 == Changelog ==
 
+* 1.4
+	- New: Implementation for tracking hits even on blogs with non-standard WordPress installs
+	- New: Reset button to reset all browsing data
+	- New: Option to exclude pages in post list
+	- New: Choose if you want to blank out display or display a custom message
+	- New: The plugin extracts the first image in the post and displays that if the post thumbnail and the post-image meta field is missing
+	- Fixed: Postmeta detection for thumbnails
+	- Some optimisation and code cleaning for better performance
 * 1.3.1 - Fixed problem where plugin was not tracking visits properly
 * 1.3
 	- Added localisation support

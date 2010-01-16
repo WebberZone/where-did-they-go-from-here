@@ -16,6 +16,9 @@ function wherego_options() {
 		$wherego_settings[add_to_feed] = (($_POST['add_to_feed']) ? true : false);
 		$wherego_settings[wg_in_admin] = (($_POST['wg_in_admin']) ? true : false);
 		$wherego_settings[show_credit] = (($_POST['show_credit']) ? true : false);
+		$wherego_settings[exclude_pages] = (($_POST['exclude_pages']) ? true : false);
+		$wherego_settings[blank_output] = (($_POST['blank_output'] == 'blank' ) ? true : false);
+		$wherego_settings[blank_output_text] = $_POST['blank_output_text'];
 		
 		$wherego_settings[post_thumb_op] = $_POST['post_thumb_op'];
 		$wherego_settings[before_list] = $_POST['before_list'];
@@ -26,6 +29,7 @@ function wherego_options() {
 		$wherego_settings[thumb_default] = $_POST['thumb_default'];
 		$wherego_settings[thumb_height] = intval($_POST['thumb_height']);
 		$wherego_settings[thumb_width] = intval($_POST['thumb_width']);
+		$wherego_settings[scan_images] = (($_POST['scan_images']) ? true : false);
 		$wherego_settings[show_excerpt] = (($_POST['show_excerpt']) ? true : false);
 		$wherego_settings[excerpt_length] = intval($_POST['excerpt_length']);
 
@@ -43,25 +47,20 @@ function wherego_options() {
 		$str = '<div id="message" class="updated fade"><p>'. __('Options set to Default.',WHEREGO_LOCAL_NAME) .'</p></div>';
 		echo $str;
 	}
+
+	if ($_POST['wherego_reset']){
+		// Delete meta
+		$str = '<div id="message" class="updated fade"><p>'. __('All visitor browsing data captured by the plugin has been deleted!',WHEREGO_LOCAL_NAME) .'</p></div>';
+		$sql = "DELETE FROM ".$wpdb->postmeta." WHERE `meta_key` = 'wheredidtheycomefrom'";
+		$wpdb->query($sql);
+	
+		echo $str;
+	}
 ?>
 
 <div class="wrap">
   <h2>Where did they go from here? </h2>
-  <div style="border: #ccc 1px solid; padding: 10px">
-    <fieldset class="options">
-    <legend>
-    <h3>
-      <?php _e('Support the Development',WHEREGO_LOCAL_NAME); ?>
-    </h3>
-    </legend>
-    <p>
-      <?php _e('If you find ',WHEREGO_LOCAL_NAME); ?>
-      <a href="http://ajaydsouza.com/wordpress/plugins/where-did-they-go-from-here/">Where did they go from here?</a>
-      <?php _e('useful, please do',WHEREGO_LOCAL_NAME); ?>
-      <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&amp;business=donate@ajaydsouza.com&amp;item_name=Where%20did%20they%20go%20from%20here%20(From%20WP-Admin)&amp;no_shipping=1&amp;return=http://ajaydsouza.com/wordpress/plugins/where-did-they-go-from-here/&amp;cancel_return=http://ajaydsouza.com/wordpress/plugins/where-did-they-go-from-here/&amp;cn=Note%20to%20Author&amp;tax=0&amp;currency_code=USD&amp;bn=PP-DonationsBF&amp;charset=UTF-8" title="Donate via PayPal"><?php _e('drop in your contribution',WHEREGO_LOCAL_NAME); ?></a>.
-	  (<a href="http://ajaydsouza.com/donate/"><?php _e('Some reasons why you should.',WHEREGO_LOCAL_NAME); ?></a>)</p>
-    </fieldset>
-  </div>
+  <div id="options-div">
   <form method="post" id="wherego_options" name="wherego_options" style="border: #ccc 1px solid; padding: 10px">
     <fieldset class="options">
     <legend>
@@ -110,8 +109,14 @@ function wherego_options() {
     </p>
     <p>
       <label>
+      <input type="checkbox" name="exclude_pages" id="exclude_pages" <?php if ($wherego_settings[exclude_pages]) echo 'checked="checked"' ?> />
+      <?php _e('Exclude pages from the post list',WHEREGO_LOCAL_NAME); ?>
+      </label>
+    </p>
+    <p>
+      <label>
       <input type="checkbox" name="show_excerpt" id="show_excerpt" <?php if ($wherego_settings[show_excerpt]) echo 'checked="checked"' ?> />
-      <?php _e('Show post excerpt in list?',WHEREGO_LOCAL_NAME); ?>
+      <strong><?php _e('Show post excerpt in list?',WHEREGO_LOCAL_NAME); ?></strong>
       </label>
     </p>
     <p>
@@ -145,6 +150,17 @@ function wherego_options() {
       <input type="textbox" name="after_list" id="after_list" value="<?php echo attribute_escape(stripslashes($wherego_settings[after_list])); ?>">
       </label>
 	</p>
+	<p><strong><?php _e('When there are no posts, what should be shown?',WHEREGO_LOCAL_NAME); ?></strong><br />
+		<label>
+		<input type="radio" name="blank_output" value="blank" id="blank_output_0" <?php if ($wherego_settings['blank_output']) echo 'checked="checked"' ?> />
+		<?php _e('Blank Output',WHEREGO_LOCAL_NAME); ?></label>
+		<br />
+		<label>
+		<input type="radio" name="blank_output" value="noposts" id="blank_output_1" <?php if (!$wherego_settings['blank_output']) echo 'checked="checked"' ?> />
+		<?php _e('Display custom text: ',WHEREGO_LOCAL_NAME); ?></label><br />
+		<textarea name="blank_output_text" id="blank_output_text" cols="50" rows="5"><?php echo htmlspecialchars(stripslashes($wherego_settings[blank_output_text])); ?></textarea>
+		<br />
+	</p>
 	<h4><?php _e('Post thumbnail options:',WHEREGO_LOCAL_NAME); ?></h4>
 	<p>
 		<label>
@@ -166,6 +182,12 @@ function wherego_options() {
       <input type="textbox" name="thumb_meta" id="thumb_meta" value="<?php echo attribute_escape(stripslashes($wherego_settings[thumb_meta])); ?>">
       </label>
     </p>
+    <p>
+      <label>
+      <input type="checkbox" name="scan_images" id="scan_images" <?php if ($wherego_settings[scan_images]) echo 'checked="checked"' ?> />
+      <?php _e('If the postmeta is not set, then should the plugin extract the first image from the post. This can slow down the loading of your post if the first image in the related posts is large in file-size',WHEREGO_LOCAL_NAME); ?>
+      </label>
+    </p>
     <p><strong><?php _e('Thumbnail dimensions:',WHEREGO_LOCAL_NAME); ?></strong><br />
       <label>
       <?php _e('Max width: ',WHEREGO_LOCAL_NAME); ?>
@@ -182,15 +204,71 @@ function wherego_options() {
 	</p>
     <p>
       <input type="submit" name="wherego_save" id="wherego_save" value="Save Options" style="border:#00CC00 1px solid" />
-      <input name="wherego_default" type="submit" id="wherego_default" value="Default Options" style="border:#FF0000 1px solid" onclick="if (!confirm('<?php _e('Do you want to set options to Default? If you don\'t have a copy of the username, please hit Cancel and copy it first.',WHEREGO_LOCAL_NAME); ?>')) return false;" />
+      <input name="wherego_default" type="submit" id="wherego_default" value="Default Options" style="border:#FF0000 1px solid" onclick="if (!confirm('<?php _e('Do you want to set options to Default?',WHEREGO_LOCAL_NAME); ?>')) return false;" />
+    </p>
+    <p><?php _e('Reset all content? This will purge WordPress of all visitor browsing information captured by this plugin. There is no going back if you hit the button.',WHEREGO_LOCAL_NAME); ?><br />
+      <input name="wherego_reset" type="submit" id="wherego_reset" value="Reset browsing data" style="border:#FFFF00 1px solid" onclick="if (!confirm('<?php _e('This will delete all user data',WHEREGO_LOCAL_NAME); ?>')) return false;" />
     </p>
     </fieldset>
   </form>
+  </div>
+
+  <div id="side">
+	<div class="side-widget">
+	<span class="title"><?php _e('Quick links') ?></span>				
+	<ul>
+		<li><a href="http://ajaydsouza.com/wordpress/plugins/where-did-they-go-from-here/"><?php _e('Where did they go from here? ');_e('plugin page',WHEREGO_LOCAL_NAME) ?></a></li>
+		<li><a href="http://ajaydsouza.com/wordpress/plugins/"><?php _e('Other plugins',WHEREGO_LOCAL_NAME) ?></a></li>
+		<li><a href="http://ajaydsouza.com/"><?php _e('Ajay\'s blog',WHEREGO_LOCAL_NAME) ?></a></li>
+		<li><a href="http://ajaydsouza.org"><?php _e('Support forum',WHEREGO_LOCAL_NAME) ?></a></li>
+		<li><a href="http://twitter.com/ajaydsouza"><?php _e('Follow @ajaydsouza on Twitter',WHEREGO_LOCAL_NAME) ?></a></li>
+	</ul>
+	</div>
+	<div class="side-widget">
+	<span class="title"><?php _e('Recent developments',WHEREGO_LOCAL_NAME) ?></span>				
+	<?php require_once(ABSPATH . WPINC . '/rss.php'); wp_widget_rss_output('http://ajaydsouza.com/archives/category/wordpress/plugins/feed/', array('items' => 5, 'show_author' => 0, 'show_date' => 1));
+	?>
+	</div>
+	<div class="side-widget">
+		<span class="title"><?php _e('Support the development',WHEREGO_LOCAL_NAME) ?></span>
+		<div id="donate-form">
+			<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+			<input type="hidden" name="cmd" value="_xclick">
+			<input type="hidden" name="business" value="KGVN7LJLLZCMY">
+			<input type="hidden" name="lc" value="IN">
+			<input type="hidden" name="item_name" value="Donation for Where did they go from here?">
+			<input type="hidden" name="item_number" value="whergo">
+			<strong><?php _e('Enter amount in USD: ',WHEREGO_LOCAL_NAME) ?></strong> <input name="amount" value="10.00" size="6" type="text"><br />
+			<input type="hidden" name="currency_code" value="USD">
+			<input type="hidden" name="button_subtype" value="services">
+			<input type="hidden" name="bn" value="PP-BuyNowBF:btn_donate_LG.gif:NonHosted">
+			<input type="image" src="https://www.paypal.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="<?php _e('Send your donation to the author of',WHEREGO_LOCAL_NAME) ?> Where did they go from here?">
+			<img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">
+			</form>
+		</div>
+	</div>
+  </div>
+  
 </div>
 <?php
 
 }
 
+function wherego_reset() {
+	global $wpdb;
+
+	// Delete meta
+	$allposts = get_posts('numberposts=0&post_type=post&post_status=');
+	foreach( $allposts as $postinfo) {
+		delete_post_meta($postinfo->ID, 'wheredidtheycomefrom');
+	}
+	$allposts = get_posts('numberposts=0&post_type=page&post_status=');
+	foreach( $allposts as $postinfo) {
+		delete_post_meta($postinfo->ID, 'wheredidtheycomefrom');
+	}
+
+
+}
 
 function wherego_adminmenu() {
 	if (function_exists('current_user_can')) {
@@ -207,10 +285,17 @@ function wherego_adminmenu() {
 	}
 
 	if ((function_exists('add_options_page'))&&($wherego_is_admin)) {
-		add_options_page(__("Where go", 'myald_wherego_plugin'), __("Where go", 'myald_wherego_plugin'), 9, 'wherego_options', 'wherego_options');
+		$plugin_page = add_options_page("Where did they go from here?","Where go", 9, 'wherego_options', 'wherego_options');
+		add_action( 'admin_head-'. $plugin_page, 'wherego_adminhead' );
 		}
 }
 add_action('admin_menu', 'wherego_adminmenu');
+
+function wherego_adminhead() {
+	global $wherego_url;
+
+	echo '<link rel="stylesheet" type="text/css" href="'.$wherego_url.'/admin-styles.css" />';
+}
 
 /* Display page views on the Edit Posts / Pages screen */
 // Add an extra column
