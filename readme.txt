@@ -33,6 +33,9 @@ This plugin will show "Readers who viewed this page, also viewed" links on your 
 
 == Changelog ==
 
+= 1.4.1 =
+* Fixed: Minor compatibility issue with other plugins
+
 = 1.4 =
 * New: Implementation for tracking hits even on blogs with non-standard WordPress installs
 * New: Reset button to reset all browsing data
@@ -42,8 +45,10 @@ This plugin will show "Readers who viewed this page, also viewed" links on your 
 * Fixed: Postmeta detection for thumbnails
 * Fixed: Compatibility with caching plugins like W3 Total Cache and WP Super Cache
 * Some optimisation and code cleaning for better performance
+
 = 1.3.1 =
 * Fixed problem where plugin was not tracking visits properly
+
 = 1.3 =
 * Added localisation support
 * Better support for blogs where wp-content folder has been moved
@@ -51,14 +56,18 @@ This plugin will show "Readers who viewed this page, also viewed" links on your 
 * Added option to display the post excerpt in the list
 * All parts of the list are now wrapped in classes for easy CSS customisation
 * Uninstall will clean up the meta tables
+
 = 1.2.1 =
 * Fixed compatibility issues with WordPress 2.9
+
 = 1.2 =
 * Fixed a bug with posts not being tracked on blogs hosted in a folder
+
 = 1.1 =
 * Compatible with caching plugins. Tweaks that should improve tracking.
 * Display the list of posts in Edit pages / posts of WP-Admin
 * Blanked out display when no related posts are found instead of #N/A
+
 = 1.0 =
 * Release
 

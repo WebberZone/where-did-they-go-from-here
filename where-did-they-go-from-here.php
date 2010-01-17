@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Where did they go from here
-Version:     1.4
+Version:     1.4.1
 Plugin URI:  http://ajaydsouza.com/wordpress/plugins/where-did-they-go-from-here/
 Description: Show "Readers who viewed this page, also viewed" links on your page. Much like Amazon.com's product pages. Based on the plugin by <a href="http://weblogtoolscollection.com">Mark Ghosh</a>. 
 Author:      Ajay D'Souza
@@ -52,7 +52,7 @@ function ald_wherego() {
 		$output .= $wherego_settings['before_list'];
 
 		foreach ($lpids as $lpid) {
-			$lppost = &get_post($lpid);
+			$lppost = get_post($lpid);
 			if (($lppost->post_type=='page')&&($wherego_settings['exclude_pages'])) continue;
 			$count++;
 			if ($count > $limit) break;	// exit loop if we cross the max number of iterations
