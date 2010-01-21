@@ -33,6 +33,9 @@ This plugin will show "Readers who viewed this page, also viewed" links on your 
 
 == Changelog ==
 
+= 1.4.2 =
+* Fixed: Languages were not detected properly. Added Italian language
+
 = 1.4.1 =
 * Fixed: Minor compatibility issue with other plugins
 
