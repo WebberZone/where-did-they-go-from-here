@@ -1,0 +1,2 @@
+* Fixed: Compability problem with WordPress blog in the subdirectory<br />
+* Added: Option to excludes posts from certain categories in the post lists

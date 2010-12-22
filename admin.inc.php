@@ -12,6 +12,7 @@ function wherego_options() {
 	if($_POST['wherego_save']){
 		$wherego_settings[title] = ($_POST['title']);
 		$wherego_settings[limit] = intval($_POST['limit']);
+		$wherego_settings[exclude_cat_slugs] = ($_POST['exclude_cat_slugs']);
 		$wherego_settings[add_to_content] = (($_POST['add_to_content']) ? true : false);
 		$wherego_settings[add_to_feed] = (($_POST['add_to_feed']) ? true : false);
 		$wherego_settings[wg_in_admin] = (($_POST['wg_in_admin']) ? true : false);
@@ -32,6 +33,15 @@ function wherego_options() {
 		$wherego_settings[scan_images] = (($_POST['scan_images']) ? true : false);
 		$wherego_settings[show_excerpt] = (($_POST['show_excerpt']) ? true : false);
 		$wherego_settings[excerpt_length] = intval($_POST['excerpt_length']);
+
+		$exclude_categories_slugs = explode(", ",$wherego_settings[exclude_cat_slugs]);
+		
+		$exclude_categories = '';
+		foreach ($exclude_categories_slugs as $exclude_categories_slug) {
+			$catObj = get_category_by_slug($exclude_categories_slug);
+			$exclude_categories .= $catObj->term_id . ',';
+		}
+		$wherego_settings[exclude_categories] = substr($exclude_categories, 0, -2);
 
 		update_option('ald_wherego_settings', $wherego_settings);
 		
@@ -74,6 +84,21 @@ function wherego_options() {
       <input type="textbox" name="limit" id="limit" value="<?php echo stripslashes($wherego_settings[limit]); ?>">
       </label>
     </p>
+    <p><?php _e('Exclude Categories: ',WHEREGO_LOCAL_NAME); ?></p>
+	<div style="position:relative;text-align:left">
+		<table id="MYCUSTOMFLOATER" class="myCustomFloater" style="position:absolute;top:50px;left:0;background-color:#cecece;display:none;visibility:hidden">
+		<tr><td><!--
+				please see: http://chrisholland.blogspot.com/2004/09/geekstuff-css-display-inline-block.html
+				to explain why i'm using a table here.
+				You could replace the table/tr/td with a DIV, but you'd have to specify it's width and height
+				-->
+			<div class="myCustomFloaterContent">
+			you should never be seeing this
+			</div>
+		</td></tr>
+		</table>
+		<textarea class="wickEnabled:MYCUSTOMFLOATER" cols="50" rows="3" wrap="virtual" name="exclude_cat_slugs"><?php echo (stripslashes($wherego_settings[exclude_cat_slugs])); ?></textarea>
+	</div>
     <p>
       <label>
       <input type="checkbox" name="add_to_content" id="add_to_content" <?php if ($wherego_settings[add_to_content]) echo 'checked="checked"' ?> />
@@ -293,9 +318,21 @@ add_action('admin_menu', 'wherego_adminmenu');
 
 function wherego_adminhead() {
 	global $wherego_url;
+?>
+<link rel="stylesheet" type="text/css" href="<?php echo $wherego_url ?>/wick/wick.css" />
+<link rel="stylesheet" type="text/css" href="<?php echo $wherego_url ?>/admin-styles.css" />
+<script type="text/javascript" language="JavaScript">
+function checkForm() {
+answer = true;
+if (siw && siw.selectingSomething)
+	answer = false;
+return answer;
+}//
+</script>
+<script type="text/javascript" src="<?php echo $wherego_url ?>/wick/sample_data.js.php"></script>
+<script type="text/javascript" src="<?php echo $wherego_url ?>/wick/wick.js"></script>
+<?php }
 
-	echo '<link rel="stylesheet" type="text/css" href="'.$wherego_url.'/admin-styles.css" />';
-}
 
 /* Display page views on the Edit Posts / Pages screen */
 // Add an extra column

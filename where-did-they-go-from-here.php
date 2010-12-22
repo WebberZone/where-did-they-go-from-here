@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Where did they go from here
-Version:     1.4.2
+Version:     1.5
 Plugin URI:  http://ajaydsouza.com/wordpress/plugins/where-did-they-go-from-here/
 Description: Show "Readers who viewed this page, also viewed" links on your page. Much like Amazon.com's product pages. Based on the plugin by <a href="http://weblogtoolscollection.com">Mark Ghosh</a>. 
 Author:      Ajay D'Souza
@@ -43,6 +43,7 @@ function ald_wherego() {
 	global $wpdb, $post, $single;
 	$wherego_settings = wherego_read_options();
 	$limit = $wherego_settings['limit'];
+	$exclude_categories = explode(',',$wherego_settings['exclude_categories']);
 	$count = 0;
 	$lpids = get_post_meta($post->ID, 'wheredidtheycomefrom', true);
 
@@ -54,36 +55,48 @@ function ald_wherego() {
 		foreach ($lpids as $lpid) {
 			$lppost = get_post($lpid);
 			if (($lppost->post_type=='page')&&($wherego_settings['exclude_pages'])) continue;
-			$count++;
-			if ($count > $limit) break;	// exit loop if we cross the max number of iterations
-			$title = trim(stripslashes(get_the_title($lpid)));
-			$output .= $wherego_settings['before_list_item'];
+			
+			$categorys = get_the_category($lppost->ID);	//Fetch categories of the plugin
+			$p_in_c = false;	// Variable to check if post exists in a particular category
 
-			if (($wherego_settings['post_thumb_op']=='inline')||($wherego_settings['post_thumb_op']=='thumbs_only')) {
-				$output .= '<a href="'.get_permalink($lpid).'" rel="bookmark">';
-				if ((function_exists('has_post_thumbnail')) && (has_post_thumbnail($lpid))) {
-					$output .= get_the_post_thumbnail( $lpid, array($wherego_settings[thumb_width],$wherego_settings[thumb_height]), array('title' => $title,'alt' => $title,'class' => 'wherego_thumb'));
-				} else {
-					$postimage = get_post_meta($lpid, $wherego_settings['thumb_meta'], true);
-					if ((!$postimage)&&($wherego_settings['scan_images'])) {
-						preg_match_all( '|<img.*?src=[\'"](.*?)[\'"].*?>|i', $lppost->post_content, $matches );
-						// any image there?
-						if( isset( $matches ) && $matches[1][0] ) {
-							$postimage = $matches[1][0]; // we need the first one only!
+			$title = trim(stripslashes(get_the_title($lpid)));
+
+			foreach ($categorys as $cat) {	// Loop to check if post exists in excluded category
+				$p_in_c = (in_array($cat->cat_ID, $exclude_categories)) ? true : false;
+				if ($p_in_c) break;	// End loop if post found in category
+			}
+
+			if (!$p_in_c) {
+				$output .= $wherego_settings['before_list_item'];
+
+				if (($wherego_settings['post_thumb_op']=='inline')||($wherego_settings['post_thumb_op']=='thumbs_only')) {
+					$output .= '<a href="'.get_permalink($lpid).'" rel="bookmark">';
+					if ((function_exists('has_post_thumbnail')) && (has_post_thumbnail($lpid))) {
+						$output .= get_the_post_thumbnail( $lpid, array($wherego_settings[thumb_width],$wherego_settings[thumb_height]), array('title' => $title,'alt' => $title,'class' => 'wherego_thumb'));
+					} else {
+						$postimage = get_post_meta($lpid, $wherego_settings['thumb_meta'], true);
+						if ((!$postimage)&&($wherego_settings['scan_images'])) {
+							preg_match_all( '|<img.*?src=[\'"](.*?)[\'"].*?>|i', $lppost->post_content, $matches );
+							// any image there?
+							if( isset( $matches ) && $matches[1][0] ) {
+								$postimage = $matches[1][0]; // we need the first one only!
+							}
 						}
+						if (!$postimage) $postimage = $wherego_settings[thumb_default];
+						$output .= '<img src="'.$postimage.'" alt="'.$title.'" title="'.$title.'" width="'.$wherego_settings[thumb_width].'" height="'.$wherego_settings[thumb_height].'" class="wherego_thumb" />';
 					}
-					if (!$postimage) $postimage = $wherego_settings[thumb_default];
-					$output .= '<img src="'.$postimage.'" alt="'.$title.'" title="'.$title.'" width="'.$wherego_settings[thumb_width].'" height="'.$wherego_settings[thumb_height].'" class="wherego_thumb" />';
+					$output .= '</a> ';
 				}
-				$output .= '</a> ';
+				if (($wherego_settings['post_thumb_op']=='inline')||($wherego_settings['post_thumb_op']=='text_only')) {
+					$output .= '<a href="'.get_permalink($lpid).'" rel="bookmark" class="wherego_title">'.$title.'</a>';
+				}
+				if ($wherego_settings['show_excerpt']) {
+					$output .= '<span class="wherego_excerpt"> '.wherego_excerpt($lppost->post_content,$wherego_settings['excerpt_length']).'</span>';
+				}
+				$output .= $wherego_settings['after_list_item'];
+				$count++;
 			}
-			if (($wherego_settings['post_thumb_op']=='inline')||($wherego_settings['post_thumb_op']=='text_only')) {
-				$output .= '<a href="'.get_permalink($lpid).'" rel="bookmark" class="wherego_title">'.$title.'</a>';
-			}
-			if ($wherego_settings['show_excerpt']) {
-				$output .= '<span class="wherego_excerpt"> '.wherego_excerpt($lppost->post_content,$wherego_settings['excerpt_length']).'</span>';
-			}
-			$output .= $wherego_settings['after_list_item'];
+			if ($count > $limit) break;	// exit loop if we cross the max number of iterations
 		}
 		if ($wherego_settings['show_credit']) {
 			$output .= $wherego_settings['before_list_item'];
@@ -140,7 +153,7 @@ function add_wherego_count() {
 		<?php wp_print_scripts(array('sack')); ?>
 		<script type="text/javascript">
 		//<![CDATA[
-			where_go_count = new sack("<?php bloginfo( 'wpurl' ); ?>/index.php");    
+			where_go_count = new sack("<?php bloginfo( 'url' ); ?>/index.php");    
 			where_go_count.setVar( "wherego_id", <?php echo $id ?> );
 			where_go_count.setVar( "wherego_sitevar", document.referrer );
 			where_go_count.method = 'GET';
@@ -167,7 +180,7 @@ function wherego_query_vars($vars) {
 function wherego_parse_request($wp) {
    	global $wpdb;
 	$wherego_settings = wherego_read_options();
-	$maxLinks = $wherego_settings['limit']*2;
+	$maxLinks = $wherego_settings['limit']*5;
 	$siteurl = get_option('siteurl');
 
 	//check to see if the page called has 'wherego_id' and 'wherego_sitevar' in the $_GET[] array
@@ -256,6 +269,8 @@ function wherego_default_options() {
 						scan_images => false,			// Scan post for images
 						show_excerpt => false,			// Show description in list item
 						excerpt_length => '10',		// Length of characters
+						exclude_categories => '',	// Exclude these categories
+						exclude_cat_slugs => '',	// Exclude these categories (slugs)
 						);
 	return $wherego_settings;
 }
@@ -322,6 +337,30 @@ global $wp_version;
 if ( version_compare( $wp_version, '2.8alpha', '>' ) )
 	add_filter( 'plugin_row_meta', 'wherego_plugin_actions', 10, 2 ); // only 2.8 and higher
 else add_filter( 'plugin_action_links', 'wherego_plugin_actions', 10, 2 );
+
+
+// Display message about plugin update option
+function wherego_check_version($file, $plugin_data) {
+	global $wp_version;
+	static $this_plugin;
+	$wp_version = str_replace(".","",$wp_version);
+	if (!$this_plugin) $this_plugin = plugin_basename(__FILE__);
+	if ($file == $this_plugin){
+		$current = $wp_version < 28 ? get_option('update_plugins') : get_transient('update_plugins');
+		if (!isset($current->response[$file])) return false;
+
+		$columns =  $wp_version < 28 ? 5 : 3;
+		$url = 'http://svn.wp-plugins.org/where-did-they-go-from-here/trunk/update-info.txt';
+		$update = wp_remote_fopen($url);
+		if ($update != "") {
+			echo '<tr class="plugin-update-tr"><td colspan="'.$columns.'" class="plugin-update"><div class="update-message">';
+			echo $update;
+			echo '</div></td></tr>';
+		}
+	}
+}
+add_action('after_plugin_row', 'wherego_check_version', 10, 2);
+
 
 }
 

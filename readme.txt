@@ -4,7 +4,7 @@ Contributors: Ajay, Mark Ghosh
 Donate link: http://ajaydsouza.com/donate/
 Stable tag: trunk
 Requires at least: 2.5
-Tested up to: 2.9.1
+Tested up to: 3.1
 
 
 Show "Readers who viewed this page, also viewed" links on your page. Much like Amazon.com's product pages.
@@ -32,6 +32,10 @@ This plugin will show "Readers who viewed this page, also viewed" links on your 
 
 
 == Changelog ==
+
+= 1.5 =
+* Fixed: Compability problem with WordPress blog in the subdirectory
+* Added: Option to excludes posts from certain categories to be displayed
 
 = 1.4.2 =
 * Fixed: Languages were not detected properly. Added Italian language
