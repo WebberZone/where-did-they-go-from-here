@@ -1,1 +1,1 @@
-* Added: Russian translation
+* Fixed: PHP Notices for Use of undefined constant limit

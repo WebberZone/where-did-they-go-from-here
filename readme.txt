@@ -4,7 +4,7 @@ Contributors: Ajay, Mark Ghosh
 Donate link: http://ajaydsouza.com/donate/
 Stable tag: trunk
 Requires at least: 2.5
-Tested up to: 3.2
+Tested up to: 3.3
 
 
 Show "Readers who viewed this page, also viewed" links on your page. Much like Amazon.com's product pages.
@@ -32,6 +32,9 @@ This plugin will show "Readers who viewed this page, also viewed" links on your 
 
 
 == Changelog ==
+
+= 1.5.2 =
+* Fixed: PHP Notices for "Use of undefined constant limit"
 
 = 1.5.1 =
 * Added: Russian translation

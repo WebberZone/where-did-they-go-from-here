@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Where did they go from here
-Version:     1.5.1
+Version:     1.5.2
 Plugin URI:  http://ajaydsouza.com/wordpress/plugins/where-did-they-go-from-here/
 Description: Show "Readers who viewed this page, also viewed" links on your page. Much like Amazon.com's product pages. Based on the plugin by <a href="http://weblogtoolscollection.com">Mark Ghosh</a>. 
 Author:      Ajay D'Souza
@@ -248,29 +248,29 @@ function wherego_default_options() {
 	$thumb_default = $wherego_url.'/default.png';
 
 	$wherego_settings = 	Array (
-						title => $title,			// Add before the content
-						add_to_content => true,		// Add related posts to content (only on single pages)
-						add_to_feed => true,		// Add related posts to feed
-						wg_in_admin => true,		// Add related posts to feed
-						limit => '5',				// How many posts to display?
-						show_credit => true,		// Link to this plugin's page?
-						exclude_pages => true,		// Exclude pages
-						blank_output => true,		// Blank output?
-						blank_output_text => $blank_output_text,	// Text to display in blank output
-						before_list => '<ul>',			// Before the entire list
-						after_list => '</ul>',			// After the entire list
-						before_list_item => '<li>',		// Before each list item
-						after_list_item => '</li>',		// After each list item
-						post_thumb_op => 'text_only',	// Display only text in posts
-						thumb_height => '50',			// Height of thumbnails
-						thumb_width => '50',			// Width of thumbnails
-						thumb_meta => 'post-image',		// Meta field that is used to store the location of default thumbnail image
-						thumb_default => $thumb_default,	// Default thumbnail image
-						scan_images => false,			// Scan post for images
-						show_excerpt => false,			// Show description in list item
-						excerpt_length => '10',		// Length of characters
-						exclude_categories => '',	// Exclude these categories
-						exclude_cat_slugs => '',	// Exclude these categories (slugs)
+						'title' => $title,			// Add before the content
+						'add_to_content' => true,		// Add related posts to content (only on single pages)
+						'add_to_feed' => true,		// Add related posts to feed
+						'wg_in_admin' => true,		// Add related posts to feed
+						'limit' => '5',				// How many posts to display?
+						'show_credit' => true,		// Link to this plugin's page?
+						'exclude_pages' => true,		// Exclude pages
+						'blank_output' => true,		// Blank output?
+						'blank_output_text' => $blank_output_text,	// Text to display in blank output
+						'before_list' => '<ul>',			// Before the entire list
+						'after_list' => '</ul>',			// After the entire list
+						'before_list_item' => '<li>',		// Before each list item
+						'after_list_item' => '</li>',		// After each list item
+						'post_thumb_op' => 'text_only',	// Display only text in posts
+						'thumb_height' => '50',			// Height of thumbnails
+						'thumb_width' => '50',			// Width of thumbnails
+						'thumb_meta' => 'post-image',		// Meta field that is used to store the location of default thumbnail image
+						'thumb_default' => $thumb_default,	// Default thumbnail image
+						'scan_images' => false,			// Scan post for images
+						'show_excerpt' => false,			// Show description in list item
+						'excerpt_length' => '10',		// Length of characters
+						'exclude_categories' => '',	// Exclude these categories
+						'exclude_cat_slugs' => '',	// Exclude these categories (slugs)
 						);
 	return $wherego_settings;
 }
