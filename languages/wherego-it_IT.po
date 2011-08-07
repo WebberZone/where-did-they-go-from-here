@@ -4,8 +4,8 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-12-22 13:43-0000\n"
 "PO-Revision-Date: \n"
-"Last-Translator: Ajay D'Souza <me@ajaydsouza.com>\n"
-"Language-Team: Gianni Diurno | gidibao.net <gidibao[at]gmail[dot]com>\n"
+"Last-Translator: Gianni Diurno (aka gidibao) <gidibao[at]gmail[dot]com>\n"
+"Language-Team: Gianni Diurno | gidibao.net & charmingpress.com\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -37,7 +37,7 @@ msgstr "numero di articoli da mostrare:"
 
 #: admin.inc.php:87
 msgid "Exclude Categories: "
-msgstr ""
+msgstr "Escludi categorie:"
 
 #: admin.inc.php:105
 msgid "Add list of posts to the post content on single posts. <br />If you choose to disable this, please add <code>&lt;?php if(function_exists('echo_ald_wherego')) echo_ald_wherego(); ?&gt;</code> to your template file where you want it displayed"
