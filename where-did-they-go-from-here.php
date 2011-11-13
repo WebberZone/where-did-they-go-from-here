@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Where did they go from here
-Version:     1.5.2
+Version:     1.5.3
 Plugin URI:  http://ajaydsouza.com/wordpress/plugins/where-did-they-go-from-here/
 Description: Show "Readers who viewed this page, also viewed" links on your page. Much like Amazon.com's product pages. Based on the plugin by <a href="http://weblogtoolscollection.com">Mark Ghosh</a>. 
 Author:      Ajay D'Souza
@@ -201,7 +201,7 @@ function wherego_parse_request($wp) {
 		if (isset($id) && $id > 0 && $matchvar) {
 			// Now figure out the ID of the post the author came from, this might be hokey at first
 			// Text search within code is your friend!
-			$postIDcamefrom = url_to_postid($tempsitevar);
+			$postIDcamefrom = slt_url_to_postid($tempsitevar);
 			if ('' != $postIDcamefrom && $id != $postIDcamefrom && '' != $id) {
 				$gotmeta = '';
 				$linkpostids = get_post_meta($postIDcamefrom, 'wheredidtheycomefrom', true);
@@ -317,6 +317,40 @@ function wherego_excerpt($content,$excerpt_length){
 	$out = $excerpt;
 	return $out;
 }
+
+// Get post id from url - fix for custom post types
+// http://sltaylor.co.uk/blog/get-post-id-from-custom-post-types-urls/
+function slt_url_to_postid( $url ) {  
+    // Try the core function  
+    $post_id = url_to_postid( $url );  
+    if ( $post_id == 0 ) {  
+        // Try custom post types  
+        $cpts = get_post_types( array(  
+            'public'   => true,  
+            '_builtin' => false  
+        ), 'objects', 'and' );  
+        // Get path from URL  
+        $url_parts = explode( '/', trim( $url, '/' ) );  
+        $url_parts = array_splice( $url_parts, 3 );  
+        $path = implode( '/', $url_parts );  
+        // Test against each CPT's rewrite slug  
+        foreach ( $cpts as $cpt_name => $cpt ) {  
+            $cpt_slug = $cpt->rewrite['slug']; 
+            if ( strlen( $path ) > strlen( $cpt_slug ) && substr( $path, 0, strlen( $cpt_slug ) ) == $cpt_slug ) { 
+                $slug = substr( $path, strlen( $cpt_slug ) ); 
+                $query = new WP_Query( array( 
+                    'post_type'         => $cpt_name, 
+                    'name'              => $slug, 
+                    'posts_per_page'    => 1  
+                ));  
+                if ( is_object( $query->post ) )  
+                    $post_id = $query->post->ID;  
+            }  
+        }  
+    }  
+    return $post_id;  
+}  
+
 
 // This function adds an Options page in WP Admin
 if (is_admin() || strstr($_SERVER['PHP_SELF'], 'wp-admin/')) {

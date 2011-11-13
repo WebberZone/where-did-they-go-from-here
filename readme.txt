@@ -33,6 +33,9 @@ This plugin will show "Readers who viewed this page, also viewed" links on your 
 
 == Changelog ==
 
+= 1.5.3 =
+* Added: Better support for custom post types
+
 = 1.5.2 =
 * Fixed: PHP Notices for "Use of undefined constant limit"
 
