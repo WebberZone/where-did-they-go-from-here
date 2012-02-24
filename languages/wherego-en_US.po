@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Top 10\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-13 12:12-0000\n"
+"POT-Creation-Date: 2012-02-24 22:36+0530\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Ajay D'Souza <me@ajaydsouza.com>\n"
 "Language-Team: Ajay D'Souza <me@ajaydsouza.com>\n"
@@ -179,7 +179,8 @@ msgid "Ajay's blog"
 msgstr ""
 
 #: admin.inc.php:248
-msgid "Support forum"
+#: where-did-they-go-from-here.php:365
+msgid "Support"
 msgstr ""
 
 #: admin.inc.php:249
@@ -214,15 +215,11 @@ msgstr ""
 msgid "Visitors have not browsed from this post. Become the first by clicking one of our related posts"
 msgstr ""
 
-#: where-did-they-go-from-here.php:363
+#: where-did-they-go-from-here.php:364
 msgid "Settings"
 msgstr ""
 
-#: where-did-they-go-from-here.php:364
-msgid "Support"
-msgstr ""
-
-#: where-did-they-go-from-here.php:365
+#: where-did-they-go-from-here.php:366
 msgid "Donate"
 msgstr ""
 

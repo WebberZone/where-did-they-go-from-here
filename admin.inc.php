@@ -245,7 +245,7 @@ function wherego_options() {
 		<li><a href="http://ajaydsouza.com/wordpress/plugins/where-did-they-go-from-here/"><?php _e('Where did they go from here? ');_e('plugin page',WHEREGO_LOCAL_NAME) ?></a></li>
 		<li><a href="http://ajaydsouza.com/wordpress/plugins/"><?php _e('Other plugins',WHEREGO_LOCAL_NAME) ?></a></li>
 		<li><a href="http://ajaydsouza.com/"><?php _e('Ajay\'s blog',WHEREGO_LOCAL_NAME) ?></a></li>
-		<li><a href="http://ajaydsouza.org"><?php _e('Support forum',WHEREGO_LOCAL_NAME) ?></a></li>
+		<li><a href="http://ajaydsouza.com/support/"><?php _e('Support',WHEREGO_LOCAL_NAME) ?></a></li>
 		<li><a href="http://twitter.com/ajaydsouza"><?php _e('Follow @ajaydsouza on Twitter',WHEREGO_LOCAL_NAME) ?></a></li>
 	</ul>
 	</div>

@@ -1,1 +1,0 @@
-* Added: Better support for custom post types

@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Where did they go from here
-Version:     1.5.3
+Version:     1.5.4
 Plugin URI:  http://ajaydsouza.com/wordpress/plugins/where-did-they-go-from-here/
 Description: Show "Readers who viewed this page, also viewed" links on your page. Much like Amazon.com's product pages. Based on the plugin by <a href="http://weblogtoolscollection.com">Mark Ghosh</a>. 
 Author:      Ajay D'Souza
@@ -371,29 +371,6 @@ global $wp_version;
 if ( version_compare( $wp_version, '2.8alpha', '>' ) )
 	add_filter( 'plugin_row_meta', 'wherego_plugin_actions', 10, 2 ); // only 2.8 and higher
 else add_filter( 'plugin_action_links', 'wherego_plugin_actions', 10, 2 );
-
-
-// Display message about plugin update option
-function wherego_check_version($file, $plugin_data) {
-	global $wp_version;
-	static $this_plugin;
-	$wp_version = str_replace(".","",$wp_version);
-	if (!$this_plugin) $this_plugin = plugin_basename(__FILE__);
-	if ($file == $this_plugin){
-		$current = $wp_version < 28 ? get_option('update_plugins') : get_transient('update_plugins');
-		if (!isset($current->response[$file])) return false;
-
-		$columns =  $wp_version < 28 ? 5 : 3;
-		$url = 'http://svn.wp-plugins.org/where-did-they-go-from-here/trunk/update-info.txt';
-		$update = wp_remote_fopen($url);
-		if ($update != "") {
-			echo '<tr class="plugin-update-tr"><td colspan="'.$columns.'" class="plugin-update"><div class="update-message">';
-			echo $update;
-			echo '</div></td></tr>';
-		}
-	}
-}
-add_action('after_plugin_row', 'wherego_check_version', 10, 2);
 
 
 }

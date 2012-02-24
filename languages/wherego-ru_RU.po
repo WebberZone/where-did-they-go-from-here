@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Top 10\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-13 12:12-0000\n"
+"POT-Creation-Date: 2012-02-24 22:37+0530\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Ajay D'Souza <me@ajaydsouza.com>\n"
 "Language-Team: DachaDecor <mail@artem-nikitenko.ru>\n"
@@ -180,8 +180,9 @@ msgid "Ajay's blog"
 msgstr "Блог разработчика (Ajay's)"
 
 #: admin.inc.php:248
-msgid "Support forum"
-msgstr "Форум поддержки"
+#: where-did-they-go-from-here.php:365
+msgid "Support"
+msgstr "Техподдержка"
 
 #: admin.inc.php:249
 msgid "Follow @ajaydsouza on Twitter"
@@ -215,15 +216,13 @@ msgstr "<h3>Читатели, которые видят эту страницу,
 msgid "Visitors have not browsed from this post. Become the first by clicking one of our related posts"
 msgstr "Посетители ничего не просмотрели из этого поста. Станьте первым, нажав на один из наших связанных постов."
 
-#: where-did-they-go-from-here.php:363
+#: where-did-they-go-from-here.php:364
 msgid "Settings"
 msgstr "Настройки"
 
-#: where-did-they-go-from-here.php:364
-msgid "Support"
-msgstr "Техподдержка"
-
-#: where-did-they-go-from-here.php:365
+#: where-did-they-go-from-here.php:366
 msgid "Donate"
 msgstr "Пожертвовать"
 
+#~ msgid "Support forum"
+#~ msgstr "Форум поддержки"

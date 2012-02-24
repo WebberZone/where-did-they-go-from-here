@@ -31,7 +31,15 @@ This plugin will show "Readers who viewed this page, also viewed" links on your 
 4. Goto Settings > Where go to configure
 
 
+== Upgrade Notice ==
+
+= 1.5.4 =
+* Fixed: Error when deleting the plugin
+
 == Changelog ==
+
+= 1.5.4 =
+* Fixed: Error when deleting the plugin
 
 = 1.5.3 =
 * Added: Better support for custom post types
@@ -111,6 +119,4 @@ For more information, please visit http://ajaydsouza.com/wordpress/plugins/where
 
 = Support =
 
-All questions need to be redirected at the Support Forum at http://ajaydsouza.org/
-
-No support questions will be entertained in the comments or via email.
+I offer limited support on the plugins. Details on how to receive support are at http://ajaydsouza.com/support/
