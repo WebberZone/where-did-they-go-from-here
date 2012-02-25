@@ -4,7 +4,7 @@ Contributors: Ajay, Mark Ghosh
 Donate link: http://ajaydsouza.com/donate/
 Stable tag: trunk
 Requires at least: 2.5
-Tested up to: 3.3
+Tested up to: 3.4
 
 
 Show "Readers who viewed this page, also viewed" links on your page. Much like Amazon.com's product pages.
