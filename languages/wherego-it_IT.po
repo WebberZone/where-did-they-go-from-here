@@ -2,227 +2,467 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Where did they go from here\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-24 22:36+0530\n"
+"POT-Creation-Date: 2013-05-05 21:28-0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Ajay D'Souza <me@ajaydsouza.com>\n"
 "Language-Team: Gianni Diurno | gidibao.net & charmingpress.com\n"
+"Language: it_IT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: Italian\n"
 "X-Poedit-KeywordsList: _e;__\n"
 "X-Poedit-Basepath: ../\n"
-"X-Poedit-Country: ITALY\n"
+"X-Generator: Poedit 1.5.5\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: admin.inc.php:48
+#: admin.inc.php:92
 msgid "Options saved successfully."
 msgstr "Le opzioni sono state salvate con successo."
 
-#: admin.inc.php:57
+#: admin.inc.php:101
 msgid "Options set to Default."
 msgstr "Opzioni impostate alle predefinite."
 
-#: admin.inc.php:63
+#: admin.inc.php:107
 msgid "All visitor browsing data captured by the plugin has been deleted!"
-msgstr "Tutti i dati di navigazione archiviati da questo plugin sono stati cancellati!"
+msgstr ""
+"Tutti i dati di navigazione archiviati da questo plugin sono stati "
+"cancellati!"
 
-#: admin.inc.php:78
-msgid "Options:"
-msgstr "Opzioni:"
+#: admin.inc.php:124
+msgid "General options"
+msgstr ""
 
-#: admin.inc.php:83
+#: admin.inc.php:127 admin.inc.php:309
 msgid "Number of posts to display: "
 msgstr "numero di articoli da mostrare:"
 
-#: admin.inc.php:87
+#: admin.inc.php:130
+msgid "This is the maximum number of followed posts that will be displayed"
+msgstr ""
+
+#: admin.inc.php:133
+msgid "Post types to include in results (including custom post types)"
+msgstr ""
+
+#: admin.inc.php:144
+msgid "List of post or page IDs to exclude from the results: "
+msgstr ""
+
+#: admin.inc.php:147 admin.inc.php:232
+msgid "Enter comma separated list of IDs. e.g. 188,320,500"
+msgstr ""
+
+#: admin.inc.php:150
 msgid "Exclude Categories: "
 msgstr "Escludi categorie:"
 
-#: admin.inc.php:105
-msgid "Add list of posts to the post content on single posts. <br />If you choose to disable this, please add <code>&lt;?php if(function_exists('echo_ald_wherego')) echo_ald_wherego(); ?&gt;</code> to your template file where you want it displayed"
-msgstr "aggiungi una lista di articoli ai contenuti del post (articoli singoli). <br />oppure disattiva ed inserisci <code>&lt;?php if(function_exists('echo_ald_wherego')) echo_ald_wherego(); ?&gt;</code> nel tuo template laddove desideri che siano visualizzati"
+#: admin.inc.php:166
+msgid ""
+"Comma separated list of category slugs. The field above has an autocomplete "
+"so simply start typing in the starting letters and it will prompt you with "
+"options"
+msgstr ""
 
-#: admin.inc.php:111
-msgid "Add list of posts to feed"
+#: admin.inc.php:169
+#, fuzzy
+msgid "Add followed posts to:"
 msgstr "aggiungi al feed l'elenco degli articoli"
 
-#: admin.inc.php:117
-msgid "Display list of posts in Edit Posts / Pages"
+#: admin.inc.php:171
+msgid "Posts"
+msgstr ""
+
+#: admin.inc.php:172
+msgid "Pages"
+msgstr ""
+
+#: admin.inc.php:173
+msgid "Home page"
+msgstr ""
+
+#: admin.inc.php:174
+msgid "Feeds"
+msgstr ""
+
+#: admin.inc.php:175
+msgid "Category archives"
+msgstr ""
+
+#: admin.inc.php:176
+msgid "Tag archives"
+msgstr ""
+
+#: admin.inc.php:177
+msgid "Other archives"
+msgstr ""
+
+#: admin.inc.php:178
+#, fuzzy
+msgid ""
+"If you choose to disable this, please add <code>&lt;?php if(function_exists"
+"('echo_ald_wherego')) echo_ald_wherego(); ?&gt;</code> to your template file "
+"where you want it displayed"
+msgstr ""
+"aggiungi una lista di articoli ai contenuti del post (articoli singoli). "
+"<br />oppure disattiva ed inserisci <code>&lt;?php if(function_exists"
+"('echo_ald_wherego')) echo_ald_wherego(); ?&gt;</code> nel tuo template "
+"laddove desideri che siano visualizzati"
+
+#: admin.inc.php:181
+#, fuzzy
+msgid "Display list of posts on All Posts page"
 msgstr "mostra l'elenco degli articoli sotto Modifica Articoli / Pagine"
 
-#: admin.inc.php:123
-msgid "Append link to this plugin as item. Optional, but would be nice to give me some link love"
-msgstr "aggiungi un link di credito al plugin. L'opzione é facoltativa, ma gradita."
+#: admin.inc.php:183
+msgid "This option will add a new column in your Posts > All Posts page"
+msgstr ""
 
-#: admin.inc.php:127
-msgid "Output Options:"
+#: admin.inc.php:186
+msgid "Add a link to the plugin page as a final item in the list"
+msgstr ""
+
+#: admin.inc.php:187
+#, fuzzy
+msgid "Optional"
+msgstr "Opzioni:"
+
+#: admin.inc.php:195
+#, fuzzy
+msgid "Output options"
 msgstr "Opzioni output:"
 
-#: admin.inc.php:131
+#: admin.inc.php:198
 msgid "Title of posts: "
 msgstr "titolo per gli articoli:"
 
-#: admin.inc.php:138
-msgid "Exclude pages from the post list"
-msgstr "Escludi le pagine dall'elenco delle pubblicazioni"
-
-#: admin.inc.php:144
-msgid "Show post excerpt in list?"
-msgstr "Desideri mostrare nella lista anche l'estratto?"
-
-#: admin.inc.php:149
-msgid "Length of excerpt (in words): "
-msgstr "lunghezza dell'estratto (in parole):"
-
-#: admin.inc.php:153
-msgid "Customize the output:"
-msgstr "Personalizzazione output:"
-
-#: admin.inc.php:156
-msgid "HTML to display before the list of posts: "
-msgstr "HTML da mostrare davanti alla lista degli articoli:"
-
-#: admin.inc.php:162
-msgid "HTML to display before each list item: "
-msgstr "HTML da mostrare davanti ad ogni singola lista:"
-
-#: admin.inc.php:168
-msgid "HTML to display after each list item: "
-msgstr "HTML da mostrare dopo ogni lista:"
-
-#: admin.inc.php:174
-msgid "HTML to display after the list of posts: "
-msgstr "HTML da mostrare dopo la lista degli articoli:"
-
-#: admin.inc.php:178
+#: admin.inc.php:202
 msgid "When there are no posts, what should be shown?"
 msgstr "Cosa desideri mostrare in assenza di articoli?"
 
-#: admin.inc.php:181
+#: admin.inc.php:206
 msgid "Blank Output"
 msgstr "nulla"
 
-#: admin.inc.php:185
+#: admin.inc.php:210
 msgid "Display custom text: "
 msgstr "mostra testo personalizzato:"
 
-#: admin.inc.php:189
+#: admin.inc.php:214 admin.inc.php:312
+msgid "Show post excerpt in list?"
+msgstr "Desideri mostrare nella lista anche l'estratto?"
+
+#: admin.inc.php:217
+msgid "Length of excerpt (in words): "
+msgstr "lunghezza dell'estratto (in parole):"
+
+#: admin.inc.php:220
+msgid "Limit post title length (in characters)"
+msgstr ""
+
+#: admin.inc.php:223
+msgid "Open links in new window"
+msgstr ""
+
+#: admin.inc.php:226
+msgid "Add nofollow attribute to links"
+msgstr ""
+
+#: admin.inc.php:229
+#, fuzzy
+msgid "Exclude display of followed posts on these posts / pages"
+msgstr "mostra l'elenco degli articoli sotto Modifica Articoli / Pagine"
+
+#: admin.inc.php:235
+msgid "Customize the output:"
+msgstr "Personalizzazione output:"
+
+#: admin.inc.php:237
+msgid "HTML to display before the list of posts: "
+msgstr "HTML da mostrare davanti alla lista degli articoli:"
+
+#: admin.inc.php:240
+msgid "HTML to display before each list item: "
+msgstr "HTML da mostrare davanti ad ogni singola lista:"
+
+#: admin.inc.php:243
+msgid "HTML to display after each list item: "
+msgstr "HTML da mostrare dopo ogni lista:"
+
+#: admin.inc.php:246
+msgid "HTML to display after the list of posts: "
+msgstr "HTML da mostrare dopo la lista degli articoli:"
+
+#: admin.inc.php:249
 msgid "Post thumbnail options:"
 msgstr "Opzioni post thumbnail:"
 
-#: admin.inc.php:193
-msgid "Display thumbnails inline with posts"
+#: admin.inc.php:251 admin.inc.php:315
+msgid "Location of post thumbnail:"
+msgstr ""
+
+#: admin.inc.php:255 admin.inc.php:319
+#, fuzzy
+msgid "Display thumbnails inline with posts, before title"
 msgstr "Mostra gli articoli con le miniature"
 
-#: admin.inc.php:197
+#: admin.inc.php:259 admin.inc.php:323
+#, fuzzy
+msgid "Display thumbnails inline with posts, after title"
+msgstr "Mostra gli articoli con le miniature"
+
+#: admin.inc.php:263 admin.inc.php:327
 msgid "Display only thumbnails, no text"
 msgstr "Mostra le sole miniature, nessun testo"
 
-#: admin.inc.php:201
+#: admin.inc.php:267 admin.inc.php:331
 msgid "Do not display thumbnails, only text."
 msgstr "Non mostrare le miniature, solo testo."
 
-#: admin.inc.php:206
-msgid "Post thumbnail meta field (the meta should point contain the image source): "
-msgstr "Campo meta per le miniature (il valore deve puntare alla immagine):"
+#: admin.inc.php:271 admin.inc.php:335
+msgid "Maximum width of the thumbnail: "
+msgstr ""
 
-#: admin.inc.php:213
-msgid "If the postmeta is not set, then should the plugin extract the first image from the post. This can slow down the loading of your post if the first image in the related posts is large in file-size"
-msgstr "Qualora il postmeta non fosse stato impostato, il plugin estrarrà la prima immagine contenuta nel post. Nel caso in cui la prima immagine fosse di grandi dimensioni, il caricamento dell'articolo potrà subire un rallentamento"
+#: admin.inc.php:274 admin.inc.php:338
+msgid "Maximum height of the thumbnail: "
+msgstr ""
 
-#: admin.inc.php:216
-msgid "Thumbnail dimensions:"
-msgstr "Dimensioni miniature:"
+#: admin.inc.php:277
+msgid "Use timthumb to generate thumbnails? "
+msgstr ""
 
-#: admin.inc.php:218
-msgid "Max width: "
-msgstr "larghezza massima:"
+#: admin.inc.php:279
+msgid ""
+"If checked, <a href=\"http://www.binarymoon.co.uk/projects/timthumb/"
+"\">timthumb</a> will be used to generate thumbnails"
+msgstr ""
 
-#: admin.inc.php:223
-msgid "Max height: "
-msgstr "altezza massima:"
+#: admin.inc.php:282
+msgid "Quality of thumbnails generated by timthumb"
+msgstr ""
 
-#: admin.inc.php:227
-msgid "The plugin will first check if the post contains a thumbnail. If it doesn't then it will check the meta field. If this is not available, then it will show the default image as specified below:"
-msgstr "Come prima operazione, il plugin controllerà la presenza di una miniatura nell'articolo. Nel caso in cui non fosse presente, verificherà il campo meta. Qualora non fosse disponibile, mostrerà l'immagine predefinita come specificato qui sotto:"
+#: admin.inc.php:285
+msgid ""
+"Enter values between 0 and 100 only. 100 is highest quality, however, it is "
+"also the highest file size. Suggested maximum value is 95. wherego default "
+"is 75."
+msgstr ""
 
-#: admin.inc.php:232
+#: admin.inc.php:288
+#, fuzzy
+msgid "Post thumbnail meta field name: "
+msgstr "Opzioni post thumbnail:"
+
+#: admin.inc.php:290
+msgid ""
+"The value of this field should contain the image source and is set in the "
+"<em>Add New Post</em> screen"
+msgstr ""
+
+#: admin.inc.php:293
+#, fuzzy
+msgid ""
+"If the postmeta is not set, then should the plugin extract the first image "
+"from the post?"
+msgstr ""
+"Qualora il postmeta non fosse stato impostato, il plugin estrarrà la prima "
+"immagine contenuta nel post. Nel caso in cui la prima immagine fosse di "
+"grandi dimensioni, il caricamento dell'articolo potrà subire un rallentamento"
+
+#: admin.inc.php:294
+#, fuzzy
+msgid ""
+"This can slow down the loading of your page if the first image in the "
+"followed posts is large in file-size"
+msgstr ""
+"Qualora il postmeta non fosse stato impostato, il plugin estrarrà la prima "
+"immagine contenuta nel post. Nel caso in cui la prima immagine fosse di "
+"grandi dimensioni, il caricamento dell'articolo potrà subire un rallentamento"
+
+#: admin.inc.php:296
+msgid "Use default thumbnail? "
+msgstr ""
+
+#: admin.inc.php:297
+msgid ""
+"If checked, when no thumbnail is found, show a default one from the URL "
+"below. If not checked and no thumbnail is found, no image will be shown."
+msgstr ""
+
+#: admin.inc.php:299
+msgid "Default thumbnail: "
+msgstr ""
+
+#: admin.inc.php:300
+#, fuzzy
+msgid ""
+"The plugin will first check if the post contains a thumbnail. If it doesn't "
+"then it will check the meta field. If this is not available, then it will "
+"show the default image as specified above"
+msgstr ""
+"Come prima operazione, il plugin controllerà la presenza di una miniatura "
+"nell'articolo. Nel caso in cui non fosse presente, verificherà il campo "
+"meta. Qualora non fosse disponibile, mostrerà l'immagine predefinita come "
+"specificato qui sotto:"
+
+#: admin.inc.php:306
+#, fuzzy
+msgid "Feed options"
+msgstr "Opzioni:"
+
+#: admin.inc.php:307
+msgid ""
+"Below options override the followed posts settings for your blog feed. These "
+"only apply if you have selected to add followed posts to Feeds in the "
+"General Options tab."
+msgstr ""
+
+#: admin.inc.php:344
+msgid "Custom Styles"
+msgstr ""
+
+#: admin.inc.php:346
+msgid "Custom CSS to add to header:"
+msgstr ""
+
+#: admin.inc.php:349
+msgid ""
+"Do not include <code>style</code> tags. Check out the <a href=\"http://"
+"wordpress.org/extend/plugins/contextual-related-posts/faq/\" target=\"_blank"
+"\">FAQ</a> for available CSS classes to style."
+msgstr ""
+
+#: admin.inc.php:355
 msgid "Do you want to set options to Default?"
 msgstr "Sei certo di volere impostare alle opzioni predefinite?"
 
-#: admin.inc.php:234
-msgid "Reset all content? This will purge WordPress of all visitor browsing information captured by this plugin. There is no going back if you hit the button."
-msgstr "Desideri ripristinare tutti i contenuti? L'operazione cancellerà da WordPress tutti i dati di navigazione archiviati da questo plugin. Questa azione non sarà reversibile."
+#: admin.inc.php:357
+msgid "Reset all content?"
+msgstr ""
 
-#: admin.inc.php:235
+#: admin.inc.php:358
+#, fuzzy
+msgid ""
+"This will purge WordPress of all visitor browsing information captured by "
+"this plugin. There is no going back if you hit the button."
+msgstr ""
+"Desideri ripristinare tutti i contenuti? L'operazione cancellerà da "
+"WordPress tutti i dati di navigazione archiviati da questo plugin. Questa "
+"azione non sarà reversibile."
+
+#: admin.inc.php:359
 msgid "This will delete all user data"
 msgstr "Questa operazione cancellerà tutti i dati utente"
 
-#: admin.inc.php:243
-msgid "Quick links"
-msgstr "Quick links"
-
-#: admin.inc.php:245
-msgid "Where did they go from here? "
-msgstr "Where did they go from here? "
-
-#: admin.inc.php:245
-msgid "plugin page"
-msgstr "pagina plugin"
-
-#: admin.inc.php:246
-msgid "Other plugins"
-msgstr "Altri plugin"
-
-#: admin.inc.php:247
-msgid "Ajay's blog"
-msgstr "Ajay's blog"
-
-#: admin.inc.php:248
-#: where-did-they-go-from-here.php:365
-msgid "Support"
-msgstr "Supporto"
-
-#: admin.inc.php:249
-msgid "Follow @ajaydsouza on Twitter"
-msgstr "Seguimi su Twitter @ajaydsouza"
-
-#: admin.inc.php:253
-msgid "Recent developments"
-msgstr "Sviluppi recenti"
-
-#: admin.inc.php:258
+#: admin.inc.php:369
 msgid "Support the development"
 msgstr "Sostieni lo sviluppo"
 
-#: admin.inc.php:266
+#: admin.inc.php:377
 msgid "Enter amount in USD: "
 msgstr "Inserisci la cifra in USD:"
 
-#: admin.inc.php:270
+#: admin.inc.php:381
 msgid "Send your donation to the author of"
 msgstr "Invia la tua donazione all'autore di"
 
-#: where-did-they-go-from-here.php:103
+#: admin.inc.php:392
+#, fuzzy
+msgid "Quick Links"
+msgstr "Quick links"
+
+#: admin.inc.php:394
+#, fuzzy
+msgid "Where did they go from here plugin page"
+msgstr "Where did they go from here? "
+
+#: admin.inc.php:395
+msgid "Other plugins"
+msgstr "Altri plugin"
+
+#: admin.inc.php:396
+msgid "Ajay's blog"
+msgstr "Ajay's blog"
+
+#: admin.inc.php:397 where-did-they-go-from-here.php:564
+msgid "Support"
+msgstr "Supporto"
+
+#: admin.inc.php:398
+msgid "Reviews"
+msgstr ""
+
+#: admin.inc.php:402
+msgid "Recent developments"
+msgstr "Sviluppi recenti"
+
+#: admin.inc.php:432
+#, fuzzy
+msgid "Where did they go from here?"
+msgstr "Where did they go from here? "
+
+#: admin.inc.php:432
+#, fuzzy
+msgid "Where did they go"
+msgstr "Where did they go from here? "
+
+#: admin.inc.php:484
+msgid "None"
+msgstr ""
+
+#: where-did-they-go-from-here.php:117
 msgid "Powered by"
 msgstr "Powered by"
 
-#: where-did-they-go-from-here.php:246
+#: where-did-they-go-from-here.php:316
 msgid "<h3>Readers who viewed this page, also viewed:</h3>"
 msgstr "<h3>Chi ha letto questa pagina ha visionato anche:</h3>"
 
-#: where-did-they-go-from-here.php:247
-msgid "Visitors have not browsed from this post. Become the first by clicking one of our related posts"
-msgstr "Nessun utente é giunto da questo articolo. Puoi essere tu il primo cliccando uno degli articoli correlati"
+#: where-did-they-go-from-here.php:317
+msgid ""
+"Visitors have not browsed from this post. Become the first by clicking one "
+"of our related posts"
+msgstr ""
+"Nessun utente é giunto da questo articolo. Puoi essere tu il primo cliccando "
+"uno degli articoli correlati"
 
-#: where-did-they-go-from-here.php:364
+#: where-did-they-go-from-here.php:563
 msgid "Settings"
 msgstr "Impostazioni"
 
-#: where-did-they-go-from-here.php:366
+#: where-did-they-go-from-here.php:565
 msgid "Donate"
 msgstr "Donazioni"
+
+#~ msgid ""
+#~ "Append link to this plugin as item. Optional, but would be nice to give "
+#~ "me some link love"
+#~ msgstr ""
+#~ "aggiungi un link di credito al plugin. L'opzione é facoltativa, ma "
+#~ "gradita."
+
+#~ msgid "Exclude pages from the post list"
+#~ msgstr "Escludi le pagine dall'elenco delle pubblicazioni"
+
+#~ msgid ""
+#~ "Post thumbnail meta field (the meta should point contain the image "
+#~ "source): "
+#~ msgstr "Campo meta per le miniature (il valore deve puntare alla immagine):"
+
+#~ msgid "Thumbnail dimensions:"
+#~ msgstr "Dimensioni miniature:"
+
+#~ msgid "Max width: "
+#~ msgstr "larghezza massima:"
+
+#~ msgid "Max height: "
+#~ msgstr "altezza massima:"
+
+#~ msgid "plugin page"
+#~ msgstr "pagina plugin"
+
+#~ msgid "Follow @ajaydsouza on Twitter"
+#~ msgstr "Seguimi su Twitter @ajaydsouza"
 
 #~ msgid "Support forum"
 #~ msgstr "Forum di supporto"
