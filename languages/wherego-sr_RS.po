@@ -1,0 +1,485 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Top 10\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-05-05 21:28-0000\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Ajay D'Souza <me@ajaydsouza.com>\n"
+"Language-Team: DachaDecor <mail@artem-nikitenko.ru>\n"
+"Language: ru_RU\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: _e;__\n"
+"X-Poedit-Basepath: ../\n"
+"X-Generator: Poedit 1.5.7\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: admin.inc.php:92
+msgid "Options saved successfully."
+msgstr "Opcije uspešno sačuvane."
+
+#: admin.inc.php:101
+msgid "Options set to Default."
+msgstr "Opcije podešene na Podrazumevano."
+
+#: admin.inc.php:107
+msgid "All visitor browsing data captured by the plugin has been deleted!"
+msgstr ""
+"Svi podaci o pretraživanju posetioca koje je snimio modul su izbrisani!"
+
+#: admin.inc.php:124
+msgid "General options"
+msgstr "Opšte opcije"
+
+#: admin.inc.php:127 admin.inc.php:309
+msgid "Number of posts to display: "
+msgstr "Broj postova za prikazivanje:"
+
+#: admin.inc.php:130
+msgid "This is the maximum number of followed posts that will be displayed"
+msgstr "Ovo je maksimalan broj postova koji će se objaviti"
+
+#: admin.inc.php:133
+msgid "Post types to include in results (including custom post types)"
+msgstr ""
+"Vrste postova koje treba uključiti u rezultate (uključujući i prilagođenu "
+"vrstu postova)"
+
+#: admin.inc.php:144
+msgid "List of post or page IDs to exclude from the results: "
+msgstr "Lista ID-a posta ili stranice koje treba izuzeti iz rezultata:"
+
+#: admin.inc.php:147 admin.inc.php:232
+msgid "Enter comma separated list of IDs. e.g. 188,320,500"
+msgstr "Unesite listu ID-a odvojenih zapetom, npr: 188, 320, 500"
+
+#: admin.inc.php:150
+msgid "Exclude Categories: "
+msgstr "Isključi kategorije:"
+
+#: admin.inc.php:166
+msgid ""
+"Comma separated list of category slugs. The field above has an autocomplete "
+"so simply start typing in the starting letters and it will prompt you with "
+"options"
+msgstr ""
+"Lista kategorijskih matrica odvojenih zapetom. Gornje polje ima auto-"
+"izvršenje, pa samo krenite da kucate početna slova i ponudiće vam se opcija."
+
+#: admin.inc.php:169
+#, fuzzy
+msgid "Add followed posts to:"
+msgstr "Pievienot amatu saraksts, lai pabarotu (feed)"
+
+#: admin.inc.php:171
+msgid "Posts"
+msgstr "Postovi"
+
+#: admin.inc.php:172
+msgid "Pages"
+msgstr "Stranice"
+
+#: admin.inc.php:173
+msgid "Home page"
+msgstr "Naslovna stranica"
+
+#: admin.inc.php:174
+msgid "Feeds"
+msgstr "Izvori"
+
+#: admin.inc.php:175
+msgid "Category archives"
+msgstr "Arhive kategorija"
+
+#: admin.inc.php:176
+msgid "Tag archives"
+msgstr "Arhive oznaka"
+
+#: admin.inc.php:177
+msgid "Other archives"
+msgstr "Ostale arhive"
+
+#: admin.inc.php:178
+#, fuzzy
+msgid ""
+"If you choose to disable this, please add <code>&lt;?php if(function_exists"
+"('echo_ald_wherego')) echo_ald_wherego(); ?&gt;</code> to your template file "
+"where you want it displayed"
+msgstr ""
+"Pievienoju sarakstu ar amatu saturu jaunajā amatā. Ja jūs izvēlaties, lai "
+"izslēgtu to, lūdzu, pievienojiet <code> <Php, ja (function_exists "
+"(\"echo_ald_wherego\")) echo_ald_wherego ();?> </ Code> jūsu veidnes failu, "
+"kurā vēlaties, lai parādītu sarakstu."
+
+#: admin.inc.php:181
+#, fuzzy
+msgid "Display list of posts on All Posts page"
+msgstr "ПParādītu sarakstu ar amatu Labot Atbildes / Pages"
+
+#: admin.inc.php:183
+msgid "This option will add a new column in your Posts > All Posts page"
+msgstr ""
+"Ova opvija će dodati novu kolonu na vašu stranicu Postovi > Svi postovi"
+
+#: admin.inc.php:186
+msgid "Add a link to the plugin page as a final item in the list"
+msgstr "Dodaj link na stranicu sa modulom kao konačnu stavku u listi"
+
+#: admin.inc.php:187
+#, fuzzy
+msgid "Optional"
+msgstr "Iespējas:"
+
+#: admin.inc.php:195
+#, fuzzy
+msgid "Output options"
+msgstr "Izejas opcijas:"
+
+#: admin.inc.php:198
+msgid "Title of posts: "
+msgstr "Naslov postova:"
+
+#: admin.inc.php:202
+msgid "When there are no posts, what should be shown?"
+msgstr "Kada nema postova, šta treba da se prikaže?"
+
+#: admin.inc.php:206
+msgid "Blank Output"
+msgstr "Prazan izlaz"
+
+#: admin.inc.php:210
+msgid "Display custom text: "
+msgstr "Prikaži prilagođeni tekst:"
+
+#: admin.inc.php:214 admin.inc.php:312
+msgid "Show post excerpt in list?"
+msgstr "Prikaži odlomak posta na ovoj listi?"
+
+#: admin.inc.php:217
+msgid "Length of excerpt (in words): "
+msgstr "Dužina odlomka (rečima):"
+
+#: admin.inc.php:220
+msgid "Limit post title length (in characters)"
+msgstr "Ograniči dužinu naslova posta (karakterima):"
+
+#: admin.inc.php:223
+msgid "Open links in new window"
+msgstr "Otvori linkove u novom prozoru"
+
+#: admin.inc.php:226
+msgid "Add nofollow attribute to links"
+msgstr "Dodaj atribut za nepotrebno praćenje na linkove "
+
+#: admin.inc.php:229
+#, fuzzy
+msgid "Exclude display of followed posts on these posts / pages"
+msgstr "ПParādītu sarakstu ar amatu Labot Atbildes / Pages"
+
+#: admin.inc.php:235
+msgid "Customize the output:"
+msgstr "Prilagodi izlaz:"
+
+#: admin.inc.php:237
+msgid "HTML to display before the list of posts: "
+msgstr "HTML koji se prikazuje pre liste sa postovima:"
+
+#: admin.inc.php:240
+msgid "HTML to display before each list item: "
+msgstr "HTML koji se prikazuje pre svake stavke sa liste:"
+
+#: admin.inc.php:243
+msgid "HTML to display after each list item: "
+msgstr "HTML koji se prikazuje posle svake stavke sa liste:"
+
+#: admin.inc.php:246
+msgid "HTML to display after the list of posts: "
+msgstr "HTML koji se prikazuje posle liste sa postovima:"
+
+#: admin.inc.php:249
+msgid "Post thumbnail options:"
+msgstr "Opcije umanjenog prikaza posta:"
+
+#: admin.inc.php:251 admin.inc.php:315
+msgid "Location of post thumbnail:"
+msgstr "Lokacija umanjenog prikaza posta:"
+
+#: admin.inc.php:255 admin.inc.php:319
+#, fuzzy
+msgid "Display thumbnails inline with posts, before title"
+msgstr "Displejs sīktēlu inline ar amatiem"
+
+#: admin.inc.php:259 admin.inc.php:323
+#, fuzzy
+msgid "Display thumbnails inline with posts, after title"
+msgstr "Displejs sīktēlu inline ar amatiem"
+
+#: admin.inc.php:263 admin.inc.php:327
+msgid "Display only thumbnails, no text"
+msgstr "Prikaži samo umanjene prikaze, ne i tekst"
+
+#: admin.inc.php:267 admin.inc.php:331
+msgid "Do not display thumbnails, only text."
+msgstr "Ne prikazuj umanjene prikaze, samo tekst"
+
+#: admin.inc.php:271 admin.inc.php:335
+msgid "Maximum width of the thumbnail: "
+msgstr "Maksimalna širina umanjenog prikaza:"
+
+#: admin.inc.php:274 admin.inc.php:338
+msgid "Maximum height of the thumbnail: "
+msgstr "Maksimalna visina umanjenog prikaza:"
+
+#: admin.inc.php:277
+msgid "Use timthumb to generate thumbnails? "
+msgstr "Upotrebi timthumb za generisanje umanjenih prikaza?"
+
+#: admin.inc.php:279
+msgid ""
+"If checked, <a href=\"http://www.binarymoon.co.uk/projects/timthumb/"
+"\">timthumb</a> will be used to generate thumbnails"
+msgstr ""
+"Ako potvrdite,<a href=\"http://www.binarymoon.co.uk/projects/timthumb/"
+"\">timthumb</a> koristiće se za generisanje umanjenih prikaza"
+
+#: admin.inc.php:282
+msgid "Quality of thumbnails generated by timthumb"
+msgstr "Kvalitet umanjenih prikaza koje generiše timthumb"
+
+#: admin.inc.php:285
+msgid ""
+"Enter values between 0 and 100 only. 100 is highest quality, however, it is "
+"also the highest file size. Suggested maximum value is 95. wherego default "
+"is 75."
+msgstr ""
+"Unesi samo vrednosti između 0 i 100. 100 je najviši kvalitet, ipak, to je i "
+"najveća veličina fajla. Preporučena maksimalna vrednost je 95. wherego "
+"podrazumevano je 75."
+
+#: admin.inc.php:288
+#, fuzzy
+msgid "Post thumbnail meta field name: "
+msgstr "Post sīktēlu iespējas:"
+
+#: admin.inc.php:290
+msgid ""
+"The value of this field should contain the image source and is set in the "
+"<em>Add New Post</em> screen"
+msgstr ""
+"Vrednost ovog polja treba da sadrži izvor slike i podešava se u <em>Add New "
+"Post</em> ekranu"
+
+#: admin.inc.php:293
+#, fuzzy
+msgid ""
+"If the postmeta is not set, then should the plugin extract the first image "
+"from the post?"
+msgstr ""
+"Ja postmeta nav uzstādīts, plug-in iegūst pirmo attēlu amatā. Tas var "
+"palēnināt lejupielādi, ja pirmais attēls amatā pārāk daudz."
+
+#: admin.inc.php:294
+#, fuzzy
+msgid ""
+"This can slow down the loading of your page if the first image in the "
+"followed posts is large in file-size"
+msgstr ""
+"Ja postmeta nav uzstādīts, plug-in iegūst pirmo attēlu amatā. Tas var "
+"palēnināt lejupielādi, ja pirmais attēls amatā pārāk daudz."
+
+#: admin.inc.php:296
+msgid "Use default thumbnail? "
+msgstr "Upotrebi podrazumevani umanjeni prikaz?"
+
+#: admin.inc.php:297
+msgid ""
+"If checked, when no thumbnail is found, show a default one from the URL "
+"below. If not checked and no thumbnail is found, no image will be shown."
+msgstr ""
+"Ako  potvrdite, kada se umanjeni prikazi ne pronalaze, prikaži jedan sa URL-"
+"a koji sledi. Ako ne potvrdite i umanjeni prikazi se ne pronalaze, nikakva "
+"slika neće biti prikazana."
+
+#: admin.inc.php:299
+msgid "Default thumbnail: "
+msgstr "Podrazumevani umanjeni prikaz:"
+
+#: admin.inc.php:300
+#, fuzzy
+msgid ""
+"The plugin will first check if the post contains a thumbnail. If it doesn't "
+"then it will check the meta field. If this is not available, then it will "
+"show the default image as specified above"
+msgstr ""
+"Vispirms spraudnis pārbaudīs, vai post sīktēlu. Ja tas neizdodas, tad plug-"
+"in būs pārbaudīt meta datus. Ja tas ir arī pieejama, tad pievienojiet "
+"noklusējuma attēlu, kā noteikts turpmāk:"
+
+#: admin.inc.php:306
+#, fuzzy
+msgid "Feed options"
+msgstr "Iespējas:"
+
+#: admin.inc.php:307
+msgid ""
+"Below options override the followed posts settings for your blog feed. These "
+"only apply if you have selected to add followed posts to Feeds in the "
+"General Options tab."
+msgstr ""
+"Opcije koje slede čine nevažećim sledeća podešavanja postova za izvor vašeg "
+"bloga. Ovo se primenjuje samo ako ste izabrali da dodate postove u Izvore u "
+"oznaci za Opšte opcije."
+
+#: admin.inc.php:344
+msgid "Custom Styles"
+msgstr "Prilagođeni stilovi"
+
+#: admin.inc.php:346
+msgid "Custom CSS to add to header:"
+msgstr "Prailgođeni CSS koji se dodaje zaglavlju:"
+
+#: admin.inc.php:349
+msgid ""
+"Do not include <code>style</code> tags. Check out the <a href=\"http://"
+"wordpress.org/extend/plugins/contextual-related-posts/faq/\" target=\"_blank"
+"\">FAQ</a> for available CSS classes to style."
+msgstr ""
+"Ne uključuj oznake <code> stilova</code>. Pogledaj<a href=\"http://wordpress."
+"org/extend/plugins/contextual-related-posts/faq/\" target=\"_blank\"> FAQ</"
+"a>  za dostupne CSS razrede za stil."
+
+#: admin.inc.php:355
+msgid "Do you want to set options to Default?"
+msgstr "Da li želite da podesite opcije na Podrazumevano?"
+
+#: admin.inc.php:357
+msgid "Reset all content?"
+msgstr "Resetuj sav sadržaj?"
+
+#: admin.inc.php:358
+#, fuzzy
+msgid ""
+"This will purge WordPress of all visitor browsing information captured by "
+"this plugin. There is no going back if you hit the button."
+msgstr ""
+"Noņemt visu saturu? Tas būs skaidrs visu informāciju, kuru jūs aplūkojat ar "
+"WordPress, kas uzņemts ar šo spraudni. Nevar atgūt, ja jūs nospiediet CCWпку."
+
+#: admin.inc.php:359
+msgid "This will delete all user data"
+msgstr "Ovo će obrisati sve korisničke podatke."
+
+#: admin.inc.php:369
+msgid "Support the development"
+msgstr "Podrži razvoj"
+
+#: admin.inc.php:377
+msgid "Enter amount in USD: "
+msgstr "Unesi iznos u USD."
+
+#: admin.inc.php:381
+msgid "Send your donation to the author of"
+msgstr "Pošalji donaciju autoru"
+
+#: admin.inc.php:392
+#, fuzzy
+msgid "Quick Links"
+msgstr "Ātrās saites"
+
+#: admin.inc.php:394
+#, fuzzy
+msgid "Where did they go from here plugin page"
+msgstr "Kur viņi aiziet no šejienes?"
+
+#: admin.inc.php:395
+msgid "Other plugins"
+msgstr "Ostali moduli"
+
+#: admin.inc.php:396
+msgid "Ajay's blog"
+msgstr "Ajaysin blog"
+
+#: admin.inc.php:397 where-did-they-go-from-here.php:564
+msgid "Support"
+msgstr "Podrška"
+
+#: admin.inc.php:398
+msgid "Reviews"
+msgstr "Pregled"
+
+#: admin.inc.php:402
+msgid "Recent developments"
+msgstr "Nedavni razvoji"
+
+#: admin.inc.php:432
+#, fuzzy
+msgid "Where did they go from here?"
+msgstr "Kur viņi aiziet no šejienes?"
+
+#: admin.inc.php:432
+#, fuzzy
+msgid "Where did they go"
+msgstr "Kur viņi aiziet no šejienes?"
+
+#: admin.inc.php:484
+msgid "None"
+msgstr "Ne postoji"
+
+#: where-did-they-go-from-here.php:117
+msgid "Powered by"
+msgstr "Omogućio"
+
+#: where-did-they-go-from-here.php:316
+msgid "<h3>Readers who viewed this page, also viewed:</h3>"
+msgstr ""
+"<h3>Čitaoci koji su pregledali ovu stranicu, takođe su pregledali i::</h3>"
+
+#: where-did-they-go-from-here.php:317
+msgid ""
+"Visitors have not browsed from this post. Become the first by clicking one "
+"of our related posts"
+msgstr ""
+"Posetioci nisu dalje pretraživali sa ovog posta. Postanite prvi tako što "
+"ćete kliknuti na jedan od naših povezanih postova"
+
+#: where-did-they-go-from-here.php:563
+msgid "Settings"
+msgstr "Podešavanja"
+
+#: where-did-they-go-from-here.php:565
+msgid "Donate"
+msgstr "Donirajte"
+
+#~ msgid ""
+#~ "Append link to this plugin as item. Optional, but would be nice to give "
+#~ "me some link love"
+#~ msgstr ""
+#~ "Pievienot saiti uz šo spraudni kā posteni. Obligāta, bet būtu jauki, "
+#~ "iedodiet man kādu saiti mīlestību"
+
+#~ msgid "Exclude pages from the post list"
+#~ msgstr "Izslēgt lapas no pasta saraksta"
+
+#~ msgid ""
+#~ "Post thumbnail meta field (the meta should point contain the image "
+#~ "source): "
+#~ msgstr "Meta-datu pārraide (meta-datiem ir jāsatur avota attēlu)"
+
+#~ msgid "Thumbnail dimensions:"
+#~ msgstr "Attēla izmēri:"
+
+#~ msgid "Max width: "
+#~ msgstr "Maksimālais platums:"
+
+#~ msgid "Max height: "
+#~ msgstr "Maksimālais garums:"
+
+#~ msgid "plugin page"
+#~ msgstr "spraudnis lapa"
+
+#~ msgid "Follow @ajaydsouza on Twitter"
+#~ msgstr "Follow @ajaydsouza on Twitter"
+
+#~ msgid "Support forum"
+#~ msgstr "Форум поддержки"
