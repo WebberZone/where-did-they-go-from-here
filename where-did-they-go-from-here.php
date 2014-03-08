@@ -9,39 +9,38 @@ Author URI:  http://ajaydsouza.com/
 */
 
 if (!defined('ABSPATH')) die("Aren't you supposed to come here via WP-Admin?");
+
 define('ALD_WHEREGO_DIR', dirname(__FILE__));
 define('WHEREGO_LOCAL_NAME', 'wherego');
 
-// Pre-2.6 compatibility
-if ( ! defined( 'WP_CONTENT_URL' ) )
-      define( 'WP_CONTENT_URL', get_option( 'siteurl' ) . '/wp-content' );
-if ( ! defined( 'WP_CONTENT_DIR' ) )
-      define( 'WP_CONTENT_DIR', ABSPATH . 'wp-content' );
-if ( ! defined( 'WP_PLUGIN_URL' ) )
-      define( 'WP_PLUGIN_URL', WP_CONTENT_URL. '/plugins' );
-if ( ! defined( 'WP_PLUGIN_DIR' ) )
-      define( 'WP_PLUGIN_DIR', WP_CONTENT_DIR . '/plugins' );
-
 // Guess the location
-$wherego_path = WP_PLUGIN_DIR.'/'.plugin_basename(dirname(__FILE__));
-$wherego_url = WP_PLUGIN_URL.'/'.plugin_basename(dirname(__FILE__));
+$wherego_path = plugin_dir_path(__FILE__);
+$wherego_url = plugins_url().'/'.plugin_basename(dirname(__FILE__));
 
-function ald_wherego_init() {
-	//* Begin Localization Code */
-	$tc_localizationName = WHEREGO_LOCAL_NAME;
-	load_plugin_textdomain( $tc_localizationName, false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
-	//* End Localization Code */
-}
-add_action('init', 'ald_wherego_init');
-
-/*********************************************************************
-*						Main Functions								*
-********************************************************************/
 // Set $wherego_settings as a global variable to prevent relookups in every function
 global 	$wherego_settings; 
 $wherego_settings = wherego_read_options();
 
-// Main function, accepts parameters in a query string format
+
+/**
+ * Initialises text domain for l10n.
+ * 
+ * @access public
+ * @return void
+ */
+function wherego_init_lang() {
+	load_plugin_textdomain( WHEREGO_LOCAL_NAME, false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+}
+add_action('init', 'wherego_init_lang');
+
+
+/**
+ * Main function to generate the list of followed posts
+ * 
+ * @access public
+ * @param mixed $args Parameters in a query string format.
+ * @return string HTML formatted list of related posts
+ */
 function ald_wherego( $args ) {
 	global $wpdb, $post, $single;
 	global $wherego_settings;
