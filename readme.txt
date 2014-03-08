@@ -47,6 +47,10 @@ The plugin will track what pages or posts visitors on your sites click through a
 == Changelog ==
 
 = 1.6 =
+* New: Redesigned responsive admin interface
+
+
+= 1.6 =
 * New: Redesigned admin interface
 * New: More thumbnail options available including using timthumb to resize images
 * New: Posts list is wrapped in a new class `wherego_related` which should be the primary method to style the list

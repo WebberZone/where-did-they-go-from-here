@@ -2,6 +2,14 @@
 /**********************************************************************
 *					Admin Page										*
 *********************************************************************/
+if (!defined('ABSPATH')) die("Aren't you supposed to come here via WP-Admin?");
+
+/**
+ * Plugin settings.
+ * 
+ * @access public
+ * @return void
+ */
 function wherego_options() {
 	
 	global $wpdb;
@@ -113,15 +121,14 @@ function wherego_options() {
 ?>
 
 <div class="wrap">
-  <?php screen_icon(); ?> <h2>Where did they go from here? </h2>
-
-  <div id="wrapper">
-	<div id="section">
+	<h2>Where did they go from here?</h2>
+	<div id="poststuff">
+	<div id="post-body" class="metabox-holder columns-2">
+	<div id="post-body-content">
 	  <form method="post" id="wherego_options" name="wherego_options" onsubmit="return checkForm()">
-	    <fieldset class="options">
-		<div class="tabber">
-		<div class="tabbertab" id="wherego_genoptions">
-		<h3><?php _e('General options',WHEREGO_LOCAL_NAME); ?></h3>
+	    <div id="genopdiv" class="postbox closed"><div class="handlediv" title="Click to toggle"><br /></div>
+	      <h3 class='hndle'><span><?php _e( 'General options', WHEREGO_LOCAL_NAME ); ?></span></h3>
+	      <div class="inside">
 			<table class="form-table">
 			<tbody>
 				<tr><th scope="row"><label for="limit"><?php _e('Number of posts to display: ',WHEREGO_LOCAL_NAME); ?></label></th>
@@ -189,10 +196,11 @@ function wherego_options() {
 				</tr>
 			</tbody>
 			</table>
-		</div> <!-- End tabbertab -->
-
-		<div class="tabbertab" id="wherego_outputoptions">
-		<h3><?php _e('Output options',WHEREGO_LOCAL_NAME); ?></h3>
+	      </div>
+	    </div>
+	    <div id="outputopdiv" class="postbox closed"><div class="handlediv" title="Click to toggle"><br /></div>
+	      <h3 class='hndle'><span><?php _e( 'Output options', WHEREGO_LOCAL_NAME ); ?></span></h3>
+	      <div class="inside">
 			<table class="form-table">
 			<tbody>
 				<tr><th scope="row"><label for="title"><?php _e('Title of posts: ',WHEREGO_LOCAL_NAME); ?></label></th>
@@ -301,9 +309,11 @@ function wherego_options() {
 				</tr>
 			</tbody>
 			</table>
-		</div> <!-- End tabbertab -->
-		<div class="tabbertab" id="wherego_feedoptions">
-		<h3><?php _e('Feed options',WHEREGO_LOCAL_NAME); ?></h3>
+	      </div>
+	    </div>
+	    <div id="feedopdiv" class="postbox closed"><div class="handlediv" title="Click to toggle"><br /></div>
+	      <h3 class='hndle'><span><?php _e( 'Feed options', WHEREGO_LOCAL_NAME ); ?></span></h3>
+	      <div class="inside">
 			<p class="description"><?php _e('Below options override the followed posts settings for your blog feed. These only apply if you have selected to add followed posts to Feeds in the General Options tab.',WHEREGO_LOCAL_NAME); ?></p>
 			<table class="form-table">
 			<tr style="vertical-align: top;"><th scope="row"><label for="limit_feed"><?php _e('Number of posts to display: ',WHEREGO_LOCAL_NAME); ?></label></th>
@@ -339,77 +349,91 @@ function wherego_options() {
 			<td><input type="textbox" name="thumb_height_feed" id="thumb_height_feed" value="<?php echo esc_attr(stripslashes($wherego_settings['thumb_height_feed'])); ?>" style="width:30px" />px</td>
 			</tr>
 			</table>		
-		</div> <!-- End tabbertab -->
-		<div class="tabbertab" id="wherego_customstyles">
-		<h3><?php _e('Custom Styles',WHEREGO_LOCAL_NAME); ?></h3>
+	      </div>
+	    </div>
+	    <div id="customcssdiv" class="postbox closed"><div class="handlediv" title="Click to toggle"><br /></div>
+	      <h3 class='hndle'><span><?php _e( 'Custom styles', WHEREGO_LOCAL_NAME ); ?></span></h3>
+	      <div class="inside">
 			<table class="form-table">
 			<tr><th scope="row" colspan="2"><?php _e('Custom CSS to add to header:',WHEREGO_LOCAL_NAME); ?></th>
 			</tr>
 			<tr><td scope="row" colspan="2"><textarea name="custom_CSS" id="custom_CSS" rows="15" cols="80"><?php echo stripslashes($wherego_settings['custom_CSS']); ?></textarea>
-			<br /><em><?php _e('Do not include <code>style</code> tags. Check out the <a href="http://wordpress.org/extend/plugins/contextual-related-posts/faq/" target="_blank">FAQ</a> for available CSS classes to style.',WHEREGO_LOCAL_NAME); ?></em></td></tr>
+			<br /><em><?php _e('Do not include <code>style</code> tags. Check out the <a href="http://wordpress.org/extend/plugins/where-did-they-go-from-here/faq/" target="_blank">FAQ</a> for available CSS classes to style.',WHEREGO_LOCAL_NAME); ?></em></td></tr>
 			</table>		
-		</div> <!-- End tabbertab -->
-		</div> <!-- End tabber -->
+	      </div>
+	    </div>
 
-		<p><input type="submit" name="wherego_save" id="wherego_save" value="Save Options" class="button button-primary" />
-		<input name="wherego_default" type="submit" id="wherego_default" value="Default Options" class="button button-secondary" onclick="if (!confirm('<?php _e('Do you want to set options to Default?',WHEREGO_LOCAL_NAME); ?>')) return false;" />
+		<p>
+		  <input type="submit" name="wherego_save" id="wherego_save" value="<?php _e( 'Save Options', WHEREGO_LOCAL_NAME ); ?>" class="button button-primary" />
+		  <input name="wherego_default" type="submit" id="wherego_default" value="<?php _e( 'Default Options', WHEREGO_LOCAL_NAME ); ?>" class="button button-secondary" onclick="if (!confirm('<?php _e( "Do you want to set options to Default?", WHEREGO_LOCAL_NAME ); ?>')) return false;" />
+		  <input name="wherego_reset" type="submit" id="wherego_reset" value="<?php _e( 'Reset followed posts', WHEREGO_LOCAL_NAME ); ?>" class="button button-secondary" onclick="if (!confirm('<?php _e( "Are you sure you want to recreate the index?", WHEREGO_LOCAL_NAME ); ?>')) return false;" />
 		</p>
-		<h3><?php _e('Reset all content?',WHEREGO_LOCAL_NAME) ?></h3>
-		<p><?php _e('This will purge WordPress of all visitor browsing information captured by this plugin. There is no going back if you hit the button.',WHEREGO_LOCAL_NAME); ?><br />
-		<input name="wherego_reset" type="submit" id="wherego_reset" value="Reset browsing data" class="button button-secondary" onclick="if (!confirm('<?php _e('This will delete all user data',WHEREGO_LOCAL_NAME); ?>')) return false;" />
-		</p>
-
-	    </fieldset>
-		<?php wp_nonce_field('wherego-plugin'); ?>
+		<?php wp_nonce_field( 'wherego-plugin' ) ?>
 	  </form>
-	</div>
-	
-	<div id="aside">
-		<div class="side-widget">
-			<span class="title"><?php _e('Support the development',WHEREGO_LOCAL_NAME) ?></span>
+	</div><!-- /post-body-content -->
+	<div id="postbox-container-1" class="postbox-container">
+	  <div id="side-sortables" class="meta-box-sortables ui-sortable">
+	    <div id="donatediv" class="postbox"><div class="handlediv" title="Click to toggle"><br /></div>
+	      <h3 class='hndle'><span><?php _e( 'Support the development', WHEREGO_LOCAL_NAME ); ?></span></h3>
+	      <div class="inside">
 			<div id="donate-form">
 				<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
 				<input type="hidden" name="cmd" value="_xclick">
 				<input type="hidden" name="business" value="donate@ajaydsouza.com">
 				<input type="hidden" name="lc" value="IN">
-				<input type="hidden" name="item_name" value="Donation for Where did they go from here">
+				<input type="hidden" name="item_name" value="Donation for Where did they go from here?">
 				<input type="hidden" name="item_number" value="wherego">
-				<strong><?php _e('Enter amount in USD: ',WHEREGO_LOCAL_NAME) ?></strong> <input name="amount" value="10.00" size="6" type="text"><br />
+				<strong><?php _e( 'Enter amount in USD: ', WHEREGO_LOCAL_NAME ); ?></strong> <input name="amount" value="10.00" size="6" type="text"><br />
 				<input type="hidden" name="currency_code" value="USD">
 				<input type="hidden" name="button_subtype" value="services">
 				<input type="hidden" name="bn" value="PP-BuyNowBF:btn_donate_LG.gif:NonHosted">
-				<input type="image" src="https://www.paypal.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="<?php _e('Send your donation to the author of',WHEREGO_LOCAL_NAME) ?> Where did they go from here" title="<?php _e('Send your donation to the author of',WHEREGO_LOCAL_NAME) ?> Where did they go from here">
+				<input type="image" src="https://www.paypal.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="<?php _e( 'Send your donation to the author of', WHEREGO_LOCAL_NAME ); ?> Where did they go from here??">
 				<img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">
 				</form>
 			</div>
-		</div>
-		<div class="side-widget">
-			<iframe src="//www.facebook.com/plugins/likebox.php?href=http%3A%2F%2Fwww.facebook.com%2Fajaydsouzacom&amp;width=292&amp;height=62&amp;colorscheme=light&amp;show_faces=false&amp;border_color&amp;stream=false&amp;header=true&amp;appId=113175385243" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:292px; height:62px;" allowTransparency="true"></iframe>
-			<div style="text-align:center"><a href="https://twitter.com/ajaydsouza" class="twitter-follow-button" data-show-count="false" data-size="large" data-dnt="true">Follow @ajaydsouza</a>
-			<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script></div>
-		</div>
-		<div class="side-widget">
-			<span class="title"><?php _e('Quick Links',WHEREGO_LOCAL_NAME) ?></span>				
-			<ul>
-				<li><a href="http://ajaydsouza.com/wordpress/plugins/where-did-they-go-from-here/"><?php _e('Where did they go from here plugin page',WHEREGO_LOCAL_NAME) ?></a></li>
-				<li><a href="http://ajaydsouza.com/wordpress/plugins/"><?php _e('Other plugins',WHEREGO_LOCAL_NAME) ?></a></li>
-				<li><a href="http://ajaydsouza.com/"><?php _e('Ajay\'s blog',WHEREGO_LOCAL_NAME) ?></a></li>
-				<li><a href="http://wordpress.org/support/plugin/where-did-they-go-from-here"><?php _e('Support',WHEREGO_LOCAL_NAME) ?></a></li>
-				<li><a href="http://wordpress.org/support/view/plugin-reviews/where-did-they-go-from-here"><?php _e('Reviews',WHEREGO_LOCAL_NAME) ?></a></li>
-			</ul>
-		</div>
-		<div class="side-widget">
-			<span class="title"><?php _e('Recent developments',WHEREGO_LOCAL_NAME) ?></span>				
-			<?php require_once(ABSPATH . WPINC . '/class-simplepie.php'); wp_widget_rss_output('http://ajaydsouza.com/archives/category/wordpress/plugins/feed/', array('items' => 5, 'show_author' => 0, 'show_date' => 1)); ?>
-		</div>
-	</div>
-  </div> <!-- Close wrapper -->
-
-</div>
+	      </div>
+	    </div>
+	    <div id="followdiv" class="postbox"><div class="handlediv" title="Click to toggle"><br /></div>
+	      <h3 class='hndle'><span><?php _e( 'Follow me', WHEREGO_LOCAL_NAME ); ?></span></h3>
+	      <div class="inside">
+			<div id="follow-us">
+				<iframe src="//www.facebook.com/plugins/likebox.php?href=http%3A%2F%2Fwww.facebook.com%2Fajaydsouzacom&amp;width=292&amp;height=62&amp;colorscheme=light&amp;show_faces=false&amp;border_color&amp;stream=false&amp;header=true&amp;appId=113175385243" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:292px; height:62px;" allowTransparency="true"></iframe>
+				<div style="text-align:center"><a href="https://twitter.com/ajaydsouza" class="twitter-follow-button" data-show-count="false" data-size="large" data-dnt="true">Follow @ajaydsouza</a>
+				<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script></div>
+			</div>
+	      </div>
+	    </div>
+	    <div id="qlinksdiv" class="postbox"><div class="handlediv" title="Click to toggle"><br /></div>
+	      <h3 class='hndle'><span><?php _e( 'Quick links', WHEREGO_LOCAL_NAME ); ?></span></h3>
+	      <div class="inside">
+	        <div id="quick-links">
+				<ul>
+					<li><a href="http://ajaydsouza.com/wordpress/plugins/where-did-they-go-from-here/"><?php _e( 'Where did they go from here? plugin page', WHEREGO_LOCAL_NAME ); ?></a></li>
+					<li><a href="http://ajaydsouza.com/wordpress/plugins/"><?php _e( 'Other plugins', WHEREGO_LOCAL_NAME ); ?></a></li>
+					<li><a href="http://ajaydsouza.com/"><?php _e( 'Ajay\'s blog', WHEREGO_LOCAL_NAME ); ?></a></li>
+					<li><a href="https://wordpress.org/plugins/where-did-they-go-from-here/faq/"><?php _e( 'FAQ', WHEREGO_LOCAL_NAME ); ?></a></li>
+					<li><a href="http://wordpress.org/support/plugin/where-did-they-go-from-here"><?php _e( 'Support', WHEREGO_LOCAL_NAME ); ?></a></li>
+					<li><a href="https://wordpress.org/support/view/plugin-reviews/where-did-they-go-from-here"><?php _e( 'Reviews', WHEREGO_LOCAL_NAME ); ?></a></li>
+				</ul>
+	        </div>
+	      </div>
+	    </div>
+	  </div><!-- /side-sortables -->
+	</div><!-- /postbox-container-1 -->
+	</div><!-- /post-body -->
+	<br class="clear" />
+	</div><!-- /poststuff -->
+</div><!-- /wrap -->
 <?php
-
 }
 
+
+/**
+ * Reset the tracked posts.
+ * 
+ * @access public
+ * @return void
+ */
 function wherego_reset() {
 	global $wpdb;
 
@@ -430,31 +454,93 @@ function wherego_reset() {
 function wherego_adminmenu() {
 	if ((function_exists('add_options_page'))) {
 		$plugin_page = add_options_page(__("Where did they go from here?", WHEREGO_LOCAL_NAME), __("Where did they go", WHEREGO_LOCAL_NAME), 'manage_options', 'wherego_options', 'wherego_options');
-		add_action( 'admin_head-'. $plugin_page, 'wherego_adminhead' );
+		add_action( 'admin_head-'. $plugin_page, 'wherego_wherego' );
 	}
 }
 add_action('admin_menu', 'wherego_adminmenu');
 
-function wherego_adminhead() {
-	global $wherego_url;
 
+/**
+ * Function to add CSS and JS to the Admin header.
+ * 
+ * @access public
+ * @return void
+ */
+function wherego_wherego() {
+	global $wherego_url;
+	wp_enqueue_script( 'common' );
+	wp_enqueue_script( 'wp-lists' );
+	wp_enqueue_script( 'postbox' );
 ?>
+	<style type="text/css">
+	.postbox .handlediv:before {
+		right:12px;
+		font:400 20px/1 dashicons;
+		speak:none;
+		display:inline-block;
+		top:0;
+		position:relative;
+		-webkit-font-smoothing:antialiased;
+		-moz-osx-font-smoothing:grayscale;
+		text-decoration:none!important;
+		content:'\f142';
+		padding:8px 10px;
+	}
+	.postbox.closed .handlediv:before {
+		content: '\f140';
+	}
+	.wrap h2:before {
+	    content: "\f307";
+	    display: inline-block;
+	    -webkit-font-smoothing: antialiased;
+	    font: normal 29px/1 'dashicons';
+	    vertical-align: middle;
+	    margin-right: 0.3em;
+	}
+	</style>
+
+	<script type="text/javascript">
+		//<![CDATA[
+		jQuery(document).ready( function($) {
+			// close postboxes that should be closed
+			$('.if-js-closed').removeClass('if-js-closed').addClass('closed');
+			// postboxes setup
+			postboxes.add_postbox_toggles('crp_options');
+		});
+		//]]>
+	</script>
+	
 	<link rel="stylesheet" type="text/css" href="<?php echo $wherego_url ?>/wick/wick.css" />
-	<link rel="stylesheet" type="text/css" href="<?php echo $wherego_url ?>/admin-styles.css" />
-	<link rel="stylesheet" type="text/css" href="<?php echo $wherego_url ?>/tabber/tabber.css" />
 	<script type="text/javascript" language="JavaScript">
+		//<![CDATA[
 		function checkForm() {
 			answer = true;
 			if (siw && siw.selectingSomething)
 				answer = false;
 			return answer;
 		}//
-	</script>
-	<script type="text/javascript" src="<?php echo $wherego_url ?>/wick/sample_data.js.php"></script>
-	<script type="text/javascript" src="<?php echo $wherego_url ?>/wick/wick.js"></script>
-	<script type="text/javascript" src="<?php echo $wherego_url ?>/tabber/tabber-minimized.js"></script>
-<?php }
 
+		<?php
+		function wick_data() {
+			global $wpdb;
+			
+			$categories = get_categories( 'hide_empty=0' );
+			$str = 'collection = [';
+			foreach ( $categories as $cat ) {
+				$str .= "'" . $cat->slug . "',";
+			}
+			$str = substr( $str, 0, -1 );	// Remove trailing comma
+			$str .= '];';
+			
+			echo $str;
+		}
+		wick_data();
+		?>
+	//]]>
+	</script>
+	<script type="text/javascript" src="<?php echo $wherego_url ?>/wick/wick.js"></script>
+<?php 
+}
 
 
 /* Display page views on the Edit Posts / Pages screen */
@@ -465,6 +551,7 @@ function wherego_column($cols) {
 	if ($wherego_settings['wg_in_admin'])	$cols['wherego'] = 'Where go';
 	return $cols;
 }
+
 
 // Display page views for each column
 function wherego_value($column_name, $id) {
