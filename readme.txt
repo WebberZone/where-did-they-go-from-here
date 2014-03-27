@@ -40,15 +40,15 @@ The plugin will track what pages or posts visitors on your sites click through a
 
 == Upgrade Notice ==
 
-= 1.6 =
-* Major upgrade; Important security fix; custom posts types support; new admin interface; more CSS styles, more thumbnail options; Check the Changelog for other new features
+= 1.6.1 =
+* New: Redesigned responsive admin interface, code cleanup, language initialisation fixed
 
 
 == Changelog ==
 
-= 1.6 =
+= 1.6.1 =
 * New: Redesigned responsive admin interface
-
+* Fixed: Language initialisation
 
 = 1.6 =
 * New: Redesigned admin interface
