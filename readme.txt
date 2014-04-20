@@ -41,7 +41,7 @@ The plugin will track what pages or posts visitors on your sites click through a
 == Upgrade Notice ==
 
 = 1.6.1 =
-* New: Redesigned responsive admin interface, code cleanup, language initialisation fixed
+* Redesigned responsive admin interface, code cleanup, language initialisation fixed
 
 
 == Changelog ==
@@ -49,6 +49,7 @@ The plugin will track what pages or posts visitors on your sites click through a
 = 1.6.1 =
 * New: Redesigned responsive admin interface
 * Fixed: Language initialisation
+* Modified: Tracking script to improve compatiblity with caching plugins
 
 = 1.6 =
 * New: Redesigned admin interface

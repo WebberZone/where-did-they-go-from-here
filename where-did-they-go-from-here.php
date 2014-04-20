@@ -232,36 +232,35 @@ function echo_ald_wherego() {
 
 
 /**
- * Function to update Where Go count.
+ * Function to add the javascript to execute the ajax request to update the count.
  * 
  * @access public
  * @return void
  */
-function add_wherego_count() {
-	global $post, $wpdb, $single, $wherego_id;
+function wherego_update_count() {
+	global $post, $wherego_id;
 	
-	if( is_single() || is_page() ) {
-		$id = $wherego_id;
-?>
-		<!-- Start of Where Go JS -->
-		<?php wp_print_scripts( array( 'sack' ) ); ?>
-		<script type="text/javascript">
-		//<![CDATA[
-			where_go_count = new sack("<?php bloginfo( 'url' ); ?>/index.php");    
-			where_go_count.setVar( "wherego_id", <?php echo $id ?> );
-			where_go_count.setVar( "wherego_sitevar", document.referrer );
-			where_go_count.method = 'GET';
-			where_go_count.onError = function() { return false };
-			where_go_count.runAJAX();
-			where_go_count = null;
-		//]]>
-		</script>
-		<!-- Start of Where Go JS -->
-<?php
+	if ( is_singular() ) {
+		echo '<script type="text/javascript">jQuery.ajax({url: "' . home_url() . '/index.php", data: {wherego_id: ' . $wherego_id . ', wherego_sitevar: document.referrer, wherego_rnd: (new Date()).getTime() + "-" + Math.floor(Math.random()*100000)}});</script>';
 	}
 }
-add_action( 'wp_footer', 'add_wherego_count' );
+add_action( 'wp_footer', 'wherego_update_count' );
 
+
+/**
+ * Function to enqueue scripts.
+ * 
+ * @access public
+ * @return void
+ */
+function wherego_enqueue_scripts() {
+	
+	if ( is_singular() ) {
+		wp_enqueue_script( 'jquery' );
+	}
+
+}
+add_action( 'wp_enqueue_scripts', 'wherego_enqueue_scripts' );
 
 
 /**
