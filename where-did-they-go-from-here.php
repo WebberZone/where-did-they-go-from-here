@@ -276,7 +276,6 @@ function wherego_query_vars( $vars ) {
 	$vars[] = 'wherego_sitevar';
 	return $vars;
 }
-add_action( 'wp', 'wherego_parse_request' );
 add_filter( 'query_vars', 'wherego_query_vars' );
 
 
@@ -347,7 +346,7 @@ function wherego_parse_request( $wp ) {
 		return;
 	}
 }
-
+add_action( 'wp', 'wherego_parse_request' );
 
 
 /**
