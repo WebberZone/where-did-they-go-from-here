@@ -15,10 +15,10 @@ define( 'WHEREGO_LOCAL_NAME', 'wherego' );
 
 // Guess the location
 $wherego_path = plugin_dir_path( __FILE__ );
-$wherego_url = plugins_url().'/'.plugin_basename( dirname( __FILE__ ) );
+$wherego_url = plugins_url() . '/' . plugin_basename( dirname( __FILE__ ) );
 
 // Set $wherego_settings as a global variable to prevent relookups in every function
-global 	$wherego_settings; 
+global 	$wherego_settings;
 $wherego_settings = wherego_read_options();
 
 
@@ -71,7 +71,9 @@ function ald_wherego( $args ) {
 
 		$output = ( is_singular() ) ? '<div id="wherego_related" class="wherego_related">' : '<div class="wherego_related">';
 	
-		if ( ! $is_widget ) $output .= stripslashes( $wherego_settings['title'] );
+		if ( ! $is_widget ) {
+			$output .= stripslashes( $wherego_settings['title'] ); 
+		}
 		$output .= $wherego_settings['before_list'];
 
 		foreach ( $results as $result ) {
@@ -219,15 +221,14 @@ add_filter('the_excerpt_rss', 'ald_wherego_rss');
 add_filter('the_content_feed', 'ald_wherego_rss');
 
 
-
 /**
  * Manual install.
  * 
  * @access public
  * @return void
  */
-function echo_ald_wherego() {
-	echo ald_wherego( 'is_widget=0' );
+function echo_ald_wherego( $args ) {
+	echo ald_wherego( $args );
 }
 
 
@@ -307,10 +308,12 @@ function wherego_parse_request( $wp ) {
 		$siteurl = $siteurls[0];
 		$sitevar = str_replace( "/", "\/", $sitevar );
 		$matchvar = preg_match( "/$siteurl/i", $sitevar );
+		
 		if ( isset( $id ) && $id > 0 && $matchvar ) {
 			// Now figure out the ID of the post the author came from, this might be hokey at first
 			// Text search within code is your friend!
-			$postIDcamefrom = slt_url_to_postid( $tempsitevar );
+			$postIDcamefrom = wherego_url_to_postid( $tempsitevar );
+			
 			if ( '' != $postIDcamefrom && $id != $postIDcamefrom && '' != $id ) {
 				$gotmeta = '';
 				$linkpostids = get_post_meta( $postIDcamefrom, 'wheredidtheycomefrom', true );
@@ -333,11 +336,11 @@ function wherego_parse_request( $wp ) {
 				}
 				$linkpostidsserialized = $linkpostids;
 				if ( $gotmeta && ! empty( $linkpostids ) ) {
-					update_post_meta($postIDcamefrom, 'wheredidtheycomefrom', $linkpostidsserialized);
+					update_post_meta( $postIDcamefrom, 'wheredidtheycomefrom', $linkpostidsserialized );
 				} else {
-					add_post_meta($postIDcamefrom, 'wheredidtheycomefrom', $linkpostidsserialized);
+					add_post_meta( $postIDcamefrom, 'wheredidtheycomefrom', $linkpostidsserialized );
 				}
-			}		
+			}	
 		}
 			
 		//stop anything else from loading as it is not needed.
@@ -445,7 +448,7 @@ function wherego_read_options() {
 		$wherego_settings_changed = true;	
 	}
 	if ( $wherego_settings_changed == true ) {
-		update_option('ald_wherego_settings', $wherego_settings);
+		update_option( 'ald_wherego_settings', $wherego_settings );
 	}
 	
 	return $wherego_settings;
@@ -459,7 +462,7 @@ function wherego_read_options() {
  * @param mixed $url
  * @return void
  */
-function slt_url_to_postid( $url ) {  
+function wherego_url_to_postid( $url ) {  
 
     $post_id = url_to_postid( $url );      // Try the core function  
 
@@ -472,7 +475,8 @@ function slt_url_to_postid( $url ) {
         // Get path from URL  
         $url_parts = explode( '/', trim( $url, '/' ) );  
         $url_parts = array_splice( $url_parts, 3 );  
-        $path = implode( '/', $url_parts );  
+        $path = implode( '/', $url_parts );
+        
         // Test against each CPT's rewrite slug  
         foreach ( $cpts as $cpt_name => $cpt ) {  
             $cpt_slug = $cpt->rewrite['slug']; 
@@ -491,7 +495,6 @@ function slt_url_to_postid( $url ) {
 	}  
     return $post_id;  
 }
-
 
 
 /**
@@ -663,7 +666,7 @@ function wherego_max_formatted_content( $content, $MaxLength = -1 ) {
 
 		// Break back down into a string of words, but drop the last one if it's chopped off
 		if ( substr( $content, $MaxLength, 1 ) == " " ) {
-		  $content = implode( " ", $aWords );
+		  $content = implode( " ", $aWords ) .'&hellip;';
 		} else {
 		  $content = implode( " ", array_slice( $aWords, 0, -1 ) ) .'&hellip;';
 		}

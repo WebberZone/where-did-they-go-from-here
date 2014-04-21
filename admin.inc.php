@@ -2,7 +2,7 @@
 /**********************************************************************
 *					Admin Page										*
 *********************************************************************/
-if (!defined('ABSPATH')) die("Aren't you supposed to come here via WP-Admin?");
+if ( ! defined( 'ABSPATH' ) ) die( "Aren't you supposed to come here via WP-Admin?" );
 
 /**
  * Plugin settings.
@@ -27,10 +27,10 @@ function wherego_options() {
 		$wherego_settings['title'] = wp_kses_post( $_POST['title'] );
 		$wherego_settings['limit'] = intval( $_POST['limit'] );
 
-		$wherego_settings['exclude_on_post_ids'] = $_POST['exclude_on_post_ids'];
-		$wherego_settings['exclude_post_ids'] = $_POST['exclude_post_ids'];
+		$wherego_settings['exclude_on_post_ids'] = $_POST['exclude_on_post_ids'] == '' ? '' : implode( ',', array_map( 'intval', explode( ",", $_POST['exclude_on_post_ids'] ) ) );
+		$wherego_settings['exclude_post_ids'] = $_POST['exclude_post_ids'] == '' ? '' : implode( ',', array_map( 'intval', explode( ",", $_POST['exclude_post_ids'] ) ) );
 
-		$wherego_settings['add_to_content'] = isset($_POST['add_to_content'] ) ? true : false;
+		$wherego_settings['add_to_content'] = isset( $_POST['add_to_content'] ) ? true : false;
 		$wherego_settings['add_to_page'] = isset( $_POST['add_to_page'] ) ? true : false;
 		$wherego_settings['add_to_feed'] = isset( $_POST['add_to_feed'] ) ? true : false;
 		$wherego_settings['add_to_home'] = isset( $_POST['add_to_home'] ) ? true : false;
@@ -140,7 +140,9 @@ function wherego_options() {
 				<td>
 					<?php foreach ( $wp_post_types as $wp_post_type ) {
 						$post_type_op = '<input type="checkbox" name="post_types[]" value="' . $wp_post_type . '" ';
-						if ( in_array( $wp_post_type, $posts_types_inc ) ) $post_type_op .= ' checked="checked" ';
+						if ( in_array( $wp_post_type, $posts_types_inc ) ) {
+							$post_type_op .= ' checked="checked" ';
+						}
 						$post_type_op .= ' />' . $wp_post_type . '&nbsp;&nbsp;';
 						echo $post_type_op;
 					}
@@ -437,15 +439,8 @@ function wherego_reset() {
 	global $wpdb;
 
 	// Delete meta
-	$allposts = get_posts( 'numberposts=0&post_type=post&post_status=' );
-	foreach ( $allposts as $postinfo ) {
-		delete_post_meta( $postinfo->ID, 'wheredidtheycomefrom' );
-	}
-	$allposts = get_posts( 'numberposts=0&post_type=page&post_status=' );
-	foreach( $allposts as $postinfo) {
-		delete_post_meta( $postinfo->ID, 'wheredidtheycomefrom' );
-	}
-
+	$sql = "DELETE FROM ".$wpdb->postmeta." WHERE `meta_key` = 'wheredidtheycomefrom'";
+	$wpdb->query( $sql );
 
 }
 
@@ -556,7 +551,7 @@ function wherego_wherego() {
  * @return void
  */
 function wherego_column( $cols ) {
-	$wherego_settings = wherego_read_options();
+	global $wherego_settings;
 	
 	if ( $wherego_settings['wg_in_admin'] )	$cols['wherego'] = 'Where go';
 	return $cols;
@@ -576,7 +571,8 @@ add_filter( 'manage_link-manager_columns', 'wherego_column' );
  * @return void
  */
 function wherego_value( $column_name, $id ) {
-	$wherego_settings = wherego_read_options();
+	global $wherego_settings;
+	
 	if ( ( $column_name == 'wherego' ) && ( $wherego_settings['wg_in_admin'] ) ) {
 		global $wpdb, $post, $single;
 		$limit = $wherego_settings['limit'];
@@ -586,13 +582,12 @@ function wherego_value( $column_name, $id ) {
 
 		if ( $lpids ) {
 			foreach ( $lpids as $lpid ) {
-				$output .= '<a href="'.get_permalink($lpid).'" title="'.get_the_title($lpid).'">'.$lpid.'</a>, ';
+				$output .= '<a href="'.get_permalink( $lpid ).'" title="'.get_the_title( $lpid ).'">'.$lpid.'</a>, ';
 			}
 		} else {
 			$output = __( "None", WHEREGO_LOCAL_NAME );
 		}
 		
-
 		echo $output;
 	}
 }

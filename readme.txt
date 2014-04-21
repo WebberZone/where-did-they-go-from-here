@@ -40,13 +40,13 @@ The plugin will track what pages or posts visitors on your sites click through a
 
 == Upgrade Notice ==
 
-= 1.6.1 =
+= 1.7 =
 * Redesigned edit followed posts list, responsive admin interface, code cleanup, language initialisation fixed
 
 
 == Changelog ==
 
-= 1.6.1 =
+= 1.7 =
 * New: Redesigned responsive admin interface
 * New: Edit the list of followed post IDs in the Write Post screen
 * Fixed: Language initialisation
