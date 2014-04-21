@@ -4,7 +4,7 @@ Contributors: Ajay
 Donate link: http://ajaydsouza.com/donate/
 Stable tag: trunk
 Requires at least: 3.0
-Tested up to: 3.9
+Tested up to: 4.0
 License: GPLv2 or later
 
 Show "Readers who viewed this page, also viewed" links on your page. Much like Amazon.com's product pages.
@@ -152,6 +152,7 @@ The plugin will track what pages or posts visitors on your sites click through a
 2. Options in WP-Admin - Output options
 3. Options in WP-Admin - Feed options
 4. Options in WP-Admin - Custom styles
+5. Edit list of followed posts in the Write Screen
 
 
 == Frequently Asked Questions ==
