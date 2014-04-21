@@ -410,11 +410,12 @@ function wherego_options() {
 	        <div id="quick-links">
 				<ul>
 					<li><a href="http://ajaydsouza.com/wordpress/plugins/where-did-they-go-from-here/"><?php _e( 'Where did they go from here? plugin page', WHEREGO_LOCAL_NAME ); ?></a></li>
-					<li><a href="http://ajaydsouza.com/wordpress/plugins/"><?php _e( 'Other plugins', WHEREGO_LOCAL_NAME ); ?></a></li>
-					<li><a href="http://ajaydsouza.com/"><?php _e( "Ajay's blog", WHEREGO_LOCAL_NAME ); ?></a></li>
+					<li><a href="https://github.com/ajaydsouza/where-did-they-go-from-here"><?php _e( 'Plugin on GitHub', WHEREGO_LOCAL_NAME ); ?></a></li>
 					<li><a href="https://wordpress.org/plugins/where-did-they-go-from-here/faq/"><?php _e( 'FAQ', WHEREGO_LOCAL_NAME ); ?></a></li>
 					<li><a href="http://wordpress.org/support/plugin/where-did-they-go-from-here"><?php _e( 'Support', WHEREGO_LOCAL_NAME ); ?></a></li>
 					<li><a href="https://wordpress.org/support/view/plugin-reviews/where-did-they-go-from-here"><?php _e( 'Reviews', WHEREGO_LOCAL_NAME ); ?></a></li>
+					<li><a href="http://ajaydsouza.com/wordpress/plugins/"><?php _e( 'Other plugins', WHEREGO_LOCAL_NAME ); ?></a></li>
+					<li><a href="http://ajaydsouza.com/"><?php _e( "Ajay's blog", WHEREGO_LOCAL_NAME ); ?></a></li>
 				</ul>
 	        </div>
 	      </div>
