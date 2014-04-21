@@ -60,11 +60,14 @@ function ald_wherego( $args ) {
 	$exclude_categories = explode( ',', $wherego_settings['exclude_categories'] );		// Extract categories to exclude
 	$rel_attribute = ( $wherego_settings['link_nofollow'] ) ? ' rel="nofollow" ' : ' ';	// Add nofollow attribute
 	$target_attribute = ( $wherego_settings['link_new_window'] ) ? ' target="_blank" ' : ' ';	// Add blank attribute
+	parse_str( $post_types, $post_types );	// Save post types in $post_types variable
 	
 	$count = 0;
 	$results = get_post_meta( $post->ID, 'wheredidtheycomefrom', true );	// Extract posts list from the meta field
 	
-	if ( $results ) $results = array_diff( $results, array_map( 'intval', explode( ',', $wherego_settings['exclude_post_ids'] ) ) );
+	if ( $results ) {
+		$results = array_diff( $results, array_map( 'intval', explode( ',', $wherego_settings['exclude_post_ids'] ) ) );
+	}
 	
 	if ( $results ) {
 		$loop_counter = 0;
@@ -78,6 +81,8 @@ function ald_wherego( $args ) {
 
 		foreach ( $results as $result ) {
 			$result = get_post( $result );
+			
+			if ( ! in_array( $result->post_type, $post_types ) ) break; // If this is not from our select post types, end loop
 			
 			$categorys = get_the_category( $result->ID );	//Fetch categories of the plugin
 			$p_in_c = false;	// Variable to check if post exists in a particular category
