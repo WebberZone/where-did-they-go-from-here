@@ -307,7 +307,7 @@ function wherego_options() {
 				</tr>
 				<tr><th scope="row"><label for="thumb_default"><?php _e( 'Default thumbnail: ', WHEREGO_LOCAL_NAME ); ?></label></th>
 					<td>
-						<input type="textbox" name="thumb_default" id="thumb_default" value="<?php echo esc_attr( stripslashes( $wherego_settings['thumb_default'] ) ); ?>"> <br /><?php _e( "The plugin will first check if the post contains a thumbnail. If it doesn't then it will check the meta field. If this is not available, then it will show the default image as specified above", WHEREGO_LOCAL_NAME ); ?>
+						<input type="textbox" name="thumb_default" id="thumb_default" value="<?php echo esc_attr( stripslashes( $wherego_settings['thumb_default'] ) ); ?>" style="width:100%"> <br />
 					  	<?php if( '' != $wherego_settings['thumb_default'] ) echo "<img src='{$wherego_settings['thumb_default']}' style='max-width:200px' />"; ?>
 						<p class="description"><?php _e( "The plugin will first check if the post contains a thumbnail. If it doesn't then it will check the meta field. If this is not available, then it will show the default image as specified above", CRP_LOCAL_NAME ); ?></p>
 					</td>
