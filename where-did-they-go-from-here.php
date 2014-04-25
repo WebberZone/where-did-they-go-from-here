@@ -232,7 +232,7 @@ add_filter('the_content_feed', 'ald_wherego_rss');
  * @access public
  * @return void
  */
-function echo_ald_wherego( $args ) {
+function echo_ald_wherego( $args = array() ) {
 	echo ald_wherego( $args );
 }
 
@@ -513,7 +513,7 @@ function wherego_url_to_postid( $url ) {
  * @param mixed $thumb_timthumb_q	Quality of timthumb thumbnail
  * @return void
  */
-function wherego_scale_thumbs( $postimage, $thumb_width, $thumb_height, $thumb_timthumb, $thumb_timthumb_q ) {
+function wherego_scale_thumbs( $postimage, $thumb_width, $thumb_height, $thumb_timthumb, $thumb_timthumb_q, $post ) {
 	global $wherego_url;
 	
 	if ( $thumb_timthumb ) {
@@ -523,7 +523,7 @@ function wherego_scale_thumbs( $postimage, $thumb_width, $thumb_height, $thumb_t
 	}
 	return $new_pi;
 }
-add_filter('wherego_postimage', 'wherego_scale_thumbs', 10, 5);
+add_filter('wherego_postimage', 'wherego_scale_thumbs', 10, 6);
 
 
 /**
@@ -568,7 +568,7 @@ function wherego_get_the_post_thumbnail( $args = array() ) {
 		if ( ( $postimage[1] < $thumb_width ) || ( $postimage[2] < $thumb_height ) ) {
 			$postimage = wp_get_attachment_image_src( get_post_thumbnail_id( $result->ID ) , 'full' ); 
 		}
-		$postimage = apply_filters( $filter, $postimage[0], $thumb_width, $thumb_height, $thumb_timthumb, $thumb_timthumb_q );
+		$postimage = apply_filters( $filter, $postimage[0], $thumb_width, $thumb_height, $thumb_timthumb, $thumb_timthumb_q, $result );
 		$output .= '<img src="' . $postimage . '" alt="' . $title . '" title="' . $title . '" ' . $thumb_html . ' border="0" class="' . $class . '" />';
 	} else {
 		$postimage = get_post_meta( $result->ID, $thumb_meta, true );	// Check the post meta first
@@ -579,7 +579,7 @@ function wherego_get_the_post_thumbnail( $args = array() ) {
 			}
 		}
 		if ( ! $postimage ) {
-			$postimage = wherego_get_first_image($result->ID);	// Get the first image
+			$postimage = wherego_get_first_image( $result->ID );	// Get the first image
 		}
 		if ( ! $postimage ) {
 			$postimage = get_post_meta( $result->ID, '_video_thumbnail', true ); // If no other thumbnail set, try to get the custom video thumbnail set by the Video Thumbnails plugin
@@ -588,8 +588,8 @@ function wherego_get_the_post_thumbnail( $args = array() ) {
 			$postimage = $thumb_default; // If no thumb found and settings permit, use default thumb
 		}
 		if ( $postimage ) {
-			$postimage = apply_filters( $filter, $postimage, $thumb_width, $thumb_height, $thumb_timthumb, $thumb_timthumb_q );
-			$output .= '<img src="'.$postimage.'" alt="'.$title.'" title="'.$title.'" '.$thumb_html.' border="0" class="'.$class.'" />';
+			$postimage = apply_filters( $filter, $postimage, $thumb_width, $thumb_height, $thumb_timthumb, $thumb_timthumb_q, $result );
+			$output .= '<img src="' . $postimage . '" alt="' . $title . '" title="' . $title . '" ' . $thumb_html . ' border="0" class="' . $class . '" />';
 		}
 	}
 	
