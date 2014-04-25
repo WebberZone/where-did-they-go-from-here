@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Where did they go from here\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-04-21 17:55-0000\n"
+"POT-Creation-Date: 2014-04-25 23:28-0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Ajay D'Souza <me@ajaydsouza.com>\n"
 "Language-Team: Ajay D'Souza <me@ajaydsouza.com>\n"
@@ -31,7 +31,7 @@ msgstr ""
 msgid "General options"
 msgstr ""
 
-#: admin.inc.php:133 admin.inc.php:320
+#: admin.inc.php:133 admin.inc.php:324
 msgid "Number of posts to display: "
 msgstr ""
 
@@ -137,7 +137,7 @@ msgstr ""
 msgid "Display custom text: "
 msgstr ""
 
-#: admin.inc.php:223 admin.inc.php:323
+#: admin.inc.php:223 admin.inc.php:327
 msgid "Show post excerpt in list?"
 msgstr ""
 
@@ -185,31 +185,31 @@ msgstr ""
 msgid "Post thumbnail options:"
 msgstr ""
 
-#: admin.inc.php:260 admin.inc.php:326
+#: admin.inc.php:260 admin.inc.php:330
 msgid "Location of post thumbnail:"
 msgstr ""
 
-#: admin.inc.php:264 admin.inc.php:330
+#: admin.inc.php:264 admin.inc.php:334
 msgid "Display thumbnails inline with posts, before title"
 msgstr ""
 
-#: admin.inc.php:268 admin.inc.php:334
+#: admin.inc.php:268 admin.inc.php:338
 msgid "Display thumbnails inline with posts, after title"
 msgstr ""
 
-#: admin.inc.php:272 admin.inc.php:338
+#: admin.inc.php:272 admin.inc.php:342
 msgid "Display only thumbnails, no text"
 msgstr ""
 
-#: admin.inc.php:276 admin.inc.php:342
+#: admin.inc.php:276 admin.inc.php:346
 msgid "Do not display thumbnails, only text."
 msgstr ""
 
-#: admin.inc.php:280 admin.inc.php:346
+#: admin.inc.php:280 admin.inc.php:350
 msgid "Maximum width of the thumbnail: "
 msgstr ""
 
-#: admin.inc.php:283 admin.inc.php:349
+#: admin.inc.php:283 admin.inc.php:353
 msgid "Maximum height of the thumbnail: "
 msgstr ""
 
@@ -270,151 +270,155 @@ msgstr ""
 msgid "Default thumbnail: "
 msgstr ""
 
-#: admin.inc.php:309
+#: admin.inc.php:312
 msgid ""
 "The plugin will first check if the post contains a thumbnail. If it doesn't "
 "then it will check the meta field. If this is not available, then it will "
 "show the default image as specified above"
 msgstr ""
 
-#: admin.inc.php:316
+#: admin.inc.php:320
 msgid "Feed options"
 msgstr ""
 
-#: admin.inc.php:318
+#: admin.inc.php:322
 msgid ""
 "Below options override the followed posts settings for your blog feed. These "
 "only apply if you have selected to add followed posts to Feeds in the "
 "General Options tab."
 msgstr ""
 
-#: admin.inc.php:356
+#: admin.inc.php:360
 msgid "Custom styles"
 msgstr ""
 
-#: admin.inc.php:359
+#: admin.inc.php:363
 msgid "Custom CSS to add to header:"
 msgstr ""
 
-#: admin.inc.php:362
+#: admin.inc.php:366
 msgid ""
 "Do not include <code>style</code> tags. Check out the <a href=\"http://"
 "wordpress.org/extend/plugins/where-did-they-go-from-here/faq/\" target="
 "\"_blank\">FAQ</a> for available CSS classes to style."
 msgstr ""
 
-#: admin.inc.php:368
+#: admin.inc.php:372
 msgid "Save Options"
 msgstr ""
 
-#: admin.inc.php:369
+#: admin.inc.php:373
 msgid "Default Options"
 msgstr ""
 
-#: admin.inc.php:369
+#: admin.inc.php:373
 msgid "Do you want to set options to Default?"
 msgstr ""
 
-#: admin.inc.php:370
+#: admin.inc.php:374
 msgid "Reset followed posts"
 msgstr ""
 
-#: admin.inc.php:370
+#: admin.inc.php:374
 msgid "Are you sure you want to recreate the index?"
 msgstr ""
 
-#: admin.inc.php:378
+#: admin.inc.php:382
 msgid "Support the development"
 msgstr ""
 
-#: admin.inc.php:387
+#: admin.inc.php:391
 msgid "Enter amount in USD: "
 msgstr ""
 
-#: admin.inc.php:391
+#: admin.inc.php:395
 msgid "Send your donation to the author of"
 msgstr ""
 
-#: admin.inc.php:398
+#: admin.inc.php:402
 msgid "Follow me"
 msgstr ""
 
-#: admin.inc.php:408
+#: admin.inc.php:412
 msgid "Quick links"
 msgstr ""
 
-#: admin.inc.php:412
+#: admin.inc.php:416
 msgid "Where did they go from here? plugin page"
 msgstr ""
 
-#: admin.inc.php:413
-msgid "Other plugins"
+#: admin.inc.php:417
+msgid "Plugin on GitHub"
 msgstr ""
 
-#: admin.inc.php:414
-msgid "Ajay's blog"
-msgstr ""
-
-#: admin.inc.php:415
+#: admin.inc.php:418
 msgid "FAQ"
 msgstr ""
 
-#: admin.inc.php:416 where-did-they-go-from-here.php:715
+#: admin.inc.php:419 where-did-they-go-from-here.php:720
 msgid "Support"
 msgstr ""
 
-#: admin.inc.php:417
+#: admin.inc.php:420
 msgid "Reviews"
 msgstr ""
 
-#: admin.inc.php:456
+#: admin.inc.php:421
+msgid "Other plugins"
+msgstr ""
+
+#: admin.inc.php:422
+msgid "Ajay's blog"
+msgstr ""
+
+#: admin.inc.php:461
 msgid "Where did they go from here?"
 msgstr ""
 
-#: admin.inc.php:456
+#: admin.inc.php:461
 msgid "Where did they go"
 msgstr ""
 
-#: admin.inc.php:588
+#: admin.inc.php:593
 msgid "None"
 msgstr ""
 
-#: admin.inc.php:628
+#: admin.inc.php:633
 msgid "Where did they go from here"
 msgstr ""
 
-#: admin.inc.php:656
+#: admin.inc.php:661
 msgid "Followed posts' IDs:"
 msgstr ""
 
-#: admin.inc.php:658
+#: admin.inc.php:663
 msgid ""
 "Enter a comma separated list of valid post/page IDs. Save this post to see "
 "the updated list below."
 msgstr ""
 
-#: admin.inc.php:662
+#: admin.inc.php:667
 msgid "Followed posts:"
 msgstr ""
 
-#: where-did-they-go-from-here.php:115
+#: where-did-they-go-from-here.php:120
 msgid "Powered by"
 msgstr ""
 
-#: where-did-they-go-from-here.php:363
+#: where-did-they-go-from-here.php:368
 msgid "<h3>Readers who viewed this page, also viewed:</h3>"
 msgstr ""
 
-#: where-did-they-go-from-here.php:364
+#: where-did-they-go-from-here.php:369
 msgid ""
 "Visitors have not browsed from this post. Become the first by clicking one "
 "of our related posts"
 msgstr ""
 
-#: where-did-they-go-from-here.php:695
+#: where-did-they-go-from-here.php:700
 msgid "Settings"
 msgstr ""
 
-#: where-did-they-go-from-here.php:716
+#: where-did-they-go-from-here.php:721
 msgid "Donate"
 msgstr ""
