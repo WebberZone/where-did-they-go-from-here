@@ -40,11 +40,16 @@ The plugin will track what pages or posts visitors on your sites click through a
 
 == Upgrade Notice ==
 
-= 1.7 =
-* Redesigned edit followed posts list, responsive admin interface, code cleanup, language initialisation fixed
+= 1.7.1 =
+* Bug fixes, updated post filter `wherego_postimage`, minor tweaks to Admin interface
 
 
 == Changelog ==
+
+= 1.7.1 =
+* New: Fixed bug with `echo_ald_wherego` introduced in v1.7
+* New: You can now view the default image in the options page
+* Modified: `wherego_postimage` filter now accepts the 6th attribute which is the post object. This can allow for custom functions that allow you to dynamically modify the image you wish to use as the thumbnail.
 
 = 1.7 =
 * New: Redesigned responsive admin interface
