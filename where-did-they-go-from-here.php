@@ -383,7 +383,7 @@ function wherego_default_options() {
 
 						'add_to_content' => true,		// Add related posts to content (only on single posts)
 						'add_to_page' => false,		// Add related posts to content (only on single pages)
-						'add_to_feed' => true,		// Add related posts to feed (full)
+						'add_to_feed' => false,		// Add related posts to feed (full)
 						'add_to_home' => false,		// Add related posts to home page
 						'add_to_category_archives' => false,		// Add related posts to category archives
 						'add_to_tag_archives' => false,		// Add related posts to tag archives
