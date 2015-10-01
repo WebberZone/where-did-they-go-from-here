@@ -1,14 +1,14 @@
 <?php
 /*
 Plugin Name: Where did they go from here
-Version:     1.7.1
+Version:     2.0-beta20151001
 Plugin URI:  http://ajaydsouza.com/wordpress/plugins/where-did-they-go-from-here/
-Description: Show "Readers who viewed this page, also viewed" links on your page. Much like Amazon.com's product pages. Based on the plugin by Mark Ghosh. 
+Description: Show "Readers who viewed this page, also viewed" links on your page. Much like Amazon.com's product pages. Based on the plugin by Mark Ghosh.
 Author:      Ajay D'Souza
 Author URI:  http://ajaydsouza.com/
 */
 
-if ( ! defined( 'ABSPATH' ) ) die( "Aren't you supposed to come here via WP-Admin?" );
+if ( ! defined( 'ABSPATH' ) ) { die( "Aren't you supposed to come here via WP-Admin?" ); }
 
 define( 'ALD_WHEREGO_DIR', dirname( __FILE__ ) );
 define( 'WHEREGO_LOCAL_NAME', 'wherego' );
@@ -24,7 +24,7 @@ $wherego_settings = wherego_read_options();
 
 /**
  * Initialises text domain for l10n.
- * 
+ *
  * @access public
  * @return void
  */
@@ -36,7 +36,7 @@ add_action( 'init', 'wherego_init_lang' );
 
 /**
  * Main function to generate the list of followed posts
- * 
+ *
  * @access public
  * @param mixed $args Parameters in a query string format.
  * @return string HTML formatted list of related posts
@@ -46,14 +46,14 @@ function ald_wherego( $args ) {
 	global $wherego_settings;
 
 	$defaults = array(
-		'is_widget' => FALSE,
-		'echo' => TRUE,
+		'is_widget' => false,
+		'echo' => true,
 	);
 	$defaults = array_merge( $defaults, $wherego_settings );
-	
+
 	// Parse incomming $args into an array and merge it with $defaults
 	$args = wp_parse_args( $args, $defaults );
-	
+
 	// OPTIONAL: Declare each item in $args as its own variable i.e. $type, $before.
 	extract( $args, EXTR_SKIP );
 
@@ -61,35 +61,36 @@ function ald_wherego( $args ) {
 	$rel_attribute = ( $wherego_settings['link_nofollow'] ) ? ' rel="nofollow" ' : ' ';	// Add nofollow attribute
 	$target_attribute = ( $wherego_settings['link_new_window'] ) ? ' target="_blank" ' : ' ';	// Add blank attribute
 	parse_str( $post_types, $post_types );	// Save post types in $post_types variable
-	
+
 	$count = 0;
 	$results = get_post_meta( $post->ID, 'wheredidtheycomefrom', true );	// Extract posts list from the meta field
-	
+
 	if ( $results ) {
 		$results = array_diff( $results, array_map( 'intval', explode( ',', $wherego_settings['exclude_post_ids'] ) ) );
 	}
-	
+
 	if ( $results ) {
 		$loop_counter = 0;
 
 		$output = ( is_singular() ) ? '<div id="wherego_related" class="wherego_related">' : '<div class="wherego_related">';
-	
+
 		if ( ! $is_widget ) {
-			$output .= stripslashes( $wherego_settings['title'] ); 
+			$output .= stripslashes( $wherego_settings['title'] );
 		}
 		$output .= $wherego_settings['before_list'];
 
 		foreach ( $results as $result ) {
 			$result = get_post( $result );
-			
-			if ( ! in_array( $result->post_type, $post_types ) ) break; // If this is not from our select post types, end loop
-			
-			$categorys = get_the_category( $result->ID );	//Fetch categories of the plugin
+
+			if ( ! in_array( $result->post_type, $post_types ) ) { break; // If this is not from our select post types, end loop
+			}
+			$categorys = get_the_category( $result->ID );	// Fetch categories of the plugin
 			$p_in_c = false;	// Variable to check if post exists in a particular category
 			$title = wherego_max_formatted_content( get_the_title( $result->ID ), $wherego_settings['title_length'] );
 			foreach ( $categorys as $cat ) {	// Loop to check if post exists in excluded category
 				$p_in_c = ( in_array( $cat->cat_ID, $exclude_categories ) ) ? true : false;
-				if ( $p_in_c ) break;	// End loop if post found in category
+				if ( $p_in_c ) { break;	// End loop if post found in category
+				}
 			}
 
 			if ( ! $p_in_c ) {
@@ -111,9 +112,10 @@ function ald_wherego( $args ) {
 					$output .= '<span class="wherego_excerpt"> ' . wherego_excerpt( $result->ID, $wherego_settings['excerpt_length'] ) . '</span>';
 				}
 				$output .= $wherego_settings['after_list_item'];
-				$loop_counter++; 
+				$loop_counter++;
 			}
-			if ( $loop_counter == $limit ) break;	// End loop when related posts limit is reached
+			if ( $loop_counter == $limit ) { break;	// End loop when related posts limit is reached
+			}
 		} //end of foreach loop
 		if ( $wherego_settings['show_credit'] ) {
 			$output .= $wherego_settings['before_list_item'];
@@ -124,17 +126,17 @@ function ald_wherego( $args ) {
 		$output .= '</div>';
 	} else {
 		$output = ( is_singular() ) ? '<div id="wherego_related" class="wherego_related">' : '<div class="wherego_related">';
-		$output .= ( $wherego_settings['blank_output'] ) ? ' ' : '<p>' . $wherego_settings['blank_output_text'] . '</p>'; 
+		$output .= ( $wherego_settings['blank_output'] ) ? ' ' : '<p>' . $wherego_settings['blank_output_text'] . '</p>';
 		$output .= '</div>';
 	}
-	
+
 	return $output;
 }
 
 
 /**
  * Header function.
- * 
+ *
  * @access public
  * @return void
  */
@@ -142,8 +144,8 @@ function wherego_header() {
 	global $wpdb, $post, $single, $wherego_settings;
 
 	$wherego_custom_CSS = '<style type="text/css">' . stripslashes( $wherego_settings['custom_CSS'] ) . '</style>';
-	
-	// Add CSS to header 
+
+	// Add CSS to header
 	if ( $wherego_custom_CSS != '' ) {
 	    if ( ( is_single() ) ) {
 			echo $wherego_custom_CSS;
@@ -164,39 +166,39 @@ function wherego_header() {
 }
 add_action( 'wp_head', 'wherego_header' );
 
-	
+
 /**
  * Filter for 'the_content' to add the related posts.
- * 
+ *
  * @access public
  * @param mixed $content
  * @return void
  */
 function ald_wherego_content( $content ) {
-	
+
 	global $single, $post, $wherego_id, $wherego_settings;
 	$wherego_id = intval( $post->ID );
-	
+
 	$exclude_on_post_ids = explode( ',', $wherego_settings['exclude_on_post_ids'] );
 
-	if ( in_array( $post->ID, $exclude_on_post_ids ) ) return $content;	// Exit without adding related posts
-	
-	
-    if ( ( is_single() ) && ( $wherego_settings['add_to_content'] ) ) {
-        return $content.ald_wherego( 'is_widget=0' );
-    } elseif ( ( is_page() ) && ( $wherego_settings['add_to_page'] ) ) {
-        return $content.ald_wherego( 'is_widget=0' );
-    } elseif ( ( is_home() ) && ( $wherego_settings['add_to_home'] ) ) {
-        return $content.ald_wherego( 'is_widget=0' );
-    } elseif ( ( is_category() ) && ( $wherego_settings['add_to_category_archives'] ) ) {
-        return $content.ald_wherego( 'is_widget=0' );
-    } elseif ( ( is_tag() ) && ( $wherego_settings['add_to_tag_archives'] ) ) {
-        return $content.ald_wherego( 'is_widget=0' );
-    } elseif ( ( ( is_tax() ) || ( is_author() ) || ( is_date() ) ) && ( $wherego_settings['add_to_archives'] ) ) {
-        return $content.ald_wherego( 'is_widget=0' );
-    } else {
-        return $content;
-    }
+	if ( in_array( $post->ID, $exclude_on_post_ids ) ) { return $content;	// Exit without adding related posts
+	}
+
+	if ( ( is_single() ) && ( $wherego_settings['add_to_content'] ) ) {
+		return $content.ald_wherego( 'is_widget=0' );
+	} elseif ( ( is_page() ) && ( $wherego_settings['add_to_page'] ) ) {
+		return $content.ald_wherego( 'is_widget=0' );
+	} elseif ( ( is_home() ) && ( $wherego_settings['add_to_home'] ) ) {
+		return $content.ald_wherego( 'is_widget=0' );
+	} elseif ( ( is_category() ) && ( $wherego_settings['add_to_category_archives'] ) ) {
+		return $content.ald_wherego( 'is_widget=0' );
+	} elseif ( ( is_tag() ) && ( $wherego_settings['add_to_tag_archives'] ) ) {
+		return $content.ald_wherego( 'is_widget=0' );
+	} elseif ( ( ( is_tax() ) || ( is_author() ) || ( is_date() ) ) && ( $wherego_settings['add_to_archives'] ) ) {
+		return $content.ald_wherego( 'is_widget=0' );
+	} else {
+		return $content;
+	}
 }
 add_filter( 'the_content', 'ald_wherego_content' );
 
@@ -204,7 +206,7 @@ add_filter( 'the_content', 'ald_wherego_content' );
 
 /**
  * Filter to add related posts to feeds.
- * 
+ *
  * @access public
  * @param mixed $content
  * @return void
@@ -217,18 +219,18 @@ function ald_wherego_rss( $content ) {
 	$post_thumb_op_feed = $wherego_settings['post_thumb_op_feed'];
 
 	if ( $wherego_settings['add_to_feed'] ) {
-        return $content.ald_wherego( 'is_widget=0&limit='.$limit_feed.'&show_excerpt='.$show_excerpt_feed.'&post_thumb_op='.$post_thumb_op_feed );
-    } else {
-        return $content;
-    }
+		return $content.ald_wherego( 'is_widget=0&limit='.$limit_feed.'&show_excerpt='.$show_excerpt_feed.'&post_thumb_op='.$post_thumb_op_feed );
+	} else {
+		return $content;
+	}
 }
-add_filter('the_excerpt_rss', 'ald_wherego_rss');
-add_filter('the_content_feed', 'ald_wherego_rss');
+add_filter( 'the_excerpt_rss', 'ald_wherego_rss' );
+add_filter( 'the_content_feed', 'ald_wherego_rss' );
 
 
 /**
  * Manual install.
- * 
+ *
  * @access public
  * @return void
  */
@@ -239,13 +241,13 @@ function echo_ald_wherego( $args = array() ) {
 
 /**
  * Function to add the javascript to execute the ajax request to update the count.
- * 
+ *
  * @access public
  * @return void
  */
 function wherego_update_count() {
 	global $post, $wherego_id;
-	
+
 	if ( is_singular() ) {
 		echo '<script type="text/javascript">jQuery.ajax({url: "' . home_url() . '/index.php", data: {wherego_id: ' . $wherego_id . ', wherego_sitevar: document.referrer, wherego_rnd: (new Date()).getTime() + "-" + Math.floor(Math.random()*100000)}});</script>';
 	}
@@ -255,12 +257,12 @@ add_action( 'wp_footer', 'wherego_update_count' );
 
 /**
  * Function to enqueue scripts.
- * 
+ *
  * @access public
  * @return void
  */
 function wherego_enqueue_scripts() {
-	
+
 	if ( is_singular() ) {
 		wp_enqueue_script( 'jquery' );
 	}
@@ -271,13 +273,13 @@ add_action( 'wp_enqueue_scripts', 'wherego_enqueue_scripts' );
 
 /**
  * Functions to add and read to queryvars.
- * 
+ *
  * @access public
  * @param mixed $vars
  * @return void
  */
 function wherego_query_vars( $vars ) {
-	//add these to the list of queryvars that WP gathers
+	// add these to the list of queryvars that WP gathers
 	$vars[] = 'wherego_id';
 	$vars[] = 'wherego_sitevar';
 	return $vars;
@@ -287,38 +289,37 @@ add_filter( 'query_vars', 'wherego_query_vars' );
 
 /**
  * Parse request from query variables update the list of posts.
- * 
+ *
  * @access public
  * @param mixed $wp
  * @return void
  */
 function wherego_parse_request( $wp ) {
-   	global $wpdb, $wherego_settings;
+		global $wpdb, $wherego_settings;
 
-	$maxLinks = $wherego_settings['limit']*5;
+	$maxLinks = $wherego_settings['limit'] * 5;
 	$siteurl = get_option( 'siteurl' );
 
-	//check to see if the page called has 'wherego_id' and 'wherego_sitevar' in the $_GET[] array
-    // i.e., if the URL looks like this 'http://example.com/index.php?wherego_id=28&wherego_sitevar=http://somesite.com' 
-    if ( array_key_exists( 'wherego_id', $wp->query_vars ) && array_key_exists( 'wherego_sitevar', $wp->query_vars ) && $wp->query_vars['wherego_id'] != '' ) {
-		//count the page
+	// check to see if the page called has 'wherego_id' and 'wherego_sitevar' in the $_GET[] array
+	// i.e., if the URL looks like this 'http://example.com/index.php?wherego_id=28&wherego_sitevar=http://somesite.com'
+	if ( array_key_exists( 'wherego_id', $wp->query_vars ) && array_key_exists( 'wherego_sitevar', $wp->query_vars ) && $wp->query_vars['wherego_id'] != '' ) {
+		// count the page
 		$id = intval( $wp->query_vars['wherego_id'] );
 		$sitevar = esc_attr( $wp->query_vars['wherego_sitevar'] );
-		Header( "content-type: application/x-javascript" );
-		//...put the rest of your count script here....
-
-		$tempsitevar =  $sitevar;
-		$siteurl = str_replace( "http://", "", $siteurl );
-		$siteurls = explode( "/", $siteurl );
+		Header( 'content-type: application/x-javascript' );
+		// ...put the rest of your count script here....
+		$tempsitevar = $sitevar;
+		$siteurl = str_replace( 'http://', '', $siteurl );
+		$siteurls = explode( '/', $siteurl );
 		$siteurl = $siteurls[0];
-		$sitevar = str_replace( "/", "\/", $sitevar );
+		$sitevar = str_replace( '/', '\/', $sitevar );
 		$matchvar = preg_match( "/$siteurl/i", $sitevar );
-		
+
 		if ( isset( $id ) && $id > 0 && $matchvar ) {
 			// Now figure out the ID of the post the author came from, this might be hokey at first
 			// Text search within code is your friend!
 			$postIDcamefrom = wherego_url_to_postid( $tempsitevar );
-			
+
 			if ( '' != $postIDcamefrom && $id != $postIDcamefrom && '' != $id ) {
 				$gotmeta = '';
 				$linkpostids = get_post_meta( $postIDcamefrom, 'wheredidtheycomefrom', true );
@@ -328,14 +329,14 @@ function wherego_parse_request( $wp ) {
 					$gotmeta = false;
 					$linkpostids = array();
 				}
-				
+
 				if ( is_array( $linkpostids ) && ! in_array( $id, $linkpostids ) && $gotmeta ) {
 					array_unshift( $linkpostids, $id );
 				} elseif ( is_array( $linkpostids ) && ! $gotmeta ) {
 					$linkpostids[0] = $id;
 				}
 
-				//Make sure we only keep maxLinks number of links
+				// Make sure we only keep maxLinks number of links
 				if ( count( $linkpostids ) > $maxLinks ) {
 					$linkpostids = array_slice( $linkpostids, 0, $maxLinks );
 				}
@@ -345,11 +346,11 @@ function wherego_parse_request( $wp ) {
 				} else {
 					add_post_meta( $postIDcamefrom, 'wheredidtheycomefrom', $linkpostidsserialized );
 				}
-			}	
+			}
 		}
-			
-		//stop anything else from loading as it is not needed.
-		exit; 
+
+		// stop anything else from loading as it is not needed.
+		exit;
 	} else {
 		return;
 	}
@@ -359,7 +360,7 @@ add_action( 'wp', 'wherego_parse_request' );
 
 /**
  * Default Options.
- * 
+ *
  * @access public
  * @return void
  */
@@ -370,13 +371,13 @@ function wherego_default_options() {
 	$thumb_default = $wherego_url.'/default.png';
 
 	// get relevant post types
-	$args = array (
+	$args = array(
 				'public' => true,
-				'_builtin' => true
+				'_builtin' => true,
 			);
 	$post_types	= http_build_query( get_post_types( $args ), '', '&' );
 
-	$wherego_settings = array (
+	$wherego_settings = array(
 						'title' => $title,			// Add before the content
 						'limit' => '5',				// How many posts to display?
 						'show_credit' => false,		// Link to this plugin's page?
@@ -434,77 +435,77 @@ function wherego_default_options() {
 
 /**
  * Function to read options from the database.
- * 
+ *
  * @access public
  * @return void
  */
 function wherego_read_options() {
 	$wherego_settings_changed = false;
-	
+
 	$defaults = wherego_default_options();
-	
-	$wherego_settings = array_map( 'stripslashes', (array)get_option('ald_wherego_settings') );
+
+	$wherego_settings = array_map( 'stripslashes', (array) get_option( 'ald_wherego_settings' ) );
 	unset( $wherego_settings[0] ); // produced by the (array) casting when there's nothing in the DB
-	
-	foreach ( $defaults as $k=>$v ) {
-		if ( ! isset( $wherego_settings[$k] ) ) {
-			$wherego_settings[$k] = $v;
+
+	foreach ( $defaults as $k => $v ) {
+		if ( ! isset( $wherego_settings[ $k ] ) ) {
+			$wherego_settings[ $k ] = $v;
 		}
-		$wherego_settings_changed = true;	
+		$wherego_settings_changed = true;
 	}
 	if ( $wherego_settings_changed == true ) {
 		update_option( 'ald_wherego_settings', $wherego_settings );
 	}
-	
+
 	return $wherego_settings;
 }
 
 
 /**
  * Get post id from url - fix for custom post types - http://sltaylor.co.uk/blog/get-post-id-from-custom-post-types-urls/.
- * 
+ *
  * @access public
  * @param mixed $url
  * @return void
  */
-function wherego_url_to_postid( $url ) {  
+function wherego_url_to_postid( $url ) {
 
-    $post_id = url_to_postid( $url );      // Try the core function  
+	$post_id = url_to_postid( $url );      // Try the core function
 
-    if ( 0 == $post_id ) {  
-        // Try custom post types  
-        $cpts = get_post_types( array(  
-            'public'   => true,  
-            '_builtin' => false  
-        ), 'objects', 'and' );  
-        // Get path from URL  
-        $url_parts = explode( '/', trim( $url, '/' ) );  
-        $url_parts = array_splice( $url_parts, 3 );  
-        $path = implode( '/', $url_parts );
-        
-        // Test against each CPT's rewrite slug  
-        foreach ( $cpts as $cpt_name => $cpt ) {  
-            $cpt_slug = $cpt->rewrite['slug']; 
-            if ( strlen( $path ) > strlen( $cpt_slug ) && substr( $path, 0, strlen( $cpt_slug ) ) == $cpt_slug ) { 
-                $slug = substr( $path, strlen( $cpt_slug ) ); 
-                $query = new WP_Query( array( 
-                    'post_type'         => $cpt_name, 
-                    'name'              => $slug, 
-                    'posts_per_page'    => 1  
-                ) );
-                if ( is_object( $query->post ) )  {
-                    $post_id = $query->post->ID;
+	if ( 0 == $post_id ) {
+		// Try custom post types
+		$cpts = get_post_types( array(
+			'public'   => true,
+			'_builtin' => false,
+		), 'objects', 'and' );
+		// Get path from URL
+		$url_parts = explode( '/', trim( $url, '/' ) );
+		$url_parts = array_splice( $url_parts, 3 );
+		$path = implode( '/', $url_parts );
+
+		// Test against each CPT's rewrite slug
+		foreach ( $cpts as $cpt_name => $cpt ) {
+			$cpt_slug = $cpt->rewrite['slug'];
+			if ( strlen( $path ) > strlen( $cpt_slug ) && substr( $path, 0, strlen( $cpt_slug ) ) == $cpt_slug ) {
+				$slug = substr( $path, strlen( $cpt_slug ) );
+				$query = new WP_Query( array(
+					'post_type'         => $cpt_name,
+					'name'              => $slug,
+					'posts_per_page'    => 1,
+				) );
+				if ( is_object( $query->post ) ) {
+					$post_id = $query->post->ID;
 				}
-			}  
-		}  
-	}  
-    return $post_id;  
+			}
+		}
+	}
+	return $post_id;
 }
 
 
 /**
  * Filter function to resize post thumbnail. Filters: wherego_postimage.
- * 
+ *
  * @access public
  * @param mixed $postimage 	URL of the post image to filter
  * @param mixed $thumb_width	Width of the thumbnail
@@ -515,7 +516,7 @@ function wherego_url_to_postid( $url ) {
  */
 function wherego_scale_thumbs( $postimage, $thumb_width, $thumb_height, $thumb_timthumb, $thumb_timthumb_q, $post ) {
 	global $wherego_url;
-	
+
 	if ( $thumb_timthumb ) {
 		$new_pi = $wherego_url.'/timthumb/timthumb.php?src=' . urlencode( $postimage ) .'&amp;w=' . $thumb_width . '&amp;h=' . $thumb_height . '&amp;zc=1&amp;q=' . $thumb_timthumb_q;
 	} else {
@@ -523,12 +524,12 @@ function wherego_scale_thumbs( $postimage, $thumb_width, $thumb_height, $thumb_t
 	}
 	return $new_pi;
 }
-add_filter('wherego_postimage', 'wherego_scale_thumbs', 10, 6);
+add_filter( 'wherego_postimage', 'wherego_scale_thumbs', 10, 6 );
 
 
 /**
  * Function to get the post thumbnail.
- * 
+ *
  * @access public
  * @param array|string $args (default: array()) Array / Query string with arguments post thumbnails
  * @return string Output with the post thumbnail
@@ -549,10 +550,10 @@ function wherego_get_the_post_thumbnail( $args = array() ) {
 		'class' => 'wherego_thumb',			// Class of the thumbnail
 		'filter' => 'wherego_postimage',			// Class of the thumbnail
 	);
-	
+
 	// Parse incomming $args into an array and merge it with $defaults
 	$args = wp_parse_args( $args, $defaults );
-	
+
 	// OPTIONAL: Declare each item in $args as its own variable i.e. $type, $before.
 	extract( $args, EXTR_SKIP );
 
@@ -561,12 +562,12 @@ function wherego_get_the_post_thumbnail( $args = array() ) {
 
 	$output = '';
 	$thumb_html = ( 'css' == $thumb_html ) ? 'style="max-width:' . $thumb_width . 'px;max-height:' . $thumb_height . 'px;"' : 'width="' . $thumb_width . '" height="' .$thumb_height . '"';
-	
+
 	if ( function_exists( 'has_post_thumbnail' ) && ( ( '' != wp_get_attachment_image_src( get_post_thumbnail_id( $result->ID ) ) ) || ( false != wp_get_attachment_image_src( get_post_thumbnail_id( $result->ID ) ) ) ) ) {
 		$postimage = wp_get_attachment_image_src( get_post_thumbnail_id( $result->ID ) );
-		
+
 		if ( ( $postimage[1] < $thumb_width ) || ( $postimage[2] < $thumb_height ) ) {
-			$postimage = wp_get_attachment_image_src( get_post_thumbnail_id( $result->ID ) , 'full' ); 
+			$postimage = wp_get_attachment_image_src( get_post_thumbnail_id( $result->ID ) , 'full' );
 		}
 		$postimage = apply_filters( $filter, $postimage[0], $thumb_width, $thumb_height, $thumb_timthumb, $thumb_timthumb_q, $result );
 		$output .= '<img src="' . $postimage . '" alt="' . $title . '" title="' . $title . '" ' . $thumb_html . ' border="0" class="' . $class . '" />';
@@ -592,14 +593,14 @@ function wherego_get_the_post_thumbnail( $args = array() ) {
 			$output .= '<img src="' . $postimage . '" alt="' . $title . '" title="' . $title . '" ' . $thumb_html . ' border="0" class="' . $class . '" />';
 		}
 	}
-	
+
 	return apply_filters( 'wherego_get_the_post_thumbnail', $output );
 }
 
 
 /**
  * Get the first image in the post.
- * 
+ *
  * @access public
  * @param mixed $postID	Post ID
  * @return string
@@ -630,9 +631,9 @@ function wherego_get_first_image( $postID ) {
 
 /**
  * Function to create an excerpt for the post.
- * 
+ *
  * @access public
- * @param int $id Post ID
+ * @param int        $id Post ID
  * @param int|string $excerpt_length Length of the excerpt in words
  * @return string Excerpt
  */
@@ -650,30 +651,30 @@ function wherego_excerpt( $id, $excerpt_length = 0, $use_excerpt = true ) {
 	if ( $excerpt_length > 0 ) {
 		$output = wp_trim_words( $output, $excerpt_length );
 	}
-	
+
 	return apply_filters( 'wherego_excerpt', $output, $id, $excerpt_length, $use_excerpt );
 }
 
 
 /**
  * Function to limit content by characters.
- * 
+ *
  * @access public
  * @param string $content Content to be used to make an excerpt
- * @param int $MaxLength (default: -1) Maximum length of excerpt in characters
+ * @param int    $MaxLength (default: -1) Maximum length of excerpt in characters
  * @return string Formatted content
  */
 function wherego_max_formatted_content( $content, $MaxLength = -1 ) {
 	$content = strip_tags( $content );  // Remove CRLFs, leaving space in their wake
-	
+
 	if ( ( $MaxLength > 0 ) && ( strlen( $content ) > $MaxLength ) ) {
-		$aWords = preg_split( "/[\s]+/", substr( $content, 0, $MaxLength ) );
+		$aWords = preg_split( '/[\s]+/', substr( $content, 0, $MaxLength ) );
 
 		// Break back down into a string of words, but drop the last one if it's chopped off
-		if ( substr( $content, $MaxLength, 1 ) == " " ) {
-		  $content = implode( " ", $aWords ) .'&hellip;';
+		if ( substr( $content, $MaxLength, 1 ) == ' ' ) {
+			$content = implode( ' ', $aWords ) .'&hellip;';
 		} else {
-		  $content = implode( " ", array_slice( $aWords, 0, -1 ) ) .'&hellip;';
+			$content = implode( ' ', array_slice( $aWords, 0, -1 ) ) .'&hellip;';
 		}
 	}
 
@@ -681,31 +682,32 @@ function wherego_max_formatted_content( $content, $MaxLength = -1 ) {
 }
 
 
-/*********************************************************************
-*				Admin Functions									*
-********************************************************************/
+* /
+	****************************************************************** *
+* Admin Functions *
+******************************************************************** /
 if ( is_admin() || strstr( $_SERVER['PHP_SELF'], 'wp-admin/' ) ) {
-	require_once( ALD_WHEREGO_DIR . "/admin.inc.php" );
-	
+	require_once( ALD_WHEREGO_DIR . '/admin.inc.php' );
+
 	/**
 	 * Filter to add link to WordPress plugin action links.
-	 * 
+	 *
 	 * @access public
 	 * @param array $links
 	 * @return array
 	 */
 	function wherego_plugin_actions_links( $links ) {
-	
+
 		return array_merge( array(
-				'settings' => '<a href="' . admin_url( 'options-general.php?page=wherego_options' ) . '">' . __('Settings', WHEREGO_LOCAL_NAME ) . '</a>'
+				'settings' => '<a href="' . admin_url( 'options-general.php?page=wherego_options' ) . '">' . __( 'Settings', WHEREGO_LOCAL_NAME ) . '</a>',
 			), $links );
-	
+
 	}
 	add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'wherego_plugin_actions_links' );
 
 	/**
 	 * Filter to add links to the plugin action row.
-	 * 
+	 *
 	 * @access public
 	 * @param array $links
 	 * @param array $file
@@ -713,8 +715,8 @@ if ( is_admin() || strstr( $_SERVER['PHP_SELF'], 'wp-admin/' ) ) {
 	 */
 	function wherego_plugin_actions( $links, $file ) {
 		static $plugin;
-		if ( ! $plugin ) $plugin = plugin_basename(__FILE__);
-	 
+		if ( ! $plugin ) { $plugin = plugin_basename( __FILE__ ); }
+
 		// create link
 		if ( $file == $plugin ) {
 			$links[] = '<a href="http://wordpress.org/support/plugin/where-did-they-go-from-here">' . __( 'Support', WHEREGO_LOCAL_NAME ) . '</a>';
@@ -722,15 +724,13 @@ if ( is_admin() || strstr( $_SERVER['PHP_SELF'], 'wp-admin/' ) ) {
 		}
 		return $links;
 	}
-	
+
 	global $wp_version;
 	if ( version_compare( $wp_version, '2.8alpha', '>' ) ) {
 		add_filter( 'plugin_row_meta', 'wherego_plugin_actions', 10, 2 ); // only 2.8 and higher
 	} else {
 		add_filter( 'plugin_action_links', 'wherego_plugin_actions', 10, 2 );
 	}
-	
 } // End admin.inc
 
 
-?>
