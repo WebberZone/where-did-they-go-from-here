@@ -1247,4 +1247,3 @@ class timthumb {
 		return $this->is404;
 	}
 }
-

@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Where did they go from here
-Version:     2.0-beta20151001
+Version:     1.7.1
 Plugin URI:  http://ajaydsouza.com/wordpress/plugins/where-did-they-go-from-here/
 Description: Show "Readers who viewed this page, also viewed" links on your page. Much like Amazon.com's product pages. Based on the plugin by Mark Ghosh.
 Author:      Ajay D'Souza
@@ -682,10 +682,10 @@ function wherego_max_formatted_content( $content, $MaxLength = -1 ) {
 }
 
 
-* /
-	****************************************************************** *
-* Admin Functions *
-******************************************************************** /
+/**
+ *******************************************************************
+*               Admin Functions                                 *
+*/
 if ( is_admin() || strstr( $_SERVER['PHP_SELF'], 'wp-admin/' ) ) {
 	require_once( ALD_WHEREGO_DIR . '/admin.inc.php' );
 
@@ -699,8 +699,8 @@ if ( is_admin() || strstr( $_SERVER['PHP_SELF'], 'wp-admin/' ) ) {
 	function wherego_plugin_actions_links( $links ) {
 
 		return array_merge( array(
-				'settings' => '<a href="' . admin_url( 'options-general.php?page=wherego_options' ) . '">' . __( 'Settings', WHEREGO_LOCAL_NAME ) . '</a>',
-			), $links );
+			'settings' => '<a href="' . admin_url( 'options-general.php?page=wherego_options' ) . '">' . __( 'Settings', WHEREGO_LOCAL_NAME ) . '</a>',
+		), $links );
 
 	}
 	add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'wherego_plugin_actions_links' );
