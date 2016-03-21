@@ -65,7 +65,7 @@ The plugin tracks the pages, posts and custom post types that visitors click thr
 
 ## Screenshots
 
-![General Options](https://raw.github.com/ajaydsouza/where-did-they-go-from-here/master/screenshot-1.png)
+![General Options](https://raw.github.com/ajaydsouza/where-did-they-go-from-here/master/assets/screenshot-1.png)
 _Settings page - General Options._
 
 For more screenshots visit the <a href="http://wordpress.org/plugins/where-did-they-go-from-here/screenshots/">WordPress plugin page</a>
