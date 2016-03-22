@@ -1,17 +1,33 @@
 <?php
-/*
-Plugin Name: Where did they go from here
-Version:     1.7.1
-Plugin URI:  http://ajaydsouza.com/wordpress/plugins/where-did-they-go-from-here/
-Description: Show "Readers who viewed this page, also viewed" links on your page. Much like Amazon.com's product pages. Based on the plugin by Mark Ghosh.
-Author:      Ajay D'Souza
-Author URI:  http://ajaydsouza.com/
-*/
+/**
+ * Top 10.
+ *
+ * Count daily and total visits per post and display the most popular posts based on the number of views.
+ *
+ * @package   WHERE_GO
+ * @author    Ajay D'Souza <me@ajaydsouza.com>
+ * @license   GPL-2.0+
+ * @link      https://ajaydsouza.com
+ * @copyright 2008-2016 Ajay D'Souza
+ *
+ * @wordpress-plugin
+ * Plugin Name:	Where did they go from here
+ * Plugin URI:	http://ajaydsouza.com/wordpress/plugins/where-did-they-go-from-here/
+ * Description:	Show "Readers who viewed this page, also viewed" links on your page. Much like Amazon.com's product pages. Based on the plugin by Mark Ghosh.
+ * Version: 	2.0.0-beta20160316
+ * Author: 		Ajay D'Souza
+ * Author URI: 	https://ajaydsouza.com
+ * License: 	GPL-2.0+
+ * License URI:	http://www.gnu.org/licenses/gpl-2.0.txt
+ * Text Domain:	where-did-they-go-from-here
+ * Domain Path:	/languages
+ * GitHub Plugin URI: https://github.com/ajaydsouza/where-did-they-go-from-here/
+ */
+
 
 if ( ! defined( 'ABSPATH' ) ) { die( "Aren't you supposed to come here via WP-Admin?" ); }
 
 define( 'ALD_WHEREGO_DIR', dirname( __FILE__ ) );
-define( 'WHEREGO_LOCAL_NAME', 'wherego' );
 
 // Guess the location
 $wherego_path = plugin_dir_path( __FILE__ );
@@ -29,9 +45,9 @@ $wherego_settings = wherego_read_options();
  * @return void
  */
 function wherego_init_lang() {
-	load_plugin_textdomain( WHEREGO_LOCAL_NAME, false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+	load_plugin_textdomain( 'where-did-they-go-from-here', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 }
-add_action( 'init', 'wherego_init_lang' );
+add_action( 'plugins_loaded', 'wherego_init_lang' );
 
 
 /**
@@ -119,7 +135,7 @@ function ald_wherego( $args ) {
 		} //end of foreach loop
 		if ( $wherego_settings['show_credit'] ) {
 			$output .= $wherego_settings['before_list_item'];
-			$output .= __( 'Powered by', WHEREGO_LOCAL_NAME );
+			$output .= __( 'Powered by', 'where-did-they-go-from-here' );
 			$output .= ' <a href="http://ajaydsouza.com/wordpress/plugins/where-did-they-go-from-here/" rel="nofollow">Where did they go from here?</a>' . $wherego_settings['after_list_item'];
 		}
 		$output .= $wherego_settings['after_list'];
@@ -366,8 +382,8 @@ add_action( 'wp', 'wherego_parse_request' );
  */
 function wherego_default_options() {
 	global $wherego_url;
-	$title = __( '<h3>Readers who viewed this page, also viewed:</h3>', WHEREGO_LOCAL_NAME );
-	$blank_output_text = __( 'Visitors have not browsed from this post. Become the first by clicking one of our related posts', WHEREGO_LOCAL_NAME );
+	$title = __( '<h3>Readers who viewed this page, also viewed:</h3>', 'where-did-they-go-from-here' );
+	$blank_output_text = __( 'Visitors have not browsed from this post. Become the first by clicking one of our related posts', 'where-did-they-go-from-here' );
 	$thumb_default = $wherego_url.'/default.png';
 
 	// get relevant post types
@@ -501,30 +517,6 @@ function wherego_url_to_postid( $url ) {
 	}
 	return $post_id;
 }
-
-
-/**
- * Filter function to resize post thumbnail. Filters: wherego_postimage.
- *
- * @access public
- * @param mixed $postimage 	URL of the post image to filter
- * @param mixed $thumb_width	Width of the thumbnail
- * @param mixed $thumb_height	Height of the thumbnail
- * @param mixed $thumb_timthumb	Use timthumb?
- * @param mixed $thumb_timthumb_q	Quality of timthumb thumbnail
- * @return void
- */
-function wherego_scale_thumbs( $postimage, $thumb_width, $thumb_height, $thumb_timthumb, $thumb_timthumb_q, $post ) {
-	global $wherego_url;
-
-	if ( $thumb_timthumb ) {
-		$new_pi = $wherego_url.'/timthumb/timthumb.php?src=' . urlencode( $postimage ) .'&amp;w=' . $thumb_width . '&amp;h=' . $thumb_height . '&amp;zc=1&amp;q=' . $thumb_timthumb_q;
-	} else {
-		$new_pi = $postimage;
-	}
-	return $new_pi;
-}
-add_filter( 'wherego_postimage', 'wherego_scale_thumbs', 10, 6 );
 
 
 /**
@@ -699,7 +691,7 @@ if ( is_admin() || strstr( $_SERVER['PHP_SELF'], 'wp-admin/' ) ) {
 	function wherego_plugin_actions_links( $links ) {
 
 		return array_merge( array(
-			'settings' => '<a href="' . admin_url( 'options-general.php?page=wherego_options' ) . '">' . __( 'Settings', WHEREGO_LOCAL_NAME ) . '</a>',
+			'settings' => '<a href="' . admin_url( 'options-general.php?page=wherego_options' ) . '">' . __( 'Settings', 'where-did-they-go-from-here' ) . '</a>',
 		), $links );
 
 	}
@@ -719,8 +711,8 @@ if ( is_admin() || strstr( $_SERVER['PHP_SELF'], 'wp-admin/' ) ) {
 
 		// create link
 		if ( $file == $plugin ) {
-			$links[] = '<a href="http://wordpress.org/support/plugin/where-did-they-go-from-here">' . __( 'Support', WHEREGO_LOCAL_NAME ) . '</a>';
-			$links[] = '<a href="http://ajaydsouza.com/donate/">' . __( 'Donate', WHEREGO_LOCAL_NAME ) . '</a>';
+			$links[] = '<a href="http://wordpress.org/support/plugin/where-did-they-go-from-here">' . __( 'Support', 'where-did-they-go-from-here' ) . '</a>';
+			$links[] = '<a href="http://ajaydsouza.com/donate/">' . __( 'Donate', 'where-did-they-go-from-here' ) . '</a>';
 		}
 		return $links;
 	}
