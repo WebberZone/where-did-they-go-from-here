@@ -117,7 +117,19 @@ function ald_wherego( $args ) {
 				}
 				if ( $post_thumb_op == 'inline' || $post_thumb_op == 'after' || $post_thumb_op == 'thumbs_only' ) {
 					$output .= '<a href="' . get_permalink( $result->ID ) . '" ' . $rel_attribute . ' ' . $target_attribute . '>';
-					$output .= wherego_get_the_post_thumbnail( 'postid=' . $result->ID . '&thumb_height=' . $thumb_height . '&thumb_width=' . $thumb_width . '&thumb_meta=' . $wherego_settings['thumb_meta'] . '&thumb_default=' . $wherego_settings['thumb_default'] . '&thumb_default_show=' . $wherego_settings['thumb_default_show'] . '&thumb_timthumb=' . $wherego_settings['thumb_timthumb'] . '&thumb_timthumb_q=' . $wherego_settings['thumb_timthumb_q'] . '&scan_images=' . $wherego_settings['scan_images'] . '&class=wherego_thumb&filter=wherego_postimage' );
+
+					$output .= wherego_get_the_post_thumbnail( array(
+						'postid' => $result,
+						'thumb_height' => $args['thumb_height'],
+						'thumb_width' => $args['thumb_width'],
+						'thumb_meta' => $args['thumb_meta'],
+						'thumb_html' => $args['thumb_html'],
+						'thumb_default' => $args['thumb_default'],
+						'thumb_default_show' => $args['thumb_default_show'],
+						'scan_images' => $args['scan_images'],
+						'class' => 'wherego_thumb',
+					) );
+
 					$output .= '</a>';
 				}
 				if ( $post_thumb_op == 'inline' || $post_thumb_op == 'text_only' ) {
@@ -265,7 +277,17 @@ function wherego_update_count() {
 	global $post, $wherego_id;
 
 	if ( is_singular() ) {
-		echo '<script type="text/javascript">jQuery.ajax({url: "' . home_url() . '/index.php", data: {wherego_id: ' . $wherego_id . ', wherego_sitevar: document.referrer, wherego_rnd: (new Date()).getTime() + "-" + Math.floor(Math.random()*100000)}});</script>';
+		echo '
+		<script type="text/javascript">
+			jQuery.ajax({
+				url: "' . home_url() . '/index.php",
+				data: {
+					wherego_id: ' . $wherego_id . ',
+					wherego_sitevar: document.referrer,
+					wherego_rnd: (new Date()).getTime() + "-" + Math.floor(Math.random() * 100000)
+				}
+			});
+		</script>';
 	}
 }
 add_action( 'wp_footer', 'wherego_update_count' );
@@ -394,55 +416,54 @@ function wherego_default_options() {
 	$post_types	= http_build_query( get_post_types( $args ), '', '&' );
 
 	$wherego_settings = array(
-						'title' => $title,			// Add before the content
-						'limit' => '5',				// How many posts to display?
-						'show_credit' => false,		// Link to this plugin's page?
+						'title'                    => $title,			// Add before the content
+						'limit'                    => '5',				// How many posts to display?
+						'show_credit'              => false,		// Link to this plugin's page?
 
-						'add_to_content' => true,		// Add related posts to content (only on single posts)
-						'add_to_page' => false,		// Add related posts to content (only on single pages)
-						'add_to_feed' => false,		// Add related posts to feed (full)
-						'add_to_home' => false,		// Add related posts to home page
+						'add_to_content'           => true,		// Add related posts to content (only on single posts)
+						'add_to_page'              => false,		// Add related posts to content (only on single pages)
+						'add_to_feed'              => false,		// Add related posts to feed (full)
+						'add_to_home'              => false,		// Add related posts to home page
 						'add_to_category_archives' => false,		// Add related posts to category archives
-						'add_to_tag_archives' => false,		// Add related posts to tag archives
-						'add_to_archives' => false,		// Add related posts to other archives
-						'wg_in_admin' => true,		// display additional column in admin area
+						'add_to_tag_archives'      => false,		// Add related posts to tag archives
+						'add_to_archives'          => false,		// Add related posts to other archives
+						'wg_in_admin'              => true,		// display additional column in admin area
 
-						'exclude_post_ids' => '',	// Comma separated list of page / post IDs that are to be excluded in the results
-						'exclude_on_post_ids' => '', 	// Comma separate list of page/post IDs to not display related posts on
-						'exclude_categories' => '',	// Exclude these categories
-						'exclude_cat_slugs' => '',	// Exclude these categories (slugs)
+						'exclude_post_ids'         => '',	// Comma separated list of page / post IDs that are to be excluded in the results
+						'exclude_on_post_ids'      => '', 	// Comma separate list of page/post IDs to not display related posts on
+						'exclude_categories'       => '',	// Exclude these categories
+						'exclude_cat_slugs'        => '',	// Exclude these categories (slugs)
 
-						'blank_output' => true,		// Blank output?
-						'blank_output_text' => $blank_output_text,	// Text to display in blank output
-						'before_list' => '<ul>',			// Before the entire list
-						'after_list' => '</ul>',			// After the entire list
-						'before_list_item' => '<li>',		// Before each list item
-						'after_list_item' => '</li>',		// After each list item
+						'blank_output'             => true,		// Blank output?
+						'blank_output_text'        => $blank_output_text,	// Text to display in blank output
+						'before_list'              => '<ul>',			// Before the entire list
+						'after_list'               => '</ul>',			// After the entire list
+						'before_list_item'         => '<li>',		// Before each list item
+						'after_list_item'          => '</li>',		// After each list item
 
-						'post_thumb_op' => 'text_only',	// Display only text in posts
-						'thumb_height' => '50',			// Height of thumbnails
-						'thumb_width' => '50',			// Width of thumbnails
-						'thumb_meta' => 'post-image',		// Meta field that is used to store the location of default thumbnail image
-						'thumb_default' => $thumb_default,	// Default thumbnail image
-						'thumb_default_show' => true,	// Show default thumb if none found (if false, don't show thumb at all)
-						'thumb_timthumb' => true,	// Use timthumb
-						'thumb_timthumb_q' => '75',	// Quality attribute for timthumb
-						'scan_images' => false,			// Scan post for images
+						'post_thumb_op'            => 'text_only',	// Display only text in posts
+						'thumb_height'             => '50',			// Height of thumbnails
+						'thumb_width'              => '50',			// Width of thumbnails
+						'thumb_meta'               => 'post-image',		// Meta field that is used to store the location of default thumbnail image
+						'thumb_default'            => $thumb_default,	// Default thumbnail image
+						'thumb_default_show'       => true,	// Show default thumb if none found (if false, don't show thumb at all)
+						'scan_images'              => false,			// Scan post for images
+						'thumb_html'               => 'html',		// Use HTML or CSS for width and height of the thumbnail?
 
-						'show_excerpt' => false,			// Show description in list item
-						'excerpt_length' => '10',		// Length of characters
-						'title_length' => '60',		// Limit length of post title
+						'show_excerpt'             => false,			// Show description in list item
+						'excerpt_length'           => '10',		// Length of characters
+						'title_length'             => '60',		// Limit length of post title
 
-						'post_types' => $post_types,		// WordPress custom post types
-						'link_new_window' => false,			// Open link in new window - Includes target="_blank" to links
-						'link_nofollow' => false,			// Includes rel="nofollow" to links
-						'custom_CSS' => '',			// Custom CSS to style the output
+						'post_types'               => $post_types,		// WordPress custom post types
+						'link_new_window'          => false,			// Open link in new window
+						'link_nofollow'            => false,			// Includes rel
+						'custom_CSS'               => '',			// Custom CSS to style the output
 
-						'limit_feed' => '5',				// How many posts to display in feeds
-						'post_thumb_op_feed' => 'text_only',	// Default option to display text and no thumbnails in Feeds
-						'thumb_height_feed' => '50',	// Height of thumbnails in feed
-						'thumb_width_feed' => '50',	// Width of thumbnails in feed
-						'show_excerpt_feed' => false,			// Show description in list item in feed
+						'limit_feed'               => '5',				// How many posts to display in feeds
+						'post_thumb_op_feed'       => 'text_only',	// Default option to display text and no thumbnails in Feeds
+						'thumb_height_feed'        => '50',	// Height of thumbnails in feed
+						'thumb_width_feed'         => '50',	// Width of thumbnails in feed
+						'show_excerpt_feed'        => false,			// Show description in list item in feed
 						);
 	return $wherego_settings;
 }
@@ -522,71 +543,203 @@ function wherego_url_to_postid( $url ) {
 /**
  * Function to get the post thumbnail.
  *
- * @access public
- * @param array|string $args (default: array()) Array / Query string with arguments post thumbnails
- * @return string Output with the post thumbnail
+ * @since	1.8
+ * @param	array $args   Query string of options related to thumbnails
+ * @return	string	Image tag
  */
 function wherego_get_the_post_thumbnail( $args = array() ) {
 
 	$defaults = array(
 		'postid' => '',
-		'thumb_height' => '50',			// Max height of thumbnails
-		'thumb_width' => '50',			// Max width of thumbnails
+		'thumb_height' => '150',			// Max height of thumbnails
+		'thumb_width' => '150',			// Max width of thumbnails
 		'thumb_meta' => 'post-image',		// Meta field that is used to store the location of default thumbnail image
 		'thumb_html' => 'html',		// HTML / CSS for width and height attributes
 		'thumb_default' => '',	// Default thumbnail image
 		'thumb_default_show' => true,	// Show default thumb if none found (if false, don't show thumb at all)
-		'thumb_timthumb' => true,	// Use timthumb
-		'thumb_timthumb_q' => '75',	// Quality attribute for timthumb
 		'scan_images' => false,			// Scan post for images
 		'class' => 'wherego_thumb',			// Class of the thumbnail
-		'filter' => 'wherego_postimage',			// Class of the thumbnail
 	);
 
 	// Parse incomming $args into an array and merge it with $defaults
 	$args = wp_parse_args( $args, $defaults );
 
-	// OPTIONAL: Declare each item in $args as its own variable i.e. $type, $before.
-	extract( $args, EXTR_SKIP );
+	// Issue notice for deprecated arguments
+	if ( isset( $args['thumb_timthumb'] ) ) {
+		_deprecated_argument( __FUNCTION__, '2.1', __( 'thumb_timthumb argument has been deprecated', 'where-did-they-go-from-here' ) );
+	}
 
-	$result = get_post( $postid );
-	$title = get_the_title( $postid );
+	if ( isset( $args['thumb_timthumb_q'] ) ) {
+		_deprecated_argument( __FUNCTION__, '2.1', __( 'thumb_timthumb_q argument has been deprecated', 'where-did-they-go-from-here' ) );
+	}
+
+	if ( isset( $args['filter'] ) ) {
+		_deprecated_argument( __FUNCTION__, '2.1', __( 'filter argument has been deprecated', 'where-did-they-go-from-here' ) );
+	}
+
+	if ( is_int( $args['postid'] ) ) {
+		$result = get_post( $args['postid'] );
+	} else {
+		$result = $args['postid'];
+	}
+
+	$post_title = $result->post_title;
+
+	/**
+	 * Filters the title and alt message for thumbnails.
+	 *
+	 * @since	2.0.0
+	 *
+	 * @param	string	$post_title		Post tile used as thumbnail alt and title
+	 * @param	object	$result			Post Object
+	 */
+	$post_title = apply_filters( 'wherego_thumb_title', $post_title, $result );
 
 	$output = '';
-	$thumb_html = ( 'css' == $thumb_html ) ? 'style="max-width:' . $thumb_width . 'px;max-height:' . $thumb_height . 'px;"' : 'width="' . $thumb_width . '" height="' .$thumb_height . '"';
+	$postimage = '';
+	$pick = '';
 
-	if ( function_exists( 'has_post_thumbnail' ) && ( ( '' != wp_get_attachment_image_src( get_post_thumbnail_id( $result->ID ) ) ) || ( false != wp_get_attachment_image_src( get_post_thumbnail_id( $result->ID ) ) ) ) ) {
-		$postimage = wp_get_attachment_image_src( get_post_thumbnail_id( $result->ID ) );
-
-		if ( ( $postimage[1] < $thumb_width ) || ( $postimage[2] < $thumb_height ) ) {
-			$postimage = wp_get_attachment_image_src( get_post_thumbnail_id( $result->ID ) , 'full' );
-		}
-		$postimage = apply_filters( $filter, $postimage[0], $thumb_width, $thumb_height, $thumb_timthumb, $thumb_timthumb_q, $result );
-		$output .= '<img src="' . $postimage . '" alt="' . $title . '" title="' . $title . '" ' . $thumb_html . ' border="0" class="' . $class . '" />';
-	} else {
-		$postimage = get_post_meta( $result->ID, $thumb_meta, true );	// Check the post meta first
-		if ( ! $postimage && $scan_images ) {
-			preg_match_all( '/<img.+src=[\'"]([^\'"]+)[\'"].*>/i', $result->post_content, $matches );
-			if ( isset( $matches[1][0] ) && $matches[1][0] ) { 			// any image there?
-				$postimage = $matches[1][0]; // we need the first one only!
-			}
-		}
-		if ( ! $postimage ) {
-			$postimage = wherego_get_first_image( $result->ID );	// Get the first image
-		}
-		if ( ! $postimage ) {
-			$postimage = get_post_meta( $result->ID, '_video_thumbnail', true ); // If no other thumbnail set, try to get the custom video thumbnail set by the Video Thumbnails plugin
-		}
-		if ( $thumb_default_show && ! $postimage ) {
-			$postimage = $thumb_default; // If no thumb found and settings permit, use default thumb
-		}
+	// Let's start fetching the thumbnail. First place to look is in the post meta defined in the Settings page
+	if ( ! $postimage ) {
+		$postimage = get_post_meta( $result->ID, $args['thumb_meta'], true );	// Check the post meta first
+		$pick = 'meta';
 		if ( $postimage ) {
-			$postimage = apply_filters( $filter, $postimage, $thumb_width, $thumb_height, $thumb_timthumb, $thumb_timthumb_q, $result );
-			$output .= '<img src="' . $postimage . '" alt="' . $title . '" title="' . $title . '" ' . $thumb_html . ' border="0" class="' . $class . '" />';
+			$postimage_id = wherego_get_attachment_id_from_url( $postimage );
+
+			if ( false != wp_get_attachment_image_src( $postimage_id, array( $args['thumb_width'], $args['thumb_height'] ) ) ) {
+				$postthumb = wp_get_attachment_image_src( $postimage_id, array( $args['thumb_width'], $args['thumb_height'] ) );
+				$postimage = $postthumb[0];
+			}
+			$pick .= 'correct';
 		}
 	}
 
-	return apply_filters( 'wherego_get_the_post_thumbnail', $output );
+	// If there is no thumbnail found, check the post thumbnail
+	if ( ! $postimage ) {
+		if ( false != get_post_thumbnail_id( $result->ID ) ) {
+			$postthumb = wp_get_attachment_image_src( get_post_thumbnail_id( $result->ID ), array( $args['thumb_width'], $args['thumb_height'] ) );
+			$postimage = $postthumb[0];
+		}
+		$pick = 'featured';
+	}
+
+	// If there is no thumbnail found, fetch the first image in the post, if enabled
+	if ( ! $postimage && $args['scan_images'] ) {
+		preg_match_all( '/<img.+src=[\'"]([^\'"]+)[\'"].*>/i', $result->post_content, $matches );
+		if ( isset( $matches[1][0] ) && $matches[1][0] ) { 			// any image there?
+			$postimage = $matches[1][0]; // we need the first one only!
+		}
+		$pick = 'first';
+		if ( $postimage ) {
+			$postimage_id = wherego_get_attachment_id_from_url( $postimage );
+
+			if ( false != wp_get_attachment_image_src( $postimage_id, array( $args['thumb_width'], $args['thumb_height'] ) ) ) {
+				$postthumb = wp_get_attachment_image_src( $postimage_id, array( $args['thumb_width'], $args['thumb_height'] ) );
+				$postimage = $postthumb[0];
+			}
+			$pick .= 'correct';
+		}
+	}
+
+	// If there is no thumbnail found, fetch the first child image
+	if ( ! $postimage ) {
+		$postimage = wherego_get_first_image( $result->ID, $args['thumb_width'], $args['thumb_height'] );	// Get the first image
+		$pick = 'firstchild';
+	}
+
+	// If no other thumbnail set, try to get the custom video thumbnail set by the Video Thumbnails plugin
+	if ( ! $postimage ) {
+		$postimage = get_post_meta( $result->ID, '_video_thumbnail', true );
+		$pick = 'video_thumb';
+	}
+
+	// If no thumb found and settings permit, use default thumb
+	if ( ! $postimage && $args['thumb_default_show'] ) {
+		$postimage = $args['thumb_default'];
+		$pick = 'default_thumb';
+	}
+
+	// Hopefully, we've found a thumbnail by now. If so, run it through the custom filter, check for SSL and create the image tag
+	if ( $postimage ) {
+
+		/**
+		 * Filters the thumbnail image URL.
+		 *
+		 * Use this filter to modify the thumbnail URL that is automatically created
+		 * Before v2.0.0 this was used for cropping the post image using timthumb
+		 *
+		 * @since	2.0.0
+		 *
+		 * @param	string	$postimage		URL of the thumbnail image
+		 * @param	int		$thumb_width	Thumbnail width
+		 * @param	int		$thumb_height	Thumbnail height
+		 * @param	object	$result			Post Object
+		 */
+		$postimage = apply_filters( 'wherego_thumb_url', $postimage, $args['thumb_width'], $args['thumb_height'], $result );
+
+		/* Backward compatibility */
+		$thumb_timthumb = false;
+		$thumb_timthumb_q = 75;
+
+		/**
+		 * Filters the thumbnail image URL.
+		 *
+		 * @since 1.8.10
+		 * @deprecated	2.0.0	Use wherego_thumb_url instead.
+		 *
+		 * @param	string	$postimage		URL of the thumbnail image
+		 * @param	int		$thumb_width	Thumbnail width
+		 * @param	int		$thumb_height	Thumbnail height
+		 * @param	boolean	$thumb_timthumb	Enable timthumb?
+		 * @param	int		$thumb_timthumb_q	Quality of timthumb thumbnail.
+		 * @param	object	$result			Post Object
+		 */
+		$postimage = apply_filters( 'wherego_postimage', $postimage, $args['thumb_width'], $args['thumb_height'], $thumb_timthumb, $thumb_timthumb_q, $result );
+
+		if ( is_ssl() ) {
+		    $postimage = preg_replace( '~http://~', 'https://', $postimage );
+		}
+
+		if ( 'css' == $args['thumb_html'] ) {
+			$thumb_html = 'style="max-width:' . $args['thumb_width'] . 'px;max-height:' . $args['thumb_height'] . 'px;"';
+		} else if ( 'html' == $args['thumb_html'] ) {
+			$thumb_html = 'width="' . $args['thumb_width'] . '" height="' . $args['thumb_height'] . '"';
+		} else {
+			$thumb_html = '';
+		}
+
+		/**
+		 * Filters the thumbnail HTML and allows a filter function to add any more HTML if needed.
+		 *
+		 * @since	2.2.0
+		 *
+		 * @param	string	$thumb_html	Thumbnail HTML
+		 */
+		$thumb_html = apply_filters( 'wherego_thumb_html', $thumb_html );
+
+		$class = $args['class'] . ' wherego_' . $pick;
+
+		/**
+		 * Filters the thumbnail classes and allows a filter function to add any more classes if needed.
+		 *
+		 * @since	2.2.0
+		 *
+		 * @param	string	$thumb_html	Thumbnail HTML
+		 */
+		$class = apply_filters( 'wherego_thumb_class', $class );
+
+		$output .= '<img src="' . $postimage . '" alt="' . $post_title . '" title="' . $post_title . '" ' . $thumb_html . ' class="' . $class . '" />';
+	}
+
+	/**
+	 * Filters post thumbnail created for Top 10.
+	 *
+	 * @since	1.9.10.1
+	 *
+	 * @param	array	$output	Formatted output
+	 * @param	array	$args	Argument list
+	 */
+	return apply_filters( 'wherego_get_the_post_thumbnail', $output, $args );
 }
 
 

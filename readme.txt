@@ -46,6 +46,10 @@ The plugin will track what pages or posts visitors on your sites click through a
 
 == Changelog ==
 
+= 2.0.0 =
+* Deprecated:
+	* Modified: timthumb has been deprecated. The script is no longer included
+
 = 1.7.1 =
 * New: Fixed bug with `echo_ald_wherego` introduced in v1.7
 * New: You can now view the default image in the options page
@@ -145,7 +149,7 @@ The plugin will track what pages or posts visitors on your sites click through a
 
 2. Extract the contents of where-did-they-go-from-here.zip to wp-content/plugins/ folder. You should get a folder called where-did-they-go-from-here.
 
-3. Activate the Plugin in WP-Admin. 
+3. Activate the Plugin in WP-Admin.
 
 4. Goto **Settings &raquo; Where did they go** to configure
 
@@ -174,7 +178,7 @@ All options can be customized within the Options page in WP-Admin itself
 
 You can customise the CSS output. This plugin uses the following CSS classes / IDs:
 
-* **wherego_related**: ID of the the `div` that surrounds the list items on single posts, pages and attachments. 
+* **wherego_related**: ID of the the `div` that surrounds the list items on single posts, pages and attachments.
 
 * **wherego_related**: CSS Class on all pages
 
