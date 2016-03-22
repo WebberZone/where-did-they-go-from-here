@@ -502,7 +502,7 @@ function wherego_wherego() {
         //]]>
     </script>
 
-	<link rel="stylesheet" type="text/css" href="<?php echo $wherego_url ?>/wick/wick.css" />
+	<link rel="stylesheet" type="text/css" href="<?php echo WHEREGO_PLUGIN_URL; ?>/admin/wick/wick.css" />
     <script type="text/javascript" language="JavaScript">
         //<![CDATA[
         function checkForm() {
@@ -514,7 +514,6 @@ function wherego_wherego() {
 
 		<?php
 		function wick_data() {
-			global $wpdb;
 
 			$categories = get_categories( 'hide_empty=0' );
 			$str = 'collection = [';
@@ -530,7 +529,7 @@ function wherego_wherego() {
 		?>
     //]]>
     </script>
-	<script type="text/javascript" src="<?php echo $wherego_url ?>/wick/wick.js"></script>
+	<script type="text/javascript" src="<?php echo WHEREGO_PLUGIN_URL; ?>/admin/wick/wick.js"></script>
 <?php
 }
 
