@@ -1,14 +1,27 @@
 <?php
 /**
- * *******************************************************************
- *                   Admin Page                                      *
- *********************************************************************/
-if ( ! defined( 'ABSPATH' ) ) { die( "Aren't you supposed to come here via WP-Admin?" ); }
+ * Where did they go from here Admin interface.
+ *
+ * This page is accessible via Settings > Where did they go
+ *
+ * @package   WHEREGO
+ * @subpackage	Admin
+ * @author    Ajay D'Souza <me@ajaydsouza.com>
+ * @license   GPL-2.0+
+ * @link      https://ajaydsouza.com
+ * @copyright 2008-2016 Ajay D'Souza
+ */
+
+// If this file is called directly, abort.
+if ( ! defined( 'WPINC' ) ) {
+	die;
+}
+
 
 /**
  * Plugin settings.
  *
- * @access public
+ * @since 1.0
  * @return void
  */
 function wherego_options() {
@@ -424,14 +437,14 @@ function wherego_options() {
 /**
  * Reset the tracked posts.
  *
- * @access public
+ * @since 1.4
  * @return void
  */
 function wherego_reset() {
 	global $wpdb;
 
 	// Delete meta
-	$sql = 'DELETE FROM '.$wpdb->postmeta." WHERE `meta_key` = 'wheredidtheycomefrom'";
+	$sql = 'DELETE FROM ' . $wpdb->postmeta . " WHERE `meta_key` = 'wheredidtheycomefrom'";
 	$wpdb->query( $sql );
 
 }
@@ -440,13 +453,13 @@ function wherego_reset() {
 /**
  * Create a menu in the WordPress settings page and add necessary styles to the header.
  *
- * @access public
+ * @since 1.0
  * @return void
  */
 function wherego_adminmenu() {
 	if ( ( function_exists( 'add_options_page' ) ) ) {
 		$plugin_page = add_options_page( __( 'Where did they go from here?', 'where-did-they-go-from-here' ), __( 'Where did they go', 'where-did-they-go-from-here' ), 'manage_options', 'wherego_options', 'wherego_options' );
-		add_action( 'admin_head-'. $plugin_page, 'wherego_wherego' );
+		add_action( 'admin_head-' . $plugin_page, 'wherego_wherego' );
 	}
 }
 add_action( 'admin_menu', 'wherego_adminmenu' );
@@ -455,7 +468,7 @@ add_action( 'admin_menu', 'wherego_adminmenu' );
 /**
  * Function to add CSS and JS to the Admin header.
  *
- * @access public
+ * @since 1.7
  * @return void
  */
 function wherego_wherego() {
@@ -537,7 +550,7 @@ function wherego_wherego() {
 /**
  * Add extra columns in Åll posts / pages screen with post list.
  *
- * @access public
+ * @since 1.1
  * @param mixed $cols
  * @return void
  */
@@ -556,7 +569,7 @@ add_filter( 'manage_link-manager_columns', 'wherego_column' );
 /**
  * Display the page views for each column.
  *
- * @access public
+ * @since 1.1
  * @param mixed $column_name
  * @param mixed $id
  * @return void
@@ -591,7 +604,7 @@ add_action( 'manage_link_custom_column', 'wherego_value', 10, 2 );
 /**
  * Add CSS to header in Admin pages.
  *
- * @access public
+ * @since 1.1
  * @return void
  */
 function wherego_css() {
@@ -602,108 +615,5 @@ function wherego_css() {
 <?php
 }
 add_action( 'admin_head', 'wherego_css' );
-
-
-/**
- * Function to add meta box in Write screens.
- *
- * @access public
- * @param text   $post_type
- * @param object $post
- * @return void
- */
-function wherego_add_meta_box( $post_type, $post ) {
-
-		add_meta_box(
-			'wherego_metabox',
-			__( 'Where did they go from here', 'where-did-they-go-from-here' ),
-			'wherego_call_meta_box',
-			$post_type,
-			'advanced',
-			'default'
-		);
-
-}
-add_action( 'add_meta_boxes', 'wherego_add_meta_box' , 10, 2 );
-
-
-/**
- * Function to call the meta box.
- *
- * @access public
- * @return void
- */
-function wherego_call_meta_box() {
-	global $post;
-
-	// Add an nonce field so we can check for it later.
-	wp_nonce_field( 'wherego_meta_box', 'wherego_meta_box_nonce' );
-
-	$results = get_post_meta( $post->ID, 'wheredidtheycomefrom', true );
-	$value = ( $results ) ? implode( ',', $results ) : '';
-	$output = '';
-?>
-    <p>
-		<label for="wherego_post_ids"><?php _e( "Followed posts' IDs:", 'where-did-they-go-from-here' ); ?></label>
-		<input type="text" id="wherego_post_ids" name="wherego_post_ids" value="<?php echo esc_attr( $value ) ?>" size="25" />
-		<em><?php _e( 'Enter a comma separated list of valid post/page IDs. Save this post to see the updated list below.', 'where-did-they-go-from-here' ); ?></em>
-    </p>
-	<?php if ( $results ) { ?>
-
-		<h3><?php _e( 'Followed posts:', 'where-did-they-go-from-here' ); ?></h3>
-        <ol>
-		<?php
-		foreach ( $results as $result ) {
-			$title = get_the_title( $result );
-			echo '<li>';
-			echo '<a href="' . get_permalink( $result ) . '" target="_blank" title="' . $title . '" class="wherego_title">' . $title . '</a>'; // Add title if post thumbnail is to be displayed after
-			echo '</li>';
-		}
-		?>
-        </ol>
-	<?php } ?>
-
-<?php
-}
-
-
-/**
- * Function to save the meta box.
- *
- * @access public
- * @param mixed $post_id
- * @return void
- */
-function wherego_save_meta_box( $post_id ) {
-	// Bail if we're doing an auto save
-	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) { return; }
-
-	// if our nonce isn't there, or we can't verify it, bail
-	if ( ! isset( $_POST['wherego_meta_box_nonce'] ) || ! wp_verify_nonce( $_POST['wherego_meta_box_nonce'], 'wherego_meta_box' ) ) { return; }
-
-	// if our current user can't edit this post, bail
-	if ( ! current_user_can( 'edit_post' ) ) { return; }
-
-	if ( isset( $_POST['wherego_post_ids'] ) ) {
-		$wherego_post_ids = $_POST['wherego_post_ids'] == '' ? '' : array_map( 'intval', explode( ',' , $_POST['wherego_post_ids'] ) );
-	}
-
-	$linkpostids = get_post_meta( $post_id, 'wheredidtheycomefrom', true );
-	if ( $linkpostids && '' != $linkpostids ) {
-		$gotmeta = true;
-	} else {
-		$gotmeta = false;
-	}
-
-	if ( $gotmeta && '' != $wherego_post_ids ) {
-		update_post_meta( $post_id, 'wheredidtheycomefrom', $wherego_post_ids );
-	} elseif ( ! $gotmeta && '' != $wherego_post_ids ) {
-		add_post_meta( $post_id, 'wheredidtheycomefrom', $wherego_post_ids );
-	} else {
-		delete_post_meta( $post_id, 'wheredidtheycomefrom' );
-	}
-
-}
-add_action( 'save_post', 'wherego_save_meta_box' );
 
 

@@ -967,6 +967,7 @@ function wherego_max_formatted_content( $content, $MaxLength = -1 ) {
 if ( is_admin() || ( defined( 'WP_CLI' ) && WP_CLI ) ) {
 
 	require_once( WHEREGO_PLUGIN_DIR . 'admin/admin.php' );
+	require_once( WHEREGO_PLUGIN_DIR . 'admin/admin-metabox.php' );
 
 	/**
 	 * Filter to add link to WordPress plugin action links.
