@@ -47,8 +47,12 @@ The plugin will track what pages or posts visitors on your sites click through a
 == Changelog ==
 
 = 2.0.0 =
+* Enhancements:
+	* Enhancements to the metabox where the list of followed posts are cleaned for incorrect post IDs or published posts when saving the post
+
 * Deprecated:
 	* Modified: timthumb has been deprecated. The script is no longer included
+	* `ald_wherego` and `echo_ald_wherego` have been deprecated. Use `get_wherego` and `echo_wherego` respectively
 
 = 1.7.1 =
 * New: Fixed bug with `echo_ald_wherego` introduced in v1.7
