@@ -399,7 +399,7 @@ function wherego_parse_request( $wp ) {
 		if ( isset( $id ) && $id > 0 && $matchvar ) {
 			// Now figure out the ID of the post the author came from, this might be hokey at first
 			// Text search within code is your friend!
-			$postIDcamefrom = wherego_url_to_postid( $tempsitevar );
+			$postIDcamefrom = url_to_postid( $tempsitevar );
 
 			if ( '' != $postIDcamefrom && $id != $postIDcamefrom && '' != $id ) {
 				$gotmeta = '';
@@ -538,48 +538,6 @@ function wherego_read_options() {
 	}
 
 	return $wherego_settings;
-}
-
-
-/**
- * Get post id from url - fix for custom post types - http://sltaylor.co.uk/blog/get-post-id-from-custom-post-types-urls/.
- *
- * @since 1.7
- * @param mixed $url
- * @return void
- */
-function wherego_url_to_postid( $url ) {
-
-	$post_id = url_to_postid( $url );      // Try the core function
-
-	if ( 0 == $post_id ) {
-		// Try custom post types
-		$cpts = get_post_types( array(
-			'public'   => true,
-			'_builtin' => false,
-		), 'objects', 'and' );
-		// Get path from URL
-		$url_parts = explode( '/', trim( $url, '/' ) );
-		$url_parts = array_splice( $url_parts, 3 );
-		$path = implode( '/', $url_parts );
-
-		// Test against each CPT's rewrite slug
-		foreach ( $cpts as $cpt_name => $cpt ) {
-			$cpt_slug = $cpt->rewrite['slug'];
-			if ( strlen( $path ) > strlen( $cpt_slug ) && substr( $path, 0, strlen( $cpt_slug ) ) == $cpt_slug ) {
-				$slug = substr( $path, strlen( $cpt_slug ) );
-				$query = new WP_Query( array(
-					'post_type'         => $cpt_name,
-					'name'              => $slug,
-					'posts_per_page'    => 1,
-				) );
-				if ( is_object( $query->post ) ) {
-					$post_id = $query->post->ID;
-				}
-			}
-		}
-	}
-	return $post_id;
 }
 
 
