@@ -3,8 +3,8 @@ Tags: related posts, visitors, browsing, visitors, tracking, similar posts, amaz
 Contributors: Ajay
 Donate link: http://ajaydsouza.com/donate/
 Stable tag: trunk
-Requires at least: 3.0
-Tested up to: 4.0
+Requires at least: 4.0
+Tested up to: 4.5
 License: GPLv2 or later
 
 Show "Readers who viewed this page, also viewed" links on your page. Much like Amazon.com's product pages.
@@ -47,6 +47,9 @@ The plugin will track what pages or posts visitors on your sites click through a
 == Changelog ==
 
 = 2.0.0 =
+* Features:
+	* Multisite activation and uninstall
+
 * Enhancements:
 	* Enhancements to the metabox where the list of followed posts are cleaned for incorrect post IDs or published posts when saving the post
 

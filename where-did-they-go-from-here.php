@@ -14,7 +14,7 @@
  * Plugin Name:	Where did they go from here
  * Plugin URI:	http://ajaydsouza.com/wordpress/plugins/where-did-they-go-from-here/
  * Description:	Show "Readers who viewed this page, also viewed" links on your page. Much like Amazon.com's product pages. Based on the plugin by Mark Ghosh.
- * Version: 	2.0.0-beta20160316
+ * Version: 	2.0.0-beta20160328
  * Author: 		Ajay D'Souza
  * Author URI: 	https://ajaydsouza.com
  * License: 	GPL-2.0+
