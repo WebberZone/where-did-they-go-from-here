@@ -134,7 +134,7 @@ function get_wherego( $args ) {
 		foreach ( $results as $result ) {
 			$result = get_post( $result );
 
-			if ( ! in_array( $result->post_type, $post_types ) ) {
+			if ( ! $result || ! in_array( $result->post_type, $post_types ) ) {
 				break; // If this is not from our select post types, end loop
 			}
 
@@ -425,6 +425,7 @@ function wherego_read_options() {
  * Modules
  *----------------------------------------------------------------------------*/
 
+require_once( WHEREGO_PLUGIN_DIR . 'includes/activate-deactivate.php' );
 require_once( WHEREGO_PLUGIN_DIR . 'includes/media.php' );
 require_once( WHEREGO_PLUGIN_DIR . 'includes/tracker.php' );
 require_once( WHEREGO_PLUGIN_DIR . 'includes/formatting.php' );
