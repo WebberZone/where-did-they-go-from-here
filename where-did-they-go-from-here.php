@@ -613,48 +613,6 @@ if ( is_admin() || ( defined( 'WP_CLI' ) && WP_CLI ) ) {
 	require_once( WHEREGO_PLUGIN_DIR . 'admin/admin.php' );
 	require_once( WHEREGO_PLUGIN_DIR . 'admin/admin-metabox.php' );
 
-	/**
-	 * Filter to add link to WordPress plugin action links.
-	 *
-	 * @since 1.7
-	 * @param array $links
-	 * @return array
-	 */
-	function wherego_plugin_actions_links( $links ) {
-
-		return array_merge( array(
-			'settings' => '<a href="' . admin_url( 'options-general.php?page=wherego_options' ) . '">' . __( 'Settings', 'where-did-they-go-from-here' ) . '</a>',
-		), $links );
-
-	}
-	add_filter( 'plugin_action_links_' . plugin_basename( WHEREGO_PLUGIN_FILE ), 'wherego_plugin_actions_links' );
-
-	/**
-	 * Filter to add links to the plugin action row.
-	 *
-	 * @since 1.3
-	 * @param array $links
-	 * @param array $file
-	 * @return void
-	 */
-	function wherego_plugin_actions( $links, $file ) {
-		static $plugin;
-		if ( ! $plugin ) { $plugin = plugin_basename( WHEREGO_PLUGIN_FILE ); }
-
-		// create link
-		if ( $file == $plugin ) {
-			$links[] = '<a href="http://wordpress.org/support/plugin/where-did-they-go-from-here">' . __( 'Support', 'where-did-they-go-from-here' ) . '</a>';
-			$links[] = '<a href="http://ajaydsouza.com/donate/">' . __( 'Donate', 'where-did-they-go-from-here' ) . '</a>';
-		}
-		return $links;
-	}
-
-	global $wp_version;
-	if ( version_compare( $wp_version, '2.8alpha', '>' ) ) {
-		add_filter( 'plugin_row_meta', 'wherego_plugin_actions', 10, 2 ); // only 2.8 and higher
-	} else {
-		add_filter( 'plugin_action_links', 'wherego_plugin_actions', 10, 2 );
-	}
 }
 
 

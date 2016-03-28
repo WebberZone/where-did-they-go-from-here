@@ -557,7 +557,10 @@ function wherego_wherego() {
 function wherego_column( $cols ) {
 	global $wherego_settings;
 
-	if ( $wherego_settings['wg_in_admin'] ) {	$cols['wherego'] = 'Where go'; }
+	if ( $wherego_settings['wg_in_admin'] ) {
+		$cols['wherego'] = 'Where go';
+	}
+
 	return $cols;
 }
 add_filter( 'manage_posts_columns', 'wherego_column' );
@@ -586,7 +589,7 @@ function wherego_value( $column_name, $id ) {
 
 		if ( $lpids ) {
 			foreach ( $lpids as $lpid ) {
-				$output .= '<a href="'.get_permalink( $lpid ).'" title="'.get_the_title( $lpid ).'">'.$lpid.'</a>, ';
+				$output .= '<a href="' . get_permalink( $lpid ) . '" title="' . get_the_title( $lpid ) . '">' . $lpid . '</a>, ';
 			}
 		} else {
 			$output = __( 'None', 'where-did-they-go-from-here' );
@@ -602,18 +605,41 @@ add_action( 'manage_link_custom_column', 'wherego_value', 10, 2 );
 
 
 /**
- * Add CSS to header in Admin pages.
+ * Filter to add link to WordPress plugin action links.
  *
- * @since 1.1
+ * @since 1.7
+ * @param array $links
+ * @return array
+ */
+function wherego_plugin_actions_links( $links ) {
+
+	return array_merge( array(
+		'settings' => '<a href="' . admin_url( 'options-general.php?page=wherego_options' ) . '">' . __( 'Settings', 'where-did-they-go-from-here' ) . '</a>',
+	), $links );
+
+}
+add_filter( 'plugin_action_links_' . plugin_basename( WHEREGO_PLUGIN_FILE ), 'wherego_plugin_actions_links' );
+
+
+/**
+ * Filter to add links to the plugin action row.
+ *
+ * @since 1.3
+ * @param array $links
+ * @param array $file
  * @return void
  */
-function wherego_css() {
-?>
-<style type="text/css">
-    #wherego { width: 50px; }
-</style>
-<?php
-}
-add_action( 'admin_head', 'wherego_css' );
+function wherego_plugin_row_meta( $links, $file ) {
+	static $plugin;
+	if ( ! $plugin ) {
+		$plugin = plugin_basename( WHEREGO_PLUGIN_FILE );
+	}
 
+	if ( $file == $plugin ) {
+		$links[] = '<a href="http://wordpress.org/support/plugin/where-did-they-go-from-here">' . __( 'Support', 'where-did-they-go-from-here' ) . '</a>';
+		$links[] = '<a href="http://ajaydsouza.com/donate/">' . __( 'Donate', 'where-did-they-go-from-here' ) . '</a>';
+	}
+	return $links;
+}
+add_filter( 'plugin_row_meta', 'wherego_plugin_row_meta', 10, 2 );
 
