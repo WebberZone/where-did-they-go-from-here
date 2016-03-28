@@ -70,6 +70,7 @@ function wherego_options() {
 
 		$wherego_settings['thumb_meta'] = $_POST['thumb_meta'];
 		$wherego_settings['thumb_default'] = $_POST['thumb_default'];
+		$wherego_settings['thumb_default'] = ( ( '' == $_POST['thumb_default'] ) || ( '/default.png' == $_POST['thumb_default'] ) ) ? WHEREGO_PLUGIN_URL . 'default.png' : $_POST['thumb_default'];
 		$wherego_settings['thumb_height'] = intval( $_POST['thumb_height'] );
 		$wherego_settings['thumb_width'] = intval( $_POST['thumb_width'] );
 		$wherego_settings['thumb_default_show'] = isset( $_POST['thumb_default_show'] ) ? true : false;
