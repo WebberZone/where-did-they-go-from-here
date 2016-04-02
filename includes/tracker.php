@@ -103,7 +103,7 @@ function wherego_parse_request( $wp ) {
 
 				$linkpostids = get_post_meta( $postIDcamefrom, 'wheredidtheycomefrom', true );
 
-				if ( '' != $linkpostids ) {
+				if ( '' == $linkpostids ) {
 					$linkpostids = array();
 				}
 
