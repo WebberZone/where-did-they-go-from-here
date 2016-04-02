@@ -47,9 +47,8 @@ register_activation_hook( WHEREGO_PLUGIN_FILE, 'wherego_activation_hook' );
  * @since 2.0.0
  */
 function wherego_single_activate() {
-	global $wpdb, $wherego_db_version;
 
-	$wherego_settings = wherego_read_options();
+	wherego_read_options();
 
 }
 

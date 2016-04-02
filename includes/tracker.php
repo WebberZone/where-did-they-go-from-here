@@ -13,7 +13,7 @@
  * @return void
  */
 function wherego_update_count() {
-	global $post, $wherego_id;
+	global $wherego_id;
 
 	if ( is_singular() ) {
 		echo '
@@ -72,7 +72,7 @@ add_filter( 'query_vars', 'wherego_query_vars' );
  * @return void
  */
 function wherego_parse_request( $wp ) {
-	global $wpdb, $wherego_settings;
+	global $wherego_settings;
 
 	$maxLinks = $wherego_settings['limit'] * 5;
 

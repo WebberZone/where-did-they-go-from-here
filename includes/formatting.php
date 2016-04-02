@@ -15,7 +15,7 @@
  * @return string Excerpt
  */
 function wherego_excerpt( $id, $excerpt_length = 0, $use_excerpt = true ) {
-	$content = $excerpt = '';
+	$content = '';
 	if ( $use_excerpt ) {
 		$content = get_post( $id )->post_excerpt;
 	}

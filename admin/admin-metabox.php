@@ -44,7 +44,7 @@ function wherego_call_meta_box() {
 
 	$results = get_post_meta( $post->ID, 'wheredidtheycomefrom', true );
 	$value = ( $results ) ? implode( ',', $results ) : '';
-	$output = '';
+
 ?>
     <p>
 		<label for="wherego_post_ids"><?php _e( "Followed posts' IDs:", 'where-did-they-go-from-here' ); ?></label>
