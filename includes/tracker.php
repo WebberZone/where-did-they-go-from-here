@@ -72,44 +72,44 @@ add_filter( 'query_vars', 'wherego_query_vars' );
  * @return void
  */
 function wherego_parse_request( $wp ) {
-		global $wpdb, $wherego_settings;
+	global $wpdb, $wherego_settings;
 
 	$maxLinks = $wherego_settings['limit'] * 5;
+
 	$siteurl = get_option( 'siteurl' );
 
-	// check to see if the page called has 'wherego_id' and 'wherego_sitevar' in the $_GET[] array
-	// i.e., if the URL looks like this 'http://example.com/index.php?wherego_id=28&wherego_sitevar=http://somesite.com'
+	// Check to see if the page called has 'wherego_id' and 'wherego_sitevar' in the query variables.
 	if ( array_key_exists( 'wherego_id', $wp->query_vars ) && array_key_exists( 'wherego_sitevar', $wp->query_vars ) && $wp->query_vars['wherego_id'] != '' ) {
-		// count the page
+
+		// Get the ID of the page
 		$id = intval( $wp->query_vars['wherego_id'] );
+
 		$sitevar = esc_attr( $wp->query_vars['wherego_sitevar'] );
-		Header( 'content-type: application/x-javascript' );
-		// ...put the rest of your count script here....
+
 		$tempsitevar = $sitevar;
-		$siteurl = str_replace( 'http://', '', $siteurl );
-		$siteurls = explode( '/', $siteurl );
-		$siteurl = $siteurls[0];
-		$sitevar = str_replace( '/', '\/', $sitevar );
-		$matchvar = preg_match( "/$siteurl/i", $sitevar );
+
+		$siteurl = parse_url( $siteurl, PHP_URL_HOST );
+
+		$sitevar = str_replace( '/', '\/', $sitevar );	// Prepare it for preg_match.
+
+		$matchvar = preg_match( "/$siteurl/i", $sitevar );	// This checks that we are tracking our own site
 
 		if ( isset( $id ) && $id > 0 && $matchvar ) {
-			// Now figure out the ID of the post the author came from, this might be hokey at first
-			// Text search within code is your friend!
+
+			// Now figure out the ID of the post the viewer came from.
 			$postIDcamefrom = url_to_postid( $tempsitevar );
 
 			if ( '' != $postIDcamefrom && $id != $postIDcamefrom && '' != $id ) {
-				$gotmeta = '';
+
 				$linkpostids = get_post_meta( $postIDcamefrom, 'wheredidtheycomefrom', true );
-				if ( $linkpostids && '' != $linkpostids ) {
-					$gotmeta = true;
-				} else {
-					$gotmeta = false;
+
+				if ( '' != $linkpostids ) {
 					$linkpostids = array();
 				}
 
-				if ( is_array( $linkpostids ) && ! in_array( $id, $linkpostids ) && $gotmeta ) {
+				if ( is_array( $linkpostids ) && ! in_array( $id, $linkpostids ) && ! empty( $linkpostids ) ) {
 					array_unshift( $linkpostids, $id );
-				} elseif ( is_array( $linkpostids ) && ! $gotmeta ) {
+				} else {
 					$linkpostids[0] = $id;
 				}
 
@@ -117,14 +117,27 @@ function wherego_parse_request( $wp ) {
 				if ( count( $linkpostids ) > $maxLinks ) {
 					$linkpostids = array_slice( $linkpostids, 0, $maxLinks );
 				}
-				$linkpostidsserialized = $linkpostids;
-				if ( $gotmeta && ! empty( $linkpostids ) ) {
-					update_post_meta( $postIDcamefrom, 'wheredidtheycomefrom', $linkpostidsserialized );
-				} else {
-					add_post_meta( $postIDcamefrom, 'wheredidtheycomefrom', $linkpostidsserialized );
+
+				if ( ! empty( $linkpostids ) ) {
+					$metastatus = update_post_meta( $postIDcamefrom, 'wheredidtheycomefrom', $linkpostids );
 				}
 			}
 		}
+
+		if ( isset( $metastatus ) && false !== $metastatus ) {
+			if ( true === $metastatus ) {
+				$str = __( 'Updated', 'where-did-they-go-from-here' );
+			} else {
+				$str = __( 'Meta ID: ', 'where-did-they-go-from-here' ) . $metastatus;
+			}
+		} else {
+			$str = __( 'No change', 'where-did-they-go-from-here' );
+		}
+
+		// Designate this as javascript.
+		header( 'content-type: application/x-javascript' );
+
+		echo '<!-- ' . $str . ' -->';
 
 		// stop anything else from loading as it is not needed.
 		exit;
