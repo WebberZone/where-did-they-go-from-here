@@ -112,8 +112,6 @@ function get_wherego( $args ) {
 	$args = wp_parse_args( $args, $defaults );
 
 	$exclude_categories = explode( ',', $args['exclude_categories'] );		// Extract categories to exclude
-	$rel_attribute      = ( $args['link_nofollow'] ) ? ' rel="nofollow" ' : ' ';	// Add nofollow attribute
-	$target_attribute   = ( $args['link_new_window'] ) ? ' target="_blank" ' : ' ';	// Add blank attribute
 
 	parse_str( $args['post_types'], $post_types );	// Save post types in $post_types variable
 
@@ -123,7 +121,21 @@ function get_wherego( $args ) {
 		$results = array_diff( $results, array_map( 'intval', explode( ',', $args['exclude_post_ids'] ) ) );
 	}
 
-	$output = ( is_singular() ) ? '<div id="wherego_related" class="wherego_related">' : '<div class="wherego_related">';
+	$widget_class = $args['is_widget'] ? 'wherego_related_widget' : 'wherego_related ';
+	$shortcode_class = $args['is_shortcode'] ? 'wherego_related_shortcode ' : '';
+
+	$post_classes = $widget_class . $shortcode_class;
+
+	/**
+	 * Filter the classes added to the div wrapper of the Contextual Related Posts.
+	 *
+	 * @since	2.0.0
+	 *
+	 * @param	string   $post_classes	Post classes string.
+	 */
+	$post_classes = apply_filters( 'wherego_post_class', $post_classes );
+
+	$output = '<div class="' . $post_classes . '">';
 
 	if ( $results ) {
 		$loop_counter = 0;
@@ -149,8 +161,6 @@ function get_wherego( $args ) {
 					break;	// End loop if post found in category
 				}
 			}
-
-			$title = wherego_max_formatted_content( get_the_title( $result->ID ), $args['title_length'] );
 
 			if ( ! $p_in_c ) {
 				$output .= wherego_before_list_item( $args, $result );
