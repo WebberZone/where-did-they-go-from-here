@@ -145,6 +145,11 @@ function get_wherego( $args ) {
 		$output .= wherego_before_list( $args );
 
 		foreach ( $results as $result ) {
+
+			if ( 0 == $result ) {
+				break;
+			}
+
 			$result = get_post( $result );
 
 			if ( ! $result || ! in_array( $result->post_type, $post_types ) ) {

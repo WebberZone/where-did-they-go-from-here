@@ -101,25 +101,31 @@ function wherego_parse_request( $wp ) {
 
 			if ( '' != $postIDcamefrom && $id != $postIDcamefrom && '' != $id ) {
 
+				$gotmeta = '';
+
 				$linkpostids = get_post_meta( $postIDcamefrom, 'wheredidtheycomefrom', true );
 
-				if ( '' == $linkpostids ) {
+				if ( $linkpostids && '' != $linkpostids ) {
+					$gotmeta = true;
+				} else {
+					$gotmeta = false;
 					$linkpostids = array();
 				}
 
-				if ( is_array( $linkpostids ) && ! in_array( $id, $linkpostids ) && ! empty( $linkpostids ) ) {
+				if ( is_array( $linkpostids ) && ! in_array( $id, $linkpostids ) && $gotmeta ) {
 					array_unshift( $linkpostids, $id );
-				} else {
+				} elseif ( is_array( $linkpostids ) && ! $gotmeta ) {
 					$linkpostids[0] = $id;
 				}
 
-				// Make sure we only keep maxLinks number of links
+				//Make sure we only keep maxLinks number of links
 				if ( count( $linkpostids ) > $maxLinks ) {
 					$linkpostids = array_slice( $linkpostids, 0, $maxLinks );
 				}
-
-				if ( ! empty( $linkpostids ) ) {
-					$metastatus = update_post_meta( $postIDcamefrom, 'wheredidtheycomefrom', $linkpostids );
+				if ( $gotmeta && ! empty( $linkpostids ) ) {
+					update_post_meta( $postIDcamefrom, 'wheredidtheycomefrom', $linkpostids );
+				} else {
+					add_post_meta( $postIDcamefrom, 'wheredidtheycomefrom', $linkpostids );
 				}
 			}
 		}

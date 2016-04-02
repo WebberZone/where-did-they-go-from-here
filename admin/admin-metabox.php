@@ -87,7 +87,7 @@ function wherego_save_meta_box( $post_id ) {
 	// if our current user can't edit this post, bail
 	if ( ! current_user_can( 'edit_post' ) ) { return; }
 
-	if ( isset( $_POST['wherego_post_ids'] ) ) {
+	if ( isset( $_POST['wherego_post_ids'] ) & ! empty( $_POST['wherego_post_ids'] ) ) {
 
 		$wherego_post_ids = array_map( 'intval', explode( ',', $_POST['wherego_post_ids'] ) );
 
@@ -96,6 +96,8 @@ function wherego_save_meta_box( $post_id ) {
 				unset( $wherego_post_ids[ $key ] );
 			}
 		}
+	} else {
+		$wherego_post_ids = '';
 	}
 
 	$linkpostids = get_post_meta( $post_id, 'wheredidtheycomefrom', true );
