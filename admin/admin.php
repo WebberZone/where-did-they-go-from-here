@@ -27,7 +27,6 @@ if ( ! defined( 'WPINC' ) ) {
 function wherego_options() {
 
 	global $wpdb;
-	$poststable = $wpdb->posts;
 
 	$wherego_settings = wherego_read_options();
 
@@ -89,11 +88,13 @@ function wherego_options() {
 		$wherego_settings['show_excerpt_feed'] = isset( $_POST['show_excerpt_feed'] ) ? true : false;
 
 		$wherego_settings['exclude_cat_slugs'] = $_POST['exclude_cat_slugs'];
-		$exclude_categories_slugs = explode( ', ', $wherego_settings['exclude_cat_slugs'] );
+		$exclude_cat_slugs = explode( ', ', $wherego_settings['exclude_cat_slugs'] );
 
-		foreach ( $exclude_categories_slugs as $exclude_categories_slug ) {
-			$catObj = get_category_by_slug( $exclude_categories_slug );
-			if ( isset( $catObj->term_id ) ) { $exclude_categories[] = $catObj->term_id; }
+		foreach ( $exclude_cat_slugs as $slug ) {
+			$catObj = get_category_by_slug( $slug );
+			if ( isset( $catObj->term_id ) ) {
+				$exclude_categories[] = $catObj->term_id;
+			}
 		}
 		$wherego_settings['exclude_categories'] = isset( $exclude_categories ) ? join( ',', $exclude_categories ) : '';
 
@@ -174,7 +175,7 @@ add_action( 'admin_menu', 'wherego_adminmenu' );
  * @return void
  */
 function wherego_wherego() {
-	global $wherego_url;
+
 	wp_enqueue_script( 'common' );
 	wp_enqueue_script( 'wp-lists' );
 	wp_enqueue_script( 'postbox' );
@@ -279,20 +280,32 @@ add_filter( 'manage_link-manager_columns', 'wherego_column' );
  * @param mixed $id
  * @return void
  */
-function wherego_value( $column_name, $id ) {
+function wherego_value( $column_name, $post_id ) {
 	global $wherego_settings;
 
 	if ( ( $column_name == 'wherego' ) && ( $wherego_settings['wg_in_admin'] ) ) {
-		global $wpdb, $post, $single;
-		$limit = $wherego_settings['limit'];
-		$lpids = get_post_meta( $post->ID, 'wheredidtheycomefrom', true );
+
+		$lpids = get_post_meta( $post_id, 'wheredidtheycomefrom', true );
 
 		$output = '';
 
 		if ( $lpids ) {
+
+			$loop = 0;
+
 			foreach ( $lpids as $lpid ) {
+				$loop++;
+
+				if ( $loop > $wherego_settings['limit'] ) {
+					break;
+				}
+
 				$output .= '<a href="' . get_permalink( $lpid ) . '" title="' . get_the_title( $lpid ) . '">' . $lpid . '</a>, ';
+
 			}
+
+			$output = substr( $output, 0, -2 );
+
 		} else {
 			$output = __( 'None', 'where-did-they-go-from-here' );
 		}

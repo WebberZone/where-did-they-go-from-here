@@ -97,7 +97,7 @@ add_action( 'plugins_loaded', 'wherego_init_lang' );
  * @return string HTML formatted list of related posts
  */
 function get_wherego( $args ) {
-	global $wpdb, $post, $wherego_settings;
+	global $post, $wherego_settings;
 
 	$defaults = array(
 		'is_widget' => false,
@@ -114,7 +114,6 @@ function get_wherego( $args ) {
 
 	parse_str( $args['post_types'], $post_types );	// Save post types in $post_types variable
 
-	$count = 0;
 	$results = get_post_meta( $post->ID, 'wheredidtheycomefrom', true );	// Extract posts list from the meta field
 
 	if ( $results ) {
@@ -138,18 +137,18 @@ function get_wherego( $args ) {
 				break; // If this is not from our select post types, end loop
 			}
 
-			$categorys = get_the_category( $result->ID );	// Fetch categories of the plugin
-
 			$p_in_c = false;	// Variable to check if post exists in a particular category
 
-			$title = wherego_max_formatted_content( get_the_title( $result->ID ), $args['title_length'] );
+			$cats = get_the_category( $result->ID );	// Fetch categories of the plugin
 
-			foreach ( $categorys as $cat ) {	// Loop to check if post exists in excluded category
+			foreach ( $cats as $cat ) {	// Loop to check if post exists in excluded category
 				$p_in_c = ( in_array( $cat->cat_ID, $exclude_categories ) ) ? true : false;
 				if ( $p_in_c ) {
 					break;	// End loop if post found in category
 				}
 			}
+
+			$title = wherego_max_formatted_content( get_the_title( $result->ID ), $args['title_length'] );
 
 			if ( ! $p_in_c ) {
 				$output .= $args['before_list_item'];
@@ -212,7 +211,7 @@ function get_wherego( $args ) {
  * @return void
  */
 function wherego_header() {
-	global $wpdb, $post, $wherego_settings;
+	global $wherego_settings;
 
 	$wherego_custom_CSS = '<style type="text/css">' . stripslashes( $wherego_settings['custom_CSS'] ) . '</style>';
 
@@ -247,12 +246,13 @@ add_action( 'wp_head', 'wherego_header' );
  */
 function ald_wherego_content( $content ) {
 
-	global $single, $post, $wherego_id, $wherego_settings;
+	global $post, $wherego_id, $wherego_settings;
 	$wherego_id = intval( $post->ID );
 
 	$exclude_on_post_ids = explode( ',', $wherego_settings['exclude_on_post_ids'] );
 
-	if ( in_array( $post->ID, $exclude_on_post_ids ) ) { return $content;	// Exit without adding related posts
+	if ( in_array( $post->ID, $exclude_on_post_ids ) ) {
+		return $content;	// Exit without adding related posts
 	}
 
 	if ( ( is_single() ) && ( $wherego_settings['add_to_content'] ) ) {
@@ -283,7 +283,7 @@ add_filter( 'the_content', 'ald_wherego_content' );
  * @return void
  */
 function ald_wherego_rss( $content ) {
-	global $post, $wherego_settings;
+	global $wherego_settings;
 
 	$limit_feed = $wherego_settings['limit_feed'];
 	$show_excerpt_feed = $wherego_settings['show_excerpt_feed'];
@@ -325,10 +325,10 @@ function echo_wherego( $args = array() ) {
  * @return void
  */
 function wherego_default_options() {
-	global $wherego_url;
+
 	$title = __( '<h3>Readers who viewed this page, also viewed:</h3>', 'where-did-they-go-from-here' );
 	$blank_output_text = __( 'Visitors have not browsed from this post. Become the first by clicking one of our related posts', 'where-did-they-go-from-here' );
-	$thumb_default = $wherego_url.'/default.png';
+	$thumb_default = WHEREGO_PLUGIN_URL . 'default.png';
 
 	// get relevant post types
 	$args = array(
@@ -399,7 +399,7 @@ function wherego_default_options() {
  * @return void
  */
 function wherego_read_options() {
-	$wherego_settings_changed = false;
+	$changed = false;
 
 	$defaults = wherego_default_options();
 
@@ -410,9 +410,9 @@ function wherego_read_options() {
 		if ( ! isset( $wherego_settings[ $k ] ) ) {
 			$wherego_settings[ $k ] = $v;
 		}
-		$wherego_settings_changed = true;
+		$changed = true;
 	}
-	if ( $wherego_settings_changed == true ) {
+	if ( $changed == true ) {
 		update_option( 'ald_wherego_settings', $wherego_settings );
 	}
 
