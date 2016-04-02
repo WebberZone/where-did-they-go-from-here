@@ -101,7 +101,10 @@ function get_wherego( $args ) {
 
 	$defaults = array(
 		'is_widget' => false,
+		'is_shortcode' => false,
+		'is_manual' => false,
 		'echo' => true,
+		'heading' => true,
 	);
 	$defaults = array_merge( $defaults, $wherego_settings );
 
@@ -120,15 +123,14 @@ function get_wherego( $args ) {
 		$results = array_diff( $results, array_map( 'intval', explode( ',', $args['exclude_post_ids'] ) ) );
 	}
 
+	$output = ( is_singular() ) ? '<div id="wherego_related" class="wherego_related">' : '<div class="wherego_related">';
+
 	if ( $results ) {
 		$loop_counter = 0;
 
-		$output = ( is_singular() ) ? '<div id="wherego_related" class="wherego_related">' : '<div class="wherego_related">';
+		$output .= wherego_heading_title( $args );
 
-		if ( ! $args['is_widget'] ) {
-			$output .= stripslashes( $args['title'] );
-		}
-		$output .= $args['before_list'];
+		$output .= wherego_before_list( $args );
 
 		foreach ( $results as $result ) {
 			$result = get_post( $result );
@@ -151,36 +153,16 @@ function get_wherego( $args ) {
 			$title = wherego_max_formatted_content( get_the_title( $result->ID ), $args['title_length'] );
 
 			if ( ! $p_in_c ) {
-				$output .= $args['before_list_item'];
+				$output .= wherego_before_list_item( $args, $result );
 
-				if ( $args['post_thumb_op'] == 'after' ) {
-					$output .= '<a href="' . get_permalink( $result->ID ) . '" ' . $rel_attribute . ' ' . $target_attribute . 'class="wherego_title">' . $title . '</a>'; // Add title if post thumbnail is to be displayed after
-				}
-				if ( $args['post_thumb_op'] == 'inline' || $args['post_thumb_op'] == 'after' || $args['post_thumb_op'] == 'thumbs_only' ) {
-					$output .= '<a href="' . get_permalink( $result->ID ) . '" ' . $rel_attribute . ' ' . $target_attribute . '>';
-
-					$output .= wherego_get_the_post_thumbnail( array(
-						'postid' => $result,
-						'thumb_height' => $args['thumb_height'],
-						'thumb_width' => $args['thumb_width'],
-						'thumb_meta' => $args['thumb_meta'],
-						'thumb_html' => $args['thumb_html'],
-						'thumb_default' => $args['thumb_default'],
-						'thumb_default_show' => $args['thumb_default_show'],
-						'scan_images' => $args['scan_images'],
-						'class' => 'wherego_thumb',
-					) );
-
-					$output .= '</a>';
-				}
-				if ( $args['post_thumb_op'] == 'inline' || $args['post_thumb_op'] == 'text_only' ) {
-					$output .= '<a href="' . get_permalink( $result->ID ) . '" ' . $rel_attribute . ' ' . $target_attribute . ' class="wherego_title">' . $title . '</a>'; // Add title when required by settings
-				}
+				$output .= wherego_list_link( $args, $result );
 
 				if ( $args['show_excerpt'] ) {
 					$output .= '<span class="wherego_excerpt"> ' . wherego_excerpt( $result->ID, $args['excerpt_length'] ) . '</span>';
 				}
-				$output .= $args['after_list_item'];
+
+				$output .= wherego_after_list_item( $args, $result );
+
 				$loop_counter++;
 			}
 			if ( $loop_counter == $args['limit'] ) {
@@ -188,19 +170,36 @@ function get_wherego( $args ) {
 			}
 		} //end of foreach loop
 		if ( $args['show_credit'] ) {
-			$output .= $args['before_list_item'];
-			$output .= __( 'Powered by', 'where-did-they-go-from-here' );
-			$output .= ' <a href="http://ajaydsouza.com/wordpress/plugins/where-did-they-go-from-here/" rel="nofollow">Where did they go from here?</a>' . $args['after_list_item'];
+			$output .= wherego_before_list_item( $args, $result );
+
+			$output .= sprintf( __( 'Powered by <a href="%s" rel="nofollow">Where did they go from here</a>', 'contextual-related-posts' ), esc_url( 'https://ajaydsouza.com/wordpress/plugins/where-did-they-go-from-here/' ) );
+
+			$output .= wherego_after_list_item( $args, $result );
+
 		}
-		$output .= $args['after_list'];
-		$output .= '</div>';
+		$output .= wherego_after_list( $args );
+
 	} else {
-		$output = ( is_singular() ) ? '<div id="wherego_related" class="wherego_related">' : '<div class="wherego_related">';
 		$output .= ( $args['blank_output'] ) ? ' ' : '<p>' . $args['blank_output_text'] . '</p>';
-		$output .= '</div>';
 	}
 
-	return $output;
+	// Check if the opening list tag is missing in the output, it means all of our results were eliminated cause of the category filter
+	if ( false === ( strpos( $output, $args['before_list_item'] ) ) ) {
+		$output = '<div class="wherego_related">';
+		$output .= ( $args['blank_output'] ) ? ' ' : '<p>' . $args['blank_output_text'] . '</p>';
+	}
+
+	$output .= '</div>'; // closing div of 'wherego_related'
+
+	/**
+	 * Filter the output
+	 *
+	 * @since	2.0.0
+	 *
+	 * @param	string	$output	Formatted list of followed posts
+	 * @param	array	$args	Complete set of arguments
+	 */
+	return apply_filters( 'get_wherego', $output, $args );
 }
 
 
@@ -426,7 +425,8 @@ function wherego_read_options() {
  *----------------------------------------------------------------------------*/
 
 require_once( WHEREGO_PLUGIN_DIR . 'includes/activate-deactivate.php' );
-require_once( WHEREGO_PLUGIN_DIR . 'includes/media.php' );
+require_once( WHEREGO_PLUGIN_DIR . 'includes/public/media.php' );
+require_once( WHEREGO_PLUGIN_DIR . 'includes/public/output-generator.php' );
 require_once( WHEREGO_PLUGIN_DIR . 'includes/tracker.php' );
 require_once( WHEREGO_PLUGIN_DIR . 'includes/formatting.php' );
 require_once( WHEREGO_PLUGIN_DIR . 'includes/deprecated.php' );
