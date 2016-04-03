@@ -14,7 +14,7 @@
  * Plugin Name:	Where did they go from here
  * Plugin URI:	http://ajaydsouza.com/wordpress/plugins/where-did-they-go-from-here/
  * Description:	Show "Readers who viewed this page, also viewed" links on your page. Much like Amazon.com's product pages. Based on the plugin by Mark Ghosh.
- * Version: 	2.0.0-beta20160402
+ * Version: 	2.0.0-beta20160403
  * Author: 		Ajay D'Souza
  * Author URI: 	https://ajaydsouza.com
  * License: 	GPL-2.0+
@@ -377,7 +377,7 @@ function wherego_default_options() {
 						'before_list_item'         => '<li>',		// Before each list item
 						'after_list_item'          => '</li>',		// After each list item
 
-						'post_thumb_op'            => 'text_only',	// Display only text in posts
+						'post_thumb_op'            => 'text_only',	// Display only text in posts. Options are: inline, after, thumbs_only, text_only
 						'thumb_height'             => '50',			// Height of thumbnails
 						'thumb_width'              => '50',			// Width of thumbnails
 						'thumb_meta'               => 'post-image',		// Meta field that is used to store the location of default thumbnail image
@@ -436,7 +436,7 @@ function wherego_read_options() {
 
 /*
  ----------------------------------------------------------------------------*
- * Modules
+ * Includes
  *----------------------------------------------------------------------------*/
 
 require_once( WHEREGO_PLUGIN_DIR . 'includes/activate-deactivate.php' );
@@ -445,6 +445,13 @@ require_once( WHEREGO_PLUGIN_DIR . 'includes/public/output-generator.php' );
 require_once( WHEREGO_PLUGIN_DIR . 'includes/tracker.php' );
 require_once( WHEREGO_PLUGIN_DIR . 'includes/formatting.php' );
 require_once( WHEREGO_PLUGIN_DIR . 'includes/deprecated.php' );
+
+/*
+ ----------------------------------------------------------------------------*
+ * Modules
+ *----------------------------------------------------------------------------*/
+
+require_once( WHEREGO_PLUGIN_DIR . 'includes/modules/shortcode.php' );
 
 
 /*

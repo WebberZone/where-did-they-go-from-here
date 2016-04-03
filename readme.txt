@@ -49,6 +49,7 @@ The plugin will track what pages or posts visitors on your sites click through a
 = 2.0.0 =
 * Features:
 	* Multisite activation and uninstall
+	* Shortcode: Use `[wherego]` to display the followed posts. For a range of options check out the function `wherego_default_options`
 
 * Enhancements:
 	* Enhancements to the metabox where the list of followed posts are cleaned for incorrect post IDs or published posts when saving the post
