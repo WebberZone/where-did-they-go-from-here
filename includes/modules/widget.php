@@ -52,6 +52,9 @@ class WhereGo_Widget extends WP_Widget {
 
 		$post_thumb_op = isset( $instance['post_thumb_op'] ) ? $instance['post_thumb_op'] : 'text_only';
 
+		$thumb_height = ( isset( $instance['thumb_height'] ) && '' !== $instance['thumb_height'] ) ? intval( $instance['thumb_height'] ) : $wherego_settings['thumb_height'];
+		$thumb_width = ( isset( $instance['thumb_width'] ) && '' !== $instance['thumb_width'] ) ? intval( $instance['thumb_width'] ) : $wherego_settings['thumb_width'];
+
 		// Start building the output now.
 		$output = $args['before_widget'];
 		$output .= $args['before_title'] . $title . $args['after_title'];
@@ -62,6 +65,8 @@ class WhereGo_Widget extends WP_Widget {
 			'heading' => 0,
 			'limit' => $limit,
 			'post_thumb_op' => $post_thumb_op,
+			'thumb_height' => $thumb_height,
+			'thumb_width' => $thumb_width,
 		);
 
 		/**
@@ -91,7 +96,9 @@ class WhereGo_Widget extends WP_Widget {
 	public function form( $instance ) {
 		$title = isset( $instance['title'] ) ? $instance['title'] : '';
 		$limit = isset( $instance['limit'] ) ? $instance['limit'] : '';
-		$post_thumb_op = isset( $instance['post_thumb_op'] ) ? esc_attr( $instance['post_thumb_op'] ) : 'text_only';
+		$post_thumb_op = isset( $instance['post_thumb_op'] ) ? $instance['post_thumb_op'] : 'text_only';
+		$thumb_width = isset( $instance['thumb_width'] ) ? $instance['thumb_width'] : '';
+		$thumb_height = isset( $instance['thumb_height'] ) ? $instance['thumb_height'] : '';
 
 		?>
 
@@ -113,6 +120,16 @@ class WhereGo_Widget extends WP_Widget {
 				<option value="thumbs_only" <?php selected( $post_thumb_op, 'thumbs_only', 0 ) ?>><?php esc_html_e( 'Thumbnails only', 'where-did-they-go-from-here' ); ?></option>
 				<option value="text_only" <?php selected( $post_thumb_op, 'text_only', 0 ) ?>><?php esc_html_e( 'Text only', 'where-did-they-go-from-here' ); ?></option>
 			</select>
+		</p>
+
+		<p>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'thumb_width' ) ); ?>"><?php esc_html_e( 'Thumb width', 'where-did-they-go-from-here' ); ?></label>
+			<input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'thumb_width' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'thumb_width' ) ); ?>" type="text" value="<?php echo esc_attr( $thumb_width ); ?>">
+		</p>
+
+		<p>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'thumb_height' ) ); ?>"><?php esc_html_e( 'Thumb height', 'where-did-they-go-from-here' ); ?></label>
+			<input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'thumb_height' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'thumb_height' ) ); ?>" type="text" value="<?php echo esc_attr( $thumb_height ); ?>">
 		</p>
 
 		<?php
@@ -142,6 +159,8 @@ class WhereGo_Widget extends WP_Widget {
 		$instance['title'] = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
 		$instance['limit'] = ( ! empty( $new_instance['limit'] ) ) ? intval( $new_instance['limit'] ) : '';
 		$instance['post_thumb_op'] = $new_instance['post_thumb_op'];
+		$instance['thumb_width'] = ( ! empty( $new_instance['thumb_width'] ) ) ? intval( $new_instance['thumb_width'] ) : '';
+		$instance['thumb_height'] = ( ! empty( $new_instance['thumb_height'] ) ) ? intval( $new_instance['thumb_height'] ) : '';
 
 		/**
 		 * Filters Update widget options array.
