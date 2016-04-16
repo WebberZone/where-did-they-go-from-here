@@ -46,15 +46,15 @@ function wherego_call_meta_box() {
 	$value = ( $results ) ? implode( ',', $results ) : '';
 
 ?>
-    <p>
+	<p>
 		<label for="wherego_post_ids"><?php _e( "Followed posts' IDs:", 'where-did-they-go-from-here' ); ?></label>
 		<input type="text" id="wherego_post_ids" name="wherego_post_ids" value="<?php echo esc_attr( $value ) ?>" size="25" />
 		<em><?php _e( 'Enter a comma separated list of valid post/page IDs. Save this post to see the updated list below.', 'where-did-they-go-from-here' ); ?></em>
-    </p>
+	</p>
 	<?php if ( $results ) { ?>
 
 		<h3><?php _e( 'Followed posts:', 'where-did-they-go-from-here' ); ?></h3>
-        <ol>
+		<ol>
 		<?php
 		foreach ( $results as $result ) {
 			$title = get_the_title( $result );
@@ -63,7 +63,7 @@ function wherego_call_meta_box() {
 			echo '</li>';
 		}
 		?>
-        </ol>
+		</ol>
 	<?php } ?>
 
 <?php

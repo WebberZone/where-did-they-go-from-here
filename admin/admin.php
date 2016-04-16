@@ -180,53 +180,53 @@ function wherego_wherego() {
 	wp_enqueue_script( 'wp-lists' );
 	wp_enqueue_script( 'postbox' );
 ?>
-    <style type="text/css">
-    .postbox .handlediv:before {
-        right:12px;
-        font:400 20px/1 dashicons;
-        speak:none;
-        display:inline-block;
-        top:0;
-        position:relative;
-        -webkit-font-smoothing:antialiased;
-        -moz-osx-font-smoothing:grayscale;
-        text-decoration:none!important;
-        content:'\f142';
-        padding:8px 10px;
-    }
-    .postbox.closed .handlediv:before {
-        content: '\f140';
-    }
-    .wrap h2:before {
-        content: "\f307";
-        display: inline-block;
-        -webkit-font-smoothing: antialiased;
-        font: normal 29px/1 'dashicons';
-        vertical-align: middle;
-        margin-right: 0.3em;
-    }
-    </style>
+	<style type="text/css">
+	.postbox .handlediv:before {
+		right:12px;
+		font:400 20px/1 dashicons;
+		speak:none;
+		display:inline-block;
+		top:0;
+		position:relative;
+		-webkit-font-smoothing:antialiased;
+		-moz-osx-font-smoothing:grayscale;
+		text-decoration:none!important;
+		content:'\f142';
+		padding:8px 10px;
+	}
+	.postbox.closed .handlediv:before {
+		content: '\f140';
+	}
+	.wrap h2:before {
+		content: "\f307";
+		display: inline-block;
+		-webkit-font-smoothing: antialiased;
+		font: normal 29px/1 'dashicons';
+		vertical-align: middle;
+		margin-right: 0.3em;
+	}
+	</style>
 
-    <script type="text/javascript">
-        //<![CDATA[
-        jQuery(document).ready( function($) {
-            // close postboxes that should be closed
-            $('.if-js-closed').removeClass('if-js-closed').addClass('closed');
-            // postboxes setup
-            postboxes.add_postbox_toggles('crp_options');
-        });
-        //]]>
-    </script>
+	<script type="text/javascript">
+		//<![CDATA[
+		jQuery(document).ready( function($) {
+			// close postboxes that should be closed
+			$('.if-js-closed').removeClass('if-js-closed').addClass('closed');
+			// postboxes setup
+			postboxes.add_postbox_toggles('crp_options');
+		});
+		//]]>
+	</script>
 
 	<link rel="stylesheet" type="text/css" href="<?php echo WHEREGO_PLUGIN_URL; ?>/admin/wick/wick.css" />
-    <script type="text/javascript" language="JavaScript">
-        //<![CDATA[
-        function checkForm() {
-            answer = true;
-            if (siw && siw.selectingSomething)
-                answer = false;
-            return answer;
-        }//
+	<script type="text/javascript" language="JavaScript">
+		//<![CDATA[
+		function checkForm() {
+			answer = true;
+			if (siw && siw.selectingSomething)
+				answer = false;
+			return answer;
+		}//
 
 		<?php
 		function wick_data() {
@@ -243,8 +243,8 @@ function wherego_wherego() {
 		}
 		wick_data();
 		?>
-    //]]>
-    </script>
+	//]]>
+	</script>
 	<script type="text/javascript" src="<?php echo WHEREGO_PLUGIN_URL; ?>/admin/wick/wick.js"></script>
 <?php
 }

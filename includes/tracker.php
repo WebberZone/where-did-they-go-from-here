@@ -118,7 +118,7 @@ function wherego_parse_request( $wp ) {
 					$linkpostids[0] = $id;
 				}
 
-				//Make sure we only keep maxLinks number of links
+				// Make sure we only keep maxLinks number of links
 				if ( count( $linkpostids ) > $maxLinks ) {
 					$linkpostids = array_slice( $linkpostids, 0, $maxLinks );
 				}
