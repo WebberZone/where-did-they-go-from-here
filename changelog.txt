@@ -1,0 +1,87 @@
+This file holds the older changelog history for the plugin
+
+= 1.7.1 =
+* New: Fixed bug with `echo_ald_wherego` introduced in v1.7
+* New: You can now view the default image in the options page
+* Modified: `wherego_postimage` filter now accepts the 6th attribute which is the post object. This can allow for custom functions that allow you to dynamically modify the image you wish to use as the thumbnail.
+
+= 1.7 =
+* New: Redesigned responsive admin interface
+* New: Edit the list of followed post IDs in the Write Post screen
+* Fixed: Language initialisation
+* Fixed: Custom post types in list of posts
+* Modified: Tracking script to improve compatiblity with caching plugins
+
+= 1.6 =
+* New: Redesigned admin interface
+* New: More thumbnail options available including using timthumb to resize images
+* New: Posts list is wrapped in a new class `wherego_related` which should be the primary method to style the list
+* New: Option to add `nofollow` to links
+* New: Option to open links in new window
+* New: Limit the length of the title in the posts list
+* New: Custom styles tab to quickly add CSS to style the output
+* New: More display options. You can now choose to display the list of visited posts on home and archive pages
+* New: Separate feed settings
+* New: Option to exclude display of visited posts on select post/page IDs
+* New: Option to exclude certain posts/page IDs from the visited posts
+* Fixed: Plugin will no longer display *Ajax error*
+* Fixed: Plugin will now work without errors with `WP_DEBUG` set to TRUE
+
+= 1.5.4 =
+* Fixed: Error when deleting the plugin
+
+= 1.5.3 =
+* New: Better support for custom post types
+
+= 1.5.2 =
+* Fixed: PHP Notices for "Use of undefined constant limit"
+
+= 1.5.1 =
+* New: Russian translation
+
+= 1.5 =
+* Fixed: Compability problem with WordPress blog in the subdirectory
+* New: Option to excludes posts from certain categories to be displayed
+
+= 1.4.2 =
+* Fixed: Languages were not detected properly. Added Italian language
+
+= 1.4.1 =
+* Fixed: Minor compatibility issue with other plugins
+
+= 1.4 =
+* New: Implementation for tracking hits even on blogs with non-standard WordPress installs
+* New: Reset button to reset all browsing data
+* New: Option to exclude pages in post list
+* New: Choose if you want to blank out display or display a custom message
+* New: The plugin extracts the first image in the post and displays that if the post thumbnail and the post-image meta field is missing
+* Fixed: Postmeta detection for thumbnails
+* Fixed: Compatibility with caching plugins like W3 Total Cache and WP Super Cache
+* Some optimisation and code cleaning for better performance
+
+= 1.3.1 =
+* Fixed problem where plugin was not tracking visits properly
+
+= 1.3 =
+* Added localisation support
+* Better support for blogs where wp-content folder has been moved
+* Added support for post thumbnails
+* Added option to display the post excerpt in the list
+* All parts of the list are now wrapped in classes for easy CSS customisation
+* Uninstall will clean up the meta tables
+
+= 1.2.1 =
+* Fixed compatibility issues with WordPress 2.9
+
+= 1.2 =
+* Fixed a bug with posts not being tracked on blogs hosted in a folder
+
+= 1.1 =
+* Compatible with caching plugins. Tweaks that should improve tracking.
+* Display the list of posts in Edit pages / posts of WP-Admin
+* Blanked out display when no related posts are found instead of #N/A
+
+= 1.0 =
+* Release
+
+
