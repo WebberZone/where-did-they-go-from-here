@@ -258,7 +258,7 @@ add_action( 'wp_head', 'wherego_header' );
  * @param mixed $content
  * @return void
  */
-function ald_wherego_content( $content ) {
+function wherego_content( $content ) {
 
 	global $post, $wherego_id, $wherego_settings;
 	$wherego_id = intval( $post->ID );
@@ -285,7 +285,7 @@ function ald_wherego_content( $content ) {
 		return $content;
 	}
 }
-add_filter( 'the_content', 'ald_wherego_content' );
+add_filter( 'the_content', 'wherego_content' );
 
 
 
@@ -296,7 +296,7 @@ add_filter( 'the_content', 'ald_wherego_content' );
  * @param mixed $content
  * @return void
  */
-function ald_wherego_rss( $content ) {
+function wherego_rss( $content ) {
 	global $wherego_settings;
 
 	$limit_feed = $wherego_settings['limit_feed'];
@@ -309,8 +309,8 @@ function ald_wherego_rss( $content ) {
 		return $content;
 	}
 }
-add_filter( 'the_excerpt_rss', 'ald_wherego_rss' );
-add_filter( 'the_content_feed', 'ald_wherego_rss' );
+add_filter( 'the_excerpt_rss', 'wherego_rss' );
+add_filter( 'the_content_feed', 'wherego_rss' );
 
 
 /**

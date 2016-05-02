@@ -77,7 +77,7 @@ if ( ! defined( 'WPINC' ) ) {
 						<label><input type="checkbox" name="add_to_category_archives" id="add_to_category_archives" <?php if ( $wherego_settings['add_to_category_archives'] ) { echo 'checked="checked"'; } ?> /> <?php _e( 'Category archives', 'where-did-they-go-from-here' ); ?></label><br />
 						<label><input type="checkbox" name="add_to_tag_archives" id="add_to_tag_archives" <?php if ( $wherego_settings['add_to_tag_archives'] ) { echo 'checked="checked"'; } ?> /> <?php _e( 'Tag archives', 'where-did-they-go-from-here' ); ?></label></label><br />
 						<label><input type="checkbox" name="add_to_archives" id="add_to_archives" <?php if ( $wherego_settings['add_to_archives'] ) { echo 'checked="checked"'; } ?> /> <?php _e( 'Other archives', 'where-did-they-go-from-here' ); ?></label></label><br />
-						<p class="description"><?php _e( 'If you choose to disable this, please add <code>&lt;?php if(function_exists(\'echo_ald_wherego\')) echo_ald_wherego(); ?&gt;</code> to your template file where you want it displayed', 'where-did-they-go-from-here' ); ?></p>
+						<p class="description"><?php _e( 'If you choose to disable this, please add <code>&lt;?php if(function_exists(\'echo_wherego\')) echo_wherego(); ?&gt;</code> to your template file where you want it displayed', 'where-did-they-go-from-here' ); ?></p>
 					</td>
 				</tr>
 				<tr><th scope="row"><label for="wg_in_admin"><?php _e( 'Display list of posts on All Posts page', 'where-did-they-go-from-here' ); ?></label></th>
