@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/ajaydsouza/where-did-they-go-from-here.svg?branch=master)](https://travis-ci.org/ajaydsouza/where-did-they-go-from-here) [![Code Climate](https://codeclimate.com/github/ajaydsouza/where-did-they-go-from-here/badges/gpa.svg)](https://codeclimate.com/github/ajaydsouza/where-did-they-go-from-here) 
+
 # Where did they go from here
 
 __Requires:__ 3.0
