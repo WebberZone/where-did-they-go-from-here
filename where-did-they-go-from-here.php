@@ -96,7 +96,7 @@ add_action( 'plugins_loaded', 'wherego_init_lang' );
  * @param string|array $args Parameters in a query string format or array
  * @return string HTML formatted list of related posts
  */
-function get_wherego( $args ) {
+function get_wherego( $args = array() ) {
 	global $post, $wherego_settings;
 
 	$defaults = array(
@@ -452,6 +452,7 @@ require_once( WHEREGO_PLUGIN_DIR . 'includes/deprecated.php' );
  *----------------------------------------------------------------------------*/
 
 require_once( WHEREGO_PLUGIN_DIR . 'includes/modules/shortcode.php' );
+require_once( WHEREGO_PLUGIN_DIR . 'includes/modules/widget.php' );
 
 
 /*
