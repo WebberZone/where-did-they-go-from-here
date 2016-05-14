@@ -2,9 +2,9 @@
 
 # Where did they go from here
 
-__Requires:__ 3.0
+__Requires:__ 4.0
 
-__Tested up to:__ 4.5
+__Tested up to:__ 4.6
 
 __License:__ [GPL-2.0+](http://www.gnu.org/licenses/gpl-2.0.html)
 

@@ -4,7 +4,7 @@ Contributors: Ajay
 Donate link: http://ajaydsouza.com/donate/
 Stable tag: trunk
 Requires at least: 4.0
-Tested up to: 4.5
+Tested up to: 4.6
 License: GPLv2 or later
 
 Show "Readers who viewed this page, also viewed" links on your page. Much like Amazon.com's product pages.
