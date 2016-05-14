@@ -464,6 +464,7 @@ if ( is_admin() || ( defined( 'WP_CLI' ) && WP_CLI ) ) {
 
 	require_once( WHEREGO_PLUGIN_DIR . 'admin/admin.php' );
 	require_once( WHEREGO_PLUGIN_DIR . 'admin/admin-metabox.php' );
+	require_once( WHEREGO_PLUGIN_DIR . 'admin/admin-columns.php' );
 
 }
 
