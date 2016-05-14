@@ -43,6 +43,10 @@ class WhereGo_Widget extends WP_Widget {
 	public function widget( $args, $instance ) {
 		global $wherego_settings;
 
+		if ( ! is_singular() ) {
+			return;
+		}
+
 		$title = apply_filters( 'widget_title', empty( $instance['title'] ) ? strip_tags( $wherego_settings['title'] ) : $instance['title'] );
 
 		$limit = isset( $instance['limit'] ) ? $instance['limit'] : $wherego_settings['limit'];
