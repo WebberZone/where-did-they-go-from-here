@@ -14,16 +14,55 @@ if ( ! defined( 'WPINC' ) ) {
 ?>
 
 <div class="wrap">
-	<h2>Where did they go from here?</h2>
+	<h1>Where did they go from here?</h1>
+
+	<ul class="subsubsub">
+		<?php
+			/**
+			 * Fires before the navigation bar in the Settings page
+			 *
+			 * @since 2.0.0
+			 */
+			do_action( 'wherego_admin_nav_bar_before' )
+		?>
+
+	  	<li><a href="#genopdiv"><?php _e( 'General options', 'where-did-they-go-from-here' ); ?></a> | </li>
+	  	<li><a href="#outputopdiv"><?php _e( 'Output options', 'where-did-they-go-from-here' ); ?></a> | </li>
+	  	<li><a href="#thumbopdiv"><?php _e( 'Thumbnail options', 'where-did-they-go-from-here' ); ?></a> | </li>
+	  	<li><a href="#customcssdiv"><?php _e( 'Styles', 'where-did-they-go-from-here' ); ?></a> | </li>
+	  	<li><a href="#feedopdiv"><?php _e( 'Feed options', 'where-did-they-go-from-here' ); ?></a></li>
+
+		<?php
+			/**
+			 * Fires after the navigation bar in the Settings page
+			 *
+			 * @since 2.0.0
+			 */
+			do_action( 'wherego_admin_nav_bar_after' )
+		?>
+	</ul>
+
 	<div id="poststuff">
 	<div id="post-body" class="metabox-holder columns-2">
 	<div id="post-body-content">
 	  <form method="post" id="wherego_options" name="wherego_options" onsubmit="return checkForm()">
+
 		<div id="genopdiv" class="postbox"><div class="handlediv" title="Click to toggle"><br /></div>
 	      <h3 class='hndle'><span><?php _e( 'General options', 'where-did-they-go-from-here' ); ?></span></h3>
 		  <div class="inside">
 			<table class="form-table">
-			<tbody>
+
+				<?php
+					/**
+					 * Fires before General options block.
+					 *
+					 * @since 2.0.0
+					 *
+					 * @param	array	$wherego_settings	Where did they go from here settings array
+					 */
+					do_action( 'wherego_admin_general_options_before', $wherego_settings );
+				?>
+
 				<tr><th scope="row"><label for="limit"><?php _e( 'Number of posts to display: ', 'where-did-they-go-from-here' ); ?></label></th>
 					<td>
 					  <input type="textbox" name="limit" id="limit" value="<?php echo stripslashes( $wherego_settings['limit'] ); ?>">
@@ -77,7 +116,7 @@ if ( ! defined( 'WPINC' ) ) {
 						<label><input type="checkbox" name="add_to_category_archives" id="add_to_category_archives" <?php if ( $wherego_settings['add_to_category_archives'] ) { echo 'checked="checked"'; } ?> /> <?php _e( 'Category archives', 'where-did-they-go-from-here' ); ?></label><br />
 						<label><input type="checkbox" name="add_to_tag_archives" id="add_to_tag_archives" <?php if ( $wherego_settings['add_to_tag_archives'] ) { echo 'checked="checked"'; } ?> /> <?php _e( 'Tag archives', 'where-did-they-go-from-here' ); ?></label></label><br />
 						<label><input type="checkbox" name="add_to_archives" id="add_to_archives" <?php if ( $wherego_settings['add_to_archives'] ) { echo 'checked="checked"'; } ?> /> <?php _e( 'Other archives', 'where-did-they-go-from-here' ); ?></label></label><br />
-						<p class="description"><?php _e( 'If you choose to disable this, please add <code>&lt;?php if(function_exists(\'echo_wherego\')) echo_wherego(); ?&gt;</code> to your template file where you want it displayed', 'where-did-they-go-from-here' ); ?></p>
+						<p class="description"><?php _e( "If you choose to disable this, please add <code>&lt;?php if ( function_exists( 'echo_wherego' ) ) { echo_wherego(); } ?&gt;</code> to your template file where you want it displayed", 'where-did-they-go-from-here' ); ?></p>
 					</td>
 				</tr>
 				<tr><th scope="row"><label for="wg_in_admin"><?php _e( 'Display list of posts on All Posts page', 'where-did-they-go-from-here' ); ?></label></th>
@@ -89,15 +128,43 @@ if ( ! defined( 'WPINC' ) ) {
 					<td><input type="checkbox" name="show_credit" id="show_credit" <?php if ( $wherego_settings['show_credit'] ) { echo 'checked="checked"'; } ?> /> <em><?php _e( 'Optional', 'where-did-they-go-from-here' ); ?></em>
 					</td>
 				</tr>
-			</tbody>
+
+				<?php
+					/**
+					 * Fires after General options block.
+					 *
+					 * @since 2.0.0
+					 *
+					 * @param	array	$wherego_settings	Where did they go from here settings array
+					 */
+					do_action( 'wherego_admin_general_options_after', $wherego_settings );
+				?>
+
 			</table>
+
+			<p>
+			  <input type="submit" name="wherego_save" id="wherego_genop_save" value="<?php _e( 'Save Options', 'where-did-they-go-from-here' ); ?>" class="button button-primary" />
+			</p>
+
 		  </div>
 		</div>
+
 		<div id="outputopdiv" class="postbox"><div class="handlediv" title="Click to toggle"><br /></div>
 	      <h3 class='hndle'><span><?php _e( 'Output options', 'where-did-they-go-from-here' ); ?></span></h3>
 		  <div class="inside">
 			<table class="form-table">
-			<tbody>
+
+				<?php
+					/**
+					 * Fires before output options main block.
+					 *
+					 * @since 2.0.0
+					 *
+					 * @param	array	$wherego_settings	Where did they go from here settings array
+					 */
+					do_action( 'wherego_admin_output_options_before', $wherego_settings );
+				?>
+
 				<tr><th scope="row"><label for="title"><?php _e( 'Title of posts: ', 'where-did-they-go-from-here' ); ?></label></th>
 					<td><input type="textbox" name="title" id="title" value="<?php echo stripslashes( $wherego_settings['title'] ); ?>" style="width:250px">
 					</td>
@@ -149,8 +216,44 @@ if ( ! defined( 'WPINC' ) ) {
 				<tr><th scope="row"><label for="after_list"><?php _e( 'HTML to display after the list of posts: ', 'where-did-they-go-from-here' ); ?></label></th>
 					<td><input type="textbox" name="after_list" id="after_list" value="<?php echo esc_attr( stripslashes( $wherego_settings['after_list'] ) ); ?>" style="width:250px" /></td>
 				</tr>
-				<tr style="background: #eee"><th scope="row" colspan="2"><?php _e( 'Post thumbnail options:', 'where-did-they-go-from-here' ); ?></th>
-				</tr>
+
+				<?php
+					/**
+					 * Fires after Output options main block.
+					 *
+					 * @since 2.0.0
+					 *
+					 * @param	array	$wherego_settings	Where did they go from here settings array
+					 */
+					do_action( 'wherego_admin_output_options_after', $wherego_settings );
+				?>
+
+			</table>
+
+			<p>
+			  <input type="submit" name="wherego_save" id="wherego_outputop_save" value="<?php _e( 'Save Options', 'where-did-they-go-from-here' ); ?>" class="button button-primary" />
+			</p>
+
+	      </div> <!-- // inside -->
+	    </div> <!-- // outputopdiv -->
+
+	    <div id="thumbopdiv" class="postbox"><div class="handlediv" title="Click to toggle"><br /></div>
+	      <h3 class='hndle'><span><?php _e( 'Thumbnail options', 'where-did-they-go-from-here' ); ?></span></h3>
+	      <div class="inside">
+
+			<table class="form-table">
+
+				<?php
+					/**
+					 * Fires before Thumbnail options block under Output options.
+					 *
+					 * @since 2.0.0
+					 *
+					 * @param	array	$wherego_settings	Where did they go from here settings array
+					 */
+					do_action( 'wherego_admin_thumb_options_before', $wherego_settings );
+				?>
+
 				<tr><th scope="row"><label for="post_thumb_op"><?php _e( 'Location of post thumbnail:', 'where-did-they-go-from-here' ); ?></label></th>
 					<td>
 						<label>
@@ -192,11 +295,68 @@ if ( ! defined( 'WPINC' ) ) {
 					<td>
 						<input type="textbox" name="thumb_default" id="thumb_default" value="<?php echo esc_attr( stripslashes( $wherego_settings['thumb_default'] ) ); ?>" style="width:100%"> <br />
 					  	<?php if ( '' != $wherego_settings['thumb_default'] ) { echo "<img src='{$wherego_settings['thumb_default']}' style='max-width:200px' />"; } ?>
-						<p class="description"><?php _e( "The plugin will first check if the post contains a thumbnail. If it doesn't then it will check the meta field. If this is not available, then it will show the default image as specified above", CRP_LOCAL_NAME ); ?></p>
+						<p class="description"><?php _e( "The plugin will first check if the post contains a thumbnail. If it doesn't then it will check the meta field. If this is not available, then it will show the default image as specified above", 'where-did-they-go-from-here' ); ?></p>
 					</td>
 				</tr>
-			</tbody>
+
+				<?php
+					/**
+					 * Fires after Thumbnail options block under Output options.
+					 *
+					 * @since 2.0.0
+					 *
+					 * @param	array	$wherego_settings	Where did they go from here settings array
+					 */
+					do_action( 'wherego_admin_thumb_options_after', $wherego_settings );
+				?>
+
 			</table>
+
+			<p>
+			  <input type="submit" name="wherego_save" id="wherego_thumbop_save" value="<?php _e( 'Save Options', 'where-did-they-go-from-here' ); ?>" class="button button-primary" />
+			</p>
+
+		  </div>
+		</div>
+
+		<div id="customcssdiv" class="postbox"><div class="handlediv" title="Click to toggle"><br /></div>
+	      <h3 class='hndle'><span><?php _e( 'Custom styles', 'where-did-they-go-from-here' ); ?></span></h3>
+		  <div class="inside">
+			<table class="form-table">
+
+				<?php
+					/**
+					 * Fires before Custom styles options block.
+					 *
+					 * @since 2.0.0
+					 *
+					 * @param	array	$wherego_settings	Where did they go from here settings array
+					 */
+					do_action( 'wherego_admin_custom_styles_before', $wherego_settings );
+				?>
+
+			<tr><th scope="row" colspan="2"><?php _e( 'Custom CSS to add to header:', 'where-did-they-go-from-here' ); ?></th>
+			</tr>
+			<tr><td scope="row" colspan="2"><textarea name="custom_CSS" id="custom_CSS" rows="15" cols="80"><?php echo stripslashes( $wherego_settings['custom_CSS'] ); ?></textarea>
+			<br /><em><?php _e( 'Do not include <code>style</code> tags. Check out the <a href="http://wordpress.org/extend/plugins/where-did-they-go-from-here/faq/" target="_blank">FAQ</a> for available CSS classes to style.', 'where-did-they-go-from-here' ); ?></em></td></tr>
+
+					<?php
+						/**
+						 * Fires after style checkboxes which allows an addon to add more styles.
+						 *
+						 * @since 2.0.0
+						 *
+						 * @param	array	$wherego_settings	Where did they go from here settings array
+						 */
+						do_action( 'wherego_admin_wherego_styles', $wherego_settings );
+					?>
+
+			</table>
+
+			<p>
+			  <input type="submit" name="wherego_save" id="wherego_customcss_save" value="<?php _e( 'Save Options', 'where-did-they-go-from-here' ); ?>" class="button button-primary" />
+			</p>
+
 		  </div>
 		</div>
 		<div id="feedopdiv" class="postbox"><div class="handlediv" title="Click to toggle"><br /></div>
@@ -204,6 +364,18 @@ if ( ! defined( 'WPINC' ) ) {
 		  <div class="inside">
 			<p class="description"><?php _e( 'Below options override the followed posts settings for your blog feed. These only apply if you have selected to add followed posts to Feeds in the General Options tab.', 'where-did-they-go-from-here' ); ?></p>
 			<table class="form-table">
+
+				<?php
+					/**
+					 * Fires before Feed options block.
+					 *
+					 * @since 2.0.0
+					 *
+					 * @param	array	$wherego_settings	Where did they go from here settings array
+					 */
+					do_action( 'wherego_admin_feed_options_before', $wherego_settings );
+				?>
+
 			<tr style="vertical-align: top;"><th scope="row"><label for="limit_feed"><?php _e( 'Number of posts to display: ', 'where-did-they-go-from-here' ); ?></label></th>
 			<td><input type="textbox" name="limit_feed" id="limit_feed" value="<?php echo esc_attr( stripslashes( $wherego_settings['limit_feed'] ) ); ?>"></td>
 			</tr>
@@ -236,20 +408,35 @@ if ( ! defined( 'WPINC' ) ) {
 			<tr style="vertical-align: top;"><th scope="row"><label for="thumb_height_feed"><?php _e( 'Maximum height of the thumbnail: ', 'where-did-they-go-from-here' ); ?></label></th>
 			<td><input type="textbox" name="thumb_height_feed" id="thumb_height_feed" value="<?php echo esc_attr( stripslashes( $wherego_settings['thumb_height_feed'] ) ); ?>" style="width:30px" />px</td>
 			</tr>
+
+				<?php
+					/**
+					 * Fires after Feed options block.
+					 *
+					 * @since 2.0.0
+					 *
+					 * @param	array	$wherego_settings	Where did they go from here settings array
+					 */
+					do_action( 'wherego_admin_feed_options_after', $wherego_settings );
+				?>
+
 			</table>
+
+			<p>
+			  <input type="submit" name="wherego_save" id="wherego_feedop_save" value="<?php _e( 'Save Options', 'where-did-they-go-from-here' ); ?>" class="button button-primary" />
+			</p>
+
 		  </div>
 		</div>
-		<div id="customcssdiv" class="postbox"><div class="handlediv" title="Click to toggle"><br /></div>
-	      <h3 class='hndle'><span><?php _e( 'Custom styles', 'where-did-they-go-from-here' ); ?></span></h3>
-		  <div class="inside">
-			<table class="form-table">
-			<tr><th scope="row" colspan="2"><?php _e( 'Custom CSS to add to header:', 'where-did-they-go-from-here' ); ?></th>
-			</tr>
-			<tr><td scope="row" colspan="2"><textarea name="custom_CSS" id="custom_CSS" rows="15" cols="80"><?php echo stripslashes( $wherego_settings['custom_CSS'] ); ?></textarea>
-			<br /><em><?php _e( 'Do not include <code>style</code> tags. Check out the <a href="http://wordpress.org/extend/plugins/where-did-they-go-from-here/faq/" target="_blank">FAQ</a> for available CSS classes to style.', 'where-did-they-go-from-here' ); ?></em></td></tr>
-			</table>
-		  </div>
-		</div>
+
+		<?php
+			/**
+			 * Fires after all the options are displayed. Allows a custom function to add a new option block.
+			 *
+			 * @since 2.0.0
+			 */
+			do_action( 'wherego_admin_more_options' )
+		?>
 
 		<p>
 		  <input type="submit" name="wherego_save" id="wherego_save" value="<?php _e( 'Save Options', 'where-did-they-go-from-here' ); ?>" class="button button-primary" />
@@ -261,52 +448,9 @@ if ( ! defined( 'WPINC' ) ) {
 	</div><!-- /post-body-content -->
 	<div id="postbox-container-1" class="postbox-container">
 	  <div id="side-sortables" class="meta-box-sortables ui-sortable">
-		<div id="donatediv" class="postbox"><div class="handlediv" title="Click to toggle"><br /></div>
-	      <h3 class='hndle'><span><?php _e( 'Support the development', 'where-did-they-go-from-here' ); ?></span></h3>
-		  <div class="inside">
-			<div id="donate-form">
-				<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-				<input type="hidden" name="cmd" value="_xclick">
-				<input type="hidden" name="business" value="donate@ajaydsouza.com">
-				<input type="hidden" name="lc" value="IN">
-				<input type="hidden" name="item_name" value="Donation for Where did they go from here?">
-				<input type="hidden" name="item_number" value="wherego">
-				<strong><?php _e( 'Enter amount in USD: ', 'where-did-they-go-from-here' ); ?></strong> <input name="amount" value="10.00" size="6" type="text"><br />
-				<input type="hidden" name="currency_code" value="USD">
-				<input type="hidden" name="button_subtype" value="services">
-				<input type="hidden" name="bn" value="PP-BuyNowBF:btn_donate_LG.gif:NonHosted">
-				<input type="image" src="https://www.paypal.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="<?php _e( 'Send your donation to the author of', 'where-did-they-go-from-here' ); ?> Where did they go from here??">
-				<img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">
-				</form>
-			</div>
-		  </div>
-		</div>
-		<div id="followdiv" class="postbox"><div class="handlediv" title="Click to toggle"><br /></div>
-	      <h3 class='hndle'><span><?php _e( 'Follow me', 'where-did-they-go-from-here' ); ?></span></h3>
-		  <div class="inside">
-			<div id="follow-us">
-				<iframe src="//www.facebook.com/plugins/likebox.php?href=http%3A%2F%2Fwww.facebook.com%2Fajaydsouzacom&amp;width=292&amp;height=62&amp;colorscheme=light&amp;show_faces=false&amp;border_color&amp;stream=false&amp;header=true&amp;appId=113175385243" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:292px; height:62px;" allowTransparency="true"></iframe>
-				<div style="text-align:center"><a href="https://twitter.com/ajaydsouza" class="twitter-follow-button" data-show-count="false" data-size="large" data-dnt="true">Follow @ajaydsouza</a>
-				<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script></div>
-			</div>
-		  </div>
-		</div>
-		<div id="qlinksdiv" class="postbox"><div class="handlediv" title="Click to toggle"><br /></div>
-	      <h3 class='hndle'><span><?php _e( 'Quick links', 'where-did-they-go-from-here' ); ?></span></h3>
-		  <div class="inside">
-			<div id="quick-links">
-				<ul>
-					<li><a href="http://ajaydsouza.com/wordpress/plugins/where-did-they-go-from-here/"><?php _e( 'Where did they go from here? plugin page', 'where-did-they-go-from-here' ); ?></a></li>
-					<li><a href="https://github.com/ajaydsouza/where-did-they-go-from-here"><?php _e( 'Plugin on GitHub', 'where-did-they-go-from-here' ); ?></a></li>
-					<li><a href="https://wordpress.org/plugins/where-did-they-go-from-here/faq/"><?php _e( 'FAQ', 'where-did-they-go-from-here' ); ?></a></li>
-					<li><a href="http://wordpress.org/support/plugin/where-did-they-go-from-here"><?php _e( 'Support', 'where-did-they-go-from-here' ); ?></a></li>
-					<li><a href="https://wordpress.org/support/view/plugin-reviews/where-did-they-go-from-here"><?php _e( 'Reviews', 'where-did-they-go-from-here' ); ?></a></li>
-					<li><a href="http://ajaydsouza.com/wordpress/plugins/"><?php _e( 'Other plugins', 'where-did-they-go-from-here' ); ?></a></li>
-					<li><a href="http://ajaydsouza.com/"><?php _e( "Ajay's blog", 'where-did-they-go-from-here' ); ?></a></li>
-				</ul>
-			</div>
-		  </div>
-		</div>
+
+			<?php include_once( 'sidebar-view.php' ); ?>
+
 	  </div><!-- /side-sortables -->
 	</div><!-- /postbox-container-1 -->
 	</div><!-- /post-body -->
