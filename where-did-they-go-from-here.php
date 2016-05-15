@@ -13,7 +13,7 @@
  * @wordpress-plugin
  * Plugin Name:	Where did they go from here
  * Plugin URI:	http://ajaydsouza.com/wordpress/plugins/where-did-they-go-from-here/
- * Description:	Show "Readers who viewed this page, also viewed" links on your page. Much like Amazon.com's product pages. Based on the plugin by Mark Ghosh.
+ * Description:	The best way to display posts followed by users a.k.a. "Readers who viewed this page, also viewed" links
  * Version: 	2.0.0-beta20160502
  * Author: 		Ajay D'Souza
  * Author URI: 	https://ajaydsouza.com
@@ -401,7 +401,15 @@ function wherego_default_options() {
 						'thumb_width_feed'         => '50',	// Width of thumbnails in feed
 						'show_excerpt_feed'        => false,			// Show description in list item in feed
 						);
-	return $wherego_settings;
+
+	/**
+	 * Filter the default options
+	 *
+	 * @since	2.0.0
+	 *
+	 * @param	string	$wherego_settings	Default settings array
+	 */
+	return apply_filters( 'wherego_default_options', $wherego_settings );
 }
 
 
@@ -430,7 +438,14 @@ function wherego_read_options() {
 		update_option( 'ald_wherego_settings', $wherego_settings );
 	}
 
-	return $wherego_settings;
+	/**
+	 * Filter the read options
+	 *
+	 * @since	2.0.0
+	 *
+	 * @param	string	$wherego_settings	Read settings array
+	 */
+	return apply_filters( 'wherego_read_options', $wherego_settings );
 }
 
 
