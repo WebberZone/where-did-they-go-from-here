@@ -125,8 +125,8 @@ function wherego_options() {
 	if ( ( isset( $_POST['wherego_reset'] ) ) && ( check_admin_referer( 'wherego-plugin' ) ) ) {
 		// Delete meta
 		$str = '<div id="message" class="updated fade"><p>'. __( 'All visitor browsing data captured by the plugin has been deleted!', 'where-did-they-go-from-here' ) .'</p></div>';
-		$sql = 'DELETE FROM ' . $wpdb->postmeta . " WHERE `meta_key` = 'wheredidtheycomefrom'";
-		$wpdb->query( $sql );
+
+		wherego_reset();
 
 		echo $str;
 	}

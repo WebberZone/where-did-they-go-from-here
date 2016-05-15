@@ -403,10 +403,10 @@ if ( ! defined( 'WPINC' ) ) {
 			</td>
 			</tr>
 			<tr style="vertical-align: top;"><th scope="row"><label for="thumb_width_feed"><?php _e( 'Maximum width of the thumbnail: ', 'where-did-they-go-from-here' ); ?></label></th>
-			<td><input type="textbox" name="thumb_width_feed" id="thumb_width_feed" value="<?php echo esc_attr( stripslashes( $wherego_settings['thumb_width_feed'] ) ); ?>" style="width:30px" />px</td>
+			<td><input type="textbox" name="thumb_width_feed" id="thumb_width_feed" value="<?php echo esc_attr( stripslashes( $wherego_settings['thumb_width_feed'] ) ); ?>" />px</td>
 			</tr>
 			<tr style="vertical-align: top;"><th scope="row"><label for="thumb_height_feed"><?php _e( 'Maximum height of the thumbnail: ', 'where-did-they-go-from-here' ); ?></label></th>
-			<td><input type="textbox" name="thumb_height_feed" id="thumb_height_feed" value="<?php echo esc_attr( stripslashes( $wherego_settings['thumb_height_feed'] ) ); ?>" style="width:30px" />px</td>
+			<td><input type="textbox" name="thumb_height_feed" id="thumb_height_feed" value="<?php echo esc_attr( stripslashes( $wherego_settings['thumb_height_feed'] ) ); ?>" />px</td>
 			</tr>
 
 				<?php
@@ -441,7 +441,7 @@ if ( ! defined( 'WPINC' ) ) {
 		<p>
 		  <input type="submit" name="wherego_save" id="wherego_save" value="<?php _e( 'Save Options', 'where-did-they-go-from-here' ); ?>" class="button button-primary" />
 		  <input name="wherego_default" type="submit" id="wherego_default" value="<?php _e( 'Default Options', 'where-did-they-go-from-here' ); ?>" class="button button-secondary" onclick="if ( ! confirm( '<?php _e( 'Do you want to set options to Default?', 'where-did-they-go-from-here' ); ?>' ) ) return false;" />
-		  <input name="wherego_reset" type="submit" id="wherego_reset" value="<?php _e( 'Reset followed posts', 'where-did-they-go-from-here' ); ?>" class="button button-secondary" onclick="if ( ! confirm( '<?php _e( 'Are you sure you want to recreate the index?', 'where-did-they-go-from-here' ); ?>' ) ) return false;" />
+		  <input name="wherego_reset" type="submit" id="wherego_reset" value="<?php _e( 'Reset followed posts', 'where-did-they-go-from-here' ); ?>" class="button button-secondary" onclick="if ( ! confirm( '<?php _e( 'Are you sure you want to delete all followed posts data?', 'where-did-they-go-from-here' ); ?>' ) ) return false;" />
 		</p>
 		<?php wp_nonce_field( 'wherego-plugin' ) ?>
 	  </form>
