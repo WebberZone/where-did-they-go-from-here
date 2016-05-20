@@ -76,6 +76,96 @@ $wherego_settings = wherego_read_options();
 
 
 /**
+ * Create a helper function for easy SDK access.
+ *
+ * @since 2.0.0
+ * @return array
+ */
+function wherego_freemius() {
+    global $wherego_freemius;
+
+    if ( ! isset( $wherego_freemius ) ) {
+        // Include Freemius SDK.
+        require_once dirname(__FILE__) . '/freemius/start.php';
+
+        $wherego_freemius = fs_dynamic_init( array(
+            'id'                => '293',
+            'slug'              => 'where-did-they-go-from-here',
+            'public_key'        => 'pk_5ac20f2d22b7bd43d2189bdf28655',
+            'is_premium'        => false,
+            'has_addons'        => false,
+            'has_paid_plans'    => false,
+            'menu'              => array(
+                'slug'       => 'wherego_options',
+                'account'    => false,
+                'contact'    => false,
+                'support'    => false,
+                'parent'     => array(
+                    'slug' => 'options-general.php',
+                ),
+            ),
+        ) );
+    }
+
+    return $wherego_freemius;
+}
+
+// Init Freemius.
+wherego_freemius();
+wherego_freemius()->add_action( 'after_uninstall', 'wherego_freemius_uninstall_cleanup' );
+
+
+/**
+ * Separate Uninstall function since we're using Freemius.
+ *
+ * @access public
+ * @return void
+ */
+function wherego_freemius_uninstall_cleanup() {
+
+	global $wpdb;
+
+	$option_name = 'ald_wherego_settings';
+
+	if ( ! is_multisite() ) {
+
+		$wpdb->query( "
+			DELETE FROM {$wpdb->postmeta}
+			WHERE meta_key LIKE 'wheredidtheycomefrom'
+		" );
+
+		delete_option( $option_name );
+
+	} else {
+
+		// Get all blogs in the network and activate plugin on each one
+		$blog_ids = $wpdb->get_col( "
+	    	SELECT blog_id FROM $wpdb->blogs
+			WHERE archived = '0' AND spam = '0' AND deleted = '0'
+		" );
+
+		foreach ( $blog_ids as $blog_id ) {
+			switch_to_blog( $blog_id );
+
+			$wpdb->query( "
+				DELETE FROM {$wpdb->postmeta}
+				WHERE meta_key LIKE 'wheredidtheycomefrom'
+			" );
+
+			delete_option( $option_name );
+
+		}
+
+		// Switch back to the current blog
+		restore_current_blog();
+
+	}
+
+
+}
+
+
+/**
  * Initialises text domain for l10n.
  *
  * @since 1.7
