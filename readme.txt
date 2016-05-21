@@ -62,9 +62,11 @@ From v2.0.0, this plugin incorporates [Freemius Insights](https://freemius.com).
 
 1. Options in WP-Admin - General options
 2. Options in WP-Admin - Output options
-3. Options in WP-Admin - Feed options
+3. Options in WP-Admin - Thumbnail options
 4. Options in WP-Admin - Custom styles
-5. Edit list of followed posts in the Write Screen
+5. Options in WP-Admin - Feed options
+6. Meta box in Edit Posts screen
+7. WordPress widget
 
 
 == Frequently Asked Questions ==
