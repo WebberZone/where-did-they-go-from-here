@@ -114,8 +114,9 @@ This function takes an array of options similar to the shortcode above.
 	* Widget: Find it in your theme customizer or under Appearances &raquo; Widgets
 	* Integrated [Freemius Insights](https://freemius.com)
 
-* Enhancements:
+* Modifications:
 	* Enhancements to the metabox where the list of followed posts are cleaned for incorrect post IDs or published posts when saving the post
+	* Replace wick with jQuery suggest which is bundled with WordPress. This is used to power the category exclusion setting in the Admin
 
 * Deprecated:
 	* Modified: timthumb has been deprecated. The script is no longer included
