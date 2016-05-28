@@ -162,7 +162,7 @@ function wherego_reset() {
 function wherego_adminmenu() {
 	if ( ( function_exists( 'add_options_page' ) ) ) {
 		$plugin_page = add_options_page( __( 'Where did they go from here?', 'where-did-they-go-from-here' ), __( 'Where did they go', 'where-did-they-go-from-here' ), 'manage_options', 'wherego_options', 'wherego_options' );
-		add_action( 'admin_head-' . $plugin_page, 'wherego_wherego' );
+		add_action( 'admin_head-' . $plugin_page, 'wherego_adminhead' );
 	}
 }
 add_action( 'admin_menu', 'wherego_adminmenu' );
@@ -171,14 +171,15 @@ add_action( 'admin_menu', 'wherego_adminmenu' );
 /**
  * Function to add CSS and JS to the Admin header.
  *
- * @since 1.7
+ * @since 1.4
  * @return void
  */
-function wherego_wherego() {
+function wherego_adminhead() {
 
 	wp_enqueue_script( 'common' );
 	wp_enqueue_script( 'wp-lists' );
 	wp_enqueue_script( 'postbox' );
+	wp_enqueue_script( 'suggest' );
 ?>
 	<style type="text/css">
 	.postbox .handlediv:before {
@@ -208,44 +209,27 @@ function wherego_wherego() {
 	</style>
 
 	<script type="text/javascript">
-		//<![CDATA[
+	//<![CDATA[
 		jQuery(document).ready( function($) {
 			// close postboxes that should be closed
 			$('.if-js-closed').removeClass('if-js-closed').addClass('closed');
 			// postboxes setup
 			postboxes.add_postbox_toggles('crp_options');
 		});
-		//]]>
-	</script>
 
-	<link rel="stylesheet" type="text/css" href="<?php echo WHEREGO_PLUGIN_URL; ?>/admin/wick/wick.css" />
-	<script type="text/javascript" language="JavaScript">
-		//<![CDATA[
+	    // Function to add auto suggest.
+	    function setSuggest( id, taxonomy ) {
+	        jQuery('#' + id).suggest("<?php echo admin_url( 'admin-ajax.php?action=ajax-tag-search&tax=' ); ?>" + taxonomy, {multiple:true, multipleSep: ","});
+	    }
+
 		function checkForm() {
 			answer = true;
 			if (siw && siw.selectingSomething)
 				answer = false;
 			return answer;
 		}//
-
-		<?php
-		function wick_data() {
-
-			$categories = get_categories( 'hide_empty=0' );
-			$str = 'collection = [';
-			foreach ( $categories as $cat ) {
-				$str .= "'" . $cat->slug . "',";
-			}
-			$str = substr( $str, 0, -1 );	// Remove trailing comma
-			$str .= '];';
-
-			echo $str;
-		}
-		wick_data();
-		?>
 	//]]>
 	</script>
-	<script type="text/javascript" src="<?php echo WHEREGO_PLUGIN_URL; ?>/admin/wick/wick.js"></script>
 <?php
 }
 
