@@ -5,7 +5,6 @@
  * @package WHEREGO
  */
 
-
 /**
  * Fired when the plugin is Network Activated.
  *
@@ -21,7 +20,7 @@ function wherego_activation_hook( $network_wide ) {
 
 	if ( is_multisite() && $network_wide ) {
 
-		// Get all blogs in the network and activate plugin on each one
+		// Get all blogs in the network and activate plugin on each one.
 		$blog_ids = $wpdb->get_col( "
         	SELECT blog_id FROM $wpdb->blogs
 			WHERE archived = '0' AND spam = '0' AND deleted = '0'
@@ -31,7 +30,7 @@ function wherego_activation_hook( $network_wide ) {
 			wherego_single_activate();
 		}
 
-		// Switch back to the current blog
+		// Switch back to the current blog.
 		restore_current_blog();
 
 	} else {
@@ -118,7 +117,6 @@ function wherego_freemius_uninstall_cleanup() {
 		restore_current_blog();
 
 	}
-
 
 }
 

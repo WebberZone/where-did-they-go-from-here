@@ -7,7 +7,6 @@
  * @package WHEREGO
  */
 
-
 /**
  * Path to plugin.
  *
@@ -45,7 +44,7 @@ $wherego_url = plugins_url() . '/' . plugin_basename( dirname( __FILE__ ) );
  * @deprecated	2.2.0
  * @see	get_wherego
  *
- * @param string|array $args Parameters in a query string format or array
+ * @param string|array $args Parameters in a query string format or array.
  * @return string HTML formatted list of related posts
  */
 function ald_wherego( $args ) {
@@ -63,7 +62,7 @@ function ald_wherego( $args ) {
  * @deprecated	2.2.0
  * @see	get_wherego
  *
- * @param string|array $args Parameters in a query string format or array
+ * @param string|array $args Parameters in a query string format or array.
  * @return void
  */
 function echo_ald_wherego( $args = array() ) {

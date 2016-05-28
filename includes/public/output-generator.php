@@ -15,7 +15,7 @@ if ( ! defined( 'WPINC' ) ) {
  *
  * @since	2.0.0
  *
- * @param	array $args   Array of arguments
+ * @param	array $args   Array of arguments.
  * @return	string	Space separated list of link attributes
  */
 function wherego_link_attributes( $args ) {
@@ -38,7 +38,7 @@ function wherego_link_attributes( $args ) {
 	 */
 	$link_attributes = apply_filters( 'wherego_link_attributes', $link_attributes, $args );
 
-	// Convert it to a string
+	// Convert it to a string.
 	$link_attributes = implode( ' ', $link_attributes );
 
 	return $link_attributes;
@@ -51,7 +51,7 @@ function wherego_link_attributes( $args ) {
  *
  * @since	2.0.0
  *
- * @param	array $args   Array of arguments
+ * @param	array $args   Array of arguments.
  * @return	string	Space separated list of link attributes
  */
 function wherego_heading_title( $args ) {
@@ -60,7 +60,7 @@ function wherego_heading_title( $args ) {
 	$title = '';
 
 	if ( $args['heading'] && ! $args['is_widget'] ) {
-		$title = str_replace( '%postname%', $post->post_title, $args['title'] );	// Replace %postname% with the title of the current post
+		$title = str_replace( '%postname%', $post->post_title, $args['title'] );	// Replace %postname% with the title of the current post.
 	}
 
 	/**
@@ -80,7 +80,7 @@ function wherego_heading_title( $args ) {
  *
  * @since	2.0.0
  *
- * @param	array $args   Array of arguments
+ * @param	array $args   Array of arguments.
  * @return	string	Space separated list of link attributes
  */
 function wherego_before_list( $args ) {
@@ -105,7 +105,7 @@ function wherego_before_list( $args ) {
  *
  * @since	2.0.0
  *
- * @param	array $args   Array of arguments
+ * @param	array $args   Array of arguments.
  * @return	string	Space separated list of link attributes
  */
 function wherego_after_list( $args ) {
@@ -130,8 +130,8 @@ function wherego_after_list( $args ) {
  *
  * @since	2.0.0
  *
- * @param	array  $args   Array of arguments
- * @param	object $result Object of the current post result
+ * @param	array  $args   Array of arguments.
+ * @param	object $result Object of the current post result.
  * @return	string	Space separated list of link attributes
  */
 function wherego_before_list_item( $args, $result ) {
@@ -147,7 +147,7 @@ function wherego_before_list_item( $args, $result ) {
 	 * @param	object	$result	Object of the current post result
 	 * @param	array	$args	Array of arguments
 	 */
-	return apply_filters( 'wherego_before_list_item', $before_list_item, $result, $args );	// Pass the post object to the filter
+	return apply_filters( 'wherego_before_list_item', $before_list_item, $result, $args );
 
 }
 
@@ -157,8 +157,8 @@ function wherego_before_list_item( $args, $result ) {
  *
  * @since	2.0.0
  *
- * @param	array  $args   Array of arguments
- * @param	object $result Object of the current post result
+ * @param	array  $args   Array of arguments.
+ * @param	object $result Object of the current post result.
  * @return	string	Space separated list of link attributes
  */
 function wherego_after_list_item( $args, $result ) {
@@ -174,7 +174,7 @@ function wherego_after_list_item( $args, $result ) {
 	 * @param	object	$result	Object of the current post result
 	 * @param	array	$args	Array of arguments
 	 */
-	return apply_filters( 'wherego_after_list_item', $after_list_item, $result, $args );	// Pass the post object to the filter
+	return apply_filters( 'wherego_after_list_item', $after_list_item, $result, $args );
 
 }
 
@@ -184,13 +184,13 @@ function wherego_after_list_item( $args, $result ) {
  *
  * @since	2.0.0
  *
- * @param	array  $args   Array of arguments
- * @param	object $result Object of the current post result
+ * @param	array  $args   Array of arguments.
+ * @param	object $result Object of the current post result.
  * @return	string	Space separated list of link attributes
  */
 function wherego_title( $args, $result ) {
 
-	$title = wherego_max_formatted_content( get_the_title( $result->ID ), $args['title_length'] );	// Get the post title and crop it if needed
+	$title = wherego_max_formatted_content( get_the_title( $result->ID ), $args['title_length'] );	// Get the post title and crop it if needed.
 
 	/**
 	 * Filter the title of each list item.
@@ -211,8 +211,8 @@ function wherego_title( $args, $result ) {
  *
  * @since	2.0.0
  *
- * @param	array  $args   Array of arguments
- * @param	object $result Object of the current post result
+ * @param	array  $args   Array of arguments.
+ * @param	object $result Object of the current post result.
  * @return	string	Space separated list of link attributes
  */
 function wherego_author( $args, $result ) {
@@ -253,8 +253,8 @@ function wherego_author( $args, $result ) {
  *
  * @since	2.0.0
  *
- * @param	array  $args   Array of arguments
- * @param	object $result Object of the current post result
+ * @param	array  $args   Array of arguments.
+ * @param	object $result Object of the current post result.
  * @return	string	Space separated list of link attributes
  */
 function wherego_list_link( $args, $result ) {
@@ -263,11 +263,11 @@ function wherego_list_link( $args, $result ) {
 	$title = wherego_title( $args, $result );
 	$link_attributes = wherego_link_attributes( $args );
 
-	if ( 'after' == $args['post_thumb_op'] ) {
-		$output .= '<a href="' . get_permalink( $result->ID ) . '" ' . $link_attributes . ' class="wherego_title">' . $title . '</a>'; // Add title if post thumbnail is to be displayed after
+	if ( 'after' === $args['post_thumb_op'] ) {
+		$output .= '<a href="' . get_permalink( $result->ID ) . '" ' . $link_attributes . ' class="wherego_title">' . $title . '</a>'; // Add title if post thumbnail is to be displayed after.
 	}
 
-	if ( 'inline' == $args['post_thumb_op'] || 'after' == $args['post_thumb_op'] || 'thumbs_only' == $args['post_thumb_op'] ) {
+	if ( 'inline' === $args['post_thumb_op'] || 'after' === $args['post_thumb_op'] || 'thumbs_only' === $args['post_thumb_op'] ) {
 		$output .= '<a href="' . get_permalink( $result->ID ) . '" ' . $link_attributes . '>';
 
 		$output .= wherego_get_the_post_thumbnail( array(
@@ -285,8 +285,8 @@ function wherego_list_link( $args, $result ) {
 		$output .= '</a>';
 	}
 
-	if ( 'inline' == $args['post_thumb_op'] || 'text_only' == $args['post_thumb_op'] ) {
-		$output .= '<a href="' . get_permalink( $result->ID ) . '" ' . $link_attributes . ' class="wherego_title">' . $title . '</a>'; // Add title when required by settings
+	if ( 'inline' === $args['post_thumb_op'] || 'text_only' === $args['post_thumb_op'] ) {
+		$output .= '<a href="' . get_permalink( $result->ID ) . '" ' . $link_attributes . ' class="wherego_title">' . $title . '</a>'; // Add title when required by settings.
 	}
 
 	/**
