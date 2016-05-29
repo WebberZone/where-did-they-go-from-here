@@ -16,7 +16,7 @@ function wherego_update_count() {
 
 	if ( is_singular() ) {
 		echo '
-		<script type="text/javascript">
+		<script type="text/javascript"> jQuery( document ).ready( function() {
 			jQuery.ajax({
 				url: "' . esc_url( home_url() ) . '/index.php",
 				data: {
@@ -25,10 +25,10 @@ function wherego_update_count() {
 					wherego_rnd: (new Date()).getTime() + "-" + Math.floor(Math.random() * 100000)
 				}
 			});
-		</script>';
+		});</script>';
 	}
 }
-add_action( 'wp_footer', 'wherego_update_count' );
+add_action( 'wp_footer', 'wherego_update_count', 99 );
 
 
 /**
