@@ -26,8 +26,6 @@ if ( ! defined( 'WPINC' ) ) {
  */
 function wherego_options() {
 
-	global $wpdb;
-
 	$wherego_settings = wherego_read_options();
 
 	parse_str( $wherego_settings['post_types'], $post_types );
