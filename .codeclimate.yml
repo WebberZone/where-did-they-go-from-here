@@ -46,3 +46,4 @@ ratings:
 exclude_paths:
 - tests/
 - admin/wick/
+- freemius/
