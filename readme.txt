@@ -117,6 +117,7 @@ This function takes an array of options similar to the shortcode above.
 * Modifications:
 	* Enhancements to the metabox where the list of followed posts are cleaned for incorrect post IDs or published posts when saving the post
 	* Replace wick with jQuery suggest which is bundled with WordPress. This is used to power the category exclusion setting in the Admin
+	* Tracker is modified to use `admin-ajax.php` and is more compatible if jQuery is loaded in the footer instead of header
 
 * Deprecated:
 	* Modified: timthumb has been deprecated. The script is no longer included
