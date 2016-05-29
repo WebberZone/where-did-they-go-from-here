@@ -15,7 +15,7 @@ function wherego_tracker_parser() {
 	global $wherego_settings;
 
 	// Check for the nonce and exit if failed.
-	if ( ! wp_verify_nonce( sanitize_key( $_POST['wherego_nonce'] ), 'wherego-tracker-nonce' ) ) {
+	if ( isset( $_POST['wherego_nonce'] ) && ! wp_verify_nonce( sanitize_key( $_POST['wherego_nonce'] ), 'wherego-tracker-nonce' ) ) {
 		wp_die( esc_html__( 'WHEREGO: Security check failed', 'where-did-they-go-from-here' ) );
 	}
 
@@ -23,9 +23,9 @@ function wherego_tracker_parser() {
 
 	$siteurl = get_option( 'siteurl' );
 
-	$id = sanitize_text_field( wp_unslash( $_POST['wherego_id'] ) );
+	$id = isset( $_POST['wherego_id'] ) ? sanitize_text_field( wp_unslash( $_POST['wherego_id'] ) ) : 0;
 
-	$sitevar = sanitize_text_field( wp_unslash( $_POST['wherego_sitevar'] ) );
+	$sitevar = isset( $_POST['wherego_sitevar'] ) ? sanitize_text_field( wp_unslash( $_POST['wherego_sitevar'] ) ) : '';
 
 	$tempsitevar = $sitevar;
 
