@@ -29,7 +29,7 @@ __If you're looking for a plugin that displays posts related to the content, loo
 * **Styles**: The output is wrapped in CSS classes which allows you to easily style the list. You can enter your custom CSS styles from within WordPress Admin area
 * **Fully customisable output**: Extendable via filters and actions. Style with CSS or use the inbuilt plugin API
 * **Thumbnail support**:
-	* Uses the default WordPress image options to create the correct size image
+	* Uses the default WordPress image options to fetch the correct sized image. Recommended thumbnail setting is the same as what you set for Thumbnail size or Medium size in your __Media settings__ page
 	* Support for WordPress featured image
 	* Auto-extract the first image in your post to be displayed as a thumbnail
 	* Manually enter the URL of the thumbnail via [WordPress meta fields](http://codex.wordpress.org/Custom_Fields)
