@@ -29,10 +29,10 @@ __If you're looking for a plugin that displays posts related to the content, loo
 * **Styles**: The output is wrapped in CSS classes which allows you to easily style the list. You can enter your custom CSS styles from within WordPress Admin area
 * **Fully customisable output**: Extendable via filters and actions. Style with CSS or use the inbuilt plugin API
 * **Thumbnail support**:
-	* Support for WordPress post thumbnails
+	* Uses the default WordPress image options to create the correct size image
+	* Support for WordPress featured image
 	* Auto-extract the first image in your post to be displayed as a thumbnail
-	* Manually enter the URL of the thumbnail via <a href="http://codex.wordpress.org/Custom_Fields">WordPress meta fields</a>
-	* Use timthumb to resize images or use your own filter function to resize post images
+	* Manually enter the URL of the thumbnail via [WordPress meta fields](http://codex.wordpress.org/Custom_Fields)
 
 From v2.0.0, this plugin incorporates [Freemius Insights](https://freemius.com). If you opt-in, some data about your usage of will be sent to freemius.com and will be used by me to help improve the plugin. This is completely optional and if you choose not to opt-in, it will not affect your usage of the plugin.
 
@@ -71,9 +71,9 @@ From v2.0.0, this plugin incorporates [Freemius Insights](https://freemius.com).
 
 == Frequently Asked Questions ==
 
-If your question isn't listed here, please post a comment at the <a href="http://wordpress.org/support/plugin/where-did-they-go-from-here">WordPress.org support forum</a>. I monitor the forums on an ongoing basis. If you're looking for more advanced support, please see <a href="http://ajaydsouza.com/support/">details here</a>.
+Check out the [FAQ on the plugin page](https://wordpress.org/plugins/where-did-they-go-from-here/faq/) for a detailed list of questions and answers.
 
-If you would like a feature to be added, or if you already have the code for the feature, you can let me know by posting in this forum.
+If your question isn't listed there, please create a new post in the [WordPress.org support forum](https://wordpress.org/support/plugin/where-did-they-go-from-here). I monitor the forums on an ongoing basis. If you're looking for more advanced _paid_ support, please see [details here](https://ajaydsouza.com/support/).
 
 
 = How can I customise the output? =
