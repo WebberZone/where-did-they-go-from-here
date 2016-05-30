@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Where did they go from here\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-20 18:38+0100\n"
+"POT-Creation-Date: 2016-05-30 14:28+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Ajay D'Souza <me@ajaydsouza.com>\n"
 "Language-Team: Ajay D'Souza <me@ajaydsouza.com>\n"
@@ -21,378 +21,47 @@ msgstr ""
 msgid "None"
 msgstr ""
 
-#: admin/admin-metabox.php:22
+#: admin/admin-metabox.php:21
 msgid "Where did they go from here"
 msgstr ""
 
-#: admin/admin-metabox.php:50
-msgid "Followed posts' IDs:"
-msgstr ""
-
-#: admin/admin-metabox.php:52
-msgid ""
-"Enter a comma separated list of valid post/page IDs. Save this post to see "
-"the updated list below."
-msgstr ""
-
-#: admin/admin-metabox.php:56
-msgid "Followed posts:"
-msgstr ""
-
-#: admin/admin.php:112
+#: admin/admin.php:110
 msgid "Options saved successfully."
 msgstr ""
 
-#: admin/admin.php:121
+#: admin/admin.php:119
 msgid "Options set to Default."
 msgstr ""
 
-#: admin/admin.php:127
+#: admin/admin.php:125
 msgid "All visitor browsing data captured by the plugin has been deleted!"
 msgstr ""
 
-#: admin/admin.php:164
+#: admin/admin.php:162
 msgid "Where did they go from here?"
 msgstr ""
 
-#: admin/admin.php:164
+#: admin/admin.php:162
 msgid "Where did they go"
 msgstr ""
 
-#: admin/admin.php:263
+#: admin/admin.php:245
 msgid "Settings"
 msgstr ""
 
-#: admin/admin.php:285 admin/sidebar-view.php:50 freemius/includes/i18n.php:39
+#: admin/admin.php:267 freemius/includes/i18n.php:39
 msgid "Support"
 msgstr ""
 
-#: admin/admin.php:286
+#: admin/admin.php:268
 msgid "Donate"
 msgstr ""
 
-#: admin/main-view.php:29 admin/main-view.php:51
-msgid "General options"
-msgstr ""
-
-#: admin/main-view.php:30 admin/main-view.php:153
-msgid "Output options"
-msgstr ""
-
-#: admin/main-view.php:31 admin/main-view.php:241
-msgid "Thumbnail options"
-msgstr ""
-
-#: admin/main-view.php:32
-msgid "Styles"
-msgstr ""
-
-#: admin/main-view.php:33 admin/main-view.php:363
-msgid "Feed options"
-msgstr ""
-
-#: admin/main-view.php:66 admin/main-view.php:379
-msgid "Number of posts to display: "
-msgstr ""
-
-#: admin/main-view.php:69
-msgid "This is the maximum number of followed posts that will be displayed"
-msgstr ""
-
-#: admin/main-view.php:72
-msgid "Post types to include in results (including custom post types)"
-msgstr ""
-
-#: admin/main-view.php:85
-msgid "List of post or page IDs to exclude from the results: "
-msgstr ""
-
-#: admin/main-view.php:88 admin/main-view.php:202
-msgid "Enter comma separated list of IDs. e.g. 188,320,500"
-msgstr ""
-
-#: admin/main-view.php:91
-msgid "Exclude Categories: "
-msgstr ""
-
-#: admin/main-view.php:107
+#: admin/main-view.php:340
+#, php-format
 msgid ""
-"Comma separated list of category slugs. The field above has an autocomplete "
-"so simply start typing in the starting letters and it will prompt you with "
-"options"
-msgstr ""
-
-#: admin/main-view.php:110
-msgid "Add followed posts to:"
-msgstr ""
-
-#: admin/main-view.php:112
-msgid "Posts"
-msgstr ""
-
-#: admin/main-view.php:113
-msgid "Pages"
-msgstr ""
-
-#: admin/main-view.php:114
-msgid "Home page"
-msgstr ""
-
-#: admin/main-view.php:115
-msgid "Feeds"
-msgstr ""
-
-#: admin/main-view.php:116
-msgid "Category archives"
-msgstr ""
-
-#: admin/main-view.php:117
-msgid "Tag archives"
-msgstr ""
-
-#: admin/main-view.php:118
-msgid "Other archives"
-msgstr ""
-
-#: admin/main-view.php:119
-msgid ""
-"If you choose to disable this, please add <code>&lt;?php if "
-"( function_exists( 'echo_wherego' ) ) { echo_wherego(); } ?&gt;</code> to "
-"your template file where you want it displayed"
-msgstr ""
-
-#: admin/main-view.php:122
-msgid "Display list of posts on All Posts page"
-msgstr ""
-
-#: admin/main-view.php:124
-msgid "This option will add a new column in your Posts > All Posts page"
-msgstr ""
-
-#: admin/main-view.php:127
-msgid "Add a link to the plugin page as a final item in the list"
-msgstr ""
-
-#: admin/main-view.php:128
-msgid "Optional"
-msgstr ""
-
-#: admin/main-view.php:146 admin/main-view.php:234 admin/main-view.php:316
-#: admin/main-view.php:357 admin/main-view.php:426 admin/main-view.php:442
-msgid "Save Options"
-msgstr ""
-
-#: admin/main-view.php:168
-msgid "Title of posts: "
-msgstr ""
-
-#: admin/main-view.php:172
-msgid "When there are no posts, what should be shown?"
-msgstr ""
-
-#: admin/main-view.php:176
-msgid "Blank Output"
-msgstr ""
-
-#: admin/main-view.php:180
-msgid "Display custom text: "
-msgstr ""
-
-#: admin/main-view.php:184 admin/main-view.php:382
-msgid "Show post excerpt in list?"
-msgstr ""
-
-#: admin/main-view.php:187
-msgid "Length of excerpt (in words): "
-msgstr ""
-
-#: admin/main-view.php:190
-msgid "Limit post title length (in characters)"
-msgstr ""
-
-#: admin/main-view.php:193
-msgid "Open links in new window"
-msgstr ""
-
-#: admin/main-view.php:196
-msgid "Add nofollow attribute to links"
-msgstr ""
-
-#: admin/main-view.php:199
-msgid "Exclude display of followed posts on these posts / pages"
-msgstr ""
-
-#: admin/main-view.php:205
-msgid "Customize the output:"
-msgstr ""
-
-#: admin/main-view.php:207
-msgid "HTML to display before the list of posts: "
-msgstr ""
-
-#: admin/main-view.php:210
-msgid "HTML to display before each list item: "
-msgstr ""
-
-#: admin/main-view.php:213
-msgid "HTML to display after each list item: "
-msgstr ""
-
-#: admin/main-view.php:216
-msgid "HTML to display after the list of posts: "
-msgstr ""
-
-#: admin/main-view.php:257 admin/main-view.php:385
-msgid "Location of post thumbnail:"
-msgstr ""
-
-#: admin/main-view.php:261 admin/main-view.php:389
-msgid "Display thumbnails inline with posts, before title"
-msgstr ""
-
-#: admin/main-view.php:265 admin/main-view.php:393
-msgid "Display thumbnails inline with posts, after title"
-msgstr ""
-
-#: admin/main-view.php:269 admin/main-view.php:397
-msgid "Display only thumbnails, no text"
-msgstr ""
-
-#: admin/main-view.php:273 admin/main-view.php:401
-msgid "Do not display thumbnails, only text."
-msgstr ""
-
-#: admin/main-view.php:277 admin/main-view.php:405
-msgid "Maximum width of the thumbnail: "
-msgstr ""
-
-#: admin/main-view.php:280 admin/main-view.php:408
-msgid "Maximum height of the thumbnail: "
-msgstr ""
-
-#: admin/main-view.php:283
-msgid "Post thumbnail meta field name: "
-msgstr ""
-
-#: admin/main-view.php:285
-msgid ""
-"The value of this field should contain the image source and is set in the "
-"<em>Add New Post</em> screen"
-msgstr ""
-
-#: admin/main-view.php:288
-msgid ""
-"If the postmeta is not set, then should the plugin extract the first image "
-"from the post?"
-msgstr ""
-
-#: admin/main-view.php:289
-msgid ""
-"This can slow down the loading of your page if the first image in the "
-"followed posts is large in file-size"
-msgstr ""
-
-#: admin/main-view.php:291
-msgid "Use default thumbnail? "
-msgstr ""
-
-#: admin/main-view.php:292
-msgid ""
-"If checked, when no thumbnail is found, show a default one from the URL "
-"below. If not checked and no thumbnail is found, no image will be shown."
-msgstr ""
-
-#: admin/main-view.php:294
-msgid "Default thumbnail: "
-msgstr ""
-
-#: admin/main-view.php:298
-msgid ""
-"The plugin will first check if the post contains a thumbnail. If it doesn't "
-"then it will check the meta field. If this is not available, then it will "
-"show the default image as specified above"
-msgstr ""
-
-#: admin/main-view.php:323
-msgid "Custom styles"
-msgstr ""
-
-#: admin/main-view.php:338
-msgid "Custom CSS to add to header:"
-msgstr ""
-
-#: admin/main-view.php:341
-msgid ""
-"Do not include <code>style</code> tags. Check out the <a href=\"http://"
-"wordpress.org/extend/plugins/where-did-they-go-from-here/faq/\" target="
-"\"_blank\">FAQ</a> for available CSS classes to style."
-msgstr ""
-
-#: admin/main-view.php:365
-msgid ""
-"Below options override the followed posts settings for your blog feed. These "
-"only apply if you have selected to add followed posts to Feeds in the "
-"General Options tab."
-msgstr ""
-
-#: admin/main-view.php:443
-msgid "Default Options"
-msgstr ""
-
-#: admin/main-view.php:443
-msgid "Do you want to set options to Default?"
-msgstr ""
-
-#: admin/main-view.php:444
-msgid "Reset followed posts"
-msgstr ""
-
-#: admin/main-view.php:444
-msgid "Are you sure you want to delete all followed posts data?"
-msgstr ""
-
-#: admin/sidebar-view.php:12
-msgid "Support the development"
-msgstr ""
-
-#: admin/sidebar-view.php:21
-msgid "Enter amount in USD: "
-msgstr ""
-
-#: admin/sidebar-view.php:25
-msgid "Send your donation to the author of"
-msgstr ""
-
-#: admin/sidebar-view.php:32
-msgid "Follow me"
-msgstr ""
-
-#: admin/sidebar-view.php:43
-msgid "Quick links"
-msgstr ""
-
-#: admin/sidebar-view.php:47
-msgid "Where did they go from here? plugin page"
-msgstr ""
-
-#: admin/sidebar-view.php:48
-msgid "Plugin on GitHub"
-msgstr ""
-
-#: admin/sidebar-view.php:49 freemius/includes/fs-plugin-info-dialog.php:486
-msgid "FAQ"
-msgstr ""
-
-#: admin/sidebar-view.php:51 freemius/includes/fs-plugin-info-dialog.php:489
-msgid "Reviews"
-msgstr ""
-
-#: admin/sidebar-view.php:52
-msgid "Other plugins"
-msgstr ""
-
-#: admin/sidebar-view.php:53
-msgid "Ajay's blog"
+"Do not include <code>style</code> tags. Check out the <a href=\"%1$s\" "
+"target=\"_blank\">FAQ</a> for available CSS classes to style."
 msgstr ""
 
 #: freemius/includes/fs-plugin-info-dialog.php:360
@@ -422,6 +91,10 @@ msgstr ""
 msgid "Installation"
 msgstr ""
 
+#: freemius/includes/fs-plugin-info-dialog.php:486
+msgid "FAQ"
+msgstr ""
+
 #: freemius/includes/fs-plugin-info-dialog.php:487
 #: freemius/includes/i18n.php:204
 msgid "Screenshots"
@@ -429,6 +102,10 @@ msgstr ""
 
 #: freemius/includes/fs-plugin-info-dialog.php:488
 msgid "Changelog"
+msgstr ""
+
+#: freemius/includes/fs-plugin-info-dialog.php:489
+msgid "Reviews"
 msgstr ""
 
 #: freemius/includes/fs-plugin-info-dialog.php:490
@@ -1816,15 +1493,15 @@ msgstr ""
 msgid "Selective refreshable widget."
 msgstr ""
 
-#: includes/public/media.php:35
+#: includes/public/media.php:34
 msgid "thumb_timthumb argument has been deprecated"
 msgstr ""
 
-#: includes/public/media.php:39
+#: includes/public/media.php:38
 msgid "thumb_timthumb_q argument has been deprecated"
 msgstr ""
 
-#: includes/public/media.php:43
+#: includes/public/media.php:42
 msgid "filter argument has been deprecated"
 msgstr ""
 
@@ -1832,29 +1509,29 @@ msgstr ""
 msgid " by "
 msgstr ""
 
-#: includes/tracker.php:135
+#: includes/tracker.php:76
 msgid "Updated"
 msgstr ""
 
-#: includes/tracker.php:137
+#: includes/tracker.php:78
 msgid "Meta ID: "
 msgstr ""
 
-#: includes/tracker.php:140
+#: includes/tracker.php:81
 msgid "No change"
 msgstr ""
 
-#: where-did-they-go-from-here.php:280
+#: where-did-they-go-from-here.php:230
 #, php-format
 msgid ""
 "Powered by <a href=\"%s\" rel=\"nofollow\">Where did they go from here</a>"
 msgstr ""
 
-#: where-did-they-go-from-here.php:432
+#: where-did-they-go-from-here.php:385
 msgid "<h3>Readers who viewed this page, also viewed:</h3>"
 msgstr ""
 
-#: where-did-they-go-from-here.php:433
+#: where-did-they-go-from-here.php:386
 msgid ""
 "Visitors have not browsed from this post. Become the first by clicking one "
 "of our related posts"
