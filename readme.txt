@@ -107,6 +107,10 @@ This function takes an array of options similar to the shortcode above.
 
 == Changelog ==
 
+= 2.0.1 =
+* Fixed:
+	* Limit for number of posts broke in v2.0.0
+
 = 2.0.0 =
 * Features:
 	* Multisite activation and uninstall

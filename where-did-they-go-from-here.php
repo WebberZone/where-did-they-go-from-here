@@ -14,7 +14,7 @@
  * Plugin Name:	Where did they go from here
  * Plugin URI:	http://ajaydsouza.com/wordpress/plugins/where-did-they-go-from-here/
  * Description:	The best way to display posts followed by users a.k.a. "Readers who viewed this page, also viewed" links
- * Version: 	2.0.0
+ * Version: 	2.0.1
  * Author: 		Ajay D'Souza
  * Author URI: 	https://ajaydsouza.com
  * License: 	GPL-2.0+
@@ -186,7 +186,7 @@ function get_wherego( $args = array() ) {
 
 		foreach ( $results as $result ) {
 
-			if ( 0 === $result ) {
+			if ( 0 === (int) $result ) {
 				break;
 			}
 
@@ -220,7 +220,7 @@ function get_wherego( $args = array() ) {
 
 				$loop_counter++;
 			}
-			if ( $loop_counter === $args['limit'] ) {
+			if ( $loop_counter === (int) $args['limit'] ) {
 				break;	// End loop when related posts limit is reached.
 			}
 		} // End of foreach loop.
