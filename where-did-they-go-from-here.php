@@ -183,7 +183,7 @@ function get_wherego( $args = array() ) {
 			if ( $loop_counter === (int) $args['limit'] ) {
 				break;	// End loop when related posts limit is reached.
 			}
-		} // End of foreach loop.
+		} // End foreach().
 		if ( $args['show_credit'] ) {
 			$output .= wherego_before_list_item( $args, $result );
 
@@ -196,7 +196,7 @@ function get_wherego( $args = array() ) {
 
 	} else {
 		$output .= ( $args['blank_output'] ) ? ' ' : '<p>' . $args['blank_output_text'] . '</p>';
-	}
+	}// End if().
 
 	// Check if the opening list tag is missing in the output, it means all of our results were eliminated cause of the category filter.
 	if ( false === ( strpos( $output, $args['before_list_item'] ) ) ) {
@@ -270,17 +270,17 @@ function wherego_content( $content ) {
 	}
 
 	if ( ( is_single() ) && ( $wherego_settings['add_to_content'] ) ) {
-		return $content.get_wherego( 'is_widget=0' );
+		return $content . get_wherego( 'is_widget=0' );
 	} elseif ( ( is_page() ) && ( $wherego_settings['add_to_page'] ) ) {
-		return $content.get_wherego( 'is_widget=0' );
+		return $content . get_wherego( 'is_widget=0' );
 	} elseif ( ( is_home() ) && ( $wherego_settings['add_to_home'] ) ) {
-		return $content.get_wherego( 'is_widget=0' );
+		return $content . get_wherego( 'is_widget=0' );
 	} elseif ( ( is_category() ) && ( $wherego_settings['add_to_category_archives'] ) ) {
-		return $content.get_wherego( 'is_widget=0' );
+		return $content . get_wherego( 'is_widget=0' );
 	} elseif ( ( is_tag() ) && ( $wherego_settings['add_to_tag_archives'] ) ) {
-		return $content.get_wherego( 'is_widget=0' );
+		return $content . get_wherego( 'is_widget=0' );
 	} elseif ( ( ( is_tax() ) || ( is_author() ) || ( is_date() ) ) && ( $wherego_settings['add_to_archives'] ) ) {
-		return $content.get_wherego( 'is_widget=0' );
+		return $content . get_wherego( 'is_widget=0' );
 	} else {
 		return $content;
 	}
@@ -304,7 +304,7 @@ function wherego_rss( $content ) {
 	$post_thumb_op_feed = $wherego_settings['post_thumb_op_feed'];
 
 	if ( $wherego_settings['add_to_feed'] ) {
-		return $content.get_wherego( 'is_widget=0&limit='.$limit_feed.'&show_excerpt='.$show_excerpt_feed.'&post_thumb_op='.$post_thumb_op_feed );
+		return $content . get_wherego( 'is_widget=0&limit=' . $limit_feed . '&show_excerpt=' . $show_excerpt_feed . '&post_thumb_op=' . $post_thumb_op_feed );
 	} else {
 		return $content;
 	}

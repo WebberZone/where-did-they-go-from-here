@@ -51,9 +51,9 @@ function wherego_max_formatted_content( $content, $max_length = -1 ) {
 
 		// Break back down into a string of words, but drop the last one if it's chopped off.
 		if ( substr( $content, $max_length, 1 ) === ' ' ) {
-			$content = implode( ' ', $all_words ) .'&hellip;';
+			$content = implode( ' ', $all_words ) . '&hellip;';
 		} else {
-			$content = implode( ' ', array_slice( $all_words, 0, -1 ) ) .'&hellip;';
+			$content = implode( ' ', array_slice( $all_words, 0, -1 ) ) . '&hellip;';
 		}
 	}
 

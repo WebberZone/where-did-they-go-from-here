@@ -100,29 +100,31 @@ function wherego_options() {
 		$wp_post_types	= get_post_types( array(
 			'public'	=> true,
 		) );
-		$post_types_arr = ( is_array( $_POST['post_types'] ) ) ? $_POST['post_types'] : array( 'post' => 'post' );
+		$post_types_arr = ( is_array( $_POST['post_types'] ) ) ? $_POST['post_types'] : array(
+			'post' => 'post',
+		);
 		$post_types = array_intersect( $wp_post_types, $post_types_arr );
 		$wherego_settings['post_types'] = http_build_query( $post_types, '', '&' );
 		$posts_types_inc = array_intersect( $wp_post_types, $post_types );
 
 		update_option( 'ald_wherego_settings', $wherego_settings );
 
-		$str = '<div id="message" class="updated fade"><p>'. __( 'Options saved successfully.', 'where-did-they-go-from-here' ) .'</p></div>';
+		$str = '<div id="message" class="updated fade"><p>' . __( 'Options saved successfully.', 'where-did-they-go-from-here' ) . '</p></div>';
 		echo $str;
-	}
+	}// End if().
 
 	if ( ( isset( $_POST['wherego_default'] ) ) && ( check_admin_referer( 'wherego-plugin' ) ) ) {
 		delete_option( 'ald_wherego_settings' );
 		$wherego_settings = wherego_default_options();
 		update_option( 'ald_wherego_settings', $wherego_settings );
 
-		$str = '<div id="message" class="updated fade"><p>'. __( 'Options set to Default.', 'where-did-they-go-from-here' ) .'</p></div>';
+		$str = '<div id="message" class="updated fade"><p>' . __( 'Options set to Default.', 'where-did-they-go-from-here' ) . '</p></div>';
 		echo $str;
 	}
 
 	if ( ( isset( $_POST['wherego_reset'] ) ) && ( check_admin_referer( 'wherego-plugin' ) ) ) {
 		// Delete meta
-		$str = '<div id="message" class="updated fade"><p>'. __( 'All visitor browsing data captured by the plugin has been deleted!', 'where-did-they-go-from-here' ) .'</p></div>';
+		$str = '<div id="message" class="updated fade"><p>' . __( 'All visitor browsing data captured by the plugin has been deleted!', 'where-did-they-go-from-here' ) . '</p></div>';
 
 		wherego_reset();
 
