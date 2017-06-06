@@ -8,7 +8,7 @@
  * @author    Ajay D'Souza <me@ajaydsouza.com>
  * @license   GPL-2.0+
  * @link      https://ajaydsouza.com
- * @copyright 2008-2016 Ajay D'Souza
+ * @copyright 2008-2017 Ajay D'Souza
  *
  * @wordpress-plugin
  * Plugin Name:	Where did they go from here
