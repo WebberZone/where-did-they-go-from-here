@@ -38,7 +38,6 @@ __If you're looking for a plugin that displays posts related to the content, loo
 	* Auto-extract the first image in your post to be displayed as a thumbnail
 	* Manually enter the URL of the thumbnail via [WordPress meta fields](http://codex.wordpress.org/Custom_Fields)
 
-From v2.0.0, this plugin incorporates [Freemius Insights](https://freemius.com). If you opt-in, some data about your usage of will be sent to freemius.com and will be used by me to help improve the plugin. This is completely optional and if you choose not to opt-in, it will not affect your usage of the plugin.
 
 ## Installation
 
@@ -65,7 +64,7 @@ From v2.0.0, this plugin incorporates [Freemius Insights](https://freemius.com).
 
 ## Screenshots
 
-![General Options](https://raw.github.com/ajaydsouza/where-did-they-go-from-here/master/assets/screenshot-1.png)
+![General Options](https://raw.github.com/ajaydsouza/where-did-they-go-from-here/master/wporg-assets/screenshot-1.png)
 _Settings page - General Options._
 
 For more screenshots visit the [WordPress plugin page](http://wordpress.org/plugins/where-did-they-go-from-here/screenshots/)
