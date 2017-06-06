@@ -14,7 +14,7 @@
  * Plugin Name:	Where did they go from here
  * Plugin URI:	http://ajaydsouza.com/wordpress/plugins/where-did-they-go-from-here/
  * Description:	The best way to display posts followed by users a.k.a. "Readers who viewed this page, also viewed" links
- * Version: 	2.0.2-beta20160606
+ * Version: 	2.1.0-beta20170606
  * Author: 		Ajay D'Souza
  * Author URI: 	https://ajaydsouza.com
  * License: 	GPL-2.0+
@@ -73,46 +73,6 @@ if ( ! defined( 'WHEREGO_PLUGIN_FILE' ) ) {
  */
 global 	$wherego_settings;
 $wherego_settings = wherego_read_options();
-
-
-/**
- * Create a helper function for easy SDK access.
- *
- * @since 2.0.0
- * @return array
- */
-function wherego_freemius() {
-	global $wherego_freemius;
-
-	if ( ! isset( $wherego_freemius ) ) {
-		// Include Freemius SDK.
-		require_once dirname( __FILE__ ) . '/freemius/start.php';
-
-		$wherego_freemius = fs_dynamic_init( array(
-			'id'                => '293',
-			'slug'              => 'where-did-they-go-from-here',
-			'public_key'        => 'pk_5ac20f2d22b7bd43d2189bdf28655',
-			'is_premium'        => false,
-			'has_addons'        => false,
-			'has_paid_plans'    => false,
-			'menu'              => array(
-				'slug'       => 'wherego_options',
-				'account'    => false,
-				'contact'    => false,
-				'support'    => false,
-				'parent'     => array(
-					'slug' => 'options-general.php',
-				),
-			),
-		) );
-	}
-
-	return $wherego_freemius;
-}
-
-// Init Freemius.
-wherego_freemius();
-wherego_freemius()->add_action( 'after_uninstall', 'wherego_freemius_uninstall_cleanup' );
 
 
 /**

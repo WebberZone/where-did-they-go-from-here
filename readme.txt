@@ -1,10 +1,10 @@
 === Where did they go from here ===
 Tags: followed posts, related posts, visitors, tracking, similar posts, amazon, followed posts
-Contributors: Ajay, webberzone, freemius
+Contributors: Ajay, webberzone
 Donate link: http://ajaydsouza.com/donate/
 Stable tag: trunk
-Requires at least: 4.0
-Tested up to: 4.6
+Requires at least: 4.1
+Tested up to: 4.8
 License: GPLv2 or later
 
 Show "Readers who viewed this page, also viewed" links on your page. Much like Amazon.com's product pages.
@@ -34,7 +34,6 @@ __If you're looking for a plugin that displays posts related to the content, loo
 	* Auto-extract the first image in your post to be displayed as a thumbnail
 	* Manually enter the URL of the thumbnail via [WordPress meta fields](http://codex.wordpress.org/Custom_Fields)
 
-From v2.0.0, this plugin incorporates [Freemius Insights](https://freemius.com). If you opt-in, some data about your usage of will be sent to freemius.com and will be used by me to help improve the plugin. This is completely optional and if you choose not to opt-in, it will not affect your usage of the plugin.
 
 
 == Installation ==
@@ -107,6 +106,10 @@ This function takes an array of options similar to the shortcode above.
 
 == Changelog ==
 
+= 2.1.0 =
+* Modifications
+	* Removed Freemius
+
 = 2.0.2 =
 * Modifications:
 	* Reformatted parts of Freemius as per WordPress coding standards. Changed logo used in Freemius for Opt-in
@@ -121,7 +124,7 @@ This function takes an array of options similar to the shortcode above.
 	* Multisite activation and uninstall
 	* Shortcode: Use `[wherego]` to display the followed posts. For a range of options check out the function `wherego_default_options`
 	* Widget: Find it in your theme customizer or under Appearances &raquo; Widgets
-	* Integrated [Freemius Insights](https://freemius.com)
+	* Integrated Freemius Insights
 
 * Modifications:
 	* Enhancements to the metabox where the list of followed posts are cleaned for incorrect post IDs or published posts when saving the post
