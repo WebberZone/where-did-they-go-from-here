@@ -18,12 +18,13 @@ require_once $_tests_dir . '/includes/functions.php';
  */
 function _manually_load_plugin() {
 	require dirname( dirname( __FILE__ ) ) . '/where-did-they-go-from-here.php';
-	echo dirname( dirname( __FILE__ ) ) . '/where-did-they-go-from-here.php';
 }
 tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
 
 // Start up the WP testing environment.
 require $_tests_dir . '/includes/bootstrap.php';
+
+echo dirname( dirname( __FILE__ ) ) . '/where-did-they-go-from-here.php';
 
 activate_plugin( 'where-did-they-go-from-here/where-did-they-go-from-here.php' );
 
