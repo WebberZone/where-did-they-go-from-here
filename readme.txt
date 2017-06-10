@@ -110,6 +110,9 @@ This function takes an array of options similar to the shortcode above.
 * Modifications
 	* Removed Freemius
 
+* Fixed:
+	* Metabox did not save when editing attachments
+
 = 2.0.2 =
 * Modifications:
 	* Reformatted parts of Freemius as per WordPress coding standards. Changed logo used in Freemius for Opt-in

@@ -114,5 +114,6 @@ function wherego_save_meta_box( $post_id ) {
 
 }
 add_action( 'save_post', 'wherego_save_meta_box' );
+add_action( 'edit_attachment', 'wherego_save_meta_box' );
 
 
