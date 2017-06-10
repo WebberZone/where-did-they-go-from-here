@@ -113,7 +113,12 @@ function get_wherego( $args = array() ) {
 
 	$exclude_categories = array_map( 'intval', explode( ',', $args['exclude_categories'] ) );		// Extract categories to exclude.
 
-	parse_str( $args['post_types'], $post_types );	// Save post types in $post_types variable.
+	// If post_types is empty or contains a query string then use parse_str else consider it comma-separated.
+	if ( ! empty( $args['post_types'] ) && false === strpos( $args['post_types'], '=' ) ) {
+		$post_types = explode( ',', $args['post_types'] );
+	} else {
+		parse_str( $args['post_types'], $post_types );
+	}
 
 	$results = get_post_meta( $post->ID, 'wheredidtheycomefrom', true );	// Extract posts list from the meta field.
 
@@ -187,7 +192,7 @@ function get_wherego( $args = array() ) {
 		if ( $args['show_credit'] ) {
 			$output .= wherego_before_list_item( $args, $result );
 
-			$output .= sprintf( __( 'Powered by <a href="%s" rel="nofollow">Where did they go from here</a>', 'contextual-related-posts' ), esc_url( 'https://ajaydsouza.com/wordpress/plugins/where-did-they-go-from-here/' ) );
+			$output .= sprintf( __( 'Powered by <a href="%s" rel="nofollow">Where did they go from here</a>', 'where-did-they-go-from-here' ), esc_url( 'https://ajaydsouza.com/wordpress/plugins/where-did-they-go-from-here/' ) );
 
 			$output .= wherego_after_list_item( $args, $result );
 
@@ -346,13 +351,6 @@ function wherego_default_options() {
 	$blank_output_text = __( 'Visitors have not browsed from this post. Become the first by clicking one of our related posts', 'where-did-they-go-from-here' );
 	$thumb_default = WHEREGO_PLUGIN_URL . 'default.png';
 
-	// Get relevant post types.
-	$args = array(
-				'public' => true,
-				'_builtin' => true,
-			);
-	$post_types	= http_build_query( get_post_types( $args ), '', '&' );
-
 	$wherego_settings = array(
 						'title'                    => $title,			// Add before the content.
 						'limit'                    => '5',				// How many posts to display?
@@ -392,7 +390,7 @@ function wherego_default_options() {
 						'excerpt_length'           => '10',		// Length of characters.
 						'title_length'             => '60',		// Limit length of post title.
 
-						'post_types'               => $post_types,		// WordPress custom post types.
+						'post_types'               => 'post,page',		// WordPress custom post types.
 						'link_new_window'          => false,			// Open link in new window.
 						'link_nofollow'            => false,			// Includes rel.
 						'custom_CSS'               => '',			// Custom CSS to style the output.

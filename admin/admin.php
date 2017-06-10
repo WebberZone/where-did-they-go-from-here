@@ -28,7 +28,13 @@ function wherego_options() {
 
 	$wherego_settings = wherego_read_options();
 
-	parse_str( $wherego_settings['post_types'], $post_types );
+	// If post_types is empty or contains a query string then use parse_str else consider it comma-separated.
+	if ( ! empty( $wherego_settings['post_types'] ) && false === strpos( $wherego_settings['post_types'], '=' ) ) {
+		$post_types = explode( ',', $wherego_settings['post_types'] );
+	} else {
+		parse_str( $wherego_settings['post_types'], $post_types );
+	}
+
 	$wp_post_types	= get_post_types( array(
 		'public'	=> true,
 	) );
@@ -96,17 +102,18 @@ function wherego_options() {
 		}
 		$wherego_settings['exclude_categories'] = isset( $exclude_categories ) ? join( ',', $exclude_categories ) : '';
 
-		// Update post types
+		/**** Post types to include ****/
 		$wp_post_types	= get_post_types( array(
 			'public'	=> true,
 		) );
-		$post_types_arr = ( is_array( $_POST['post_types'] ) ) ? $_POST['post_types'] : array(
+		$post_types_arr = ( isset( $_POST['post_types'] ) && is_array( $_POST['post_types'] ) ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['post_types'] ) ) : array(
 			'post' => 'post',
 		);
 		$post_types = array_intersect( $wp_post_types, $post_types_arr );
-		$wherego_settings['post_types'] = http_build_query( $post_types, '', '&' );
+		$wherego_settings['post_types'] = implode( ',', $post_types );
 		$posts_types_inc = array_intersect( $wp_post_types, $post_types );
 
+		// Update option.
 		update_option( 'ald_wherego_settings', $wherego_settings );
 
 		$str = '<div id="message" class="updated fade"><p>' . __( 'Options saved successfully.', 'where-did-they-go-from-here' ) . '</p></div>';

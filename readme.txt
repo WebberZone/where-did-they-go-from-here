@@ -107,6 +107,9 @@ This function takes an array of options similar to the shortcode above.
 == Changelog ==
 
 = 2.1.0 =
+* Features:
+	* `post_types` argument can now be passed in csv format
+
 * Modifications
 	* Removed Freemius
 
