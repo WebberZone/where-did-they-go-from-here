@@ -87,7 +87,7 @@ if ( ! defined( 'WPINC' ) ) {
 				</tr>
 				<tr><th scope="row"><label for="exclude_cat_slugs"><?php esc_html_e( 'Exclude Categories', 'where-did-they-go-from-here' ); ?></label></th>
 					<td>
-						<label><input type="textbox" name="exclude_cat_slugs" id="exclude_cat_slugs" value="<?php echo esc_attr( $wherego_settings['exclude_cat_slugs'] ); ?>" onfocus="setSuggest('exclude_cat_slugs', 'category');" class="widefat"></label>
+						<label><input type="textbox" name="exclude_cat_slugs" id="exclude_cat_slugs" value="<?php echo esc_attr( $wherego_settings['exclude_cat_slugs'] ); ?>" class="category_autocomplete widefat"></label>
 						<p class="description"><?php esc_html_e( 'Comma separated list of category slugs. The field above has an autocomplete so simply start typing in the starting letters and it will prompt you with options. Does not support custom taxonomies.', 'where-did-they-go-from-here' ); ?></p>
 					</td>
 				</tr>

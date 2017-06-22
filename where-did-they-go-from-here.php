@@ -72,7 +72,32 @@ if ( ! defined( 'WHEREGO_PLUGIN_FILE' ) ) {
  * @var string
  */
 global 	$wherego_settings;
-$wherego_settings = wherego_read_options();
+// $wherego_settings = wherego_read_options();
+$wherego_settings = wherego_get_settings();
+
+
+/**
+ * Get Settings.
+ *
+ * Retrieves all plugin settings
+ *
+ * @since 2.1.0
+ * @return array Add to All settings
+ */
+function wherego_get_settings() {
+
+	$settings = get_option( 'wherego_settings' );
+
+	/**
+	 * Settings array
+	 *
+	 * Retrieves all plugin settings
+	 *
+	 * @since 2.1.0
+	 * @param array $settings Settings array.
+	 */
+	return apply_filters( 'wherego_get_settings', $settings );
+}
 
 
 /**
@@ -455,6 +480,7 @@ function wherego_read_options() {
  *----------------------------------------------------------------------------
  */
 
+require_once( WHEREGO_PLUGIN_DIR . 'includes/admin/register-settings.php' );
 require_once( WHEREGO_PLUGIN_DIR . 'includes/activate-deactivate.php' );
 require_once( WHEREGO_PLUGIN_DIR . 'includes/public/media.php' );
 require_once( WHEREGO_PLUGIN_DIR . 'includes/public/output-generator.php' );
@@ -480,6 +506,10 @@ require_once( WHEREGO_PLUGIN_DIR . 'includes/modules/widget.php' );
 
 if ( is_admin() || ( defined( 'WP_CLI' ) && WP_CLI ) ) {
 
+	require_once( WHEREGO_PLUGIN_DIR . 'includes/admin/admin.php' );
+	require_once( WHEREGO_PLUGIN_DIR . 'includes/admin/settings-page.php' );
+	require_once( WHEREGO_PLUGIN_DIR . 'includes/admin/save-settings.php' );
+	require_once( WHEREGO_PLUGIN_DIR . 'includes/admin/help-tab.php' );
 	require_once( WHEREGO_PLUGIN_DIR . 'admin/admin.php' );
 	require_once( WHEREGO_PLUGIN_DIR . 'admin/admin-metabox.php' );
 	require_once( WHEREGO_PLUGIN_DIR . 'admin/admin-columns.php' );

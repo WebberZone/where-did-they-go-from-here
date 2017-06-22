@@ -166,13 +166,13 @@ function wherego_reset() {
  * @since 1.0
  * @return void
  */
-function wherego_adminmenu() {
+function wherego_adminmenu_old() {
 	if ( ( function_exists( 'add_options_page' ) ) ) {
 		$plugin_page = add_options_page( __( 'Where did they go from here?', 'where-did-they-go-from-here' ), __( 'Where did they go', 'where-did-they-go-from-here' ), 'manage_options', 'wherego_options', 'wherego_options' );
 		add_action( 'admin_head-' . $plugin_page, 'wherego_adminhead' );
 	}
 }
-add_action( 'admin_menu', 'wherego_adminmenu' );
+add_action( 'admin_menu', 'wherego_adminmenu_old' );
 
 
 /**
@@ -181,7 +181,7 @@ add_action( 'admin_menu', 'wherego_adminmenu' );
  * @since 1.4
  * @return void
  */
-function wherego_adminhead() {
+function wherego_adminhead_old() {
 
 	wp_enqueue_script( 'common' );
 	wp_enqueue_script( 'wp-lists' );
@@ -248,14 +248,14 @@ function wherego_adminhead() {
  * @param array $links
  * @return array
  */
-function wherego_plugin_actions_links( $links ) {
+function wherego_plugin_actions_links_old( $links ) {
 
 	return array_merge( array(
 		'settings' => '<a href="' . admin_url( 'options-general.php?page=wherego_options' ) . '">' . __( 'Settings', 'where-did-they-go-from-here' ) . '</a>',
 	), $links );
 
 }
-add_filter( 'plugin_action_links_' . plugin_basename( WHEREGO_PLUGIN_FILE ), 'wherego_plugin_actions_links' );
+add_filter( 'plugin_action_links_' . plugin_basename( WHEREGO_PLUGIN_FILE ), 'wherego_plugin_actions_links_old' );
 
 
 /**
@@ -266,7 +266,7 @@ add_filter( 'plugin_action_links_' . plugin_basename( WHEREGO_PLUGIN_FILE ), 'wh
  * @param array $file
  * @return void
  */
-function wherego_plugin_row_meta( $links, $file ) {
+function wherego_plugin_row_meta_old( $links, $file ) {
 	static $plugin;
 	if ( ! $plugin ) {
 		$plugin = plugin_basename( WHEREGO_PLUGIN_FILE );
@@ -278,5 +278,5 @@ function wherego_plugin_row_meta( $links, $file ) {
 	}
 	return $links;
 }
-add_filter( 'plugin_row_meta', 'wherego_plugin_row_meta', 10, 2 );
+add_filter( 'plugin_row_meta', 'wherego_plugin_row_meta_old', 10, 2 );
 
