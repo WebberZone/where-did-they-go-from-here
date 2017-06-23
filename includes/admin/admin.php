@@ -25,15 +25,16 @@ if ( ! defined( 'WPINC' ) ) {
  * @return void
  */
 function wherego_add_admin_pages_links() {
-	global $whergo_settings_page;
+	global $wherego_settings_page;
 
 	$wherego_settings_page = add_options_page( esc_html__( 'Where did they go from here?', 'where-did-they-go-from-here' ), esc_html__( 'WDTGFH Followed Posts', 'where-did-they-go-from-here' ), 'manage_options', 'wherego_options_page', 'wherego_options_page' );
 
 	// Load the settings contextual help.
 	add_action( "load-$wherego_settings_page", 'wherego_settings_help' );
 
-	// Load the
+	// Load the admin head
 	add_action( "admin_head-$wherego_settings_page", 'wherego_adminhead' );
+
 }
 add_action( 'admin_menu', 'wherego_add_admin_pages_links' );
 
@@ -145,6 +146,26 @@ function wherego_adminhead() {
 			$( '.category_autocomplete' ).each( function ( i, element ) {
 				$( element ).wheregoTagsSuggest();
 			});
+
+			// Prompt the user when they leave the page without saving the form.
+			formmodified=0;
+
+			$('form *').change(function(){
+				formmodified=1;
+			});
+
+			window.onbeforeunload = confirmExit;
+
+			function confirmExit() {
+				if (formmodified == 1) {
+					return "<?php esc_html__( 'New information not saved. Do you wish to leave the page?', 'where-did-they-go-from-here' ) ?>";
+				}
+			}
+
+			$( "input[name='submit']" ).click( function() {
+				formmodified = 0;
+			});
+
 		});
 
 	//]]>
