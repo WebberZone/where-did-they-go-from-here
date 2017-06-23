@@ -250,7 +250,7 @@ function wherego_get_registered_settings() {
 				),
 				'list_header'             => array(
 					'id'                     => 'list_header',
-					'name'                   => '<h3>' . esc_html__( 'List options', 'easy-digital-downloads' ) . '</h3>',
+					'name'                   => '<h3>' . esc_html__( 'List options', 'where-did-they-go-from-here' ) . '</h3>',
 					'desc'                   => '',
 					'type'                   => 'header',
 				),
@@ -265,7 +265,7 @@ function wherego_get_registered_settings() {
 				'post_types'              => array(
 					'id'                     => 'post_types',
 					'name'                   => esc_html__( 'Post types to include', 'where-did-they-go-from-here' ),
-					'desc'                   => esc_html__( 'Comma-separated list of post types to include in the list', 'where-did-they-go-from-here' ),
+					'desc'                   => esc_html__( 'Select which post types you want to include in the list of posts. This field can be overridden using a comma separated list of post types when using the manual display.', 'where-did-they-go-from-here' ),
 					'type'                   => 'posttypes',
 					'options'                => 'post',
 				),
@@ -374,8 +374,8 @@ function wherego_get_registered_settings() {
 				),
 				'customize_output_header' => array(
 					'id'                     => 'customize_output_header',
-					'name'                   => '<h3>' . esc_html__( 'Customize the output: HTML to display...', 'easy-digital-downloads' ) . '</h3>',
-					'desc'                   => '',
+					'name'                   => '<h3>' . esc_html__( 'Customize the output', 'where-did-they-go-from-here' ) . '</h3>',
+					'desc'                   => esc_html__( 'HTML to display...', 'where-did-they-go-from-here' ),
 					'type'                   => 'header',
 				),
 				'before_list'             => array(
@@ -409,7 +409,7 @@ function wherego_get_registered_settings() {
 			)
 		),
 		/*** Thumbnail settings ***/
-		'thumb_options'             => apply_filters( 'wherego_settings_thumb_options',
+		'thumbnail'                 => apply_filters( 'wherego_settings_thumbnail',
 			array(
 				'post_thumb_op'           => array(
 					'id'                     => 'post_thumb_op',
@@ -464,7 +464,7 @@ function wherego_get_registered_settings() {
 				'thumb_default'          => array(
 					'id'                     => 'thumb_default',
 					'name'                   => esc_html__( 'Default thumbnail', 'where-did-they-go-from-here' ),
-					'desc'                   => esc_html__( "The plugin will first check if the post contains a thumbnail. If it doesn't then it will check the meta field. If this is not available, then it will show the default image as specified above", 'where-did-they-go-from-here' ),
+					'desc'                   => esc_html__( "Enter the full URL of the image that you wish to display if no thumbnail is found. This image will be displayed below.", 'where-did-they-go-from-here' ),
 					'type'                   => 'text',
 					'options'                => WHEREGO_PLUGIN_URL . 'default.png',
 					'size'                   => 'large',

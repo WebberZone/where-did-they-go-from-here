@@ -68,7 +68,7 @@ function wherego_options_page() {
 					<?php
 						// Default submit button.
 						submit_button(
-							__( 'Submit', 'where-did-they-go-from-here' ),
+							__( 'Save Changes', 'where-did-they-go-from-here' ),
 							'primary',
 							'submit',
 							false
@@ -120,11 +120,11 @@ function wherego_options_page() {
  */
 function wherego_get_settings_sections() {
 	$wherego_settings_sections = array(
-		'general'       => __( 'General', 'where-did-they-go-from-here' ),
-		'output'        => __( 'Output', 'where-did-they-go-from-here' ),
-		'thumb_options' => __( 'Thumbnail', 'where-did-they-go-from-here' ),
-		'styles'        => __( 'Styles', 'where-did-they-go-from-here' ),
-		'feed'          => __( 'Feed', 'where-did-they-go-from-here' ),
+		'general'   => __( 'General', 'where-did-they-go-from-here' ),
+		'output'    => __( 'Output', 'where-did-they-go-from-here' ),
+		'thumbnail' => __( 'Thumbnail', 'where-did-they-go-from-here' ),
+		'styles'    => __( 'Styles', 'where-did-they-go-from-here' ),
+		'feed'      => __( 'Feed', 'where-did-they-go-from-here' ),
 	);
 
 	/**
@@ -164,6 +164,8 @@ function wherego_missing_callback( $args ) {
  */
 function wherego_header_callback( $args ) {
 
+	$html = '<p class="description">' . wp_kses_post( $args['desc'] ) . '</p>';
+
 	/**
 	 * After Settings Output filter
 	 *
@@ -171,7 +173,7 @@ function wherego_header_callback( $args ) {
 	 * @param string $html HTML string.
 	 * @param array Arguments array.
 	 */
-	echo apply_filters( 'wherego_after_setting_output', '', $args ); // WPCS: XSS OK.
+	echo apply_filters( 'wherego_after_setting_output', $html, $args ); // WPCS: XSS OK.
 }
 
 
@@ -318,7 +320,7 @@ function wherego_multicheck_callback( $args ) {
 			}
 
 			$html .= sprintf( '<input name="wherego_settings[%1$s][%2$s]" id="wherego_settings[%1$s][%2$s]" type="checkbox" value="%3$s" %4$s /> ', sanitize_key( $args['id'] ), sanitize_key( $key ), esc_attr( $key ), checked( $key, $enabled, false ) );
-				$html .= sprintf( '<label for="wherego_settings[%1$s][%2$s]">%3$s</label> <br />', sanitize_key( $args['id'] ), sanitize_key( $key ), $option );
+			$html .= sprintf( '<label for="wherego_settings[%1$s][%2$s]">%3$s</label> <br />', sanitize_key( $args['id'] ), sanitize_key( $key ), $option );
 		}
 
 		$html .= '<p class="description">' . wp_kses_post( $args['desc'] ) . '</p>';
@@ -490,6 +492,8 @@ function wherego_posttypes_callback( $args ) {
 		$html .= sprintf( '<label for="wherego_settings[%1$s][%2$s]">%2$s</label> <br />', sanitize_key( $args['id'] ), $wp_post_type );
 
 	}
+
+	$html .= '<p class="description">' . wp_kses_post( $args['desc'] ) . '</p>';
 
 	/** This filter has been defined in settings-page.php */
 	echo apply_filters( 'wherego_after_setting_output', $html, $args ); // WPCS: XSS OK.
