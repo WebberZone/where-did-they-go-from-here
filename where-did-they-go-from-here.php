@@ -263,13 +263,13 @@ function wherego_header() {
 			echo $wherego_custom_css; // WPCS: XSS OK.
 	    } elseif ( ( is_page() ) ) {
 			echo $wherego_custom_css; // WPCS: XSS OK.
-	    } elseif ( ( is_home() ) && ( $wherego_settings['add_to_home'] ) ) {
+	    } elseif ( ( is_home() ) && ( $wherego_settings['add_to']['home'] ) ) {
 			echo $wherego_custom_css; // WPCS: XSS OK.
-	    } elseif ( ( is_category() ) && ( $wherego_settings['add_to_category_archives'] ) ) {
+	    } elseif ( ( is_category() ) && ( $wherego_settings['add_to']['category_archives'] ) ) {
 			echo $wherego_custom_css; // WPCS: XSS OK.
-	    } elseif ( ( is_tag() ) && ( $wherego_settings['add_to_tag_archives'] ) ) {
+	    } elseif ( ( is_tag() ) && ( $wherego_settings['add_to']['tag_archives'] ) ) {
 			echo $wherego_custom_css; // WPCS: XSS OK.
-	    } elseif ( ( ( is_tax() ) || ( is_author() ) || ( is_date() ) ) && ( $wherego_settings['add_to_archives'] ) ) {
+	    } elseif ( ( ( is_tax() ) || ( is_author() ) || ( is_date() ) ) && ( $wherego_settings['add_to']['archives'] ) ) {
 			echo $wherego_custom_css; // WPCS: XSS OK.
 	    } elseif ( is_active_widget( false, false, 'Widgetwherego', true ) ) {
 			echo $wherego_custom_css; // WPCS: XSS OK.
@@ -298,17 +298,17 @@ function wherego_content( $content ) {
 		return $content;
 	}
 
-	if ( ( is_single() ) && ( $wherego_settings['add_to_content'] ) ) {
+	if ( ( is_single() ) && ( $wherego_settings['add_to']['content'] ) ) {
 		return $content . get_wherego( 'is_widget=0' );
-	} elseif ( ( is_page() ) && ( $wherego_settings['add_to_page'] ) ) {
+	} elseif ( ( is_page() ) && ( $wherego_settings['add_to']['page'] ) ) {
 		return $content . get_wherego( 'is_widget=0' );
-	} elseif ( ( is_home() ) && ( $wherego_settings['add_to_home'] ) ) {
+	} elseif ( ( is_home() ) && ( $wherego_settings['add_to']['home'] ) ) {
 		return $content . get_wherego( 'is_widget=0' );
-	} elseif ( ( is_category() ) && ( $wherego_settings['add_to_category_archives'] ) ) {
+	} elseif ( ( is_category() ) && ( $wherego_settings['add_to']['category_archives'] ) ) {
 		return $content . get_wherego( 'is_widget=0' );
-	} elseif ( ( is_tag() ) && ( $wherego_settings['add_to_tag_archives'] ) ) {
+	} elseif ( ( is_tag() ) && ( $wherego_settings['add_to']['tag_archives'] ) ) {
 		return $content . get_wherego( 'is_widget=0' );
-	} elseif ( ( ( is_tax() ) || ( is_author() ) || ( is_date() ) ) && ( $wherego_settings['add_to_archives'] ) ) {
+	} elseif ( ( ( is_tax() ) || ( is_author() ) || ( is_date() ) ) && ( $wherego_settings['add_to']['archives'] ) ) {
 		return $content . get_wherego( 'is_widget=0' );
 	} else {
 		return $content;
@@ -332,7 +332,7 @@ function wherego_rss( $content ) {
 	$show_excerpt_feed = $wherego_settings['show_excerpt_feed'];
 	$post_thumb_op_feed = $wherego_settings['post_thumb_op_feed'];
 
-	if ( $wherego_settings['add_to_feed'] ) {
+	if ( $wherego_settings['add_to']['feed'] ) {
 		return $content . get_wherego( 'is_widget=0&limit=' . $limit_feed . '&show_excerpt=' . $show_excerpt_feed . '&post_thumb_op=' . $post_thumb_op_feed );
 	} else {
 		return $content;
