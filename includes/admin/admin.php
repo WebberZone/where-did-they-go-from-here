@@ -27,7 +27,7 @@ if ( ! defined( 'WPINC' ) ) {
 function wherego_add_admin_pages_links() {
 	global $wherego_settings_page;
 
-	$wherego_settings_page = add_options_page( esc_html__( 'Where did they go from here?', 'where-did-they-go-from-here' ), esc_html__( 'WDTGFH Followed Posts', 'where-did-they-go-from-here' ), 'manage_options', 'wherego_options_page', 'wherego_options_page' );
+	$wherego_settings_page = add_options_page( esc_html__( 'Where did they go from here?', 'where-did-they-go-from-here' ), esc_html__( 'WZ Followed Posts', 'where-did-they-go-from-here' ), 'manage_options', 'wherego_options_page', 'wherego_options_page' );
 
 	// Load the settings contextual help.
 	add_action( "load-$wherego_settings_page", 'wherego_settings_help' );

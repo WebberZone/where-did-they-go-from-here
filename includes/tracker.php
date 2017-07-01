@@ -90,7 +90,7 @@ add_action( 'wp_ajax_wherego_tracker', 'wherego_tracker_parser' );
 
 
 /**
- * Enqueues the scripts needed by WDTGFH.
+ * Enqueues the scripts.
  *
  * @since 1.7
  * @return void
