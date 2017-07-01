@@ -645,7 +645,8 @@ function wherego_upgrade_settings() {
 	// Convert 'blank_output' to the new format: true = 'blank' and false = 'custom_text'
 	$settings['blank_output'] = ! empty( $old_settings['blank_output'] ) ? 'blank' : 'custom_text';
 
-	// delete_option( 'ald_wherego_settings' );
+	delete_option( 'ald_wherego_settings' );
+
 	return $settings;
 
 }
