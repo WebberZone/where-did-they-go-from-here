@@ -223,7 +223,10 @@ function wherego_get_registered_settings() {
 					'name'                   => esc_html__( 'Add followed posts to', 'where-did-they-go-from-here' ),
 					'desc'                   => sprintf( esc_html__( 'If you choose to disable this, please add %1$s to your template file where you want it displayed', 'where-did-they-go-from-here' ),  "<code>&lt;?php if ( function_exists( 'echo_wherego' ) ) { echo_wherego(); } ?&gt;</code>" ),
 					'type'                   => 'multicheck',
-					'default'                => array( 'content', 'page' ),
+					'default'                => array(
+						'content'               => 'content',
+						'page'                  => 'page',
+					),
 					'options'                => array(
 						'content'               => esc_html__( 'Posts', 'where-did-they-go-from-here' ),
 						'page'                  => esc_html__( 'Pages', 'where-did-they-go-from-here' ),
@@ -464,7 +467,7 @@ function wherego_get_registered_settings() {
 				'thumb_default'          => array(
 					'id'                     => 'thumb_default',
 					'name'                   => esc_html__( 'Default thumbnail', 'where-did-they-go-from-here' ),
-					'desc'                   => esc_html__( "Enter the full URL of the image that you wish to display if no thumbnail is found. This image will be displayed below.", 'where-did-they-go-from-here' ),
+					'desc'                   => esc_html__( 'Enter the full URL of the image that you wish to display if no thumbnail is found. This image will be displayed below.', 'where-did-they-go-from-here' ),
 					'type'                   => 'text',
 					'options'                => WHEREGO_PLUGIN_URL . 'default.png',
 					'size'                   => 'large',
@@ -572,8 +575,11 @@ function wherego_settings_defaults() {
 				$options[ $option['id'] ] = '1';
 			}
 			// If an option is set.
-			if ( in_array( $option['type'], array( 'textarea', 'text', 'csv' ), true ) && ! empty( $option['options'] ) ) {
+			if ( in_array( $option['type'], array( 'textarea', 'text', 'csv', 'numbercsv' ), true ) && ! empty( $option['options'] ) ) {
 				$options[ $option['id'] ] = $option['options'];
+			}
+			if ( in_array( $option['type'], array( 'multicheck', 'radio' ), true ) && ! empty( $option['default'] ) ) {
+				$options[ $option['id'] ] = $option['default'];
 			}
 		}
 	}
