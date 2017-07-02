@@ -206,7 +206,8 @@ add_action( 'admin_init', 'wherego_register_settings' );
 /**
  * Retrieve the array of plugin settings
  *
- * The plugin settings are in the format of $settings[ tab ][ setting_id ][ setting_arguments ]
+ * The plugin settings are in the format of $settings[ tab ][ setting_id ][ setting_arguments ].
+ * The different types of settings are: text, csv, numbercsv, textarea, checkbox, multicheck, radio, number, select and posttypes
  *
  * @since 2.1.0
  *
@@ -249,7 +250,7 @@ function wherego_get_registered_settings() {
 					'name'                   => esc_html__( 'Link to plugin page', 'where-did-they-go-from-here' ),
 					'desc'                   => esc_html__( "Add a no-follow link to the plugin page to announce to the world that you're using this plugin", 'where-did-they-go-from-here' ),
 					'type'                   => 'checkbox',
-					'options'                => true,
+					'options'                => false,
 				),
 				'list_header'             => array(
 					'id'                     => 'list_header',
@@ -343,7 +344,7 @@ function wherego_get_registered_settings() {
 					'name'                   => esc_html__( 'Show post excerpt in list?', 'where-did-they-go-from-here' ),
 					'desc'                   => '',
 					'type'                   => 'checkbox',
-					'options'                => true,
+					'options'                => false,
 				),
 				'excerpt_length'          => array(
 					'id'                     => 'excerpt_length',
@@ -366,14 +367,14 @@ function wherego_get_registered_settings() {
 					'name'                   => esc_html__( 'Open links in new window', 'where-did-they-go-from-here' ),
 					'desc'                   => '',
 					'type'                   => 'checkbox',
-					'options'                => true,
+					'options'                => false,
 				),
 				'link_nofollow'           => array(
 					'id'                     => 'link_nofollow',
 					'name'                   => esc_html__( 'Add nofollow to links', 'where-did-they-go-from-here' ),
 					'desc'                   => '',
 					'type'                   => 'checkbox',
-					'options'                => true,
+					'options'                => false,
 				),
 				'customize_output_header' => array(
 					'id'                     => 'customize_output_header',
@@ -508,7 +509,7 @@ function wherego_get_registered_settings() {
 					'name'                   => esc_html__( 'Show post excerpt in list?', 'where-did-they-go-from-here' ),
 					'desc'                   => '',
 					'type'                   => 'checkbox',
-					'options'                => true,
+					'options'                => false,
 				),
 				'post_thumb_op_feed'      => array(
 					'id'                     => 'post_thumb_op_feed',
@@ -575,10 +576,10 @@ function wherego_settings_defaults() {
 				$options[ $option['id'] ] = '1';
 			}
 			// If an option is set.
-			if ( in_array( $option['type'], array( 'textarea', 'text', 'csv', 'numbercsv' ), true ) && ! empty( $option['options'] ) ) {
+			if ( in_array( $option['type'], array( 'textarea', 'text', 'csv', 'numbercsv', 'posttypes', 'number' ), true ) && isset( $option['options'] ) ) {
 				$options[ $option['id'] ] = $option['options'];
 			}
-			if ( in_array( $option['type'], array( 'multicheck', 'radio' ), true ) && ! empty( $option['default'] ) ) {
+			if ( in_array( $option['type'], array( 'multicheck', 'radio', 'select' ), true ) && isset( $option['default'] ) ) {
 				$options[ $option['id'] ] = $option['default'];
 			}
 		}
