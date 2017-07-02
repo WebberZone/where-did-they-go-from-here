@@ -17,8 +17,8 @@
 function wherego_column( $cols ) {
 	global $wherego_settings;
 
-	if ( $wherego_settings['wg_in_admin'] ) {
-		$cols['wherego'] = 'Where go';
+	if ( wherego_get_option( 'wg_in_admin' ) ) {
+		$cols['wherego'] = esc_html__( 'Followed Posts', 'where-did-they-go-from-here' );
 	}
 
 	return $cols;

@@ -201,7 +201,7 @@ function get_wherego( $args = array() ) {
 
 				$output .= wherego_list_link( $args, $result );
 
-				if ( $args['show_excerpt'] ) {
+				if ( isset( $args['show_excerpt'] ) && $args['show_excerpt'] ) {
 					$output .= '<span class="wherego_excerpt"> ' . wherego_excerpt( $result->ID, $args['excerpt_length'] ) . '</span>';
 				}
 
@@ -213,7 +213,7 @@ function get_wherego( $args = array() ) {
 				break;	// End loop when related posts limit is reached.
 			}
 		} // End foreach().
-		if ( $args['show_credit'] ) {
+		if ( isset( $args['show_credit'] ) && $args['show_credit'] ) {
 			$output .= wherego_before_list_item( $args, $result );
 
 			$output .= sprintf( __( 'Powered by <a href="%s" rel="nofollow">Where did they go from here</a>', 'where-did-they-go-from-here' ), esc_url( 'https://ajaydsouza.com/wordpress/plugins/where-did-they-go-from-here/' ) );
@@ -263,13 +263,13 @@ function wherego_header() {
 			echo $wherego_custom_css; // WPCS: XSS OK.
 	    } elseif ( ( is_page() ) ) {
 			echo $wherego_custom_css; // WPCS: XSS OK.
-	    } elseif ( ( is_home() ) && ( $wherego_settings['add_to']['home'] ) ) {
+	    } elseif ( ( is_home() ) && ! empty( $wherego_settings['add_to']['home'] ) ) {
 			echo $wherego_custom_css; // WPCS: XSS OK.
-	    } elseif ( ( is_category() ) && ( $wherego_settings['add_to']['category_archives'] ) ) {
+	    } elseif ( ( is_category() ) && ! empty( $wherego_settings['add_to']['category_archives'] ) ) {
 			echo $wherego_custom_css; // WPCS: XSS OK.
-	    } elseif ( ( is_tag() ) && ( $wherego_settings['add_to']['tag_archives'] ) ) {
+	    } elseif ( ( is_tag() ) && ! empty( $wherego_settings['add_to']['tag_archives'] ) ) {
 			echo $wherego_custom_css; // WPCS: XSS OK.
-	    } elseif ( ( ( is_tax() ) || ( is_author() ) || ( is_date() ) ) && ( $wherego_settings['add_to']['archives'] ) ) {
+	    } elseif ( ( ( is_tax() ) || ( is_author() ) || ( is_date() ) ) && ! empty( $wherego_settings['add_to']['archives'] ) ) {
 			echo $wherego_custom_css; // WPCS: XSS OK.
 	    } elseif ( is_active_widget( false, false, 'Widgetwherego', true ) ) {
 			echo $wherego_custom_css; // WPCS: XSS OK.
@@ -298,17 +298,17 @@ function wherego_content( $content ) {
 		return $content;
 	}
 
-	if ( ( is_single() ) && ( $wherego_settings['add_to']['content'] ) ) {
+	if ( ( is_single() ) && ! empty( $wherego_settings['add_to']['content'] ) ) {
 		return $content . get_wherego( 'is_widget=0' );
-	} elseif ( ( is_page() ) && ( $wherego_settings['add_to']['page'] ) ) {
+	} elseif ( ( is_page() ) && ! empty( $wherego_settings['add_to']['page'] ) ) {
 		return $content . get_wherego( 'is_widget=0' );
-	} elseif ( ( is_home() ) && ( $wherego_settings['add_to']['home'] ) ) {
+	} elseif ( ( is_home() ) && ! empty( $wherego_settings['add_to']['home'] ) ) {
 		return $content . get_wherego( 'is_widget=0' );
-	} elseif ( ( is_category() ) && ( $wherego_settings['add_to']['category_archives'] ) ) {
+	} elseif ( ( is_category() ) && ! empty( $wherego_settings['add_to']['category_archives'] ) ) {
 		return $content . get_wherego( 'is_widget=0' );
-	} elseif ( ( is_tag() ) && ( $wherego_settings['add_to']['tag_archives'] ) ) {
+	} elseif ( ( is_tag() ) && ! empty( $wherego_settings['add_to']['tag_archives'] ) ) {
 		return $content . get_wherego( 'is_widget=0' );
-	} elseif ( ( ( is_tax() ) || ( is_author() ) || ( is_date() ) ) && ( $wherego_settings['add_to']['archives'] ) ) {
+	} elseif ( ( ( is_tax() ) || ( is_author() ) || ( is_date() ) ) && ! empty( $wherego_settings['add_to']['archives'] ) ) {
 		return $content . get_wherego( 'is_widget=0' );
 	} else {
 		return $content;
@@ -329,7 +329,7 @@ function wherego_rss( $content ) {
 	global $wherego_settings;
 
 	$limit_feed = $wherego_settings['limit_feed'];
-	$show_excerpt_feed = $wherego_settings['show_excerpt_feed'];
+	$show_excerpt_feed = wherego_get_option( 'show_excerpt_feed' );
 	$post_thumb_op_feed = $wherego_settings['post_thumb_op_feed'];
 
 	if ( $wherego_settings['add_to']['feed'] ) {
