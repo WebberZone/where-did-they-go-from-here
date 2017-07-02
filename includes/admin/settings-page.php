@@ -79,7 +79,7 @@ function wherego_options_page() {
 						// Reset button.
 						$confirm = esc_js( __( 'Do you really want to reset all these settings to their default values?', 'where-did-they-go-from-here' ) );
 						submit_button(
-							__( 'Reset', 'where-did-they-go-from-here' ),
+							__( 'Reset all settings', 'where-did-they-go-from-here' ),
 							'secondary',
 							'settings_reset',
 							false,
