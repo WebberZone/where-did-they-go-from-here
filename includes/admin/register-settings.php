@@ -29,9 +29,13 @@ if ( ! defined( 'WPINC' ) ) {
  * @param mixed  $default Default value to fetch if option is missing.
  * @return mixed
  */
-function wherego_get_option( $key = '', $default = false ) {
+function wherego_get_option( $key = '', $default = null ) {
 
 	global $wherego_settings;
+
+	if ( is_null( $default ) ) {
+		$default = wherego_get_default_option( $key );
+	}
 
 	$value = ! empty( $wherego_settings[ $key ] ) ? $wherego_settings[ $key ] : $default;
 
@@ -311,7 +315,7 @@ function wherego_get_registered_settings() {
 					'name'                   => esc_html__( 'Heading of posts', 'where-did-they-go-from-here' ),
 					'desc'                   => esc_html__( 'Displayed before the list of the posts as a the master heading', 'where-did-they-go-from-here' ),
 					'type'                   => 'text',
-					'options'                => esc_html__( '<h3>Readers who viewed this page, also viewed:</h3>', 'where-did-they-go-from-here' ),
+					'options'                => '<h3>' . esc_html__( 'Readers who viewed this page, also viewed:', 'where-did-they-go-from-here' ) . '</h3>',
 					'size'                   => 'large',
 				),
 				'blank_output'            => array(
@@ -556,7 +560,6 @@ function wherego_get_registered_settings() {
 }
 
 
-
 /**
  * Default settings.
  *
@@ -599,6 +602,27 @@ function wherego_settings_defaults() {
 	 * @param array $options Default settings.
 	 */
 	return apply_filters( 'wherego_settings_defaults', $options );
+}
+
+
+/**
+ * Get the default option for a specific key
+ *
+ * @since 2.1.0
+ *
+ * @param string $key Key of the option to fetch.
+ * @return mixed
+ */
+function wherego_get_default_option( $key = '' ) {
+
+	$default_settings = wherego_settings_defaults();
+
+	if ( array_key_exists( $key, $default_settings ) ) {
+		return $default_settings[ $key ];
+	} else {
+		return false;
+	}
+
 }
 
 
