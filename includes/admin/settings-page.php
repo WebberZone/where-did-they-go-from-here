@@ -563,9 +563,11 @@ function wherego_admin_thumbnail( $html, $args ) {
 
 	global $wherego_settings;
 
-	if ( 'thumb_default' === $args['id'] && '' !== $wherego_settings['thumb_default'] ) {
+	$thumb_default = wherego_get_option( 'thumb_default' );
+
+	if ( 'thumb_default' === $args['id'] && '' !== $thumb_default ) {
 		$html .= '<br />';
-		$html .= sprintf( '<img src="%1$s" style="max-width:200px" title="%2$s" alt="%2$s" />', esc_attr( $wherego_settings['thumb_default'] ), esc_html__( 'Default thumbnail', 'where-did-they-go-from-here' ) );
+		$html .= sprintf( '<img src="%1$s" style="max-width:200px" title="%2$s" alt="%2$s" />', esc_attr( $thumb_default ), esc_html__( 'Default thumbnail', 'where-did-they-go-from-here' ) );
 	}
 
 	return $html;

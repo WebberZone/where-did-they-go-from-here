@@ -326,13 +326,13 @@ add_filter( 'the_content', 'wherego_content' );
  * @return string
  */
 function wherego_rss( $content ) {
-	global $wherego_settings;
 
-	$limit_feed = $wherego_settings['limit_feed'];
 	$show_excerpt_feed = wherego_get_option( 'show_excerpt_feed' );
-	$post_thumb_op_feed = $wherego_settings['post_thumb_op_feed'];
+	$limit_feed = wherego_get_option( 'limit_feed' );
+	$post_thumb_op_feed = wherego_get_option( 'post_thumb_op_feed' );
+	$add_to = wherego_get_option( 'add_to' );
 
-	if ( $wherego_settings['add_to']['feed'] ) {
+	if ( ! empty( $add_to['feed'] ) ) {
 		return $content . get_wherego( 'is_widget=0&limit=' . $limit_feed . '&show_excerpt=' . $show_excerpt_feed . '&post_thumb_op=' . $post_thumb_op_feed );
 	} else {
 		return $content;

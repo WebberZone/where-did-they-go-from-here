@@ -40,7 +40,7 @@ add_filter( 'manage_link-manager_columns', 'wherego_column' );
 function wherego_value( $column_name, $post_id ) {
 	global $wherego_settings;
 
-	if ( ( $column_name == 'wherego' ) && ( $wherego_settings['wg_in_admin'] ) ) {
+	if ( ( $column_name == 'wherego' ) && wherego_get_option( 'wg_in_admin' ) ) {
 
 		$lpids = get_post_meta( $post_id, 'wheredidtheycomefrom', true );
 
@@ -53,7 +53,7 @@ function wherego_value( $column_name, $post_id ) {
 			foreach ( $lpids as $lpid ) {
 				$loop++;
 
-				if ( $loop > $wherego_settings['limit'] ) {
+				if ( $loop > wherego_get_option( 'limit' ) ) {
 					break;
 				}
 

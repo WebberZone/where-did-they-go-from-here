@@ -19,7 +19,7 @@ function wherego_tracker_parser() {
 		wp_die( esc_html__( 'WHEREGO: Security check failed', 'where-did-they-go-from-here' ) );
 	}
 
-	$max_links = $wherego_settings['limit'] * 5;
+	$max_links = wherego_get_option( 'limit' ) * 5;
 
 	$siteurl = get_option( 'siteurl' );
 
