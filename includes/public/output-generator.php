@@ -20,8 +20,8 @@ if ( ! defined( 'WPINC' ) ) {
  */
 function wherego_link_attributes( $args ) {
 
-	$rel_attribute = ( $args['link_nofollow'] ) ? ' rel="nofollow" ' : ' ';
-	$target_attribute = ( $args['link_new_window'] ) ? ' target="_blank" ' : ' ';
+	$rel_attribute = ( isset( $args['link_nofollow'] ) && $args['link_nofollow'] ) ? ' rel="nofollow" ' : ' ';
+	$target_attribute = ( isset( $args['link_new_window'] ) && $args['link_new_window'] ) ? ' target="_blank" ' : ' ';
 
 	$link_attributes = array(
 		'rel_attribute' => $rel_attribute,
@@ -277,8 +277,8 @@ function wherego_list_link( $args, $result ) {
 			'thumb_meta' => $args['thumb_meta'],
 			'thumb_html' => $args['thumb_html'],
 			'thumb_default' => $args['thumb_default'],
-			'thumb_default_show' => $args['thumb_default_show'],
-			'scan_images' => $args['scan_images'],
+			'thumb_default_show' => ( isset( $args['thumb_default_show'] ) && $args['thumb_default_show'] ),
+			'scan_images' => ( isset( $args['scan_images'] ) && $args['scan_images'] ),
 			'class' => 'wherego_thumb',
 		) );
 

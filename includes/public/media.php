@@ -89,7 +89,7 @@ function wherego_get_the_post_thumbnail( $args = array() ) {
 	}
 
 	// If there is no thumbnail found, fetch the first image in the post, if enabled.
-	if ( ! $postimage && $args['scan_images'] ) {
+	if ( ! $postimage && ( isset( $args['scan_images'] ) && $args['scan_images'] ) ) {
 		preg_match_all( '/<img.+src=[\'"]([^\'"]+)[\'"].*>/i', $result->post_content, $matches );
 		if ( isset( $matches[1][0] ) && $matches[1][0] ) { 			// Any image there?
 			$postimage = $matches[1][0]; // We need the first one only.
@@ -119,7 +119,7 @@ function wherego_get_the_post_thumbnail( $args = array() ) {
 	}
 
 	// If no thumb found and settings permit, use default thumb.
-	if ( ! $postimage && $args['thumb_default_show'] ) {
+	if ( ! $postimage && ( isset( $args['thumb_default_show'] ) && $args['thumb_default_show'] ) ) {
 		$postimage = $args['thumb_default'];
 		$pick = 'default_thumb';
 	}

@@ -21,7 +21,7 @@ __If you're looking for a plugin that displays posts related to the content, loo
 
 = Key features =
 * **Automatic**: The plugin will start displaying visited posts on your site and feed automatically after the content when you activate the plugin
-* **Shortcode**: Use `[wherego]` to display the followed posts. For a range of options check out the function `wherego_default_options`
+* **Shortcode**: Use `[wherego]` to display the followed posts
 * **Widget**: Find the __Followed posts__ widget to display the posts in your theme's sidebar
 * **Manual install**: Want more control over placement? Check the [FAQ](https://wordpress.org/extend/plugins/where-did-they-go-from-here/faq/) on which functions are available for manual install
 * **Exclusions**: Exclude select posts and pages from the list of posts. Exclude posts from select categories from the list of posts
@@ -92,7 +92,7 @@ You can add the CSS code in the **Custom Styles** section of the plugin settings
 
 = Shortcode =
 
-Use `[wherego]` to display the followed posts. For a range of options check out the function `wherego_default_options`
+Use `[wherego]` to display the followed posts
 
 = Manual install =
 
@@ -108,6 +108,7 @@ This function takes an array of options similar to the shortcode above.
 
 = 2.1.0 =
 * Features:
+	* Updated admin page based on the Settings API
 	* `post_types` argument can now be passed in csv format
 
 * Modifications
@@ -128,7 +129,7 @@ This function takes an array of options similar to the shortcode above.
 = 2.0.0 =
 * Features:
 	* Multisite activation and uninstall
-	* Shortcode: Use `[wherego]` to display the followed posts. For a range of options check out the function `wherego_default_options`
+	* Shortcode: Use `[wherego]` to display the followed posts
 	* Widget: Find it in your theme customizer or under Appearances &raquo; Widgets
 	* Integrated Freemius Insights
 

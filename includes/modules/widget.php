@@ -23,7 +23,7 @@ class WhereGo_Widget extends WP_Widget {
 	public function __construct() {
 		parent::__construct(
 			'wherego_widget',
-			__( 'Followed Posts [WDTGFH]', 'where-did-they-go-from-here' ),
+			__( 'WZ Followed Posts', 'where-did-they-go-from-here' ),
 			array(
 				'description' => __( 'Selective refreshable widget.', 'where-did-they-go-from-here' ),
 				'customize_selective_refresh' => true,
