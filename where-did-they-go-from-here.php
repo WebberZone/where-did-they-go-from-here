@@ -130,7 +130,7 @@ function get_wherego( $args = array() ) {
 		'echo' => true,
 		'heading' => true,
 	);
-	$defaults = array_merge( $defaults, $wherego_settings );
+	$defaults = array_merge( $defaults, wherego_settings_defaults(), $wherego_settings );
 
 	// Parse incomming $args into an array and merge it with $defaults.
 	$args = wp_parse_args( $args, $defaults );
