@@ -448,6 +448,18 @@ function wherego_get_registered_settings() {
 					'options'                => '250',
 					'size'                   => 'small',
 				),
+				'thumb_html'              => array(
+					'id'                     => 'thumb_html',
+					'name'                   => esc_html__( 'Thumbnail size attributes', 'where-did-they-go-from-here' ),
+					'desc'                   => '',
+					'type'                   => 'radio',
+					'default'                => 'html',
+					'options'                => array(
+						'css'                   => sprintf( esc_html__( 'Use CSS to set the width and height: e.g. %s', 'where-did-they-go-from-here' ), '<code>style="max-width:250px;max-height:250px"</code>' ),
+						'html'                  => sprintf( esc_html__( 'Use HTML attributes to set the width and height: e.g. %s', 'where-did-they-go-from-here' ), '<code>width="250" height="250"</code>' ),
+						'none'                  => esc_html__( 'No width or height set. You will need to use external styles to force any width or height of your choice.', 'where-did-they-go-from-here' ),
+					),
+				),
 				'thumb_meta'              => array(
 					'id'                     => 'thumb_meta',
 					'name'                   => esc_html__( 'Thumbnail meta field name', 'where-did-they-go-from-here' ),
