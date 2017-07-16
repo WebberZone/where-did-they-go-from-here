@@ -259,21 +259,21 @@ function wherego_header() {
 
 	// Add CSS to header.
 	if ( '' !== $wherego_custom_css ) {
-	    if ( ( is_single() ) ) {
+		if ( ( is_single() ) ) {
 			echo $wherego_custom_css; // WPCS: XSS OK.
-	    } elseif ( ( is_page() ) ) {
+		} elseif ( ( is_page() ) ) {
 			echo $wherego_custom_css; // WPCS: XSS OK.
-	    } elseif ( ( is_home() ) && ! empty( $wherego_settings['add_to']['home'] ) ) {
+		} elseif ( ( is_home() ) && ! empty( $wherego_settings['add_to']['home'] ) ) {
 			echo $wherego_custom_css; // WPCS: XSS OK.
-	    } elseif ( ( is_category() ) && ! empty( $wherego_settings['add_to']['category_archives'] ) ) {
+		} elseif ( ( is_category() ) && ! empty( $wherego_settings['add_to']['category_archives'] ) ) {
 			echo $wherego_custom_css; // WPCS: XSS OK.
-	    } elseif ( ( is_tag() ) && ! empty( $wherego_settings['add_to']['tag_archives'] ) ) {
+		} elseif ( ( is_tag() ) && ! empty( $wherego_settings['add_to']['tag_archives'] ) ) {
 			echo $wherego_custom_css; // WPCS: XSS OK.
-	    } elseif ( ( ( is_tax() ) || ( is_author() ) || ( is_date() ) ) && ! empty( $wherego_settings['add_to']['archives'] ) ) {
+		} elseif ( ( ( is_tax() ) || ( is_author() ) || ( is_date() ) ) && ! empty( $wherego_settings['add_to']['archives'] ) ) {
 			echo $wherego_custom_css; // WPCS: XSS OK.
-	    } elseif ( is_active_widget( false, false, 'Widgetwherego', true ) ) {
+		} elseif ( is_active_widget( false, false, 'Widgetwherego', true ) ) {
 			echo $wherego_custom_css; // WPCS: XSS OK.
-	    }
+		}
 	}
 }
 add_action( 'wp_head', 'wherego_header' );

@@ -35,7 +35,7 @@
 	<div id="qlinksdiv" class="postbox meta-box-sortables">
 	  <h2 class='hndle metabox-holder'><span><?php esc_html_e( 'Quick links', 'where-did-they-go-from-here' ); ?></span></h3>
 	  <div class="inside">
-	    <div id="quick-links">
+	  	<div id="quick-links">
 			<ul>
 				<li><a href="https://ajaydsouza.com/wordpress/plugins/where-did-they-go-from-here/"><?php esc_html_e( 'Where did they go from here? plugin page', 'where-did-they-go-from-here' ); ?></a></li>
 				<li><a href="https://github.com/ajaydsouza/where-did-they-go-from-here"><?php esc_html_e( 'Plugin on GitHub', 'where-did-they-go-from-here' ); ?></a></li>
@@ -45,7 +45,7 @@
 				<li><a href="https://ajaydsouza.com/wordpress/plugins/"><?php esc_html_e( 'Other plugins', 'where-did-they-go-from-here' ); ?></a></li>
 				<li><a href="https://ajaydsouza.com/"><?php esc_html_e( "Ajay's blog", 'where-did-they-go-from-here' ); ?></a></li>
 			</ul>
-	    </div>
+		</div>
 	  </div><!-- /.inside -->
 	</div><!-- /.postbox -->
 </div>

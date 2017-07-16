@@ -17,6 +17,7 @@
 	<!-- Add in some extra rules from other standards. -->
 	<rule ref="Generic.CodeAnalysis.UnusedFunctionParameter"/>
 	<rule ref="Generic.Commenting.Todo"/>
+	<rule ref="Generic.WhiteSpace.DisallowSpaceIndent.SpacesUsed"/>
 
 	<!-- Check for PHP cross-version compatibility. -->
 	<config name="testVersion" value="5.2-99.0"/>

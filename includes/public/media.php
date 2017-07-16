@@ -162,7 +162,7 @@ function wherego_get_the_post_thumbnail( $args = array() ) {
 		$postimage = apply_filters( 'wherego_postimage', $postimage, $args['thumb_width'], $args['thumb_height'], $thumb_timthumb, $thumb_timthumb_q, $result );
 
 		if ( is_ssl() ) {
-		    $postimage = preg_replace( '~http://~', 'https://', $postimage );
+			$postimage = preg_replace( '~http://~', 'https://', $postimage );
 		}
 
 		if ( 'css' == $args['thumb_html'] ) {

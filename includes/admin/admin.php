@@ -52,7 +52,7 @@ function wherego_adminhead() {
 ?>
 	<script type="text/javascript">
 	//<![CDATA[
-	    // Function to add auto suggest.
+		// Function to add auto suggest.
 		jQuery(document).ready(function($) {
 			$.fn.wheregoTagsSuggest = function( options ) {
 
