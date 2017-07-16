@@ -32,7 +32,7 @@ function wherego_add_admin_pages_links() {
 	// Load the settings contextual help.
 	add_action( "load-$wherego_settings_page", 'wherego_settings_help' );
 
-	// Load the admin head
+	// Load the admin head.
 	add_action( "admin_head-$wherego_settings_page", 'wherego_adminhead' );
 
 }
@@ -178,7 +178,7 @@ function wherego_adminhead() {
  * Filter to add link to WordPress plugin action links.
  *
  * @since 1.7
- * @param array $links
+ * @param array $links Array containing the links.
  * @return array
  */
 function wherego_plugin_actions_links( $links ) {
@@ -195,9 +195,9 @@ add_filter( 'plugin_action_links_' . plugin_basename( WHEREGO_PLUGIN_FILE ), 'wh
  * Filter to add links to the plugin action row.
  *
  * @since 1.3
- * @param array $links
- * @param array $file
- * @return void
+ * @param array  $links Array containing the links.
+ * @param string $file Path to the plugin file, relative to the plugins directory.
+ * @return array
  */
 function wherego_plugin_row_meta( $links, $file ) {
 

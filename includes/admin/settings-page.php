@@ -541,7 +541,7 @@ function wherego_tags_search() {
 	 * Require $term_search_min_chars chars for matching (default: 2)
 	 * ensure it's a non-negative, non-zero integer.
 	 */
-	if ( ( $term_search_min_chars === 0 ) || ( strlen( $s ) < $term_search_min_chars ) ) {
+	if ( ( 0 === $term_search_min_chars ) || ( strlen( $s ) < $term_search_min_chars ) ) {
 		wp_die();
 	}
 
@@ -551,7 +551,7 @@ function wherego_tags_search() {
 		'hide_empty' => false,
 	) );
 
-	echo json_encode( $results );
+	echo wp_json_encode( $results );
 	wp_die();
 
 }
@@ -559,9 +559,14 @@ add_action( 'wp_ajax_nopriv_wherego_tag_search', 'wherego_tags_search' );
 add_action( 'wp_ajax_wherego_tag_search', 'wherego_tags_search' );
 
 
+/**
+ * Display the default thumbnail below the setting.
+ *
+ * @param  string $html Current HTML.
+ * @param  array  $args Argument array of the setting.
+ * @return string
+ */
 function wherego_admin_thumbnail( $html, $args ) {
-
-	global $wherego_settings;
 
 	$thumb_default = wherego_get_option( 'thumb_default' );
 

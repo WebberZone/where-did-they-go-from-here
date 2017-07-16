@@ -12,8 +12,6 @@
  */
 function wherego_tracker_parser() {
 
-	global $wherego_settings;
-
 	// Check for the nonce and exit if failed.
 	if ( isset( $_POST['wherego_nonce'] ) && ! wp_verify_nonce( sanitize_key( $_POST['wherego_nonce'] ), 'wherego-tracker-nonce' ) ) {
 		wp_die( esc_html__( 'WHEREGO: Security check failed', 'where-did-they-go-from-here' ) );
@@ -73,9 +71,9 @@ function wherego_tracker_parser() {
 
 	if ( isset( $metastatus ) && false !== $metastatus ) {
 		if ( true === $metastatus ) {
-			$str = __( 'Updated', 'where-did-they-go-from-here' );
+			$str = __( 'Updated', 'where-did-they-go-from-here' ) . $post_id_came_from;
 		} else {
-			$str = __( 'Meta ID: ', 'where-did-they-go-from-here' ) . $metastatus;
+			$str = __( 'Meta ID: ', 'where-did-they-go-from-here' ) . $metastatus . ' ' . $post_id_came_from;
 		}
 	} else {
 		$str = __( 'No change', 'where-did-they-go-from-here' );

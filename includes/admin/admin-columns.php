@@ -6,16 +6,14 @@
  * @subpackage	Admin
  */
 
-
 /**
  * Add extra columns in Åll posts / pages screen with post list.
  *
  * @since 1.1
- * @param mixed $cols
- * @return void
+ * @param string $cols Columns.
+ * @return string Updated Columns.
  */
 function wherego_column( $cols ) {
-	global $wherego_settings;
 
 	if ( wherego_get_option( 'wg_in_admin' ) ) {
 		$cols['wherego'] = esc_html__( 'Followed Posts', 'where-did-they-go-from-here' );
@@ -33,14 +31,13 @@ add_filter( 'manage_link-manager_columns', 'wherego_column' );
  * Display the page views for each column.
  *
  * @since 1.1
- * @param mixed $column_name
- * @param mixed $id
+ * @param string $column_name Column Name.
+ * @param int    $post_id Post ID.
  * @return void
  */
 function wherego_value( $column_name, $post_id ) {
-	global $wherego_settings;
 
-	if ( ( $column_name == 'wherego' ) && wherego_get_option( 'wg_in_admin' ) ) {
+	if ( ( 'wherego' === $column_name ) && wherego_get_option( 'wg_in_admin' ) ) {
 
 		$lpids = get_post_meta( $post_id, 'wheredidtheycomefrom', true );
 
