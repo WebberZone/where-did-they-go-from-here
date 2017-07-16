@@ -35,7 +35,7 @@ function wherego_options_page() {
 		<div id="post-body" class="metabox-holder columns-2">
 		<div id="post-body-content">
 
-			<h2 class="nav-tab-wrapper" style="padding:0">
+			<ul class="nav-tab-wrapper" style="padding:0">
 				<?php
 				foreach ( wherego_get_settings_sections() as $tab_id => $tab_name ) {
 
@@ -46,22 +46,26 @@ function wherego_options_page() {
 						)
 					) );
 
-					$active = $active_tab === $tab_id ? ' nav-tab-active' : '';
+					$active = $active_tab === $tab_id ? ' ' : '';
 
-					echo '<a href="' . esc_url( $tab_url ) . '" title="' . esc_attr( $tab_name ) . '" class="nav-tab ' . sanitize_html_class( $active ) . '">';
-								echo esc_html( $tab_name );
-					echo '</a>';
+					echo '<li><a href="#' . $tab_id . '" title="' . esc_attr( $tab_name ) . '" class="nav-tab ' . sanitize_html_class( $active ) . '">';
+						echo esc_html( $tab_name );
+					echo '</a></li>';
 
 				}
 				?>
-			</h2>
+			</ul>
 
-			<div id="tab_container">
-				<form method="post" action="options.php">
+			<form method="post" action="options.php">
+
+				<?php settings_fields( 'wherego_settings' ); ?>
+
+				<?php foreach ( wherego_get_settings_sections() as $tab_id => $tab_name ) : ?>
+
+				<div id="<?php echo $tab_id ?>">
 					<table class="form-table">
 					<?php
-						settings_fields( 'wherego_settings' );
-						do_settings_fields( 'wherego_settings_' . $active_tab, 'wherego_settings_' . $active_tab );
+						do_settings_fields( 'wherego_settings_' . $tab_id, 'wherego_settings_' . $tab_id );
 					?>
 					</table>
 					<p>
@@ -89,8 +93,11 @@ function wherego_options_page() {
 						);
 					?>
 					</p>
-				</form>
-			</div><!-- /#tab_container-->
+				</div><!-- /#tab_id-->
+
+				<?php endforeach; ?>
+
+			</form>
 
 		</div><!-- /#post-body-content -->
 
