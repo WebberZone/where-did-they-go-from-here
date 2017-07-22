@@ -40,43 +40,35 @@ function wherego_tracker_parser() {
 
 		if ( '' !== $post_id_came_from && $id !== $post_id_came_from && '' !== $id ) {
 
-			$gotmeta = '';
-
 			$linkpostids = get_post_meta( $post_id_came_from, 'wheredidtheycomefrom', true );
 
-			if ( $linkpostids && '' !== $linkpostids ) {
-				$gotmeta = true;
-			} else {
-				$gotmeta = false;
-				$linkpostids = array();
-			}
-
-			if ( is_array( $linkpostids ) && ! in_array( $id, $linkpostids ) && $gotmeta ) {
+			if ( is_array( $linkpostids ) && ! in_array( $id, $linkpostids ) ) {
 				array_unshift( $linkpostids, $id );
-			} elseif ( is_array( $linkpostids ) && ! $gotmeta ) {
-				$linkpostids[0] = $id;
+			} elseif ( '' === $linkpostids ) {
+				$linkpostids = array( $id );
 			}
 
 			// Make sure we only keep max_links number of links.
 			if ( count( $linkpostids ) > $max_links ) {
 				$linkpostids = array_slice( $linkpostids, 0, $max_links );
 			}
-			if ( $gotmeta && ! empty( $linkpostids ) ) {
+
+			if ( ! empty( $linkpostids ) ) {
 				$metastatus = update_post_meta( $post_id_came_from, 'wheredidtheycomefrom', $linkpostids );
-			} else {
-				$metastatus = add_post_meta( $post_id_came_from, 'wheredidtheycomefrom', $linkpostids );
 			}
 		}
 	}
 
-	if ( isset( $metastatus ) && false !== $metastatus ) {
+	if ( isset( $metastatus ) ) {
 		if ( true === $metastatus ) {
-			$str = __( 'Updated', 'where-did-they-go-from-here' ) . $post_id_came_from;
+			$str = __( 'Updated - ', 'where-did-they-go-from-here' ) . $post_id_came_from;
+		} elseif ( false === $metastatus ) {
+			$str = __( 'Error - ', 'where-did-they-go-from-here' ) . $post_id_came_from;
 		} else {
-			$str = __( 'Meta ID: ', 'where-did-they-go-from-here' ) . $metastatus . ' ' . $post_id_came_from;
+			$str = __( 'Meta ID:', 'where-did-they-go-from-here' ) . $metastatus . ' - ' . $post_id_came_from;
 		}
 	} else {
-		$str = __( 'No change', 'where-did-they-go-from-here' );
+		$str = __( 'No change', 'where-did-they-go-from-here' ) . $post_id_came_from;
 	}
 
 	echo esc_html( $str );
