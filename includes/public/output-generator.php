@@ -13,10 +13,10 @@ if ( ! defined( 'WPINC' ) ) {
 /**
  * Returns the link attributes.
  *
- * @since	2.0.0
+ * @since   2.0.0
  *
- * @param	array $args   Array of arguments.
- * @return	string	Space separated list of link attributes
+ * @param   array $args   Array of arguments.
+ * @return  string  Space separated list of link attributes
  */
 function wherego_link_attributes( $args ) {
 
@@ -31,10 +31,10 @@ function wherego_link_attributes( $args ) {
 	/**
 	 * Filter the title of the followed posts list
 	 *
-	 * @since	2.0.0
+	 * @since   2.0.0
 	 *
-	 * @param	array	$link_attributes	Array of link attributes
-	 * @param	array	$args	Array of arguments
+	 * @param   array   $link_attributes    Array of link attributes
+	 * @param   array   $args   Array of arguments
 	 */
 	$link_attributes = apply_filters( 'wherego_link_attributes', $link_attributes, $args );
 
@@ -49,10 +49,10 @@ function wherego_link_attributes( $args ) {
 /**
  * Returns the heading of the followed posts.
  *
- * @since	2.0.0
+ * @since   2.0.0
  *
- * @param	array $args   Array of arguments.
- * @return	string	Space separated list of link attributes
+ * @param   array $args   Array of arguments.
+ * @return  string  Space separated list of link attributes
  */
 function wherego_heading_title( $args ) {
 	global $post;
@@ -60,16 +60,16 @@ function wherego_heading_title( $args ) {
 	$title = '';
 
 	if ( $args['heading'] && ! $args['is_widget'] ) {
-		$title = str_replace( '%postname%', $post->post_title, $args['title'] );	// Replace %postname% with the title of the current post.
+		$title = str_replace( '%postname%', $post->post_title, $args['title'] );    // Replace %postname% with the title of the current post.
 	}
 
 	/**
 	 * Filter the title of the followed posts list
 	 *
-	 * @since	2.0.0
+	 * @since   2.0.0
 	 *
-	 * @param	string	$title	Title/heading of the followed posts list
-	 * @param	array	$args	Array of arguments
+	 * @param   string  $title  Title/heading of the followed posts list
+	 * @param   array   $args   Array of arguments
 	 */
 	return apply_filters( 'wherego_heading_title', $title, $args );
 }
@@ -78,10 +78,10 @@ function wherego_heading_title( $args ) {
 /**
  * Returns the opening tag of the followed posts list.
  *
- * @since	2.0.0
+ * @since   2.0.0
  *
- * @param	array $args   Array of arguments.
- * @return	string	Space separated list of link attributes
+ * @param   array $args   Array of arguments.
+ * @return  string  Space separated list of link attributes
  */
 function wherego_before_list( $args ) {
 
@@ -90,10 +90,10 @@ function wherego_before_list( $args ) {
 	/**
 	 * Filter the opening tag of the followed posts list
 	 *
-	 * @since	2.0.0
+	 * @since   2.0.0
 	 *
-	 * @param	string	$before_list	Opening tag set in the Settings Page
-	 * @param	array	$args	Array of arguments
+	 * @param   string  $before_list    Opening tag set in the Settings Page
+	 * @param   array   $args   Array of arguments
 	 */
 	return apply_filters( 'wherego_before_list', $before_list, $args );
 
@@ -103,10 +103,10 @@ function wherego_before_list( $args ) {
 /**
  * Returns the closing tag of the followed posts list.
  *
- * @since	2.0.0
+ * @since   2.0.0
  *
- * @param	array $args   Array of arguments.
- * @return	string	Space separated list of link attributes
+ * @param   array $args   Array of arguments.
+ * @return  string  Space separated list of link attributes
  */
 function wherego_after_list( $args ) {
 
@@ -115,10 +115,10 @@ function wherego_after_list( $args ) {
 	/**
 	 * Filter the closing tag of the followed posts list
 	 *
-	 * @since	2.0.0
+	 * @since   2.0.0
 	 *
-	 * @param	string	$after_list	Closing tag set in the Settings Page
-	 * @param	array	$args	Array of arguments
+	 * @param   string  $after_list Closing tag set in the Settings Page
+	 * @param   array   $args   Array of arguments
 	 */
 	return apply_filters( 'wherego_after_list', $after_list, $args );
 
@@ -128,11 +128,11 @@ function wherego_after_list( $args ) {
 /**
  * Returns the opening tag of each list item.
  *
- * @since	2.0.0
+ * @since   2.0.0
  *
- * @param	array  $args   Array of arguments.
- * @param	object $result Object of the current post result.
- * @return	string	Space separated list of link attributes
+ * @param   array  $args   Array of arguments.
+ * @param   object $result Object of the current post result.
+ * @return  string  Space separated list of link attributes
  */
 function wherego_before_list_item( $args, $result ) {
 
@@ -141,11 +141,11 @@ function wherego_before_list_item( $args, $result ) {
 	/**
 	 * Filter the opening tag of each list item.
 	 *
-	 * @since	2.0.0
+	 * @since   2.0.0
 	 *
-	 * @param	string	$before_list_item	Tag before each list item. Can be defined in the Settings page.
-	 * @param	object	$result	Object of the current post result
-	 * @param	array	$args	Array of arguments
+	 * @param   string  $before_list_item   Tag before each list item. Can be defined in the Settings page.
+	 * @param   object  $result Object of the current post result
+	 * @param   array   $args   Array of arguments
 	 */
 	return apply_filters( 'wherego_before_list_item', $before_list_item, $result, $args );
 
@@ -155,11 +155,11 @@ function wherego_before_list_item( $args, $result ) {
 /**
  * Returns the closing tag of each list item.
  *
- * @since	2.0.0
+ * @since   2.0.0
  *
- * @param	array  $args   Array of arguments.
- * @param	object $result Object of the current post result.
- * @return	string	Space separated list of link attributes
+ * @param   array  $args   Array of arguments.
+ * @param   object $result Object of the current post result.
+ * @return  string  Space separated list of link attributes
  */
 function wherego_after_list_item( $args, $result ) {
 
@@ -168,11 +168,11 @@ function wherego_after_list_item( $args, $result ) {
 	/**
 	 * Filter the closing tag of each list item.
 	 *
-	 * @since	2.0.0
+	 * @since   2.0.0
 	 *
-	 * @param	string	$after_list_item	Tag after each list item. Can be defined in the Settings page.
-	 * @param	object	$result	Object of the current post result
-	 * @param	array	$args	Array of arguments
+	 * @param   string  $after_list_item    Tag after each list item. Can be defined in the Settings page.
+	 * @param   object  $result Object of the current post result
+	 * @param   array   $args   Array of arguments
 	 */
 	return apply_filters( 'wherego_after_list_item', $after_list_item, $result, $args );
 
@@ -182,24 +182,24 @@ function wherego_after_list_item( $args, $result ) {
 /**
  * Returns the title of each list item.
  *
- * @since	2.0.0
+ * @since   2.0.0
  *
- * @param	array  $args   Array of arguments.
- * @param	object $result Object of the current post result.
- * @return	string	Space separated list of link attributes
+ * @param   array  $args   Array of arguments.
+ * @param   object $result Object of the current post result.
+ * @return  string  Space separated list of link attributes
  */
 function wherego_title( $args, $result ) {
 
-	$title = wherego_max_formatted_content( get_the_title( $result->ID ), $args['title_length'] );	// Get the post title and crop it if needed.
+	$title = wherego_max_formatted_content( get_the_title( $result->ID ), $args['title_length'] );  // Get the post title and crop it if needed.
 
 	/**
 	 * Filter the title of each list item.
 	 *
-	 * @since	2.0.0
+	 * @since   2.0.0
 	 *
-	 * @param	string	$title	Title of the post.
-	 * @param	object	$result	Object of the current post result
-	 * @param	array	$args	Array of arguments
+	 * @param   string  $title  Title of the post.
+	 * @param   object  $result Object of the current post result
+	 * @param   array   $args   Array of arguments
 	 */
 	return apply_filters( 'wherego_title', $title, $result, $args );
 
@@ -209,11 +209,11 @@ function wherego_title( $args, $result ) {
 /**
  * Returns the author of each list item.
  *
- * @since	2.0.0
+ * @since   2.0.0
  *
- * @param	array  $args   Array of arguments.
- * @param	object $result Object of the current post result.
- * @return	string	Space separated list of link attributes
+ * @param   array  $args   Array of arguments.
+ * @param   object $result Object of the current post result.
+ * @return  string  Space separated list of link attributes
  */
 function wherego_author( $args, $result ) {
 
@@ -224,10 +224,10 @@ function wherego_author( $args, $result ) {
 	/**
 	 * Filter the author name.
 	 *
-	 * @since	2.0.0.1
+	 * @since   2.0.0.1
 	 *
-	 * @param	string	$author_name	Proper name of the post author.
-	 * @param	object	$author_info	WP_User object of the post author
+	 * @param   string  $author_name    Proper name of the post author.
+	 * @param   object  $author_info    WP_User object of the post author
 	 */
 	$author_name = apply_filters( 'wherego_author_name', $author_name, $author_info );
 
@@ -236,12 +236,12 @@ function wherego_author( $args, $result ) {
 	/**
 	 * Filter the text with the author details.
 	 *
-	 * @since	2.0.0
+	 * @since   2.0.0
 	 *
-	 * @param	string	$wherego_author	Formatted string with author details and link
-	 * @param	object	$author_info	WP_User object of the post author
-	 * @param	object	$result	Object of the current post result
-	 * @param	array	$args	Array of arguments
+	 * @param   string  $wherego_author Formatted string with author details and link
+	 * @param   object  $author_info    WP_User object of the post author
+	 * @param   object  $result Object of the current post result
+	 * @param   array   $args   Array of arguments
 	 */
 	return apply_filters( 'wherego_author', $wherego_author, $author_info, $result, $args );
 
@@ -251,11 +251,11 @@ function wherego_author( $args, $result ) {
 /**
  * Returns the formatted list item with link and and thumbnail for each list item.
  *
- * @since	2.0.0
+ * @since   2.0.0
  *
- * @param	array  $args   Array of arguments.
- * @param	object $result Object of the current post result.
- * @return	string	Space separated list of link attributes
+ * @param   array  $args   Array of arguments.
+ * @param   object $result Object of the current post result.
+ * @return  string  Space separated list of link attributes
  */
 function wherego_list_link( $args, $result ) {
 
@@ -270,17 +270,19 @@ function wherego_list_link( $args, $result ) {
 	if ( 'inline' === $args['post_thumb_op'] || 'after' === $args['post_thumb_op'] || 'thumbs_only' === $args['post_thumb_op'] ) {
 		$output .= '<a href="' . get_permalink( $result->ID ) . '" ' . $link_attributes . '>';
 
-		$output .= wherego_get_the_post_thumbnail( array(
-			'postid' => $result->ID,
-			'thumb_height' => $args['thumb_height'],
-			'thumb_width' => $args['thumb_width'],
-			'thumb_meta' => $args['thumb_meta'],
-			'thumb_html' => $args['thumb_html'],
-			'thumb_default' => $args['thumb_default'],
-			'thumb_default_show' => ( isset( $args['thumb_default_show'] ) && $args['thumb_default_show'] ),
-			'scan_images' => ( isset( $args['scan_images'] ) && $args['scan_images'] ),
-			'class' => 'wherego_thumb',
-		) );
+		$output .= wherego_get_the_post_thumbnail(
+			array(
+				'postid' => $result->ID,
+				'thumb_height' => $args['thumb_height'],
+				'thumb_width' => $args['thumb_width'],
+				'thumb_meta' => $args['thumb_meta'],
+				'thumb_html' => $args['thumb_html'],
+				'thumb_default' => $args['thumb_default'],
+				'thumb_default_show' => ( isset( $args['thumb_default_show'] ) && $args['thumb_default_show'] ),
+				'scan_images' => ( isset( $args['scan_images'] ) && $args['scan_images'] ),
+				'class' => 'wherego_thumb',
+			)
+		);
 
 		$output .= '</a>';
 	}
@@ -292,11 +294,11 @@ function wherego_list_link( $args, $result ) {
 	/**
 	 * Filter Formatted list item with link and and thumbnail.
 	 *
-	 * @since	2.0.0
+	 * @since   2.0.0
 	 *
-	 * @param	string	$output	Formatted list item with link and and thumbnail
-	 * @param	object	$result	Object of the current post result
-	 * @param	array	$args	Array of arguments
+	 * @param   string  $output Formatted list item with link and and thumbnail
+	 * @param   object  $result Object of the current post result
+	 * @param   array   $args   Array of arguments
 	 */
 	return apply_filters( 'wherego_list_link', $output, $result, $args );
 

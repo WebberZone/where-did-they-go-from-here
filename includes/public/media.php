@@ -8,22 +8,22 @@
 /**
  * Function to get the post thumbnail.
  *
- * @since	1.6
- * @param	array $args   Query string of options related to thumbnails.
- * @return	string	Image tag
+ * @since   1.6
+ * @param   array $args   Query string of options related to thumbnails.
+ * @return  string  Image tag
  */
 function wherego_get_the_post_thumbnail( $args = array() ) {
 
 	$defaults = array(
 		'postid' => '',
-		'thumb_height' => '150',			// Max height of thumbnails.
-		'thumb_width' => '150',			// Max width of thumbnails.
-		'thumb_meta' => 'post-image',		// Meta field that is used to store the location of default thumbnail image.
-		'thumb_html' => 'html',		// HTML / CSS for width and height attributes.
-		'thumb_default' => '',	// Default thumbnail image.
-		'thumb_default_show' => true,	// Show default thumb if none found (if false, don't show thumb at all).
-		'scan_images' => false,			// Scan post for images.
-		'class' => 'wherego_thumb',			// Class of the thumbnail.
+		'thumb_height' => '150',            // Max height of thumbnails.
+		'thumb_width' => '150',         // Max width of thumbnails.
+		'thumb_meta' => 'post-image',       // Meta field that is used to store the location of default thumbnail image.
+		'thumb_html' => 'html',     // HTML / CSS for width and height attributes.
+		'thumb_default' => '',  // Default thumbnail image.
+		'thumb_default_show' => true,   // Show default thumb if none found (if false, don't show thumb at all).
+		'scan_images' => false,         // Scan post for images.
+		'class' => 'wherego_thumb',         // Class of the thumbnail.
 	);
 
 	// Parse incomming $args into an array and merge it with $defaults.
@@ -53,10 +53,10 @@ function wherego_get_the_post_thumbnail( $args = array() ) {
 	/**
 	 * Filters the title and alt message for thumbnails.
 	 *
-	 * @since	2.0.0
+	 * @since   2.0.0
 	 *
-	 * @param	string	$post_title		Post tile used as thumbnail alt and title
-	 * @param	object	$result			Post Object
+	 * @param   string  $post_title     Post tile used as thumbnail alt and title
+	 * @param   object  $result         Post Object
 	 */
 	$post_title = apply_filters( 'wherego_thumb_title', $post_title, $result );
 
@@ -66,7 +66,7 @@ function wherego_get_the_post_thumbnail( $args = array() ) {
 
 	// Let's start fetching the thumbnail. First place to look is in the post meta defined in the Settings page.
 	if ( ! $postimage ) {
-		$postimage = get_post_meta( $result->ID, $args['thumb_meta'], true );	// Check the post meta first.
+		$postimage = get_post_meta( $result->ID, $args['thumb_meta'], true );   // Check the post meta first.
 		$pick = 'meta';
 		if ( $postimage ) {
 			$postimage_id = wherego_get_attachment_id_from_url( $postimage );
@@ -91,7 +91,7 @@ function wherego_get_the_post_thumbnail( $args = array() ) {
 	// If there is no thumbnail found, fetch the first image in the post, if enabled.
 	if ( ! $postimage && ( isset( $args['scan_images'] ) && $args['scan_images'] ) ) {
 		preg_match_all( '/<img.+src=[\'"]([^\'"]+)[\'"].*>/i', $result->post_content, $matches );
-		if ( isset( $matches[1][0] ) && $matches[1][0] ) { 			// Any image there?
+		if ( isset( $matches[1][0] ) && $matches[1][0] ) {          // Any image there?
 			$postimage = $matches[1][0]; // We need the first one only.
 		}
 		$pick = 'first';
@@ -108,7 +108,7 @@ function wherego_get_the_post_thumbnail( $args = array() ) {
 
 	// If there is no thumbnail found, fetch the first child image.
 	if ( ! $postimage ) {
-		$postimage = wherego_get_first_image( $result->ID, $args['thumb_width'], $args['thumb_height'] );	// Get the first image.
+		$postimage = wherego_get_first_image( $result->ID, $args['thumb_width'], $args['thumb_height'] );   // Get the first image.
 		$pick = 'firstchild';
 	}
 
@@ -133,12 +133,12 @@ function wherego_get_the_post_thumbnail( $args = array() ) {
 		 * Use this filter to modify the thumbnail URL that is automatically created
 		 * Before v2.0.0 this was used for cropping the post image using timthumb
 		 *
-		 * @since	2.0.0
+		 * @since   2.0.0
 		 *
-		 * @param	string	$postimage		URL of the thumbnail image
-		 * @param	int		$thumb_width	Thumbnail width
-		 * @param	int		$thumb_height	Thumbnail height
-		 * @param	object	$result			Post Object
+		 * @param   string  $postimage      URL of the thumbnail image
+		 * @param   int     $thumb_width    Thumbnail width
+		 * @param   int     $thumb_height   Thumbnail height
+		 * @param   object  $result         Post Object
 		 */
 		$postimage = apply_filters( 'wherego_thumb_url', $postimage, $args['thumb_width'], $args['thumb_height'], $result );
 
@@ -150,14 +150,14 @@ function wherego_get_the_post_thumbnail( $args = array() ) {
 		 * Filters the thumbnail image URL.
 		 *
 		 * @since 1.6
-		 * @deprecated	2.0.0	Use wherego_thumb_url instead.
+		 * @deprecated  2.0.0   Use wherego_thumb_url instead.
 		 *
-		 * @param	string	$postimage		URL of the thumbnail image
-		 * @param	int		$thumb_width	Thumbnail width
-		 * @param	int		$thumb_height	Thumbnail height
-		 * @param	boolean	$thumb_timthumb	Enable timthumb?
-		 * @param	int		$thumb_timthumb_q	Quality of timthumb thumbnail.
-		 * @param	object	$result			Post Object
+		 * @param   string  $postimage      URL of the thumbnail image
+		 * @param   int     $thumb_width    Thumbnail width
+		 * @param   int     $thumb_height   Thumbnail height
+		 * @param   boolean $thumb_timthumb Enable timthumb?
+		 * @param   int     $thumb_timthumb_q   Quality of timthumb thumbnail.
+		 * @param   object  $result         Post Object
 		 */
 		$postimage = apply_filters( 'wherego_postimage', $postimage, $args['thumb_width'], $args['thumb_height'], $thumb_timthumb, $thumb_timthumb_q, $result );
 
@@ -176,9 +176,9 @@ function wherego_get_the_post_thumbnail( $args = array() ) {
 		/**
 		 * Filters the thumbnail HTML and allows a filter function to add any more HTML if needed.
 		 *
-		 * @since	2.2.0
+		 * @since   2.2.0
 		 *
-		 * @param	string	$thumb_html	Thumbnail HTML
+		 * @param   string  $thumb_html Thumbnail HTML
 		 */
 		$thumb_html = apply_filters( 'wherego_thumb_html', $thumb_html );
 
@@ -187,9 +187,9 @@ function wherego_get_the_post_thumbnail( $args = array() ) {
 		/**
 		 * Filters the thumbnail classes and allows a filter function to add any more classes if needed.
 		 *
-		 * @since	2.2.0
+		 * @since   2.2.0
 		 *
-		 * @param	string	$thumb_html	Thumbnail HTML
+		 * @param   string  $thumb_html Thumbnail HTML
 		 */
 		$class = apply_filters( 'wherego_thumb_class', $class );
 
@@ -199,10 +199,10 @@ function wherego_get_the_post_thumbnail( $args = array() ) {
 	/**
 	 * Filters post thumbnail created for Top 10.
 	 *
-	 * @since	1.7
+	 * @since   1.7
 	 *
-	 * @param	array	$output	Formatted output
-	 * @param	array	$args	Argument list
+	 * @param   array   $output Formatted output
+	 * @param   array   $args   Argument list
 	 */
 	return apply_filters( 'wherego_get_the_post_thumbnail', $output, $args );
 }
@@ -244,8 +244,8 @@ function wherego_get_first_image( $post_id ) {
  *
  * @since 2.0.0
  *
- * @param	string $attachment_url Attachment URL
- * @return	int		Attachment ID
+ * @param   string $attachment_url Attachment URL
+ * @return  int     Attachment ID
  */
 function wherego_get_attachment_id_from_url( $attachment_url = '' ) {
 
@@ -279,8 +279,8 @@ function wherego_get_attachment_id_from_url( $attachment_url = '' ) {
 	 *
 	 * @since 2.0.0
 	 *
-	 * @param	int		Attachment ID
-	 * @param	string	$attachment_url	Attachment URL
+	 * @param   int     Attachment ID
+	 * @param   string  $attachment_url Attachment URL
 	 */
 	return apply_filters( 'wherego_get_attachment_id_from_url', $attachment_id, $attachment_url );
 }
@@ -289,7 +289,7 @@ function wherego_get_attachment_id_from_url( $attachment_url = '' ) {
 /**
  * Function to get the correct height and width of the thumbnail.
  *
- * @since	2.0.0
+ * @since   2.0.0
  *
  * @param array $args Array of arguments.
  * @return array Width and height
@@ -319,10 +319,10 @@ function wherego_get_thumb_size( $args ) {
 	/**
 	 * Filter array of thumbnail size.
 	 *
-	 * @since	2.0.0
+	 * @since   2.0.0
 	 *
-	 * @param	array	$thumb_size	Array with width and height of thumbnail.
-	 * @param	array	$args	Array of arguments.
+	 * @param   array   $thumb_size Array with width and height of thumbnail.
+	 * @param   array   $args   Array of arguments.
 	 */
 	return apply_filters( 'wherego_get_thumb_size', $thumb_size, $args );
 

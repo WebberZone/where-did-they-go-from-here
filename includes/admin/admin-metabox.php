@@ -3,7 +3,7 @@
  * Functions to generate and manage the metaboxes.
  *
  * @package   WHEREGO
- * @subpackage	Admin
+ * @subpackage  Admin
  */
 
 /**
@@ -47,7 +47,7 @@ function wherego_call_meta_box() {
 ?>
 	<p>
 		<label for="wherego_post_ids"><?php esc_html_e( "Followed posts' IDs:", 'where-did-they-go-from-here' ); ?></label>
-		<input type="text" id="wherego_post_ids" name="wherego_post_ids" value="<?php echo esc_attr( $value ) ?>" size="25" />
+		<input type="text" id="wherego_post_ids" name="wherego_post_ids" value="<?php echo esc_attr( $value ); ?>" size="25" />
 		<em><?php esc_html_e( 'Enter a comma separated list of valid post/page IDs. Save this post to see the updated list below.', 'where-did-they-go-from-here' ); ?></em>
 	</p>
 	<?php if ( $results ) { ?>

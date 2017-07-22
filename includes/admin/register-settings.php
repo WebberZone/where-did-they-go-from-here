@@ -8,7 +8,7 @@
  * @link  https://ajaydsouza.com
  * @since 2.1.0
  *
- * @package	WHEREGO
+ * @package WHEREGO
  * @subpackage Admin/Register_Settings
  */
 
@@ -68,7 +68,7 @@ function wherego_get_option( $key = '', $default = null ) {
  *
  * Updates an wherego setting value in both the db and the global variable.
  * Warning: Passing in an empty, false or null string value will remove
- *		  the key from the wherego_options array.
+ *        the key from the wherego_options array.
  *
  * @since 2.1.0
  *
@@ -168,14 +168,15 @@ function wherego_register_settings() {
 
 		add_settings_section(
 			'wherego_settings_' . $section, // ID used to identify this section and with which to register options, e.g. wherego_settings_general.
-			__return_null(),	// No title, we will handle this via a separate function.
-			'__return_false',	// No callback function needed. We'll process this separately.
+			__return_null(),    // No title, we will handle this via a separate function.
+			'__return_false',   // No callback function needed. We'll process this separately.
 			'wherego_settings_' . $section  // Page on which these options will be added.
 		);
 
 		foreach ( $settings as $setting ) {
 
-			$args = wp_parse_args( $setting, array(
+			$args = wp_parse_args(
+				$setting, array(
 					'section'          => $section,
 					'id'               => null,
 					'name'             => '',
@@ -188,14 +189,15 @@ function wherego_register_settings() {
 					'size'             => null,
 					'field_class'      => '',
 					'field_attributes' => '',
-			) );
+				)
+			);
 
 			add_settings_field(
 				'wherego_settings[' . $args['id'] . ']', // ID of the settings field. We save it within the wherego_settings array.
-				$args['name'],	   // Label of the setting.
+				$args['name'],     // Label of the setting.
 				function_exists( 'wherego_' . $args['type'] . '_callback' ) ? 'wherego_' . $args['type'] . '_callback' : 'wherego_missing_callback', // Function to handle the setting.
-				'wherego_settings_' . $section,	// Page to display the setting. In our case it is the section as defined above.
-				'wherego_settings_' . $section,	// Name of the section.
+				'wherego_settings_' . $section, // Page to display the setting. In our case it is the section as defined above.
+				'wherego_settings_' . $section, // Name of the section.
 				$args
 			);
 		}
@@ -221,7 +223,8 @@ function wherego_get_registered_settings() {
 
 	$wherego_settings = array(
 		/*** General settings ***/
-		'general'                   => apply_filters( 'wherego_settings_general',
+		'general'                   => apply_filters(
+			'wherego_settings_general',
 			array(
 				'add_to'                  => array(
 					'id'                     => 'add_to',
@@ -308,7 +311,8 @@ function wherego_get_registered_settings() {
 			)
 		),
 		/*** Output settings ***/
-		'output'                    => apply_filters( 'wherego_settings_output',
+		'output'                    => apply_filters(
+			'wherego_settings_output',
 			array(
 				'title'                   => array(
 					'id'                     => 'title',
@@ -417,7 +421,8 @@ function wherego_get_registered_settings() {
 			)
 		),
 		/*** Thumbnail settings ***/
-		'thumbnail'                 => apply_filters( 'wherego_settings_thumbnail',
+		'thumbnail'                 => apply_filters(
+			'wherego_settings_thumbnail',
 			array(
 				'post_thumb_op'           => array(
 					'id'                     => 'post_thumb_op',
@@ -492,7 +497,8 @@ function wherego_get_registered_settings() {
 			)
 		),
 		/*** Styles settings ***/
-		'styles'                    => apply_filters( 'wherego_settings_styles',
+		'styles'                    => apply_filters(
+			'wherego_settings_styles',
 			array(
 				'custom_CSS'              => array(
 					'id'                     => 'custom_CSS',
@@ -504,7 +510,8 @@ function wherego_get_registered_settings() {
 			)
 		),
 		/*** Feed settings ***/
-		'feed'                      => apply_filters( 'wherego_settings_feed',
+		'feed'                      => apply_filters(
+			'wherego_settings_feed',
 			array(
 				'feed_desc'               => array(
 					'id'                     => 'feed_desc',

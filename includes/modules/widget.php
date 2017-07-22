@@ -78,7 +78,7 @@ class WhereGo_Widget extends WP_Widget {
 		 *
 		 * @since 2.0.0
 		 *
-		 * @param	array	$arguments	Widget options array
+		 * @param   array   $arguments  Widget options array
 		 */
 		$arguments = apply_filters( 'wherego_widget_options' , $arguments );
 
@@ -86,7 +86,7 @@ class WhereGo_Widget extends WP_Widget {
 
 		$output .= $args['after_widget'];
 
-		echo $output;	// WPCS: XSS OK.
+		echo $output;   // WPCS: XSS OK.
 
 	}
 
@@ -119,10 +119,10 @@ class WhereGo_Widget extends WP_Widget {
 		<p>
 			<?php esc_html_e( 'Thumbnail options', 'where-did-they-go-from-here' ); ?>: <br />
 			<select class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'post_thumb_op' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'post_thumb_op' ) ); ?>">
-				<option value="inline" <?php selected( $post_thumb_op, 'inline', 0 ) ?>><?php esc_html_e( 'Thumbnails before title', 'where-did-they-go-from-here' ); ?></option>
-				<option value="after" <?php selected( $post_thumb_op, 'after', 0 ) ?>><?php esc_html_e( 'Thumbnails after title', 'where-did-they-go-from-here' ); ?></option>
-				<option value="thumbs_only" <?php selected( $post_thumb_op, 'thumbs_only', 0 ) ?>><?php esc_html_e( 'Thumbnails only', 'where-did-they-go-from-here' ); ?></option>
-				<option value="text_only" <?php selected( $post_thumb_op, 'text_only', 0 ) ?>><?php esc_html_e( 'Text only', 'where-did-they-go-from-here' ); ?></option>
+				<option value="inline" <?php selected( $post_thumb_op, 'inline', 0 ); ?>><?php esc_html_e( 'Thumbnails before title', 'where-did-they-go-from-here' ); ?></option>
+				<option value="after" <?php selected( $post_thumb_op, 'after', 0 ); ?>><?php esc_html_e( 'Thumbnails after title', 'where-did-they-go-from-here' ); ?></option>
+				<option value="thumbs_only" <?php selected( $post_thumb_op, 'thumbs_only', 0 ); ?>><?php esc_html_e( 'Thumbnails only', 'where-did-they-go-from-here' ); ?></option>
+				<option value="text_only" <?php selected( $post_thumb_op, 'text_only', 0 ); ?>><?php esc_html_e( 'Text only', 'where-did-they-go-from-here' ); ?></option>
 			</select>
 		</p>
 
@@ -143,7 +143,7 @@ class WhereGo_Widget extends WP_Widget {
 		 *
 		 * @since 2.0.0
 		 *
-		 * @param	array	$instance	Widget options array
+		 * @param   array   $instance   Widget options array
 		 */
 		do_action( 'wherego_widget_options_after', $instance );
 	}
@@ -171,7 +171,7 @@ class WhereGo_Widget extends WP_Widget {
 		 *
 		 * @since 2.0.0
 		 *
-		 * @param	array	$instance	Widget options array
+		 * @param   array   $instance   Widget options array
 		 */
 		return apply_filters( 'wherego_widget_options_update' , $instance );
 	}

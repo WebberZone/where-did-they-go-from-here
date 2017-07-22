@@ -11,16 +11,16 @@
  * @copyright 2008-2017 Ajay D'Souza
  *
  * @wordpress-plugin
- * Plugin Name:	Where did they go from here
- * Plugin URI:	http://ajaydsouza.com/wordpress/plugins/where-did-they-go-from-here/
- * Description:	The best way to display posts followed by users a.k.a. "Readers who viewed this page, also viewed" links
- * Version: 	2.1.0-beta20170606
- * Author: 		Ajay D'Souza
- * Author URI: 	https://ajaydsouza.com
- * License: 	GPL-2.0+
- * License URI:	http://www.gnu.org/licenses/gpl-2.0.txt
- * Text Domain:	where-did-they-go-from-here
- * Domain Path:	/languages
+ * Plugin Name: Where did they go from here
+ * Plugin URI:  http://ajaydsouza.com/wordpress/plugins/where-did-they-go-from-here/
+ * Description: The best way to display posts followed by users a.k.a. "Readers who viewed this page, also viewed" links
+ * Version:     2.1.0-beta20170606
+ * Author:      Ajay D'Souza
+ * Author URI:  https://ajaydsouza.com
+ * License:     GPL-2.0+
+ * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
+ * Text Domain: where-did-they-go-from-here
+ * Domain Path: /languages
  * GitHub Plugin URI: https://github.com/ajaydsouza/where-did-they-go-from-here/
  */
 
@@ -71,7 +71,7 @@ if ( ! defined( 'WHEREGO_PLUGIN_FILE' ) ) {
  *
  * @var string
  */
-global 	$wherego_settings;
+global  $wherego_settings;
 $wherego_settings = wherego_get_settings();
 
 
@@ -135,7 +135,7 @@ function get_wherego( $args = array() ) {
 	// Parse incomming $args into an array and merge it with $defaults.
 	$args = wp_parse_args( $args, $defaults );
 
-	$exclude_categories = array_map( 'intval', explode( ',', $args['exclude_categories'] ) );		// Extract categories to exclude.
+	$exclude_categories = array_map( 'intval', explode( ',', $args['exclude_categories'] ) );       // Extract categories to exclude.
 
 	// If post_types is empty or contains a query string then use parse_str else consider it comma-separated.
 	if ( ! empty( $args['post_types'] ) && false === strpos( $args['post_types'], '=' ) ) {
@@ -144,7 +144,7 @@ function get_wherego( $args = array() ) {
 		parse_str( $args['post_types'], $post_types );
 	}
 
-	$results = get_post_meta( $post->ID, 'wheredidtheycomefrom', true );	// Extract posts list from the meta field.
+	$results = get_post_meta( $post->ID, 'wheredidtheycomefrom', true );    // Extract posts list from the meta field.
 
 	if ( $results ) {
 		$results = array_diff( $results, array_map( 'intval', explode( ',', $args['exclude_post_ids'] ) ) );
@@ -158,9 +158,9 @@ function get_wherego( $args = array() ) {
 	/**
 	 * Filter the classes added to the div wrapper of the Contextual Related Posts.
 	 *
-	 * @since	2.0.0
+	 * @since   2.0.0
 	 *
-	 * @param	string   $post_classes	Post classes string.
+	 * @param   string   $post_classes  Post classes string.
 	 */
 	$post_classes = apply_filters( 'wherego_post_class', $post_classes );
 
@@ -185,14 +185,14 @@ function get_wherego( $args = array() ) {
 				break; // If this is not from our select post types, end loop.
 			}
 
-			$p_in_c = false;	// Variable to check if post exists in a particular category.
+			$p_in_c = false;    // Variable to check if post exists in a particular category.
 
-			$cats = get_the_category( $result->ID );	// Fetch categories of the plugin.
+			$cats = get_the_category( $result->ID );    // Fetch categories of the plugin.
 
-			foreach ( $cats as $cat ) {	// Loop to check if post exists in excluded category.
+			foreach ( $cats as $cat ) { // Loop to check if post exists in excluded category.
 				$p_in_c = ( in_array( $cat->cat_ID, $exclude_categories, true ) ) ? true : false;
 				if ( $p_in_c ) {
-					break;	// End loop if post found in category.
+					break;  // End loop if post found in category.
 				}
 			}
 
@@ -210,7 +210,7 @@ function get_wherego( $args = array() ) {
 				$loop_counter++;
 			}
 			if ( $loop_counter === (int) $args['limit'] ) {
-				break;	// End loop when related posts limit is reached.
+				break;  // End loop when related posts limit is reached.
 			}
 		} // End foreach().
 		if ( isset( $args['show_credit'] ) && $args['show_credit'] ) {
@@ -238,10 +238,10 @@ function get_wherego( $args = array() ) {
 	/**
 	 * Filter the output
 	 *
-	 * @since	2.0.0
+	 * @since   2.0.0
 	 *
-	 * @param	string	$output	Formatted list of followed posts
-	 * @param	array	$args	Complete set of arguments
+	 * @param   string  $output Formatted list of followed posts
+	 * @param   array   $args   Complete set of arguments
 	 */
 	return apply_filters( 'get_wherego', $output, $args );
 }

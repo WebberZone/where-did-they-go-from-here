@@ -3,7 +3,7 @@
  * Functions to generate and manage the metaboxes.
  *
  * @package   WHEREGO
- * @subpackage	Admin
+ * @subpackage  Admin
  */
 
 /**

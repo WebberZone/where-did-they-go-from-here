@@ -29,7 +29,7 @@ function wherego_options_page() {
 	ob_start();
 	?>
 	<div class="wrap">
-		<h1><?php _e( 'Where did they go from here? Settings', 'where-did-they-go-from-here' ); // WPCS: XSS OK. ?></h1>
+		<h1><?php esc_html_e( 'Where did they go from here? Settings', 'where-did-they-go-from-here' ); ?></h1>
 
 		<div id="poststuff">
 		<div id="post-body" class="metabox-holder columns-2">
@@ -39,12 +39,14 @@ function wherego_options_page() {
 				<?php
 				foreach ( wherego_get_settings_sections() as $tab_id => $tab_name ) {
 
-					$tab_url = esc_url( add_query_arg(
-						array(
-						'settings-updated' => false,
-						'tab' => $tab_id,
+					$tab_url = esc_url(
+						add_query_arg(
+							array(
+								'settings-updated' => false,
+								'tab' => $tab_id,
+							)
 						)
-					) );
+					);
 
 					$active = $active_tab === $tab_id ? ' ' : '';
 
@@ -62,7 +64,7 @@ function wherego_options_page() {
 
 				<?php foreach ( wherego_get_settings_sections() as $tab_id => $tab_name ) : ?>
 
-				<div id="<?php echo $tab_id ?>">
+				<div id="<?php echo $tab_id; ?>">
 					<table class="form-table">
 					<?php
 						do_settings_fields( 'wherego_settings_' . $tab_id, 'wherego_settings_' . $tab_id );
@@ -488,9 +490,11 @@ function wherego_posttypes_callback( $args ) {
 		parse_str( $options, $post_types );
 	}
 
-	$wp_post_types	= get_post_types( array(
-		'public'	=> true,
-	) );
+	$wp_post_types  = get_post_types(
+		array(
+			'public'    => true,
+		)
+	);
 	$posts_types_inc = array_intersect( $wp_post_types, $post_types );
 
 	foreach ( $wp_post_types as $wp_post_type ) {
@@ -552,11 +556,13 @@ function wherego_tags_search() {
 		wp_die();
 	}
 
-	$results = get_terms( $taxonomy, array(
-		'name__like' => $s,
-		'fields' => 'names',
-		'hide_empty' => false,
-	) );
+	$results = get_terms(
+		$taxonomy, array(
+			'name__like' => $s,
+			'fields' => 'names',
+			'hide_empty' => false,
+		)
+	);
 
 	echo wp_json_encode( $results );
 	wp_die();

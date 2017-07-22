@@ -159,7 +159,7 @@ function wherego_adminhead() {
 
 			function confirmExit() {
 				if (formmodified == 1) {
-					return "<?php esc_html__( 'New information not saved. Do you wish to leave the page?', 'where-did-they-go-from-here' ) ?>";
+					return "<?php esc_html__( 'New information not saved. Do you wish to leave the page?', 'where-did-they-go-from-here' ); ?>";
 				}
 			}
 
@@ -196,9 +196,11 @@ function wherego_adminhead() {
  */
 function wherego_plugin_actions_links( $links ) {
 
-	return array_merge( array(
-		'settings' => '<a href="' . admin_url( 'options-general.php?page=wherego_options' ) . '">' . esc_html__( 'Settings', 'where-did-they-go-from-here' ) . '</a>',
-	), $links );
+	return array_merge(
+		array(
+			'settings' => '<a href="' . admin_url( 'options-general.php?page=wherego_options' ) . '">' . esc_html__( 'Settings', 'where-did-they-go-from-here' ) . '</a>',
+		), $links
+	);
 
 }
 add_filter( 'plugin_action_links_' . plugin_basename( WHEREGO_PLUGIN_FILE ), 'wherego_plugin_actions_links' );
