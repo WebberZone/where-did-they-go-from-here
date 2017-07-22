@@ -64,7 +64,7 @@ before_script:
   # Install PHP Compatibility sniffs.
   - if [[ "$SNIFF" == "1" ]]; then git clone -b master https://github.com/wimg/PHPCompatibility.git $SNIFFS_DIR/PHPCompatibility; fi
   # Set install path for WordPress Coding Standards.
-  - if [[ "$SNIFF" == "1" ]]; then $PHPCS_DIR/scripts/phpcs --config-set installed_paths $SNIFFS_DIR; fi
+  - if [[ "$SNIFF" == "1" ]]; then phpcs --config-set installed_paths $SNIFFS_DIR; fi
   - if [[ "$SNIFF" == "1" ]]; then phpcs -i; fi
   # After CodeSniffer install you should refresh your path.
   - if [[ "$SNIFF" == "1" ]]; then phpenv rehash; fi
