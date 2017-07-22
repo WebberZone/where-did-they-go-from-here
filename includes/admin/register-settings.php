@@ -229,6 +229,7 @@ function wherego_get_registered_settings() {
 				'add_to'                  => array(
 					'id'                     => 'add_to',
 					'name'                   => esc_html__( 'Add followed posts to', 'where-did-they-go-from-here' ),
+					/* translators: 1: Code. */
 					'desc'                   => sprintf( esc_html__( 'If you choose to disable this, please add %1$s to your template file where you want it displayed', 'where-did-they-go-from-here' ),  "<code>&lt;?php if ( function_exists( 'echo_wherego' ) ) { echo_wherego(); } ?&gt;</code>" ),
 					'type'                   => 'multicheck',
 					'default'                => array(
@@ -325,6 +326,7 @@ function wherego_get_registered_settings() {
 				'blank_output'            => array(
 					'id'                     => 'blank_output',
 					'name'                   => esc_html__( 'Show when no posts are found', 'where-did-they-go-from-here' ),
+					/* translators: 1: Code. */
 					'desc'                   => sprintf( esc_html__( 'If you choose to disable this, please add %1$s to your template file where you want it displayed', 'where-did-they-go-from-here' ),  "<code>&lt;?php if ( function_exists( 'echo_wherego' ) ) { echo_wherego(); } ?&gt;</code>" ),
 					'type'                   => 'radio',
 					'default'                => 'blank',
@@ -460,7 +462,9 @@ function wherego_get_registered_settings() {
 					'type'                   => 'radio',
 					'default'                => 'html',
 					'options'                => array(
+						/* translators: %s: Code. */
 						'css'                   => sprintf( esc_html__( 'Use CSS to set the width and height: e.g. %s', 'where-did-they-go-from-here' ), '<code>style="max-width:250px;max-height:250px"</code>' ),
+						/* translators: %s: Code. */
 						'html'                  => sprintf( esc_html__( 'Use HTML attributes to set the width and height: e.g. %s', 'where-did-they-go-from-here' ), '<code>width="250" height="250"</code>' ),
 						'none'                  => esc_html__( 'No width or height set. You will need to use external styles to force any width or height of your choice.', 'where-did-they-go-from-here' ),
 					),
@@ -503,6 +507,7 @@ function wherego_get_registered_settings() {
 				'custom_CSS'              => array(
 					'id'                     => 'custom_CSS',
 					'name'                   => esc_html__( 'Custom CSS', 'where-did-they-go-from-here' ),
+					/* translators: 1: Opening a tag, 2: Closing a tag, 3: Opening code tage, 4. Closing code tag. */
 					'desc'                   => sprintf( esc_html__( 'Do not include %3$sstyle%4$s tags. Check out the %1$sFAQ%2$s for available CSS classes to style.', 'where-did-they-go-from-here' ), '<a href="' . esc_url( 'http://wordpress.org/plugins/where-did-they-go-from-here/faq/' ) . '" target="_blank">', '</a>', '<code>', '</code>' ),
 					'type'                   => 'textarea',
 					'options'                => '',

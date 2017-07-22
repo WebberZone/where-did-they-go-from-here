@@ -27,7 +27,7 @@ function wherego_tracker_parser() {
 
 	$tempsitevar = $sitevar;
 
-	$siteurl = parse_url( $siteurl, PHP_URL_HOST );
+	$siteurl = wp_parse_url( $siteurl, PHP_URL_HOST );
 
 	$sitevar = str_replace( '/', '\/', $sitevar );  // Prepare it for preg_match.
 

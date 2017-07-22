@@ -39,18 +39,9 @@ function wherego_options_page() {
 				<?php
 				foreach ( wherego_get_settings_sections() as $tab_id => $tab_name ) {
 
-					$tab_url = esc_url(
-						add_query_arg(
-							array(
-								'settings-updated' => false,
-								'tab' => $tab_id,
-							)
-						)
-					);
-
 					$active = $active_tab === $tab_id ? ' ' : '';
 
-					echo '<li><a href="#' . $tab_id . '" title="' . esc_attr( $tab_name ) . '" class="nav-tab ' . sanitize_html_class( $active ) . '">';
+					echo '<li><a href="#' . esc_attr( $tab_id ) . '" title="' . esc_attr( $tab_name ) . '" class="nav-tab ' . sanitize_html_class( $active ) . '">';
 						echo esc_html( $tab_name );
 					echo '</a></li>';
 
@@ -64,7 +55,7 @@ function wherego_options_page() {
 
 				<?php foreach ( wherego_get_settings_sections() as $tab_id => $tab_name ) : ?>
 
-				<div id="<?php echo $tab_id; ?>">
+				<div id="<?php echo esc_attr( $tab_id ); ?>">
 					<table class="form-table">
 					<?php
 						do_settings_fields( 'wherego_settings_' . $tab_id, 'wherego_settings_' . $tab_id );
@@ -157,6 +148,7 @@ function wherego_get_settings_sections() {
  * @return void
  */
 function wherego_missing_callback( $args ) {
+	/* translators: %s: Setting ID. */
 	printf( esc_html__( 'The callback function used for the <strong>%s</strong> setting is missing.', 'where-did-they-go-from-here' ), esc_html( $args['id'] ) );
 }
 

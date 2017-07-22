@@ -31,9 +31,12 @@ function wherego_settings_help() {
 	}
 
 	$screen->set_help_sidebar(
+		/* translators: %s: Support URL. */
 		'<p>' . sprintf( __( 'For more information or how to get support visit the <a href="%s">support site</a>.', 'where-did-they-go-from-here' ), esc_url( 'https://ajaydsouza.com/support/' ) ) . '</p>' .
+		/* translators: %s: Support forums URL. */
 		'<p>' . sprintf( __( 'Support queries should be posted in the <a href="%s">WordPress.org support forums</a>.', 'where-did-they-go-from-here' ), esc_url( 'https://wordpress.org/support/plugin/where-did-they-go-from-here' ) ) . '</p>' .
 		'<p>' . sprintf(
+			/* translators: 1: GitHub Issues URL, 2: GitHub URL. */
 			__( '<a href="%1$s">Post an issue</a> on <a href="%2$s">GitHub</a> (bug reports only).', 'where-did-they-go-from-here' ),
 			esc_url( 'https://github.com/ajaydsouza/where-did-they-go-from-here/issues' ),
 			esc_url( 'https://github.com/ajaydsouza/where-did-they-go-from-here' )

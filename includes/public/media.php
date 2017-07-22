@@ -31,15 +31,15 @@ function wherego_get_the_post_thumbnail( $args = array() ) {
 
 	// Issue notice for deprecated arguments.
 	if ( isset( $args['thumb_timthumb'] ) ) {
-		_deprecated_argument( __FUNCTION__, '2.1', __( 'thumb_timthumb argument has been deprecated', 'where-did-they-go-from-here' ) );
+		_deprecated_argument( __FUNCTION__, '2.1', esc_html__( 'thumb_timthumb argument has been deprecated', 'where-did-they-go-from-here' ) );
 	}
 
 	if ( isset( $args['thumb_timthumb_q'] ) ) {
-		_deprecated_argument( __FUNCTION__, '2.1', __( 'thumb_timthumb_q argument has been deprecated', 'where-did-they-go-from-here' ) );
+		_deprecated_argument( __FUNCTION__, '2.1', esc_html__( 'thumb_timthumb_q argument has been deprecated', 'where-did-they-go-from-here' ) );
 	}
 
 	if ( isset( $args['filter'] ) ) {
-		_deprecated_argument( __FUNCTION__, '2.1', __( 'filter argument has been deprecated', 'where-did-they-go-from-here' ) );
+		_deprecated_argument( __FUNCTION__, '2.1', esc_html__( 'filter argument has been deprecated', 'where-did-they-go-from-here' ) );
 	}
 
 	if ( is_int( $args['postid'] ) ) {
@@ -244,7 +244,7 @@ function wherego_get_first_image( $post_id ) {
  *
  * @since 2.0.0
  *
- * @param   string $attachment_url Attachment URL
+ * @param   string $attachment_url Attachment URL.
  * @return  int     Attachment ID
  */
 function wherego_get_attachment_id_from_url( $attachment_url = '' ) {
