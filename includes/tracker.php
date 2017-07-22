@@ -63,12 +63,12 @@ function wherego_tracker_parser() {
 		if ( true === $metastatus ) {
 			$str = __( 'Updated - ', 'where-did-they-go-from-here' ) . $post_id_came_from;
 		} elseif ( false === $metastatus ) {
-			$str = __( 'Error - ', 'where-did-they-go-from-here' ) . $post_id_came_from;
+			$str = __( 'No change - ', 'where-did-they-go-from-here' ) . $post_id_came_from;
 		} else {
 			$str = __( 'Meta ID:', 'where-did-they-go-from-here' ) . $metastatus . ' - ' . $post_id_came_from;
 		}
 	} else {
-		$str = __( 'No change', 'where-did-they-go-from-here' ) . $post_id_came_from;
+		$str = __( 'Error', 'where-did-they-go-from-here' ) . $post_id_came_from;
 	}
 
 	echo esc_html( $str );
