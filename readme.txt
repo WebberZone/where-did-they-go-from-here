@@ -7,7 +7,7 @@ Requires at least: 4.1
 Tested up to: 4.8
 License: GPLv2 or later
 
-Show "Readers who viewed this page, also viewed" links on your page. Much like Amazon.com's product pages.
+Show "Readers who viewed this page, also viewed" a.k.a. followed posts on your page. Much like Amazon.com's product pages.
 
 == Description ==
 
@@ -25,15 +25,10 @@ __If you're looking for a plugin that displays posts related to the content, loo
 * **Widget**: Find the __Followed posts__ widget to display the posts in your theme's sidebar
 * **Manual install**: Want more control over placement? Check the [FAQ](https://wordpress.org/extend/plugins/where-did-they-go-from-here/faq/) on which functions are available for manual install
 * **Exclusions**: Exclude select posts and pages from the list of posts. Exclude posts from select categories from the list of posts
-* **Custom post types**: The visited posts list lets you include posts, pages, attachments or any other custom post type!
+* **Supports all post types**: The visited posts list lets you include posts, pages, attachments or any other custom post type!
 * **Styles**: The output is wrapped in CSS classes which allows you to easily style the list. You can enter your custom CSS styles from within WordPress Admin area
-* **Fully customisable output**: Extendable via filters and actions. Style with CSS or use the inbuilt plugin API
-* **Thumbnail support**:
-	* Uses the default WordPress image options to fetch the correct sized image. Recommended thumbnail setting is the same as what you set for Thumbnail size or Medium size in your __Media settings__ page
-	* Support for WordPress featured image
-	* Auto-extract the first image in your post to be displayed as a thumbnail
-	* Manually enter the URL of the thumbnail via [WordPress meta fields](http://codex.wordpress.org/Custom_Fields)
-
+* **Customizable and extendable**: Extendable via filters and actions. Style with CSS or use the inbuilt plugin API
+* **Thumbnail support**: Display thumbnails as well as text. The plugin tries multiple methods to fetch a thumbnail or you can even specify a default one
 
 
 == Installation ==
@@ -41,7 +36,7 @@ __If you're looking for a plugin that displays posts related to the content, loo
 = WordPress install =
 1. Navigate to Plugins within your WordPress Admin Area
 
-2. Click "Add new" and in the search box enter "Where did they go from here" and select "Keyword" from the dropdown
+2. Click "Add new" and in the search box enter "Where did they go from here"
 
 3. Find the plugin in the list (usually the first result) and click "Install Now"
 
@@ -52,9 +47,7 @@ __If you're looking for a plugin that displays posts related to the content, loo
 
 3. Activate the Plugin in WP-Admin.
 
-4. Goto **Settings &raquo; Where did they go** to configure
-
-5. Optionally visit the **Custom Styles** tab to add any custom CSS styles. These are added to `wp_head` on the pages where the posts are displayed
+4. Goto **Settings &raquo; WZ Followed Posts** to configure
 
 
 == Screenshots ==
@@ -87,7 +80,7 @@ Check out the settings page for a wide array of settings that let you customise 
 
 * **wherego_excerpt**: Class of the `span` tag for excerpt (if included)
 
-You can add the CSS code in the **Custom Styles** section of the plugin settings page or in your theme's *style.css* file
+You can add the CSS code in the **Custom Styles** section of the plugin settings page or in your theme's *style.css* file. To find out the detailed list of available styles, check out the HTML output of the generated code.
 
 
 = Shortcode =

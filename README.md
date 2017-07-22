@@ -4,21 +4,21 @@
 
 __Requires:__ 4.0
 
-__Tested up to:__ 4.6
+__Tested up to:__ 4.8
 
 __License:__ [GPL-2.0+](http://www.gnu.org/licenses/gpl-2.0.html)
 
 __Plugin page:__ [Homepage](https://ajaydsouza.com/wordpress/plugins/where-did-they-go-from-here/) | [WordPress.org](https://wordpress.org/plugins/where-did-they-go-from-here)
 
-Show "Readers who viewed this page, also viewed" links on your page. Much like Amazon.com's product pages.
+Show "Readers who viewed this page, also viewed" a.k.a. followed posts on your page. Much like Amazon's product pages.
 
 ## Description
 
-Have you seen Amazon.com's product pages? Amazon is a great example of visitor retention through recommendations. All of Amazon's pages have a "Customers who viewed this also viewed". And how many times have you clicked those links? I know I have!
+Have you seen Amazon's product pages? Amazon is a great example of visitor retention through recommendations. All of Amazon's pages have a "Customers who bought this item also bought". And how many times have you clicked those links? I know I have!
 
 Now you can implement the same feature on your WordPress blog. **Where did you go from here** let's you show "Readers who viewed this page, also viewed" links on your page.
 
-The plugin tracks the pages, posts and custom post types that visitors click through from the current post. You can then display these followed posts automatically at the bottom of your posts, using a shortcode or via the inbuilt widget.
+The plugin tracks the pages, posts and custom post types that visitors click through from the current post. You can then display these followed posts automatically at the bottom of your posts, using a shortcode or in your sidebar using the inbuilt widget.
 
 __If you're looking for a plugin that displays posts related to the content, look no further than [Contextual Related Posts](https://wordpress.org/plugins/contextual-related-posts/)__
 
@@ -29,15 +29,10 @@ __If you're looking for a plugin that displays posts related to the content, loo
 * **Widget**: Find the __Followed posts__ widget to display the posts in your theme's sidebar
 * **Manual install**: Want more control over placement? Check the [FAQ](https://wordpress.org/extend/plugins/where-did-they-go-from-here/faq/) on which functions are available for manual install
 * **Exclusions**: Exclude select posts and pages from the list of posts. Exclude posts from select categories from the list of posts
-* **Custom post types**: The visited posts list lets you include posts, pages, attachments or any other custom post type!
+* **Supports all post types**: The visited posts list lets you include posts, pages, attachments or any other custom post type!
 * **Styles**: The output is wrapped in CSS classes which allows you to easily style the list. You can enter your custom CSS styles from within WordPress Admin area
-* **Fully customisable output**: Extendable via filters and actions. Style with CSS or use the inbuilt plugin API
-* **Thumbnail support**: 
-	* Uses the default WordPress image options to fetch the correct sized image. Recommended thumbnail setting is the same as what you set for Thumbnail size or Medium size in your __Media settings__ page
-	* Support for WordPress featured image
-	* Auto-extract the first image in your post to be displayed as a thumbnail
-	* Manually enter the URL of the thumbnail via [WordPress meta fields](http://codex.wordpress.org/Custom_Fields)
-
+* **Customizable and extendable**: Extendable via filters and actions. Style with CSS or use the inbuilt plugin API
+* **Thumbnail support**: Display thumbnails as well as text. The plugin tries multiple methods to fetch a thumbnail or you can even specify a default one
 
 ## Installation
 
@@ -57,9 +52,7 @@ __If you're looking for a plugin that displays posts related to the content, loo
 
 3. Activate the Plugin in WP-Admin. 
 
-4. Goto **Settings &raquo; Where did they go** to configure
-
-5. Optionally visit the **Custom Styles** section to add any custom CSS styles. These are added to `wp_head` on the pages where the posts are displayed
+4. Goto **Settings &raquo; WZ Followed Posts** to configure
 
 
 ## Screenshots
