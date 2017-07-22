@@ -142,7 +142,7 @@ For previous changelog entries check out the changelog.txt file included with th
 
 == Upgrade Notice ==
 
-= 2.0.0 =
-* Major release; bug fixes, new features. Double check your settings page on upgrade. View Changelog for more details
+= 2.1.0 =
+* Major release; bug fixes, new Admin page. Double check your settings page on upgrade. View Changelog for more details
 
 
