@@ -61,7 +61,7 @@ before_script:
   # Install PHP Compatibility sniffs.
   - if [[ "$SNIFF" == "1" ]]; then composer global require wimg/php-compatibility; fi
   # Set install path for PHPCS sniffs.
-  - if [[ "$SNIFF" == "1" ]]; then phpcs --config-set installed_paths $HOME/.composer/vendor/wp-coding-standards/wpcs,$HOME/.composer/vendor/wimg/php-compatibility; fi
+  - if [[ "$SNIFF" == "1" ]]; then phpcs --config-set installed_paths $HOME/.composer/vendor/wp-coding-standards/wpcs,$HOME/.composer/vendor/wimg; fi
   - if [[ "$SNIFF" == "1" ]]; then phpcs -i; fi
   # After CodeSniffer install you should refresh your path.
   - if [[ "$SNIFF" == "1" ]]; then phpenv rehash; fi
