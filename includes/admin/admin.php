@@ -198,7 +198,7 @@ function wherego_plugin_actions_links( $links ) {
 
 	return array_merge(
 		array(
-			'settings' => '<a href="' . admin_url( 'options-general.php?page=wherego_options' ) . '">' . esc_html__( 'Settings', 'where-did-they-go-from-here' ) . '</a>',
+			'settings' => '<a href="' . admin_url( 'options-general.php?page=wherego_options_page' ) . '">' . esc_html__( 'Settings', 'where-did-they-go-from-here' ) . '</a>',
 		), $links
 	);
 
