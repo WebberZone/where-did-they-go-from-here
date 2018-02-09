@@ -27,14 +27,12 @@ matrix:
     - php: 7.0
       env: WP_VERSION=latest
     - php: 5.6
-      env: WP_VERSION=4.0
+      env: WP_VERSION=4.1
     - php: 5.6
       env: WP_VERSION=latest
     - php: 5.6
       env: WP_VERSION=trunk
-    - php: 5.3
-      env: WP_VERSION=latest
-    - php: 5.3
+    - php: 5.6
       env: WP_VERSION=latest WP_MULTISITE=1
 
   allow_failures:
@@ -76,6 +74,3 @@ script:
       phpcs -p -v -s --standard=phpcs.ruleset.xml $(find . -name '*.php')
     fi
 
-addons:
-    code_climate:
-        repo_token: 781f67a421df089b1b16c409b72c66772f5cac52642ea5cbb8c59754bc426d59
