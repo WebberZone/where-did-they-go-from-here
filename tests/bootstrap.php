@@ -31,4 +31,4 @@ activate_plugin( 'where-did-they-go-from-here/where-did-they-go-from-here.php' )
 echo "Installing Where did they go from here...\n";
 
 global  $wherego_settings, $current_user;
-$wherego_settings = wherego_read_options();
+$wherego_settings = wherego_get_settings();
