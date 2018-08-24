@@ -4,7 +4,7 @@ Contributors: Ajay, webberzone
 Donate link: http://ajaydsouza.com/donate/
 Stable tag: trunk
 Requires at least: 4.1
-Tested up to: 4.8
+Tested up to: 4.9
 License: GPLv2 or later
 
 Show "Readers who viewed this page, also viewed" a.k.a. followed posts on your page. Much like Amazon.com's product pages.
