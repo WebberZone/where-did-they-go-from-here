@@ -26,10 +26,12 @@ function wherego_shortcode( $atts ) {
 		array_merge(
 			$wherego_settings,
 			array(
-				'heading'   => 1,
+				'heading'      => 1,
 				'is_shortcode' => 1,
 			)
-		), $atts, 'wherego'
+		),
+		$atts,
+		'wherego'
 	);
 
 	return get_wherego( $atts );

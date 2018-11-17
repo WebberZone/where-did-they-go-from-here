@@ -50,7 +50,7 @@ function wherego_adminhead() {
 	wp_enqueue_script( 'jquery' );
 	wp_enqueue_script( 'jquery-ui-autocomplete' );
 	wp_enqueue_script( 'jquery-ui-tabs' );
-?>
+	?>
 	<script type="text/javascript">
 	//<![CDATA[
 		// Function to add auto suggest.
@@ -183,7 +183,7 @@ function wherego_adminhead() {
 
 	//]]>
 	</script>
-<?php
+	<?php
 }
 
 
@@ -199,7 +199,8 @@ function wherego_plugin_actions_links( $links ) {
 	return array_merge(
 		array(
 			'settings' => '<a href="' . admin_url( 'options-general.php?page=wherego_options_page' ) . '">' . esc_html__( 'Settings', 'where-did-they-go-from-here' ) . '</a>',
-		), $links
+		),
+		$links
 	);
 
 }

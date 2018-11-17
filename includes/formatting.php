@@ -57,6 +57,6 @@ function wherego_max_formatted_content( $content, $max_length = -1 ) {
 		}
 	}
 
-	return apply_filters( 'wherego_max_formatted_content' , $content, $max_length );
+	return apply_filters( 'wherego_max_formatted_content', $content, $max_length );
 }
 

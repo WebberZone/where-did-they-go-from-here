@@ -100,9 +100,9 @@ function wherego_read_options() {
  */
 function wherego_default_options() {
 
-	$title = __( '<h3>Readers who viewed this page, also viewed:</h3>', 'where-did-they-go-from-here' );
+	$title             = __( '<h3>Readers who viewed this page, also viewed:</h3>', 'where-did-they-go-from-here' );
 	$blank_output_text = __( 'Visitors have not browsed from this post. Become the first by clicking one of our related posts', 'where-did-they-go-from-here' );
-	$thumb_default = WHEREGO_PLUGIN_URL . 'default.png';
+	$thumb_default     = WHEREGO_PLUGIN_URL . 'default.png';
 
 	$wherego_settings = array(
 		'title'                    => $title,           // Add before the content.

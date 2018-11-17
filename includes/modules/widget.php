@@ -25,7 +25,7 @@ class WhereGo_Widget extends WP_Widget {
 			'wherego_widget',
 			__( 'WZ Followed Posts', 'where-did-they-go-from-here' ),
 			array(
-				'description' => __( 'Selective refreshable widget.', 'where-did-they-go-from-here' ),
+				'description'                 => __( 'Selective refreshable widget.', 'where-did-they-go-from-here' ),
 				'customize_selective_refresh' => true,
 			)
 		);
@@ -57,20 +57,20 @@ class WhereGo_Widget extends WP_Widget {
 		$post_thumb_op = isset( $instance['post_thumb_op'] ) ? $instance['post_thumb_op'] : 'text_only';
 
 		$thumb_height = ( isset( $instance['thumb_height'] ) && '' !== $instance['thumb_height'] ) ? intval( $instance['thumb_height'] ) : $wherego_settings['thumb_height'];
-		$thumb_width = ( isset( $instance['thumb_width'] ) && '' !== $instance['thumb_width'] ) ? intval( $instance['thumb_width'] ) : $wherego_settings['thumb_width'];
+		$thumb_width  = ( isset( $instance['thumb_width'] ) && '' !== $instance['thumb_width'] ) ? intval( $instance['thumb_width'] ) : $wherego_settings['thumb_width'];
 
 		// Start building the output now.
-		$output = $args['before_widget'];
+		$output  = $args['before_widget'];
 		$output .= $args['before_title'] . $title . $args['after_title'];
 
 		$arguments = array(
-			'is_widget' => 1,
-			'instance_id' => $this->number,
-			'heading' => 0,
-			'limit' => $limit,
+			'is_widget'     => 1,
+			'instance_id'   => $this->number,
+			'heading'       => 0,
+			'limit'         => $limit,
 			'post_thumb_op' => $post_thumb_op,
-			'thumb_height' => $thumb_height,
-			'thumb_width' => $thumb_width,
+			'thumb_height'  => $thumb_height,
+			'thumb_width'   => $thumb_width,
 		);
 
 		/**
@@ -80,7 +80,7 @@ class WhereGo_Widget extends WP_Widget {
 		 *
 		 * @param   array   $arguments  Widget options array
 		 */
-		$arguments = apply_filters( 'wherego_widget_options' , $arguments );
+		$arguments = apply_filters( 'wherego_widget_options', $arguments );
 
 		$output .= get_wherego( $arguments );
 
@@ -98,11 +98,11 @@ class WhereGo_Widget extends WP_Widget {
 	 * @param array $instance Previously saved values from database.
 	 */
 	public function form( $instance ) {
-		$title = isset( $instance['title'] ) ? $instance['title'] : '';
-		$limit = isset( $instance['limit'] ) ? $instance['limit'] : '';
+		$title         = isset( $instance['title'] ) ? $instance['title'] : '';
+		$limit         = isset( $instance['limit'] ) ? $instance['limit'] : '';
 		$post_thumb_op = isset( $instance['post_thumb_op'] ) ? $instance['post_thumb_op'] : 'text_only';
-		$thumb_width = isset( $instance['thumb_width'] ) ? $instance['thumb_width'] : '';
-		$thumb_height = isset( $instance['thumb_height'] ) ? $instance['thumb_height'] : '';
+		$thumb_width   = isset( $instance['thumb_width'] ) ? $instance['thumb_width'] : '';
+		$thumb_height  = isset( $instance['thumb_height'] ) ? $instance['thumb_height'] : '';
 
 		?>
 
@@ -159,12 +159,12 @@ class WhereGo_Widget extends WP_Widget {
 	 * @return array Updated safe values to be saved.
 	 */
 	public function update( $new_instance, $old_instance ) {
-		$instance = array();
-		$instance['title'] = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
-		$instance['limit'] = ( ! empty( $new_instance['limit'] ) ) ? intval( $new_instance['limit'] ) : '';
+		$instance                  = array();
+		$instance['title']         = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
+		$instance['limit']         = ( ! empty( $new_instance['limit'] ) ) ? intval( $new_instance['limit'] ) : '';
 		$instance['post_thumb_op'] = $new_instance['post_thumb_op'];
-		$instance['thumb_width'] = ( ! empty( $new_instance['thumb_width'] ) ) ? intval( $new_instance['thumb_width'] ) : '';
-		$instance['thumb_height'] = ( ! empty( $new_instance['thumb_height'] ) ) ? intval( $new_instance['thumb_height'] ) : '';
+		$instance['thumb_width']   = ( ! empty( $new_instance['thumb_width'] ) ) ? intval( $new_instance['thumb_width'] ) : '';
+		$instance['thumb_height']  = ( ! empty( $new_instance['thumb_height'] ) ) ? intval( $new_instance['thumb_height'] ) : '';
 
 		/**
 		 * Filters Update widget options array.
@@ -173,7 +173,7 @@ class WhereGo_Widget extends WP_Widget {
 		 *
 		 * @param   array   $instance   Widget options array
 		 */
-		return apply_filters( 'wherego_widget_options_update' , $instance );
+		return apply_filters( 'wherego_widget_options_update', $instance );
 	}
 }
 

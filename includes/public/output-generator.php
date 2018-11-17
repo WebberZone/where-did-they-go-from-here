@@ -20,11 +20,11 @@ if ( ! defined( 'WPINC' ) ) {
  */
 function wherego_link_attributes( $args ) {
 
-	$rel_attribute = ( isset( $args['link_nofollow'] ) && $args['link_nofollow'] ) ? ' rel="nofollow" ' : ' ';
+	$rel_attribute    = ( isset( $args['link_nofollow'] ) && $args['link_nofollow'] ) ? ' rel="nofollow" ' : ' ';
 	$target_attribute = ( isset( $args['link_new_window'] ) && $args['link_new_window'] ) ? ' target="_blank" ' : ' ';
 
 	$link_attributes = array(
-		'rel_attribute' => $rel_attribute,
+		'rel_attribute'    => $rel_attribute,
 		'target_attribute' => $target_attribute,
 	);
 
@@ -259,8 +259,8 @@ function wherego_author( $args, $result ) {
  */
 function wherego_list_link( $args, $result ) {
 
-	$output = '';
-	$title = wherego_title( $args, $result );
+	$output          = '';
+	$title           = wherego_title( $args, $result );
 	$link_attributes = wherego_link_attributes( $args );
 
 	if ( 'after' === $args['post_thumb_op'] ) {
@@ -272,15 +272,15 @@ function wherego_list_link( $args, $result ) {
 
 		$output .= wherego_get_the_post_thumbnail(
 			array(
-				'postid' => $result->ID,
-				'thumb_height' => $args['thumb_height'],
-				'thumb_width' => $args['thumb_width'],
-				'thumb_meta' => $args['thumb_meta'],
-				'thumb_html' => $args['thumb_html'],
-				'thumb_default' => $args['thumb_default'],
+				'postid'             => $result->ID,
+				'thumb_height'       => $args['thumb_height'],
+				'thumb_width'        => $args['thumb_width'],
+				'thumb_meta'         => $args['thumb_meta'],
+				'thumb_html'         => $args['thumb_html'],
+				'thumb_default'      => $args['thumb_default'],
 				'thumb_default_show' => ( isset( $args['thumb_default_show'] ) && $args['thumb_default_show'] ),
-				'scan_images' => ( isset( $args['scan_images'] ) && $args['scan_images'] ),
-				'class' => 'wherego_thumb',
+				'scan_images'        => ( isset( $args['scan_images'] ) && $args['scan_images'] ),
+				'class'              => 'wherego_thumb',
 			)
 		);
 

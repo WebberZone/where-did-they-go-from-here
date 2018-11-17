@@ -124,11 +124,11 @@ function get_wherego( $args = array() ) {
 	global $post, $wherego_settings;
 
 	$defaults = array(
-		'is_widget' => false,
+		'is_widget'    => false,
 		'is_shortcode' => false,
-		'is_manual' => false,
-		'echo' => true,
-		'heading' => true,
+		'is_manual'    => false,
+		'echo'         => true,
+		'heading'      => true,
 	);
 	$defaults = array_merge( $defaults, wherego_settings_defaults(), $wherego_settings );
 
@@ -150,7 +150,7 @@ function get_wherego( $args = array() ) {
 		$results = array_diff( $results, array_map( 'intval', explode( ',', $args['exclude_post_ids'] ) ) );
 	}
 
-	$widget_class = $args['is_widget'] ? 'wherego_related_widget' : 'wherego_related ';
+	$widget_class    = $args['is_widget'] ? 'wherego_related_widget' : 'wherego_related ';
 	$shortcode_class = $args['is_shortcode'] ? 'wherego_related_shortcode ' : '';
 
 	$post_classes = $widget_class . $shortcode_class;
@@ -230,7 +230,7 @@ function get_wherego( $args = array() ) {
 
 	// Check if the opening list tag is missing in the output, it means all of our results were eliminated cause of the category filter.
 	if ( false === ( strpos( $output, $args['before_list_item'] ) ) ) {
-		$output = '<div class="wherego_related">';
+		$output  = '<div class="wherego_related">';
 		$output .= ( $args['blank_output'] ) ? ' ' : '<p>' . $args['blank_output_text'] . '</p>';
 	}
 
@@ -328,10 +328,10 @@ add_filter( 'the_content', 'wherego_content' );
  */
 function wherego_rss( $content ) {
 
-	$show_excerpt_feed = wherego_get_option( 'show_excerpt_feed' );
-	$limit_feed = wherego_get_option( 'limit_feed' );
+	$show_excerpt_feed  = wherego_get_option( 'show_excerpt_feed' );
+	$limit_feed         = wherego_get_option( 'limit_feed' );
 	$post_thumb_op_feed = wherego_get_option( 'post_thumb_op_feed' );
-	$add_to = wherego_get_option( 'add_to' );
+	$add_to             = wherego_get_option( 'add_to' );
 
 	if ( ! empty( $add_to['feed'] ) ) {
 		return $content . get_wherego( 'is_widget=0&limit=' . $limit_feed . '&show_excerpt=' . $show_excerpt_feed . '&post_thumb_op=' . $post_thumb_op_feed );
@@ -369,13 +369,13 @@ function echo_wherego( $args = array() ) {
  *----------------------------------------------------------------------------
  */
 
-require_once( WHEREGO_PLUGIN_DIR . 'includes/admin/register-settings.php' );
-require_once( WHEREGO_PLUGIN_DIR . 'includes/activate-deactivate.php' );
-require_once( WHEREGO_PLUGIN_DIR . 'includes/public/media.php' );
-require_once( WHEREGO_PLUGIN_DIR . 'includes/public/output-generator.php' );
-require_once( WHEREGO_PLUGIN_DIR . 'includes/tracker.php' );
-require_once( WHEREGO_PLUGIN_DIR . 'includes/formatting.php' );
-require_once( WHEREGO_PLUGIN_DIR . 'includes/deprecated.php' );
+require_once WHEREGO_PLUGIN_DIR . 'includes/admin/register-settings.php';
+require_once WHEREGO_PLUGIN_DIR . 'includes/activate-deactivate.php';
+require_once WHEREGO_PLUGIN_DIR . 'includes/public/media.php';
+require_once WHEREGO_PLUGIN_DIR . 'includes/public/output-generator.php';
+require_once WHEREGO_PLUGIN_DIR . 'includes/tracker.php';
+require_once WHEREGO_PLUGIN_DIR . 'includes/formatting.php';
+require_once WHEREGO_PLUGIN_DIR . 'includes/deprecated.php';
 
 /*
  ----------------------------------------------------------------------------*
@@ -383,8 +383,8 @@ require_once( WHEREGO_PLUGIN_DIR . 'includes/deprecated.php' );
  *----------------------------------------------------------------------------
  */
 
-require_once( WHEREGO_PLUGIN_DIR . 'includes/modules/shortcode.php' );
-require_once( WHEREGO_PLUGIN_DIR . 'includes/modules/widget.php' );
+require_once WHEREGO_PLUGIN_DIR . 'includes/modules/shortcode.php';
+require_once WHEREGO_PLUGIN_DIR . 'includes/modules/widget.php';
 
 
 /*
@@ -395,12 +395,12 @@ require_once( WHEREGO_PLUGIN_DIR . 'includes/modules/widget.php' );
 
 if ( is_admin() || ( defined( 'WP_CLI' ) && WP_CLI ) ) {
 
-	require_once( WHEREGO_PLUGIN_DIR . 'includes/admin/admin.php' );
-	require_once( WHEREGO_PLUGIN_DIR . 'includes/admin/settings-page.php' );
-	require_once( WHEREGO_PLUGIN_DIR . 'includes/admin/save-settings.php' );
-	require_once( WHEREGO_PLUGIN_DIR . 'includes/admin/help-tab.php' );
-	require_once( WHEREGO_PLUGIN_DIR . 'includes/admin/admin-metabox.php' );
-	require_once( WHEREGO_PLUGIN_DIR . 'includes/admin/admin-columns.php' );
+	require_once WHEREGO_PLUGIN_DIR . 'includes/admin/admin.php';
+	require_once WHEREGO_PLUGIN_DIR . 'includes/admin/settings-page.php';
+	require_once WHEREGO_PLUGIN_DIR . 'includes/admin/save-settings.php';
+	require_once WHEREGO_PLUGIN_DIR . 'includes/admin/help-tab.php';
+	require_once WHEREGO_PLUGIN_DIR . 'includes/admin/admin-metabox.php';
+	require_once WHEREGO_PLUGIN_DIR . 'includes/admin/admin-columns.php';
 
 }
 

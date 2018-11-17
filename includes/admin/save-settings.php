@@ -177,21 +177,21 @@ function wherego_sanitize_textarea_field( $value ) {
 
 	// We need more tags to allow for script and style.
 	$moretags = array(
-		'script'    => array(
-			'type'     => true,
-			'src'      => true,
-			'async'    => true,
-			'defer'    => true,
-			'charset'  => true,
-			'lang'     => true,
+		'script' => array(
+			'type'    => true,
+			'src'     => true,
+			'async'   => true,
+			'defer'   => true,
+			'charset' => true,
+			'lang'    => true,
 		),
-		'style'     => array(
-			'type'     => true,
-			'media'    => true,
-			'scoped'   => true,
-			'lang'     => true,
+		'style'  => array(
+			'type'   => true,
+			'media'  => true,
+			'scoped' => true,
+			'lang'   => true,
 		),
-		'link'      => array(
+		'link'   => array(
 			'rel'      => true,
 			'type'     => true,
 			'href'     => true,

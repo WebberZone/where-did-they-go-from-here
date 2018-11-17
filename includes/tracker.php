@@ -93,12 +93,14 @@ function wherego_enqueue_scripts() {
 		wp_enqueue_script( 'wherego_tracker', plugins_url( 'includes/js/wherego_tracker.js', WHEREGO_PLUGIN_FILE ), array( 'jquery' ) );
 
 		wp_localize_script(
-			'wherego_tracker', 'ajax_wherego_tracker', array(
-				'ajax_url' => admin_url( 'admin-ajax.php' ),
-				'wherego_nonce' => wp_create_nonce( 'wherego-tracker-nonce' ),
-				'wherego_id' => $post->ID,
+			'wherego_tracker',
+			'ajax_wherego_tracker',
+			array(
+				'ajax_url'        => admin_url( 'admin-ajax.php' ),
+				'wherego_nonce'   => wp_create_nonce( 'wherego-tracker-nonce' ),
+				'wherego_id'      => $post->ID,
 				'wherego_sitevar' => isset( $_SERVER['HTTP_REFERER'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_REFERER'] ) ) : '',
-				'wherego_rnd' => wp_rand( 1, time() ),
+				'wherego_rnd'     => wp_rand( 1, time() ),
 			)
 		);
 	}

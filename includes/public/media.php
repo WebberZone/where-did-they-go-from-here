@@ -15,15 +15,15 @@
 function wherego_get_the_post_thumbnail( $args = array() ) {
 
 	$defaults = array(
-		'postid' => '',
-		'thumb_height' => '150',            // Max height of thumbnails.
-		'thumb_width' => '150',         // Max width of thumbnails.
-		'thumb_meta' => 'post-image',       // Meta field that is used to store the location of default thumbnail image.
-		'thumb_html' => 'html',     // HTML / CSS for width and height attributes.
-		'thumb_default' => '',  // Default thumbnail image.
+		'postid'             => '',
+		'thumb_height'       => '150',            // Max height of thumbnails.
+		'thumb_width'        => '150',         // Max width of thumbnails.
+		'thumb_meta'         => 'post-image',       // Meta field that is used to store the location of default thumbnail image.
+		'thumb_html'         => 'html',     // HTML / CSS for width and height attributes.
+		'thumb_default'      => '',  // Default thumbnail image.
 		'thumb_default_show' => true,   // Show default thumb if none found (if false, don't show thumb at all).
-		'scan_images' => false,         // Scan post for images.
-		'class' => 'wherego_thumb',         // Class of the thumbnail.
+		'scan_images'        => false,         // Scan post for images.
+		'class'              => 'wherego_thumb',         // Class of the thumbnail.
 	);
 
 	// Parse incomming $args into an array and merge it with $defaults.
@@ -60,14 +60,14 @@ function wherego_get_the_post_thumbnail( $args = array() ) {
 	 */
 	$post_title = apply_filters( 'wherego_thumb_title', $post_title, $result );
 
-	$output = '';
+	$output    = '';
 	$postimage = '';
-	$pick = '';
+	$pick      = '';
 
 	// Let's start fetching the thumbnail. First place to look is in the post meta defined in the Settings page.
 	if ( ! $postimage ) {
 		$postimage = get_post_meta( $result->ID, $args['thumb_meta'], true );   // Check the post meta first.
-		$pick = 'meta';
+		$pick      = 'meta';
 		if ( $postimage ) {
 			$postimage_id = wherego_get_attachment_id_from_url( $postimage );
 
@@ -109,19 +109,19 @@ function wherego_get_the_post_thumbnail( $args = array() ) {
 	// If there is no thumbnail found, fetch the first child image.
 	if ( ! $postimage ) {
 		$postimage = wherego_get_first_image( $result->ID, $args['thumb_width'], $args['thumb_height'] );   // Get the first image.
-		$pick = 'firstchild';
+		$pick      = 'firstchild';
 	}
 
 	// If no other thumbnail set, try to get the custom video thumbnail set by the Video Thumbnails plugin.
 	if ( ! $postimage ) {
 		$postimage = get_post_meta( $result->ID, '_video_thumbnail', true );
-		$pick = 'video_thumb';
+		$pick      = 'video_thumb';
 	}
 
 	// If no thumb found and settings permit, use default thumb.
 	if ( ! $postimage && ( isset( $args['thumb_default_show'] ) && $args['thumb_default_show'] ) ) {
 		$postimage = $args['thumb_default'];
-		$pick = 'default_thumb';
+		$pick      = 'default_thumb';
 	}
 
 	// Hopefully, we've found a thumbnail by now. If so, run it through the custom filter, check for SSL and create the image tag.
@@ -143,7 +143,7 @@ function wherego_get_the_post_thumbnail( $args = array() ) {
 		$postimage = apply_filters( 'wherego_thumb_url', $postimage, $args['thumb_width'], $args['thumb_height'], $result );
 
 		/* Backward compatibility */
-		$thumb_timthumb = false;
+		$thumb_timthumb   = false;
 		$thumb_timthumb_q = 75;
 
 		/**
@@ -217,12 +217,12 @@ function wherego_get_the_post_thumbnail( $args = array() ) {
  */
 function wherego_get_first_image( $post_id ) {
 	$args = array(
-		'numberposts' => 1,
-		'order' => 'ASC',
+		'numberposts'    => 1,
+		'order'          => 'ASC',
 		'post_mime_type' => 'image',
-		'post_parent' => $post_id,
-		'post_status' => null,
-		'post_type' => 'attachment',
+		'post_parent'    => $post_id,
+		'post_status'    => null,
+		'post_type'      => 'attachment',
 	);
 
 	$attachments = get_children( $args );
@@ -300,17 +300,17 @@ function wherego_get_thumb_size( $args ) {
 	$wherego_thumb_size = wherego_get_all_image_sizes( $args['thumb_size'] );
 
 	if ( isset( $wherego_thumb_size['width'] ) ) {
-		$thumb_width = $wherego_thumb_size['width'];
+		$thumb_width  = $wherego_thumb_size['width'];
 		$thumb_height = $wherego_thumb_size['height'];
 	}
 
 	if ( empty( $thumb_width ) || ( $args['is_widget'] && $thumb_width != $args['thumb_width'] ) ) {
-		$thumb_width = $args['thumb_width'];
+		$thumb_width        = $args['thumb_width'];
 		$args['thumb_html'] = 'css';
 	}
 
 	if ( empty( $thumb_height ) || ( $args['is_widget'] && $thumb_height != $args['thumb_height'] ) ) {
-		$thumb_height = $args['thumb_height'];
+		$thumb_height       = $args['thumb_height'];
 		$args['thumb_html'] = 'css';
 	}
 

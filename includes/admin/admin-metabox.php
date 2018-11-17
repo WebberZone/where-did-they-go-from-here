@@ -26,7 +26,7 @@ function wherego_add_meta_box( $post_type, $post ) {
 		);
 
 }
-add_action( 'add_meta_boxes', 'wherego_add_meta_box' , 10, 2 );
+add_action( 'add_meta_boxes', 'wherego_add_meta_box', 10, 2 );
 
 
 /**
@@ -42,9 +42,9 @@ function wherego_call_meta_box() {
 	wp_nonce_field( 'wherego_meta_box', 'wherego_meta_box_nonce' );
 
 	$results = get_post_meta( $post->ID, 'wheredidtheycomefrom', true );
-	$value = ( $results ) ? implode( ',', $results ) : '';
+	$value   = ( $results ) ? implode( ',', $results ) : '';
 
-?>
+	?>
 	<p>
 		<label for="wherego_post_ids"><?php esc_html_e( "Followed posts' IDs:", 'where-did-they-go-from-here' ); ?></label>
 		<input type="text" id="wherego_post_ids" name="wherego_post_ids" value="<?php echo esc_attr( $value ); ?>" size="25" />
@@ -57,17 +57,17 @@ function wherego_call_meta_box() {
 		<?php
 		foreach ( $results as $result ) {
 			$title = get_the_title( $result );
-		?>
+			?>
 			<li>
 				<a href="<?php echo esc_attr( get_permalink( $result ) ); ?>" target="_blank" title="<?php echo esc_attr( $title ); ?>" class="wherego_title"><?php echo esc_attr( $title ); ?></a>
 			</li>
-		<?php
+			<?php
 		}
 		?>
 		</ol>
 	<?php } ?>
 
-<?php
+	<?php
 }
 
 
