@@ -18,20 +18,26 @@ cache:
 matrix:
   fast_finish: true
   include:
-    - php: 7.2
+    - php: 5.6
       env: SNIFF=1
     - php: 7.1
       env: WP_VERSION=latest
-    - php: 7.2
+    - php: 7.1
       env: WP_VERSION=latest WP_MULTISITE=1
+    - php: 7.0
+      env: WP_VERSION=latest
     - php: 5.6
       env: WP_VERSION=4.1
     - php: 5.6
       env: WP_VERSION=latest
+    - php: 5.6
+      env: WP_VERSION=trunk
+    - php: 5.6
+      env: WP_VERSION=latest WP_MULTISITE=1
 
   allow_failures:
     # Allow failures for unstable builds.
-    - php: 7.2
+    - php: nightly
     - env: WP_VERSION=master
     - env: SNIFF=1
 
@@ -42,14 +48,11 @@ before_script:
   - |
     if [[ ! -z "$WP_VERSION" ]] ; then
       bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
-
-	  if [[ ${TRAVIS_PHP_VERSION:0:2} == "7." ]]; then
-	    echo "Using latest PHPUnit 6.x branch"
-	    composer global require "phpunit/phpunit=^6"
-	  else
-	    echo "Using latest PHPUnit 4.x branch"
-	    composer global require "phpunit/phpunit=^4"
-	  fi
+      if [[ ${TRAVIS_PHP_VERSION:0:2} == "7." ]]; then
+        composer global require "phpunit/phpunit=5.7.*"
+      else
+        composer global require "phpunit/phpunit=4.8.*"
+      fi
     fi
   # Install WordPress Coding Standards.
   - if [[ "$SNIFF" == "1" ]]; then composer global require wp-coding-standards/wpcs; fi
