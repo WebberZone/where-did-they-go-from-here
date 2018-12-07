@@ -100,6 +100,10 @@ This function takes an array of options similar to the shortcode above.
 
 == Changelog ==
 
+= 2.2.0 =
+* Fixed:
+	* Fixed error message that was generated on activation
+
 = 2.1.0 =
 * Features:
 	* Updated admin page based on the Settings API

@@ -49,7 +49,7 @@ register_activation_hook( WHEREGO_PLUGIN_FILE, 'wherego_activation_hook' );
  */
 function wherego_single_activate() {
 
-	wherego_read_options();
+	wherego_get_settings();
 
 }
 
