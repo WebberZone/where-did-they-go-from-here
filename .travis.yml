@@ -63,7 +63,7 @@ before_script:
 script:
   - |
     if [[ ! -z "$WP_VERSION" ]] ; then
-      "$HOME/.config/composer/vendor/phpunit/phpunit/phpunit”
+      $HOME/.config/composer/vendor/phpunit/phpunit/phpunit
     fi
   - |
     if [[ "$SNIFF" == "1" ]] ; then
