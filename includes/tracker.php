@@ -38,7 +38,7 @@ function wherego_tracker_parser() {
 		// Now figure out the ID of the post the viewer came from.
 		$post_id_came_from = url_to_postid( $tempsitevar );
 
-		if ( '' !== $post_id_came_from && $id !== $post_id_came_from && '' !== $id ) {
+		if ( ! empty( $post_id_came_from ) && $id !== $post_id_came_from && ! empty( $id ) ) {
 
 			$linkpostids = get_post_meta( $post_id_came_from, 'wheredidtheycomefrom', true );
 
@@ -49,7 +49,7 @@ function wherego_tracker_parser() {
 			}
 
 			// Make sure we only keep max_links number of links.
-			if ( count( $linkpostids ) > $max_links ) {
+			if ( is_array( $linkpostids ) && count( $linkpostids ) > $max_links ) {
 				$linkpostids = array_slice( $linkpostids, 0, $max_links );
 			}
 
@@ -68,7 +68,7 @@ function wherego_tracker_parser() {
 			$str = __( 'Meta ID:', 'where-did-they-go-from-here' ) . $metastatus . ' - ' . $post_id_came_from;
 		}
 	} else {
-		$str = __( 'Error', 'where-did-they-go-from-here' ) . $post_id_came_from;
+		$str = __( 'Not tracked - ', 'where-did-they-go-from-here' ) . $post_id_came_from;
 	}
 
 	echo esc_html( $str );
@@ -90,7 +90,7 @@ function wherego_enqueue_scripts() {
 
 	if ( is_singular() ) {
 
-		wp_enqueue_script( 'wherego_tracker', plugins_url( 'includes/js/wherego_tracker.js', WHEREGO_PLUGIN_FILE ), array( 'jquery' ) );
+		wp_enqueue_script( 'wherego_tracker', plugins_url( 'includes/js/wherego_tracker.js', WHEREGO_PLUGIN_FILE ), array( 'jquery' ), '1.0', true );
 
 		wp_localize_script(
 			'wherego_tracker',
