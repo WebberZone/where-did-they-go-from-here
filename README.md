@@ -1,10 +1,10 @@
-[![Build Status](https://travis-ci.org/ajaydsouza/where-did-they-go-from-here.svg?branch=master)](https://travis-ci.org/ajaydsouza/where-did-they-go-from-here) [![Code Climate](https://codeclimate.com/github/ajaydsouza/where-did-they-go-from-here/badges/gpa.svg)](https://codeclimate.com/github/ajaydsouza/where-did-they-go-from-here) 
-
 # Where did they go from here
 
-__Requires:__ 4.0
+[![Build Status](https://travis-ci.org/ajaydsouza/where-did-they-go-from-here.svg?branch=master)](https://travis-ci.org/ajaydsouza/where-did-they-go-from-here) [![Code Climate](https://codeclimate.com/github/ajaydsouza/where-did-they-go-from-here/badges/gpa.svg)](https://codeclimate.com/github/ajaydsouza/where-did-they-go-from-here)
 
-__Tested up to:__ 4.8
+__Requires:__ 4.5
+
+__Tested up to:__ 5.0
 
 __License:__ [GPL-2.0+](http://www.gnu.org/licenses/gpl-2.0.html)
 
@@ -50,10 +50,9 @@ __If you're looking for a plugin that displays posts related to the content, loo
 
 2. Extract the contents of where-did-they-go-from-here.zip to wp-content/plugins/ folder. You should get a folder called where-did-they-go-from-here.
 
-3. Activate the Plugin in WP-Admin. 
+3. Activate the Plugin in WP-Admin.
 
 4. Goto **Settings &raquo; WZ Followed Posts** to configure
-
 
 ## Screenshots
 
@@ -61,7 +60,6 @@ __If you're looking for a plugin that displays posts related to the content, loo
 _Settings page - General Options._
 
 For more screenshots visit the [WordPress plugin page](http://wordpress.org/plugins/where-did-they-go-from-here/screenshots/)
-
 
 ## Frequently Asked Questions
 
