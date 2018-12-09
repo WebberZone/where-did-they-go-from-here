@@ -1,5 +1,5 @@
-=== Where did they go from here ===
-Tags: followed posts, related posts, visitors, tracking, similar posts, amazon, followed posts
+=== WebberZone Followed Posts (formerly Where did they go from here) ===
+Tags: followed posts, related posts, visitors, tracking, similar posts, where did they go from here
 Contributors: Ajay, webberzone
 Donate link: https://ajaydsouza.com/donate/
 Stable tag: trunk
@@ -36,7 +36,7 @@ __If you're looking for a plugin that displays posts related to the content, loo
 = WordPress install =
 1. Navigate to Plugins within your WordPress Admin Area
 
-2. Click "Add new" and in the search box enter "Where did they go from here"
+2. Click "Add new" and in the search box enter "WebberZone Followed Posts"
 
 3. Find the plugin in the list (usually the first result) and click "Install Now"
 
@@ -47,7 +47,7 @@ __If you're looking for a plugin that displays posts related to the content, loo
 
 3. Activate the Plugin in WP-Admin.
 
-4. Goto **Settings &raquo; WZ Followed Posts** to configure
+4. Goto **Settings &raquo; WebberZone Followed Posts** to configure
 
 
 == Screenshots ==

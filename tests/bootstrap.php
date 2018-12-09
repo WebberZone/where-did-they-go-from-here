@@ -28,7 +28,7 @@ echo dirname( dirname( __FILE__ ) ) . '/where-did-they-go-from-here.php';
 
 activate_plugin( 'where-did-they-go-from-here/where-did-they-go-from-here.php' );
 
-echo "Installing Where did they go from here...\n";
+echo "Installing WebberZone Followed Posts...\n";
 
 global  $wherego_settings, $current_user;
 $wherego_settings = wherego_get_settings();

@@ -1,6 +1,6 @@
 <?php
 /**
- * Where did they go from here.
+ * WebberZone Followed Posts.
  *
  * Display a list of posts that are visited from the custom post.
  *
@@ -11,10 +11,10 @@
  * @copyright 2008-2018 Ajay D'Souza
  *
  * @wordpress-plugin
- * Plugin Name: Where did they go from here
+ * Plugin Name: WebberZone Followed Posts
  * Plugin URI:  https://ajaydsouza.com/wordpress/plugins/where-did-they-go-from-here/
  * Description: The best way to display posts followed by users a.k.a. "Readers who viewed this page, also viewed" links
- * Version:     2.1.1-beta1
+ * Version:     2.2.0-beta1
  * Author:      Ajay D'Souza
  * Author URI:  https://ajaydsouza.com
  * License:     GPL-2.0+

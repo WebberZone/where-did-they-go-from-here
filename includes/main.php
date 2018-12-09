@@ -120,7 +120,7 @@ function get_wherego( $args = array() ) {
 			$output .= wherego_before_list_item( $args, $result );
 
 			/* translators: %s: Plugin URL. */
-			$output .= sprintf( __( 'Powered by <a href="%s" rel="nofollow">Where did they go from here</a>', 'where-did-they-go-from-here' ), esc_url( 'https://ajaydsouza.com/wordpress/plugins/where-did-they-go-from-here/' ) );
+			$output .= sprintf( __( 'Powered by <a href="%s" rel="nofollow">WebberZone Followed Posts</a>', 'where-did-they-go-from-here' ), esc_url( 'https://ajaydsouza.com/wordpress/plugins/where-did-they-go-from-here/' ) );
 
 			$output .= wherego_after_list_item( $args, $result );
 

@@ -142,7 +142,7 @@ msgid ""
 msgstr ""
 
 #: includes/modules/widget.php:26
-msgid "WZ Followed Posts"
+msgid "WebberZone Followed Posts"
 msgstr ""
 
 #: includes/modules/widget.php:28

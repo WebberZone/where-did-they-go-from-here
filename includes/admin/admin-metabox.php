@@ -18,7 +18,7 @@ function wherego_add_meta_box( $post_type, $post ) {
 
 		add_meta_box(
 			'wherego_metabox',
-			__( 'Where did they go from here', 'where-did-they-go-from-here' ),
+			__( 'WebberZone Followed Posts', 'where-did-they-go-from-here' ),
 			'wherego_call_meta_box',
 			$post_type,
 			'advanced',

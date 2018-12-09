@@ -23,7 +23,7 @@ class WhereGo_Widget extends WP_Widget {
 	public function __construct() {
 		parent::__construct(
 			'wherego_widget',
-			__( 'WZ Followed Posts', 'where-did-they-go-from-here' ),
+			__( 'WebberZone Followed Posts', 'where-did-they-go-from-here' ),
 			array(
 				'description'                 => __( 'Selective refreshable widget.', 'where-did-they-go-from-here' ),
 				'customize_selective_refresh' => true,
@@ -202,7 +202,7 @@ class WhereGo_Widget extends WP_Widget {
 		<?php
 
 		/**
-		 * Fires after Where did they go from here widget options.
+		 * Fires after WebberZone Followed Posts widget options.
 		 *
 		 * @since 2.0.0
 		 *

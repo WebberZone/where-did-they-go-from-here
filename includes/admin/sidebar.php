@@ -19,7 +19,7 @@
 			<input type="hidden" name="cmd" value="_xclick">
 			<input type="hidden" name="business" value="donate@ajaydsouza.com">
 			<input type="hidden" name="lc" value="IN">
-			<input type="hidden" name="item_name" value="<?php esc_html_e( 'Donation for Where did they go from here?', 'where-did-they-go-from-here' ); ?>">
+			<input type="hidden" name="item_name" value="<?php esc_html_e( 'Donation for WebberZone Followed Posts', 'where-did-they-go-from-here' ); ?>">
 			<input type="hidden" name="item_number" value="crp_plugin_settings">
 			<strong><?php esc_html_e( 'Enter amount in USD:', 'where-did-they-go-from-here' ); ?></strong> <input name="amount" value="10.00" size="6" type="text"><br />
 			<input type="hidden" name="currency_code" value="USD">
@@ -37,7 +37,7 @@
 	  <div class="inside">
 		  <div id="quick-links">
 			<ul>
-				<li><a href="https://ajaydsouza.com/wordpress/plugins/where-did-they-go-from-here/"><?php esc_html_e( 'Where did they go from here? plugin page', 'where-did-they-go-from-here' ); ?></a></li>
+				<li><a href="https://ajaydsouza.com/wordpress/plugins/where-did-they-go-from-here/"><?php esc_html_e( 'WebberZone Followed Posts plugin page', 'where-did-they-go-from-here' ); ?></a></li>
 				<li><a href="https://github.com/ajaydsouza/where-did-they-go-from-here"><?php esc_html_e( 'Plugin on GitHub', 'where-did-they-go-from-here' ); ?></a></li>
 				<li><a href="https://wordpress.org/plugins/where-did-they-go-from-here/faq/"><?php esc_html_e( 'FAQ', 'where-did-they-go-from-here' ); ?></a></li>
 				<li><a href="https://wordpress.org/support/plugin/where-did-they-go-from-here"><?php esc_html_e( 'Support', 'where-did-they-go-from-here' ); ?></a></li>

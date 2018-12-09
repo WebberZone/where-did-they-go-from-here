@@ -29,7 +29,7 @@ function wherego_options_page() {
 	ob_start();
 	?>
 	<div class="wrap">
-		<h1><?php esc_html_e( 'Where did they go from here? Settings', 'where-did-they-go-from-here' ); ?></h1>
+		<h1><?php esc_html_e( 'WebberZone Followed Posts (formerly Where did they go from here) Settings', 'where-did-they-go-from-here' ); ?></h1>
 
 		<div id="poststuff">
 		<div id="post-body" class="metabox-holder columns-2">

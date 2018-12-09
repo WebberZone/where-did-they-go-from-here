@@ -1,4 +1,4 @@
-# Where did they go from here
+# WebberZone Followed Posts
 
 [![Build Status](https://travis-ci.org/ajaydsouza/where-did-they-go-from-here.svg?branch=master)](https://travis-ci.org/ajaydsouza/where-did-they-go-from-here) [![Code Climate](https://codeclimate.com/github/ajaydsouza/where-did-they-go-from-here/badges/gpa.svg)](https://codeclimate.com/github/ajaydsouza/where-did-they-go-from-here)
 
@@ -40,7 +40,7 @@ __If you're looking for a plugin that displays posts related to the content, loo
 
 1. Navigate to Plugins within your WordPress Admin Area
 
-2. Click "Add new" and in the search box enter "Where did they go from here"
+2. Click "Add new" and in the search box enter "WebberZone Followed Posts"
 
 3. Find the plugin in the list (usually the first result) and click "Install Now"
 
@@ -52,7 +52,7 @@ __If you're looking for a plugin that displays posts related to the content, loo
 
 3. Activate the Plugin in WP-Admin.
 
-4. Goto **Settings &raquo; WZ Followed Posts** to configure
+4. Goto **Settings &raquo; WebberZone Followed Posts** to configure
 
 ## Screenshots
 
