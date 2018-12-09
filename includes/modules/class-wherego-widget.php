@@ -59,9 +59,9 @@ class WhereGo_Widget extends WP_Widget {
 		$thumb_height = ( isset( $instance['thumb_height'] ) && '' !== $instance['thumb_height'] ) ? intval( $instance['thumb_height'] ) : $wherego_settings['thumb_height'];
 		$thumb_width  = ( isset( $instance['thumb_width'] ) && '' !== $instance['thumb_width'] ) ? intval( $instance['thumb_width'] ) : $wherego_settings['thumb_width'];
 
-		// Start building the output now.
-		$output  = $args['before_widget'];
-		$output .= $args['before_title'] . $title . $args['after_title'];
+		$show_excerpt = isset( $instance['show_excerpt'] ) ? esc_attr( $instance['show_excerpt'] ) : '';
+		$show_author  = isset( $instance['show_author'] ) ? esc_attr( $instance['show_author'] ) : '';
+		$show_date    = isset( $instance['show_date'] ) ? esc_attr( $instance['show_date'] ) : '';
 
 		$arguments = array(
 			'is_widget'     => 1,
@@ -71,6 +71,9 @@ class WhereGo_Widget extends WP_Widget {
 			'post_thumb_op' => $post_thumb_op,
 			'thumb_height'  => $thumb_height,
 			'thumb_width'   => $thumb_width,
+			'show_excerpt'  => $show_excerpt,
+			'show_author'   => $show_author,
+			'show_date'     => $show_date,
 		);
 
 		/**
@@ -81,6 +84,10 @@ class WhereGo_Widget extends WP_Widget {
 		 * @param   array   $arguments  Widget options array
 		 */
 		$arguments = apply_filters( 'wherego_widget_options', $arguments );
+
+		// Start building the output now.
+		$output  = $args['before_widget'];
+		$output .= $args['before_title'] . $title . $args['after_title'];
 
 		$output .= get_wherego( $arguments );
 
@@ -103,6 +110,9 @@ class WhereGo_Widget extends WP_Widget {
 		$post_thumb_op = isset( $instance['post_thumb_op'] ) ? $instance['post_thumb_op'] : 'text_only';
 		$thumb_width   = isset( $instance['thumb_width'] ) ? $instance['thumb_width'] : '';
 		$thumb_height  = isset( $instance['thumb_height'] ) ? $instance['thumb_height'] : '';
+		$show_excerpt  = isset( $instance['show_excerpt'] ) ? esc_attr( $instance['show_excerpt'] ) : '';
+		$show_author   = isset( $instance['show_author'] ) ? esc_attr( $instance['show_author'] ) : '';
+		$show_date     = isset( $instance['show_date'] ) ? esc_attr( $instance['show_date'] ) : '';
 
 		?>
 
@@ -117,6 +127,24 @@ class WhereGo_Widget extends WP_Widget {
 		</p>
 
 		<p>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'show_excerpt' ) ); ?>">
+				<input id="<?php echo esc_attr( $this->get_field_id( 'show_excerpt' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'show_excerpt' ) ); ?>" type="checkbox" <?php checked( true, $show_excerpt, true ); ?> /> <?php esc_html_e( 'Show excerpt?', 'top-10' ); ?>
+			</label>
+		</p>
+
+		<p>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'show_author' ) ); ?>">
+				<input id="<?php echo esc_attr( $this->get_field_id( 'show_author' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'show_author' ) ); ?>" type="checkbox" <?php checked( true, $show_author, true ); ?> /> <?php esc_html_e( 'Show author?', 'top-10' ); ?>
+			</label>
+		</p>
+
+		<p>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'show_date' ) ); ?>">
+				<input id="<?php echo esc_attr( $this->get_field_id( 'show_date' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'show_date' ) ); ?>" type="checkbox" <?php checked( true, $show_date, true ); ?> /> <?php esc_html_e( 'Show date?', 'top-10' ); ?>
+			</label>
+		</p>
+
+		<p>
 			<?php esc_html_e( 'Thumbnail options', 'where-did-they-go-from-here' ); ?>: <br />
 			<select class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'post_thumb_op' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'post_thumb_op' ) ); ?>">
 				<option value="inline" <?php selected( $post_thumb_op, 'inline', 0 ); ?>><?php esc_html_e( 'Thumbnails before title', 'where-did-they-go-from-here' ); ?></option>
@@ -127,12 +155,12 @@ class WhereGo_Widget extends WP_Widget {
 		</p>
 
 		<p>
-			<label for="<?php echo esc_attr( $this->get_field_id( 'thumb_width' ) ); ?>"><?php esc_html_e( 'Thumb width', 'where-did-they-go-from-here' ); ?></label>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'thumb_width' ) ); ?>"><?php esc_html_e( 'Thumbnail width', 'where-did-they-go-from-here' ); ?></label>
 			<input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'thumb_width' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'thumb_width' ) ); ?>" type="text" value="<?php echo esc_attr( $thumb_width ); ?>">
 		</p>
 
 		<p>
-			<label for="<?php echo esc_attr( $this->get_field_id( 'thumb_height' ) ); ?>"><?php esc_html_e( 'Thumb height', 'where-did-they-go-from-here' ); ?></label>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'thumb_height' ) ); ?>"><?php esc_html_e( 'Thumbnail height', 'where-did-they-go-from-here' ); ?></label>
 			<input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'thumb_height' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'thumb_height' ) ); ?>" type="text" value="<?php echo esc_attr( $thumb_height ); ?>">
 		</p>
 
@@ -166,6 +194,9 @@ class WhereGo_Widget extends WP_Widget {
 		$instance['post_thumb_op'] = $new_instance['post_thumb_op'];
 		$instance['thumb_width']   = ( ! empty( $new_instance['thumb_width'] ) ) ? intval( $new_instance['thumb_width'] ) : '';
 		$instance['thumb_height']  = ( ! empty( $new_instance['thumb_height'] ) ) ? intval( $new_instance['thumb_height'] ) : '';
+		$instance['show_excerpt']  = isset( $new_instance['show_excerpt'] ) ? true : false;
+		$instance['show_author']   = isset( $new_instance['show_author'] ) ? true : false;
+		$instance['show_date']     = isset( $new_instance['show_date'] ) ? true : false;
 
 		/**
 		 * Filters Update widget options array.

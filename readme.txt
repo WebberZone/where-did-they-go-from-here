@@ -102,7 +102,8 @@ This function takes an array of options similar to the shortcode above.
 
 = 2.2.0 =
 * Features:
-	* New options to show author and date in the list
+	* New options to show author and date in the list. Find it under *Output* tab
+	* New options in widget to show author, excerpt and date
 
 * Fixed:
 	* Fixed error message that was generated on activation
