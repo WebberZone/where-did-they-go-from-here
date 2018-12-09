@@ -218,13 +218,13 @@ function wherego_title( $args, $result ) {
 function wherego_author( $args, $result ) {
 
 	$author_info = get_userdata( $result->post_author );
-	$author_link = get_author_posts_url( $author_info->ID );
-	$author_name = ucwords( trim( stripslashes( $author_info->display_name ) ) );
+	$author_link = ( false === $author_info ) ? '' : get_author_posts_url( $author_info->ID );
+	$author_name = ( false === $author_info ) ? '' : ucwords( trim( stripslashes( $author_info->display_name ) ) );
 
 	/**
 	 * Filter the author name.
 	 *
-	 * @since   2.0.0.1
+	 * @since   2.0.1
 	 *
 	 * @param   string  $author_name    Proper name of the post author.
 	 * @param   object  $author_info    WP_User object of the post author
@@ -244,6 +244,34 @@ function wherego_author( $args, $result ) {
 	 * @param   array   $args   Array of arguments
 	 */
 	return apply_filters( 'wherego_author', $wherego_author, $author_info, $result, $args );
+
+}
+
+
+/**
+ * Returns the date of each list item.
+ *
+ * @since   2.2.0
+ *
+ * @param   array  $args   Array of arguments.
+ * @param   object $result Object of the current post result.
+ * @return  string  Space separated list of link attributes
+ */
+function wherego_date( $args, $result ) {
+
+	$wherego_date = mysql2date( get_option( 'date_format', 'd/m/y' ), $result->post_date );
+
+	/**
+	 * Filter the text with the author details.
+	 *
+	 * @since   2.2.0
+	 *
+	 * @param   string  $wherego_date Formatted string with author details and link
+	 * @param   object  $author_info    WP_User object of the post author
+	 * @param   object  $result Object of the current post result
+	 * @param   array   $args   Array of arguments
+	 */
+	return apply_filters( 'wherego_date', $wherego_date, $result, $args );
 
 }
 

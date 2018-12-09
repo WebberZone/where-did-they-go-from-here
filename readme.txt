@@ -101,6 +101,9 @@ This function takes an array of options similar to the shortcode above.
 == Changelog ==
 
 = 2.2.0 =
+* Features:
+	* New options to show author and date in the list
+
 * Fixed:
 	* Fixed error message that was generated on activation
 	* Errors in tracker under PHP 7.2

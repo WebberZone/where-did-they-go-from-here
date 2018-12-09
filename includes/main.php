@@ -33,7 +33,7 @@ function get_wherego( $args = array() ) {
 	// If post_types is empty or contains a query string then use parse_str else consider it comma-separated.
 	if ( ! empty( $args['post_types'] ) && false === strpos( $args['post_types'], '=' ) ) {
 		$post_types = explode( ',', $args['post_types'] );
-	} else {
+	} elseif ( ! empty( $args['post_types'] ) ) {
 		parse_str( $args['post_types'], $post_types );
 	}
 
@@ -94,6 +94,14 @@ function get_wherego( $args = array() ) {
 
 				$output .= wherego_list_link( $args, $result );
 
+				if ( $args['show_author'] ) {
+					$output .= wherego_author( $args, $result );
+				}
+
+				if ( $args['show_date'] ) {
+					$output .= '<span class="wherego_date"> ' . wherego_date( $args, $result ) . '</span> ';
+				}
+
 				if ( isset( $args['show_excerpt'] ) && $args['show_excerpt'] ) {
 					$output .= '<span class="wherego_excerpt"> ' . wherego_excerpt( $result->ID, $args['excerpt_length'] ) . '</span>';
 				}
@@ -105,7 +113,7 @@ function get_wherego( $args = array() ) {
 			if ( $loop_counter === (int) $args['limit'] ) {
 				break;  // End loop when related posts limit is reached.
 			}
-		} // End foreach().
+		} // End foreach.
 		if ( isset( $args['show_credit'] ) && $args['show_credit'] ) {
 			$output .= wherego_before_list_item( $args, $result );
 
@@ -119,7 +127,7 @@ function get_wherego( $args = array() ) {
 
 	} else {
 		$output .= ( $args['blank_output'] ) ? ' ' : '<p>' . $args['blank_output_text'] . '</p>';
-	}// End if().
+	}// End if.
 
 	// Check if the opening list tag is missing in the output, it means all of our results were eliminated cause of the category filter.
 	if ( false === ( strpos( $output, $args['before_list_item'] ) ) ) {
