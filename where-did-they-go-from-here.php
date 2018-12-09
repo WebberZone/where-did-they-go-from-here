@@ -105,6 +105,7 @@ function wherego_get_settings() {
  *----------------------------------------------------------------------------
  */
 
+require_once WHEREGO_PLUGIN_DIR . 'includes/admin/default-settings.php';
 require_once WHEREGO_PLUGIN_DIR . 'includes/admin/register-settings.php';
 require_once WHEREGO_PLUGIN_DIR . 'includes/i18n.php';
 require_once WHEREGO_PLUGIN_DIR . 'includes/activate-deactivate.php';
@@ -122,7 +123,7 @@ require_once WHEREGO_PLUGIN_DIR . 'includes/deprecated.php';
  */
 
 require_once WHEREGO_PLUGIN_DIR . 'includes/modules/shortcode.php';
-require_once WHEREGO_PLUGIN_DIR . 'includes/modules/widget.php';
+require_once WHEREGO_PLUGIN_DIR . 'includes/modules/class-wherego-widget.php';
 
 
 /*

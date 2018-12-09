@@ -47,7 +47,7 @@ class WhereGo_Widget extends WP_Widget {
 			return;
 		}
 
-		$title = apply_filters( 'widget_title', empty( $instance['title'] ) ? strip_tags( $wherego_settings['title'] ) : $instance['title'] );
+		$title = apply_filters( 'widget_title', empty( $instance['title'] ) ? wp_strip_all_tags( $wherego_settings['title'] ) : $instance['title'] );
 
 		$limit = isset( $instance['limit'] ) ? $instance['limit'] : $wherego_settings['limit'];
 		if ( empty( $limit ) ) {
@@ -159,8 +159,9 @@ class WhereGo_Widget extends WP_Widget {
 	 * @return array Updated safe values to be saved.
 	 */
 	public function update( $new_instance, $old_instance ) {
+		$instance                  = $old_instance;
 		$instance                  = array();
-		$instance['title']         = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
+		$instance['title']         = ( ! empty( $new_instance['title'] ) ) ? wp_strip_all_tags( $new_instance['title'] ) : '';
 		$instance['limit']         = ( ! empty( $new_instance['limit'] ) ) ? intval( $new_instance['limit'] ) : '';
 		$instance['post_thumb_op'] = $new_instance['post_thumb_op'];
 		$instance['thumb_width']   = ( ! empty( $new_instance['thumb_width'] ) ) ? intval( $new_instance['thumb_width'] ) : '';
