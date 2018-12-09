@@ -1,7 +1,7 @@
 === Where did they go from here ===
 Tags: followed posts, related posts, visitors, tracking, similar posts, amazon, followed posts
 Contributors: Ajay, webberzone
-Donate link: http://ajaydsouza.com/donate/
+Donate link: https://ajaydsouza.com/donate/
 Stable tag: trunk
 Requires at least: 4.5
 Tested up to: 5.0

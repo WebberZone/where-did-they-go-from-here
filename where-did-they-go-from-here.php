@@ -12,13 +12,13 @@
  *
  * @wordpress-plugin
  * Plugin Name: Where did they go from here
- * Plugin URI:  http://ajaydsouza.com/wordpress/plugins/where-did-they-go-from-here/
+ * Plugin URI:  https://ajaydsouza.com/wordpress/plugins/where-did-they-go-from-here/
  * Description: The best way to display posts followed by users a.k.a. "Readers who viewed this page, also viewed" links
  * Version:     2.1.1-beta1
  * Author:      Ajay D'Souza
  * Author URI:  https://ajaydsouza.com
  * License:     GPL-2.0+
- * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
+ * License URI: https://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain: where-did-they-go-from-here
  * Domain Path: /languages
  * GitHub Plugin URI: https://github.com/ajaydsouza/where-did-they-go-from-here/

@@ -220,7 +220,7 @@ function wherego_plugin_row_meta( $links, $file ) {
 	if ( plugin_basename( WHEREGO_PLUGIN_FILE ) === $file ) {
 
 		$new_links = array(
-			'support'    => '<a href = "http://wordpress.org/support/plugin/where-did-they-go-from-here">' . esc_html__( 'Support', 'where-did-they-go-from-here' ) . '</a>',
+			'support'    => '<a href = "https://wordpress.org/support/plugin/where-did-they-go-from-here">' . esc_html__( 'Support', 'where-did-they-go-from-here' ) . '</a>',
 			'donate'     => '<a href = "https://ajaydsouza.com/donate/">' . esc_html__( 'Donate', 'where-did-they-go-from-here' ) . '</a>',
 			'contribute' => '<a href = "https://github.com/ajaydsouza/where-did-they-go-from-here">' . esc_html__( 'Contribute', 'where-did-they-go-from-here' ) . '</a>',
 		);

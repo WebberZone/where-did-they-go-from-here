@@ -6,7 +6,7 @@ __Requires:__ 4.5
 
 __Tested up to:__ 5.0
 
-__License:__ [GPL-2.0+](http://www.gnu.org/licenses/gpl-2.0.html)
+__License:__ [GPL-2.0+](https://www.gnu.org/licenses/gpl-2.0.html)
 
 __Plugin page:__ [Homepage](https://ajaydsouza.com/wordpress/plugins/where-did-they-go-from-here/) | [WordPress.org](https://wordpress.org/plugins/where-did-they-go-from-here)
 
@@ -59,7 +59,7 @@ __If you're looking for a plugin that displays posts related to the content, loo
 ![General Options](https://raw.github.com/ajaydsouza/where-did-they-go-from-here/master/wporg-assets/screenshot-1.png)
 _Settings page - General Options._
 
-For more screenshots visit the [WordPress plugin page](http://wordpress.org/plugins/where-did-they-go-from-here/screenshots/)
+For more screenshots visit the [WordPress plugin page](https://wordpress.org/plugins/where-did-they-go-from-here/screenshots/)
 
 ## Frequently Asked Questions
 
