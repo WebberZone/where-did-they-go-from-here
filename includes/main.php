@@ -31,10 +31,12 @@ function get_wherego( $args = array() ) {
 	$exclude_categories = array_map( 'intval', explode( ',', $args['exclude_categories'] ) );       // Extract categories to exclude.
 
 	// If post_types is empty or contains a query string then use parse_str else consider it comma-separated.
-	if ( ! empty( $args['post_types'] ) && false === strpos( $args['post_types'], '=' ) ) {
+	if ( ! empty( $args['post_types'] ) && is_array( $args['post_types'] ) ) {
+		$post_types = $args['post_types'];
+	} elseif ( ! empty( $args['post_types'] ) && false === strpos( $args['post_types'], '=' ) ) {
 		$post_types = explode( ',', $args['post_types'] );
-	} elseif ( ! empty( $args['post_types'] ) ) {
-		parse_str( $args['post_types'], $post_types );
+	} else {
+		parse_str( $args['post_types'], $post_types );  // Save post types in $post_types variable.
 	}
 
 	$results = get_post_meta( $post->ID, 'wheredidtheycomefrom', true );    // Extract posts list from the meta field.

@@ -62,6 +62,7 @@ class WhereGo_Widget extends WP_Widget {
 		$show_excerpt = isset( $instance['show_excerpt'] ) ? esc_attr( $instance['show_excerpt'] ) : '';
 		$show_author  = isset( $instance['show_author'] ) ? esc_attr( $instance['show_author'] ) : '';
 		$show_date    = isset( $instance['show_date'] ) ? esc_attr( $instance['show_date'] ) : '';
+		$post_types   = ! empty( $instance['post_types'] ) ? $instance['post_types'] : wherego_get_option( 'post_types' );
 
 		$arguments = array(
 			'is_widget'     => 1,
@@ -74,6 +75,7 @@ class WhereGo_Widget extends WP_Widget {
 			'show_excerpt'  => $show_excerpt,
 			'show_author'   => $show_author,
 			'show_date'     => $show_date,
+			'post_types'    => $post_types,
 		);
 
 		/**
@@ -114,6 +116,26 @@ class WhereGo_Widget extends WP_Widget {
 		$show_author   = isset( $instance['show_author'] ) ? esc_attr( $instance['show_author'] ) : '';
 		$show_date     = isset( $instance['show_date'] ) ? esc_attr( $instance['show_date'] ) : '';
 
+		// Parse the Post types.
+		$post_types = array();
+		if ( isset( $instance['post_types'] ) ) {
+			$post_types = $instance['post_types'];
+
+			// If post_types is empty or contains a query string then use parse_str else consider it comma-separated.
+			if ( false === strpos( $post_types, '=' ) ) {
+				$post_types = explode( ',', $post_types );
+			} else {
+				parse_str( $post_types, $post_types );
+			}
+
+		}
+		$wp_post_types   = get_post_types(
+			array(
+				'public' => true,
+			)
+		);
+		$posts_types_inc = array_intersect( $wp_post_types, $post_types );
+
 		?>
 
 		<p>
@@ -128,19 +150,19 @@ class WhereGo_Widget extends WP_Widget {
 
 		<p>
 			<label for="<?php echo esc_attr( $this->get_field_id( 'show_excerpt' ) ); ?>">
-				<input id="<?php echo esc_attr( $this->get_field_id( 'show_excerpt' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'show_excerpt' ) ); ?>" type="checkbox" <?php checked( true, $show_excerpt, true ); ?> /> <?php esc_html_e( 'Show excerpt?', 'top-10' ); ?>
+				<input id="<?php echo esc_attr( $this->get_field_id( 'show_excerpt' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'show_excerpt' ) ); ?>" type="checkbox" <?php checked( true, $show_excerpt, true ); ?> /> <?php esc_html_e( 'Show excerpt?', 'where-did-they-go-from-here' ); ?>
 			</label>
 		</p>
 
 		<p>
 			<label for="<?php echo esc_attr( $this->get_field_id( 'show_author' ) ); ?>">
-				<input id="<?php echo esc_attr( $this->get_field_id( 'show_author' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'show_author' ) ); ?>" type="checkbox" <?php checked( true, $show_author, true ); ?> /> <?php esc_html_e( 'Show author?', 'top-10' ); ?>
+				<input id="<?php echo esc_attr( $this->get_field_id( 'show_author' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'show_author' ) ); ?>" type="checkbox" <?php checked( true, $show_author, true ); ?> /> <?php esc_html_e( 'Show author?', 'where-did-they-go-from-here' ); ?>
 			</label>
 		</p>
 
 		<p>
 			<label for="<?php echo esc_attr( $this->get_field_id( 'show_date' ) ); ?>">
-				<input id="<?php echo esc_attr( $this->get_field_id( 'show_date' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'show_date' ) ); ?>" type="checkbox" <?php checked( true, $show_date, true ); ?> /> <?php esc_html_e( 'Show date?', 'top-10' ); ?>
+				<input id="<?php echo esc_attr( $this->get_field_id( 'show_date' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'show_date' ) ); ?>" type="checkbox" <?php checked( true, $show_date, true ); ?> /> <?php esc_html_e( 'Show date?', 'where-did-they-go-from-here' ); ?>
 			</label>
 		</p>
 
@@ -162,6 +184,19 @@ class WhereGo_Widget extends WP_Widget {
 		<p>
 			<label for="<?php echo esc_attr( $this->get_field_id( 'thumb_height' ) ); ?>"><?php esc_html_e( 'Thumbnail height', 'where-did-they-go-from-here' ); ?></label>
 			<input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'thumb_height' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'thumb_height' ) ); ?>" type="text" value="<?php echo esc_attr( $thumb_height ); ?>">
+		</p>
+
+		<p><?php esc_html_e( 'Post types to include', 'where-did-they-go-from-here' ); ?><br />
+
+			<?php foreach ( $wp_post_types as $wp_post_type ) { ?>
+
+				<label>
+					<input id="<?php echo esc_attr( $this->get_field_id( 'post_types' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'post_types' ) ); ?>[]" type="checkbox" value="<?php echo esc_attr( $wp_post_type ); ?>" <?php checked( true, in_array( $wp_post_type, $posts_types_inc, true ), true ); ?> />
+					<?php echo esc_attr( $wp_post_type ); ?>
+				</label>
+				<br />
+
+			<?php } ?>
 		</p>
 
 		<?php
@@ -197,6 +232,16 @@ class WhereGo_Widget extends WP_Widget {
 		$instance['show_excerpt']  = isset( $new_instance['show_excerpt'] ) ? true : false;
 		$instance['show_author']   = isset( $new_instance['show_author'] ) ? true : false;
 		$instance['show_date']     = isset( $new_instance['show_date'] ) ? true : false;
+
+		// Process post types to be selected.
+		$wp_post_types          = get_post_types(
+			array(
+				'public' => true,
+			)
+		);
+		$post_types             = ( isset( $new_instance['post_types'] ) ) ? $new_instance['post_types'] : array();
+		$post_types             = array_intersect( $wp_post_types, $post_types );
+		$instance['post_types'] = implode( ',', $post_types );
 
 		/**
 		 * Filters Update widget options array.
