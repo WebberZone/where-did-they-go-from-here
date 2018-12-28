@@ -25,7 +25,7 @@ function wherego_excerpt( $id, $excerpt_length = 0, $use_excerpt = true ) {
 		$content = get_post( $id )->post_content;
 	}
 
-	$output = strip_tags( strip_shortcodes( $content ) );
+	$output = wp_strip_all_tags( strip_shortcodes( $content ) );
 
 	if ( $excerpt_length > 0 ) {
 		$output = wp_trim_words( $output, $excerpt_length );
@@ -44,7 +44,7 @@ function wherego_excerpt( $id, $excerpt_length = 0, $use_excerpt = true ) {
  * @return string Formatted content
  */
 function wherego_max_formatted_content( $content, $max_length = -1 ) {
-	$content = strip_tags( $content );  // Remove CRLFs, leaving space in their wake.
+	$content = wp_strip_all_tags( $content );  // Remove CRLFs, leaving space in their wake.
 
 	if ( ( $max_length > 0 ) && ( strlen( $content ) > $max_length ) ) {
 		$all_words = preg_split( '/[\s]+/', substr( $content, 0, $max_length ) );
