@@ -94,7 +94,7 @@ function wherego_read_options() {
  * Default Options.
  *
  * @since 1.0
- & @deprecated 2.1.0
+ * @deprecated 2.1.0
  *
  * @return array Default settings.
  */

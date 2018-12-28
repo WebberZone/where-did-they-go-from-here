@@ -202,7 +202,7 @@ function wherego_register_settings() {
 				$args
 			);
 		}
-	}// End foreach().
+	}// End foreach.
 
 	// Register the settings into the options table.
 	register_setting( 'wherego_settings', 'wherego_settings', 'wherego_settings_sanitize' );

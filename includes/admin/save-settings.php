@@ -31,17 +31,17 @@ function wherego_settings_sanitize( $input = array() ) {
 	global $wherego_settings;
 
 	// This should be set if a form is submitted, so let's save it in the $referrer variable.
-	if ( empty( $_POST['_wp_http_referer'] ) ) {
+	if ( empty( $_POST['_wp_http_referer'] ) ) { // WPCS: CSRF ok.
 		return $input;
 	}
 
-	parse_str( sanitize_text_field( wp_unslash( $_POST['_wp_http_referer'] ) ), $referrer ); // Input var okay.
+	parse_str( sanitize_text_field( wp_unslash( $_POST['_wp_http_referer'] ) ), $referrer ); // WPCS: CSRF ok.
 
 	// Get the various settings we've registered.
 	$settings = wherego_get_registered_settings();
 
 	// Check if we need to set to defaults.
-	$reset = isset( $_POST['settings_reset'] );
+	$reset = isset( $_POST['settings_reset'] ); // WPCS: CSRF ok.
 
 	if ( $reset ) {
 		wherego_settings_reset();

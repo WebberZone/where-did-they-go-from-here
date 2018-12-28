@@ -71,7 +71,7 @@ function wherego_get_the_post_thumbnail( $args = array() ) {
 		if ( $postimage ) {
 			$postimage_id = wherego_get_attachment_id_from_url( $postimage );
 
-			if ( false != wp_get_attachment_image_src( $postimage_id, array( $args['thumb_width'], $args['thumb_height'] ) ) ) {
+			if ( false !== wp_get_attachment_image_src( $postimage_id, array( $args['thumb_width'], $args['thumb_height'] ) ) ) {
 				$postthumb = wp_get_attachment_image_src( $postimage_id, array( $args['thumb_width'], $args['thumb_height'] ) );
 				$postimage = $postthumb[0];
 			}
@@ -81,7 +81,7 @@ function wherego_get_the_post_thumbnail( $args = array() ) {
 
 	// If there is no thumbnail found, check the post thumbnail.
 	if ( ! $postimage ) {
-		if ( false != get_post_thumbnail_id( $result->ID ) ) {
+		if ( ! empty( get_post_thumbnail_id( $result->ID ) ) ) {
 			$postthumb = wp_get_attachment_image_src( get_post_thumbnail_id( $result->ID ), array( $args['thumb_width'], $args['thumb_height'] ) );
 			$postimage = $postthumb[0];
 		}
@@ -98,7 +98,7 @@ function wherego_get_the_post_thumbnail( $args = array() ) {
 		if ( $postimage ) {
 			$postimage_id = wherego_get_attachment_id_from_url( $postimage );
 
-			if ( false != wp_get_attachment_image_src( $postimage_id, array( $args['thumb_width'], $args['thumb_height'] ) ) ) {
+			if ( false !== wp_get_attachment_image_src( $postimage_id, array( $args['thumb_width'], $args['thumb_height'] ) ) ) {
 				$postthumb = wp_get_attachment_image_src( $postimage_id, array( $args['thumb_width'], $args['thumb_height'] ) );
 				$postimage = $postthumb[0];
 			}
@@ -165,9 +165,9 @@ function wherego_get_the_post_thumbnail( $args = array() ) {
 			$postimage = preg_replace( '~http://~', 'https://', $postimage );
 		}
 
-		if ( 'css' == $args['thumb_html'] ) {
+		if ( 'css' === $args['thumb_html'] ) {
 			$thumb_html = 'style="max-width:' . $args['thumb_width'] . 'px;max-height:' . $args['thumb_height'] . 'px;"';
-		} elseif ( 'html' == $args['thumb_html'] ) {
+		} elseif ( 'html' === $args['thumb_html'] ) {
 			$thumb_html = 'width="' . $args['thumb_width'] . '" height="' . $args['thumb_height'] . '"';
 		} else {
 			$thumb_html = '';
@@ -194,7 +194,7 @@ function wherego_get_the_post_thumbnail( $args = array() ) {
 		$class = apply_filters( 'wherego_thumb_class', $class );
 
 		$output .= '<img src="' . $postimage . '" alt="' . $post_title . '" title="' . $post_title . '" ' . $thumb_html . ' class="' . $class . '" />';
-	}// End if().
+	}// End if.
 
 	/**
 	 * Filters post thumbnail created for Top 10.
@@ -253,7 +253,7 @@ function wherego_get_attachment_id_from_url( $attachment_url = '' ) {
 	$attachment_id = false;
 
 	// If there is no url, return.
-	if ( '' == $attachment_url ) {
+	if ( '' === $attachment_url ) {
 		return;
 	}
 
@@ -270,7 +270,7 @@ function wherego_get_attachment_id_from_url( $attachment_url = '' ) {
 		$attachment_url = str_replace( $upload_dir_paths['baseurl'] . '/', '', $attachment_url );
 
 		// Finally, run a custom database query to get the attachment ID from the modified attachment URL.
-		$attachment_id = $wpdb->get_var( $wpdb->prepare( "SELECT wposts.ID FROM $wpdb->posts wposts, $wpdb->postmeta wpostmeta WHERE wposts.ID = wpostmeta.post_id AND wpostmeta.meta_key = '_wp_attached_file' AND wpostmeta.meta_value = '%s' AND wposts.post_type = 'attachment'", $attachment_url ) );
+		$attachment_id = $wpdb->get_var( $wpdb->prepare( "SELECT wposts.ID FROM $wpdb->posts wposts, $wpdb->postmeta wpostmeta WHERE wposts.ID = wpostmeta.post_id AND wpostmeta.meta_key = '_wp_attached_file' AND wpostmeta.meta_value = %s AND wposts.post_type = 'attachment'", $attachment_url ) );
 
 	}
 
@@ -304,12 +304,12 @@ function wherego_get_thumb_size( $args ) {
 		$thumb_height = $wherego_thumb_size['height'];
 	}
 
-	if ( empty( $thumb_width ) || ( $args['is_widget'] && $thumb_width != $args['thumb_width'] ) ) {
+	if ( empty( $thumb_width ) || ( $args['is_widget'] && $thumb_width != $args['thumb_width'] ) ) { // WPCS: loose comparison ok.
 		$thumb_width        = $args['thumb_width'];
 		$args['thumb_html'] = 'css';
 	}
 
-	if ( empty( $thumb_height ) || ( $args['is_widget'] && $thumb_height != $args['thumb_height'] ) ) {
+	if ( empty( $thumb_height ) || ( $args['is_widget'] && $thumb_height != $args['thumb_height'] ) ) { // WPCS: loose comparison ok.
 		$thumb_height       = $args['thumb_height'];
 		$args['thumb_html'] = 'css';
 	}

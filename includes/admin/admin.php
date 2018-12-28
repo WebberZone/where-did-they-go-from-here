@@ -98,7 +98,7 @@ function wherego_adminhead() {
 							$.ajax({
 								type: 'POST',
 								dataType: 'json',
-								url: '<?php echo admin_url( 'admin-ajax.php' ); ?>',
+								url: '<?php echo admin_url( 'admin-ajax.php' ); // WPCS: XSS ok. ?>',
 								data: {
 									action: 'wherego_tag_search',
 									tax: taxonomy,

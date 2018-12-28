@@ -24,7 +24,7 @@ if ( ! defined( 'WPINC' ) ) {
  * @return void
  */
 function wherego_options_page() {
-	$active_tab = isset( $_GET['tab'] ) && array_key_exists( sanitize_key( wp_unslash( $_GET['tab'] ) ), wherego_get_settings_sections() ) ? sanitize_key( wp_unslash( $_GET['tab'] ) ) : 'general'; // Input var okay.
+	$active_tab = isset( $_GET['tab'] ) && array_key_exists( sanitize_key( wp_unslash( $_GET['tab'] ) ), wherego_get_settings_sections() ) ? sanitize_key( wp_unslash( $_GET['tab'] ) ) : 'general'; // WPCS: CSRF ok.
 
 	ob_start();
 	?>
@@ -511,7 +511,7 @@ function wherego_posttypes_callback( $args ) {
  */
 function wherego_tags_search() {
 
-	if ( ! isset( $_REQUEST['tax'] ) ) {
+	if ( ! isset( $_REQUEST['tax'] ) ) { // WPCS: CSRF ok.
 		wp_die( 0 );
 	}
 
@@ -525,7 +525,7 @@ function wherego_tags_search() {
 		wp_die( -1 );
 	}
 
-	$s = wp_unslash( $_REQUEST['q'] );
+	$s = wp_unslash( $_REQUEST['q'] ); // WPCS: CSRF ok.
 
 	$comma = _x( ',', 'tag delimiter' );
 	if ( ',' !== $comma ) {

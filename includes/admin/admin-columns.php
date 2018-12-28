@@ -64,7 +64,7 @@ function wherego_value( $column_name, $post_id ) {
 			$output = __( 'None', 'where-did-they-go-from-here' );
 		}
 
-		echo $output;
+		echo $output; // WPCS: XSS ok.
 	}
 }
 add_action( 'manage_posts_custom_column', 'wherego_value', 10, 2 );
