@@ -99,7 +99,7 @@ function wherego_enqueue_scripts() {
 				'ajax_url'        => admin_url( 'admin-ajax.php' ),
 				'wherego_nonce'   => wp_create_nonce( 'wherego-tracker-nonce' ),
 				'wherego_id'      => $post->ID,
-				'wherego_sitevar' => isset( $_SERVER['HTTP_REFERER'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_REFERER'] ) ) : '',
+				'wherego_sitevar' => wherego_get_referer(),
 				'wherego_rnd'     => wp_rand( 1, time() ),
 			)
 		);
@@ -108,3 +108,22 @@ function wherego_enqueue_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'wherego_enqueue_scripts' );
 
+/**
+ * Get the referer.
+ *
+ * @since 2.2.0
+ *
+ * @return string WZ Followed Posts referer
+ */
+function wherego_get_referer() {
+	$referer = isset( $_SERVER['HTTP_REFERER'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_REFERER'] ) ) : '';
+
+	/**
+	 * Referer filter: This allows us to manipulate and trick the plugin for custom tracking.
+	 *
+	 * @since 2.2.0
+	 *
+	 * @param string $referer WZ Followed Posts referer.
+	 */
+	return apply_filters( 'wherego_get_referer', $referer );
+}

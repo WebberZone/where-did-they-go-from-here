@@ -106,6 +106,7 @@ Where did they go from here has now been renamed to WebberZone Followed Posts
 * Features:
 	* New options to show author and date in the list. Find it under *Output* tab
 	* New options in widget to show author, excerpt, date and post types
+	* New function `wherego_get_referer()` alongwith its corresponding filter
 
 * Fixed:
 	* Fixed error message that was generated on activation
