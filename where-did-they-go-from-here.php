@@ -5,23 +5,23 @@
  * Display a list of posts that are visited from the custom post.
  *
  * @package   WHEREGO
- * @author    Ajay D'Souza <me@ajaydsouza.com>
+ * @author    Ajay D'Souza
  * @license   GPL-2.0+
- * @link      https://ajaydsouza.com
+ * @link      https://webberzone.com
  * @copyright 2008-2018 Ajay D'Souza
  *
  * @wordpress-plugin
  * Plugin Name: WebberZone Followed Posts
- * Plugin URI:  https://ajaydsouza.com/wordpress/plugins/where-did-they-go-from-here/
+ * Plugin URI:  https://webberzone.com/plugins/webberzone-followed-posts/
  * Description: The best way to display posts followed by users a.k.a. "Readers who viewed this page, also viewed" links
  * Version:     2.2.0-beta1
  * Author:      Ajay D'Souza
- * Author URI:  https://ajaydsouza.com
+ * Author URI:  https://webberzone.com
  * License:     GPL-2.0+
  * License URI: https://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain: where-did-they-go-from-here
  * Domain Path: /languages
- * GitHub Plugin URI: https://github.com/ajaydsouza/where-did-they-go-from-here/
+ * GitHub Plugin URI: https://github.com/WebberZone/where-did-they-go-from-here/
  */
 
 // If this file is called directly, abort.

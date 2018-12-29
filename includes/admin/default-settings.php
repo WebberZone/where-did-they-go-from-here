@@ -2,7 +2,7 @@
 /**
  * Default settings.
  *
- * @link  https://ajaydsouza.com
+ * @link  https://webberzone.com
  * @since 2.2.0
  *
  * @package WHEREGO

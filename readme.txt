@@ -13,7 +13,7 @@ Show "Readers who viewed this page, also viewed" a.k.a. followed posts on your p
 
 Have you seen Amazon.com's product pages? Amazon is a great example of visitor retention through recommendations. All of Amazon's pages have a "Customers who viewed this also viewed". And how many times have you clicked those links? I know I have!
 
-Now you can implement the same feature on your WordPress blog. **Where did you go from here** let's you show "Readers who viewed this page, also viewed" links on your page.
+Now you can implement the same feature on your WordPress blog. **WebberZone Followed Posts** let's you show "Readers who viewed this page, also viewed" links on your page.
 
 The plugin tracks the pages, posts and custom post types that visitors click through from the current post. You can then display these followed posts automatically at the bottom of your posts, using a shortcode or via the inbuilt widget.
 
@@ -23,7 +23,7 @@ __If you're looking for a plugin that displays posts related to the content, loo
 * **Automatic**: The plugin will start displaying visited posts on your site and feed automatically after the content when you activate the plugin
 * **Shortcode**: Use `[wherego]` to display the followed posts
 * **Widget**: Find the __Followed posts__ widget to display the posts in your theme's sidebar
-* **Manual install**: Want more control over placement? Check the [FAQ](https://wordpress.org/extend/plugins/where-did-they-go-from-here/faq/) on which functions are available for manual install
+* **Manual install**: Want more control over placement? Check the [FAQ](https://wordpress.org/plugins/where-did-they-go-from-here/#faq) on which functions are available for manual install
 * **Exclusions**: Exclude select posts and pages from the list of posts. Exclude posts from select categories from the list of posts
 * **Supports all post types**: The visited posts list lets you include posts, pages, attachments or any other custom post type!
 * **Styles**: The output is wrapped in CSS classes which allows you to easily style the list. You can enter your custom CSS styles from within WordPress Admin area
@@ -63,9 +63,9 @@ __If you're looking for a plugin that displays posts related to the content, loo
 
 == Frequently Asked Questions ==
 
-Check out the [FAQ on the plugin page](https://wordpress.org/plugins/where-did-they-go-from-here/faq/) for a detailed list of questions and answers.
+Check out the [FAQ on the plugin page](https://wordpress.org/plugins/where-did-they-go-from-here/#faq) for a detailed list of questions and answers.
 
-If your question isn't listed there, please create a new post in the [WordPress.org support forum](https://wordpress.org/support/plugin/where-did-they-go-from-here). I monitor the forums on an ongoing basis. If you're looking for more advanced _paid_ support, please see [details here](https://ajaydsouza.com/support/).
+If your question isn't listed there, please create a new post in the [WordPress.org support forum](https://wordpress.org/support/plugin/where-did-they-go-from-here). I monitor the forums on an ongoing basis. If you're looking for more advanced _paid_ support, please see [details here](https://webberzone.com/support/).
 
 
 = How can I customise the output? =
@@ -101,6 +101,8 @@ This function takes an array of options similar to the shortcode above.
 == Changelog ==
 
 = 2.2.0 =
+Where did they go from here has now been renamed to WebberZone Followed Posts
+
 * Features:
 	* New options to show author and date in the list. Find it under *Output* tab
 	* New options in widget to show author, excerpt, date and post types

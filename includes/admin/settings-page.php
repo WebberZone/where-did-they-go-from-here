@@ -3,7 +3,7 @@
  * Renders the settings page.
  * Portions of this code have been inspired by Easy Digital Downloads, WordPress Settings Sandbox, wordpress-settings-api-class, etc.
  *
- * @link https://ajaydsouza.com
+ * @link https://webberzone.com
  * @since 2.1.0
  *
  * @package WHEREGO

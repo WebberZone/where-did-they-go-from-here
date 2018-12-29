@@ -31,10 +31,10 @@
 			<div id="quick-links">
 				<ul>
 					<li>
-						<a href="https://ajaydsouza.com/wordpress/plugins/where-did-they-go-from-here/"><?php esc_html_e( 'WebberZone Followed Posts plugin page', 'where-did-they-go-from-here' ); ?></a>
+						<a href="https://webberzone.com/plugins/webberzone-followed-posts/"><?php esc_html_e( 'WebberZone Followed Posts plugin page', 'where-did-they-go-from-here' ); ?></a>
 					</li>
 					<li>
-						<a href="https://github.com/ajaydsouza/where-did-they-go-from-here"><?php esc_html_e( 'Plugin on GitHub', 'where-did-they-go-from-here' ); ?></a>
+						<a href="https://github.com/WebberZone/where-did-they-go-from-here"><?php esc_html_e( 'Plugin on GitHub', 'where-did-they-go-from-here' ); ?></a>
 					</li>
 					<li>
 						<a href="https://wordpress.org/plugins/where-did-they-go-from-here/faq/"><?php esc_html_e( 'FAQ', 'where-did-they-go-from-here' ); ?></a>
@@ -46,7 +46,7 @@
 						<a href="https://wordpress.org/support/view/plugin-reviews/where-did-they-go-from-here"><?php esc_html_e( 'Reviews', 'where-did-they-go-from-here' ); ?></a>
 					</li>
 					<li>
-						<a href="https://ajaydsouza.com/wordpress/plugins/"><?php esc_html_e( 'Other plugins', 'where-did-they-go-from-here' ); ?></a>
+						<a href="https://webberzone.com/plugins/"><?php esc_html_e( 'Other plugins', 'where-did-they-go-from-here' ); ?></a>
 					</li>
 					<li>
 						<a href="https://ajaydsouza.com/"><?php esc_html_e( "Ajay's blog", 'where-did-they-go-from-here' ); ?></a>

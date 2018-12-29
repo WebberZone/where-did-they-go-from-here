@@ -5,7 +5,7 @@
  * Functions to register, read, write and update settings.
  * Portions of this code have been inspired by Easy Digital Downloads, WordPress Settings Sandbox, wordpress-settings-api-class, etc.
  *
- * @link  https://ajaydsouza.com
+ * @link  https://webberzone.com
  * @since 2.1.0
  *
  * @package WHEREGO
