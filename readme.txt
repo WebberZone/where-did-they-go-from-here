@@ -47,7 +47,7 @@ __If you're looking for a plugin that displays posts related to the content, loo
 
 3. Activate the Plugin in WP-Admin.
 
-4. Goto **Settings &raquo; WebberZone Followed Posts** to configure
+4. Go to **Settings &raquo; Followed Posts** to configure
 
 
 == Screenshots ==
@@ -154,7 +154,6 @@ For previous changelog entries check out the changelog.txt file included with th
 
 == Upgrade Notice ==
 
-= 2.1.0 =
-* Major release; bug fixes, new Admin page. Double check your settings page on upgrade. View Changelog for more details
-
+= 2.2.0 =
+* Plugin rebrand. New features and bug fixes. View Changelog for more details
 

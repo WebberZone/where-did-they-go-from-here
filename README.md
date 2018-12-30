@@ -52,7 +52,7 @@ __If you're looking for a plugin that displays posts related to the content, loo
 
 3. Activate the Plugin in WP-Admin.
 
-4. Goto **Settings &raquo; WebberZone Followed Posts** to configure
+4. Goto **Settings &raquo; Followed Posts** to configure
 
 ## Screenshots
 
