@@ -3,8 +3,8 @@ Tags: followed posts, related posts, visitors, tracking, similar posts, where di
 Contributors: Ajay, webberzone
 Donate link: https://ajaydsouza.com/donate/
 Stable tag: trunk
-Requires at least: 4.5
-Tested up to: 5.0
+Requires at least: 4.7
+Tested up to: 5.1
 License: GPLv2 or later
 
 Show "Readers who viewed this page, also viewed" a.k.a. followed posts on your page. Much like Amazon.com's product pages.
@@ -99,6 +99,11 @@ This function takes an array of options similar to the shortcode above.
 
 
 == Changelog ==
+
+= 2.3.0 =
+
+* Bug fixes:
+	* PHP notices for `show_author` and `show_date`
 
 = 2.2.0 =
 Where did they go from here has now been renamed to WebberZone Followed Posts

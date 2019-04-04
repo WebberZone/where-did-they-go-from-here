@@ -96,11 +96,11 @@ function get_wherego( $args = array() ) {
 
 				$output .= wherego_list_link( $args, $result );
 
-				if ( $args['show_author'] ) {
+				if ( isset( $args['show_author'] ) && $args['show_author'] ) {
 					$output .= wherego_author( $args, $result );
 				}
 
-				if ( $args['show_date'] ) {
+				if ( isset( $args['show_date'] ) && $args['show_date'] ) {
 					$output .= '<span class="wherego_date"> ' . wherego_date( $args, $result ) . '</span> ';
 				}
 
