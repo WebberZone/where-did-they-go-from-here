@@ -248,15 +248,17 @@ function wherego_sanitize_exclude_cat( $settings ) {
 
 	if ( ! empty( $settings['exclude_cat_slugs'] ) ) {
 
-		$exclude_cat_slugs = explode( ',', $settings['exclude_cat_slugs'] );
+		$exclude_cat_slugs = array_unique( explode( ',', $settings['exclude_cat_slugs'] ) );
 
 		foreach ( $exclude_cat_slugs as $cat_name ) {
 			$cat = get_term_by( 'name', $cat_name, 'category' );
 			if ( isset( $cat->term_id ) ) {
-				$exclude_categories[] = $cat->term_id;
+				$exclude_categories[]     = $cat->term_id;
+				$exclude_category_slugs[] = $cat->name;
 			}
 		}
 		$settings['exclude_categories'] = isset( $exclude_categories ) ? join( ',', $exclude_categories ) : '';
+		$settings['exclude_cat_slugs']  = isset( $exclude_category_slugs ) ? join( ',', $exclude_category_slugs ) : '';
 
 	}
 

@@ -103,6 +103,7 @@ This function takes an array of options similar to the shortcode above.
 = 2.3.0 =
 
 * Bug fixes:
+	* Duplicate entries in "Exclude Categories" settings are removed on saving options
 	* PHP notices for `show_author` and `show_date`
 
 = 2.2.0 =
