@@ -286,9 +286,13 @@ function wherego_checkbox_callback( $args ) {
 	// First, we read the options collection.
 	global $wherego_settings;
 
-	$checked = ! empty( $wherego_settings[ $args['id'] ] ) ? checked( 1, $wherego_settings[ $args['id'] ], false ) : '';
+	$default = isset( $args['options'] ) ? $args['options'] : '';
+	$set     = isset( $wherego_settings[ $args['id'] ] ) ? $wherego_settings[ $args['id'] ] : wherego_get_default_option( $args['id'] );
+	$checked = ! empty( $set ) ? checked( 1, (int) $set, false ) : '';
 
-	$html  = sprintf( '<input type="checkbox" id="wherego_settings[%1$s]" name="wherego_settings[%2$s]" value="1" %3$s />', sanitize_key( $args['id'] ), sanitize_key( $args['id'] ), $checked );
+	$html  = sprintf( '<input type="hidden" name="wherego_settings[%1$s]" value="-1" />', sanitize_key( $args['id'] ) );
+	$html .= sprintf( '<input type="checkbox" id="wherego_settings[%1$s]" name="wherego_settings[%1$s]" value="1" %2$s />', sanitize_key( $args['id'] ), $checked );
+	$html .= ( $set <> $default ) ? '<em style="color:orange"> ' . esc_html__( 'Modified from default setting', 'where-did-they-go-from-here' ) . '</em>' : ''; // phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison
 	$html .= '<p class="description">' . wp_kses_post( $args['desc'] ) . '</p>';
 
 	/** This filter has been defined in settings-page.php */
@@ -357,6 +361,41 @@ function wherego_radio_callback( $args ) {
 
 		$html .= sprintf( '<input name="wherego_settings[%1$s]" id="wherego_settings[%1$s][%2$s]" type="radio" value="%2$s" %3$s /> ', sanitize_key( $args['id'] ), $key, checked( true, $checked, false ) );
 		$html .= sprintf( '<label for="wherego_settings[%1$s][%2$s]">%3$s</label> <br />', sanitize_key( $args['id'] ), $key, $option );
+	}
+
+	$html .= '<p class="description">' . wp_kses_post( $args['desc'] ) . '</p>';
+
+	/** This filter has been defined in settings-page.php */
+	echo apply_filters( 'wherego_after_setting_output', $html, $args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+}
+
+
+/**
+ * Radio callback with description.
+ *
+ * Renders radio boxes with each item having it separate description.
+ *
+ * @since 2.6.0
+ *
+ * @param array $args Array of arguments.
+ * @return void
+ */
+function wherego_radiodesc_callback( $args ) {
+	global $wherego_settings;
+	$html = '';
+
+	foreach ( $args['options'] as $option ) {
+		$checked = false;
+
+		if ( isset( $wherego_settings[ $args['id'] ] ) && $wherego_settings[ $args['id'] ] === $option['id'] ) {
+			$checked = true;
+		} elseif ( isset( $args['default'] ) && $args['default'] === $option['id'] && ! isset( $wherego_settings[ $args['id'] ] ) ) {
+			$checked = true;
+		}
+
+		$html .= sprintf( '<input name="wherego_settings[%1$s]" id="wherego_settings[%1$s][%2$s]" type="radio" value="%2$s" %3$s /> ', sanitize_key( $args['id'] ), $option['id'], checked( true, $checked, false ) );
+		$html .= sprintf( '<label for="wherego_settings[%1$s][%2$s]">%3$s</label>', sanitize_key( $args['id'] ), $option['id'], $option['name'] );
+		$html .= ': <em>' . wp_kses_post( $option['description'] ) . '</em> <br />';
 	}
 
 	$html .= '<p class="description">' . wp_kses_post( $args['desc'] ) . '</p>';
@@ -504,9 +543,65 @@ function wherego_posttypes_callback( $args ) {
 
 
 /**
+ * Display taxonomies fields.
+ *
+ * @since 2.6.0
+ *
+ * @param array $args Array of arguments.
+ * @return void
+ */
+function wherego_taxonomies_callback( $args ) {
+
+	global $wherego_settings;
+	$html = '';
+
+	if ( isset( $wherego_settings[ $args['id'] ] ) ) {
+		$options = $wherego_settings[ $args['id'] ];
+	} else {
+		$options = isset( $args['options'] ) ? $args['options'] : '';
+	}
+
+	// If taxonomies is empty or contains a query string then use parse_str else consider it comma-separated.
+	if ( is_array( $options ) ) {
+		$taxonomies = $options;
+	} elseif ( ! is_array( $options ) && false === strpos( $options, '=' ) ) {
+		$taxonomies = explode( ',', $options );
+	} else {
+		parse_str( $options, $taxonomies );
+	}
+
+	/* Fetch taxonomies */
+	$argsc         = array(
+		'public'   => true,
+		'_builtin' => true,
+	);
+	$output        = 'objects';
+	$operator      = 'and';
+	$wp_taxonomies = get_taxonomies( $argsc, $output, $operator );
+
+	$taxonomies_inc = array_intersect( wp_list_pluck( (array) $wp_taxonomies, 'name' ), $taxonomies );
+
+	$html .= sprintf( '<input type="hidden" name="wherego_settings[%1$s]" value="-1" />', sanitize_key( $args['id'] ) );
+
+	foreach ( $wp_taxonomies as $wp_taxonomy ) {
+
+		$html .= sprintf( '<input name="wherego_settings[%1$s][%2$s]" id="wherego_settings[%1$s][%2$s]" type="checkbox" value="%2$s" %3$s /> ', sanitize_key( $args['id'] ), esc_attr( $wp_taxonomy->name ), checked( true, in_array( $wp_taxonomy->name, $taxonomies_inc, true ), false ) );
+		$html .= sprintf( '<label for="wherego_settings[%1$s][%2$s]">%3$s</label> <br />', sanitize_key( $args['id'] ), esc_attr( $wp_taxonomy->name ), $wp_taxonomy->labels->name );
+
+	}
+
+	$html .= '<p class="description">' . wp_kses_post( $args['desc'] ) . '</p>';
+
+	/** This filter has been defined in settings-page.php */
+	echo apply_filters( 'wherego_after_setting_output', $html, $args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+}
+
+
+/**
  * Function to add an action to search for tags using Ajax.
  *
- * @access public
+ * @since 2.1.0
+ *
  * @return void
  */
 function wherego_tags_search() {

@@ -102,9 +102,10 @@ This function takes an array of options similar to the shortcode above.
 
 = 2.3.0 =
 
-* Bug fixes:
+* Fixed:
 	* Duplicate entries in "Exclude Categories" settings are removed on saving options
 	* PHP notices for `show_author` and `show_date`
+	* `crp_update_option` only deletes options when the value passed is null
 
 = 2.2.0 =
 Where did they go from here has now been renamed to WebberZone Followed Posts

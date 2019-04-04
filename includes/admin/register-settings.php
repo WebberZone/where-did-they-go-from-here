@@ -83,8 +83,8 @@ function wherego_update_option( $key = '', $value = false ) {
 		return false;
 	}
 
-	// If no value, delete.
-	if ( empty( $value ) ) {
+	// If null value, delete.
+	if ( is_null( $value ) ) {
 		$remove_option = wherego_delete_option( $key );
 		return $remove_option;
 	}
@@ -190,6 +190,7 @@ function wherego_register_settings() {
 					'size'             => null,
 					'field_class'      => '',
 					'field_attributes' => '',
+					'placeholder'      => '',
 				)
 			);
 
@@ -211,6 +212,35 @@ add_action( 'admin_init', 'wherego_register_settings' );
 
 
 /**
+ * Flattens wherego_get_registered_settings() into $setting[id] => $setting[type] format.
+ *
+ * @since 2.3.0
+ *
+ * @return array Default settings
+ */
+function wherego_get_registered_settings_types() {
+
+	$options = array();
+
+	// Populate some default values.
+	foreach ( wherego_get_registered_settings() as $tab => $settings ) {
+		foreach ( $settings as $option ) {
+			$options[ $option['id'] ] = $option['type'];
+		}
+	}
+
+	/**
+	 * Filters the settings array.
+	 *
+	 * @since 2.6.0
+	 *
+	 * @param array   $options Default settings.
+	 */
+	return apply_filters( 'wherego_get_settings_types', $options );
+}
+
+
+/**
  * Default settings.
  *
  * @since 2.1.0
@@ -226,13 +256,15 @@ function wherego_settings_defaults() {
 		foreach ( $settings as $option ) {
 			// When checkbox is set to true, set this to 1.
 			if ( 'checkbox' === $option['type'] && ! empty( $option['options'] ) ) {
-				$options[ $option['id'] ] = '1';
+				$options[ $option['id'] ] = 1;
+			} else {
+				$options[ $option['id'] ] = 0;
 			}
 			// If an option is set.
 			if ( in_array( $option['type'], array( 'textarea', 'text', 'csv', 'numbercsv', 'posttypes', 'number' ), true ) && isset( $option['options'] ) ) {
 				$options[ $option['id'] ] = $option['options'];
 			}
-			if ( in_array( $option['type'], array( 'multicheck', 'radio', 'select' ), true ) && isset( $option['default'] ) ) {
+			if ( in_array( $option['type'], array( 'multicheck', 'radio', 'select', 'radiodesc', 'thumbsizes' ), true ) && isset( $option['default'] ) ) {
 				$options[ $option['id'] ] = $option['default'];
 			}
 		}
@@ -285,50 +317,5 @@ function wherego_get_default_option( $key = '' ) {
  */
 function wherego_settings_reset() {
 	delete_option( 'wherego_settings' );
-}
-
-
-/**
- * Upgrade v2.0.x settings to v2.1.0.
- *
- * @since v2.1.0
- * @return array Settings array
- */
-function wherego_upgrade_settings() {
-	$old_settings = get_option( 'ald_wherego_settings' );
-
-	if ( empty( $old_settings ) ) {
-		return false;
-	}
-
-	// Start will assigning all the old settings to the new settings and we will unset later on.
-	$settings = $old_settings;
-
-	// Convert the add_to_{x} to the new settings format.
-	$add_to = array(
-		'content'           => 'add_to_content',
-		'page'              => 'add_to_page',
-		'feed'              => 'add_to_feed',
-		'home'              => 'add_to_home',
-		'category_archives' => 'add_to_category_archives',
-		'tag_archives'      => 'add_to_tag_archives',
-		'other_archives'    => 'add_to_archives',
-	);
-
-	// Convert the status of the mapped flags into a a comma-separated list.
-	foreach ( $add_to as $newkey => $oldkey ) {
-		if ( $old_settings[ $oldkey ] ) {
-			$settings['add_to'][ $newkey ] = $newkey;
-		}
-		unset( $settings[ $oldkey ] );
-	}
-
-	// Convert 'blank_output' to the new format: true = 'blank' and false = 'custom_text'.
-	$settings['blank_output'] = ! empty( $old_settings['blank_output'] ) ? 'blank' : 'custom_text';
-
-	delete_option( 'ald_wherego_settings' );
-
-	return $settings;
-
 }
 
