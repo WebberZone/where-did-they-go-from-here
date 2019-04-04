@@ -275,7 +275,7 @@ function wherego_get_attachment_id_from_url( $attachment_url = '' ) {
 		$attachment_url = str_replace( $upload_dir_paths['baseurl'] . '/', '', $attachment_url );
 
 		// Finally, run a custom database query to get the attachment ID from the modified attachment URL.
-		$attachment_id = $wpdb->get_var( $wpdb->prepare( "SELECT wposts.ID FROM $wpdb->posts wposts, $wpdb->postmeta wpostmeta WHERE wposts.ID = wpostmeta.post_id AND wpostmeta.meta_key = '_wp_attached_file' AND wpostmeta.meta_value = %s AND wposts.post_type = 'attachment'", $attachment_url ) );
+		$attachment_id = $wpdb->get_var( $wpdb->prepare( "SELECT wposts.ID FROM $wpdb->posts wposts, $wpdb->postmeta wpostmeta WHERE wposts.ID = wpostmeta.post_id AND wpostmeta.meta_key = '_wp_attached_file' AND wpostmeta.meta_value = %s AND wposts.post_type = 'attachment'", $attachment_url ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching
 
 	}
 
@@ -309,12 +309,12 @@ function wherego_get_thumb_size( $args ) {
 		$thumb_height = $wherego_thumb_size['height'];
 	}
 
-	if ( empty( $thumb_width ) || ( $args['is_widget'] && $thumb_width != $args['thumb_width'] ) ) { // WPCS: loose comparison ok.
+	if ( empty( $thumb_width ) || ( $args['is_widget'] && $thumb_width != $args['thumb_width'] ) ) { // phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison
 		$thumb_width        = $args['thumb_width'];
 		$args['thumb_html'] = 'css';
 	}
 
-	if ( empty( $thumb_height ) || ( $args['is_widget'] && $thumb_height != $args['thumb_height'] ) ) { // WPCS: loose comparison ok.
+	if ( empty( $thumb_height ) || ( $args['is_widget'] && $thumb_height != $args['thumb_height'] ) ) { // phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison
 		$thumb_height       = $args['thumb_height'];
 		$args['thumb_html'] = 'css';
 	}

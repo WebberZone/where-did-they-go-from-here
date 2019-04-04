@@ -47,7 +47,7 @@ function wherego_tracker_parser() {
 
 			$linkpostids = get_post_meta( $post_id_came_from, 'wheredidtheycomefrom', true );
 
-			if ( is_array( $linkpostids ) && ! in_array( $id, $linkpostids ) ) {
+			if ( is_array( $linkpostids ) && ! in_array( $id, $linkpostids ) ) { // phpcs:ignore WordPress.PHP.StrictInArray.MissingTrueStrict
 				array_unshift( $linkpostids, $id );
 			} elseif ( '' === $linkpostids ) {
 				$linkpostids = array( $id );

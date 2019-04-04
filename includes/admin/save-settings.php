@@ -31,17 +31,17 @@ function wherego_settings_sanitize( $input = array() ) {
 	global $wherego_settings;
 
 	// This should be set if a form is submitted, so let's save it in the $referrer variable.
-	if ( empty( $_POST['_wp_http_referer'] ) ) { // WPCS: CSRF ok.
+	if ( empty( $_POST['_wp_http_referer'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
 		return $input;
 	}
 
-	parse_str( sanitize_text_field( wp_unslash( $_POST['_wp_http_referer'] ) ), $referrer ); // WPCS: CSRF ok.
+	parse_str( sanitize_text_field( wp_unslash( $_POST['_wp_http_referer'] ) ), $referrer ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
 
 	// Get the various settings we've registered.
 	$settings = wherego_get_registered_settings();
 
 	// Check if we need to set to defaults.
-	$reset = isset( $_POST['settings_reset'] ); // WPCS: CSRF ok.
+	$reset = isset( $_POST['settings_reset'] ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
 
 	if ( $reset ) {
 		wherego_settings_reset();
