@@ -29,6 +29,16 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
+/**
+ * Holds the filesystem directory path (with trailing slash) for Top 10
+ *
+ * @since 2.0.0
+ *
+ * @var string Plugin Root File
+ */
+if ( ! defined( 'WHEREGO_PLUGIN_FILE' ) ) {
+	define( 'WHEREGO_PLUGIN_FILE', __FILE__ );
+}
 
 /**
  * Holds the filesystem directory path (with trailing slash) for Top 10
@@ -38,7 +48,7 @@ if ( ! defined( 'WPINC' ) ) {
  * @var string Plugin folder path
  */
 if ( ! defined( 'WHEREGO_PLUGIN_DIR' ) ) {
-	define( 'WHEREGO_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
+	define( 'WHEREGO_PLUGIN_DIR', plugin_dir_path( WHEREGO_PLUGIN_FILE ) );
 }
 
 /**
@@ -49,18 +59,7 @@ if ( ! defined( 'WHEREGO_PLUGIN_DIR' ) ) {
  * @var string Plugin folder URL
  */
 if ( ! defined( 'WHEREGO_PLUGIN_URL' ) ) {
-	define( 'WHEREGO_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
-}
-
-/**
- * Holds the filesystem directory path (with trailing slash) for Top 10
- *
- * @since 2.0.0
- *
- * @var string Plugin Root File
- */
-if ( ! defined( 'WHEREGO_PLUGIN_FILE' ) ) {
-	define( 'WHEREGO_PLUGIN_FILE', __FILE__ );
+	define( 'WHEREGO_PLUGIN_URL', plugin_dir_url( WHEREGO_PLUGIN_FILE ) );
 }
 
 
