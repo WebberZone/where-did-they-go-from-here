@@ -103,6 +103,7 @@ This function takes an array of options similar to the shortcode above.
 = 2.3.0 =
 
 * Fixed:
+	* Migrate `custom_CSS` to `custom_css` - this only happens if `custom_css` doesn't already have a value
 	* Duplicate entries in "Exclude Categories" settings are removed on saving options
 	* PHP notices for `show_author` and `show_date`
 	* `crp_update_option` only deletes options when the value passed is null
