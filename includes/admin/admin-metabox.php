@@ -16,10 +16,9 @@ if ( ! defined( 'WPINC' ) ) {
  *
  * @since 1.7
  *
- * @param text   $post_type Post type.
- * @param object $post Post object.
+ * @param string $post_type Post type.
  */
-function wherego_add_meta_box( $post_type, $post ) {
+function wherego_add_meta_box( $post_type ) {
 
 		add_meta_box(
 			'wherego_metabox',
@@ -31,7 +30,7 @@ function wherego_add_meta_box( $post_type, $post ) {
 		);
 
 }
-add_action( 'add_meta_boxes', 'wherego_add_meta_box', 10, 2 );
+add_action( 'add_meta_boxes', 'wherego_add_meta_box' );
 
 
 /**
