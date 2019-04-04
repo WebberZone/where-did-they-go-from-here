@@ -7,6 +7,11 @@
  * @package WHEREGO
  */
 
+// If this file is called directly, abort.
+if ( ! defined( 'WPINC' ) ) {
+	die;
+}
+
 /**
  * Path to plugin.
  *

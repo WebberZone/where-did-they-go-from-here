@@ -5,6 +5,11 @@
  * @package WHEREGO
  */
 
+// If this file is called directly, abort.
+if ( ! defined( 'WPINC' ) ) {
+	die;
+}
+
 /**
  * Main function to generate the list of followed posts
  *

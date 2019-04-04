@@ -6,6 +6,11 @@
  * @subpackage  Admin
  */
 
+// If this file is called directly, abort.
+if ( ! defined( 'WPINC' ) ) {
+	die;
+}
+
 /**
  * Function to add meta box in Write screens.
  *

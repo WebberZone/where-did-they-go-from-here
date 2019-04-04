@@ -6,6 +6,10 @@
  * @subpackage  Admin
  */
 
+// If this file is called directly, abort.
+if ( ! defined( 'WPINC' ) ) {
+	die;
+}
 /**
  * Add extra columns in Åll posts / pages screen with post list.
  *

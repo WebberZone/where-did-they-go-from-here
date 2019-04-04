@@ -127,7 +127,6 @@ class WhereGo_Widget extends WP_Widget {
 			} else {
 				parse_str( $post_types, $post_types );
 			}
-
 		}
 		$wp_post_types   = get_post_types(
 			array(
