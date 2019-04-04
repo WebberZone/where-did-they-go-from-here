@@ -169,19 +169,19 @@ function wherego_header() {
 	// Add CSS to header.
 	if ( '' !== $wherego_custom_css ) {
 		if ( ( is_single() ) ) {
-			echo $wherego_custom_css; // WPCS: XSS OK.
+			echo $wherego_custom_css; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		} elseif ( ( is_page() ) ) {
-			echo $wherego_custom_css; // WPCS: XSS OK.
+			echo $wherego_custom_css; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		} elseif ( ( is_home() ) && ! empty( $wherego_settings['add_to']['home'] ) ) {
-			echo $wherego_custom_css; // WPCS: XSS OK.
+			echo $wherego_custom_css; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		} elseif ( ( is_category() ) && ! empty( $wherego_settings['add_to']['category_archives'] ) ) {
-			echo $wherego_custom_css; // WPCS: XSS OK.
+			echo $wherego_custom_css; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		} elseif ( ( is_tag() ) && ! empty( $wherego_settings['add_to']['tag_archives'] ) ) {
-			echo $wherego_custom_css; // WPCS: XSS OK.
+			echo $wherego_custom_css; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		} elseif ( ( ( is_tax() ) || ( is_author() ) || ( is_date() ) ) && ! empty( $wherego_settings['add_to']['archives'] ) ) {
-			echo $wherego_custom_css; // WPCS: XSS OK.
+			echo $wherego_custom_css; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		} elseif ( is_active_widget( false, false, 'Widgetwherego', true ) ) {
-			echo $wherego_custom_css; // WPCS: XSS OK.
+			echo $wherego_custom_css; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 	}
 }
@@ -267,7 +267,7 @@ function echo_wherego( $args = array() ) {
 	// Parse incomming $args into an array and merge it with $defaults.
 	$args = wp_parse_args( $args, $defaults );
 
-	echo get_wherego( $args ); // WPCS: XSS OK.
+	echo get_wherego( $args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }
 
 

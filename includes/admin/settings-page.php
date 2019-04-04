@@ -108,7 +108,7 @@ function wherego_options_page() {
 	</div><!-- /.wrap -->
 
 	<?php
-	echo ob_get_clean(); // WPCS: XSS OK.
+	echo ob_get_clean(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }
 
 /**
@@ -174,7 +174,7 @@ function wherego_header_callback( $args ) {
 	 * @param string $html HTML string.
 	 * @param array Arguments array.
 	 */
-	echo apply_filters( 'wherego_after_setting_output', $html, $args ); // WPCS: XSS OK.
+	echo apply_filters( 'wherego_after_setting_output', $html, $args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }
 
 
@@ -214,7 +214,7 @@ function wherego_text_callback( $args ) {
 	$html .= '<p class="description">' . wp_kses_post( $args['desc'] ) . '</p>';
 
 	/** This filter has been defined in settings-page.php */
-	echo apply_filters( 'wherego_after_setting_output', $html, $args ); // WPCS: XSS OK.
+	echo apply_filters( 'wherego_after_setting_output', $html, $args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }
 
 
@@ -269,7 +269,7 @@ function wherego_textarea_callback( $args ) {
 	$html .= '<p class="description">' . wp_kses_post( $args['desc'] ) . '</p>';
 
 	/** This filter has been defined in settings-page.php */
-	echo apply_filters( 'wherego_after_setting_output', $html, $args ); // WPCS: XSS OK.
+	echo apply_filters( 'wherego_after_setting_output', $html, $args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }
 
 
@@ -292,7 +292,7 @@ function wherego_checkbox_callback( $args ) {
 	$html .= '<p class="description">' . wp_kses_post( $args['desc'] ) . '</p>';
 
 	/** This filter has been defined in settings-page.php */
-	echo apply_filters( 'wherego_after_setting_output', $html, $args ); // WPCS: XSS OK.
+	echo apply_filters( 'wherego_after_setting_output', $html, $args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }
 
 
@@ -328,7 +328,7 @@ function wherego_multicheck_callback( $args ) {
 	}
 
 	/** This filter has been defined in settings-page.php */
-	echo apply_filters( 'wherego_after_setting_output', $html, $args ); // WPCS: XSS OK.
+	echo apply_filters( 'wherego_after_setting_output', $html, $args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }
 
 
@@ -362,7 +362,7 @@ function wherego_radio_callback( $args ) {
 	$html .= '<p class="description">' . wp_kses_post( $args['desc'] ) . '</p>';
 
 	/** This filter has been defined in settings-page.php */
-	echo apply_filters( 'wherego_after_setting_output', $html, $args ); // WPCS: XSS OK.
+	echo apply_filters( 'wherego_after_setting_output', $html, $args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }
 
 
@@ -395,7 +395,7 @@ function wherego_number_callback( $args ) {
 	$html .= '<p class="description">' . wp_kses_post( $args['desc'] ) . '</p>';
 
 	/** This filter has been defined in settings-page.php */
-	echo apply_filters( 'wherego_after_setting_output', $html, $args ); // WPCS: XSS OK.
+	echo apply_filters( 'wherego_after_setting_output', $html, $args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }
 
 
@@ -434,7 +434,7 @@ function wherego_select_callback( $args ) {
 	$html .= '<p class="description">' . wp_kses_post( $args['desc'] ) . '</p>';
 
 	/** This filter has been defined in settings-page.php */
-	echo apply_filters( 'wherego_after_setting_output', $html, $args ); // WPCS: XSS OK.
+	echo apply_filters( 'wherego_after_setting_output', $html, $args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }
 
 
@@ -452,7 +452,7 @@ function wherego_descriptive_text_callback( $args ) {
 	$html = wp_kses_post( $args['desc'] );
 
 	/** This filter has been defined in settings-page.php */
-	echo apply_filters( 'wherego_after_setting_output', $html, $args ); // WPCS: XSS OK.
+	echo apply_filters( 'wherego_after_setting_output', $html, $args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }
 
 
@@ -499,7 +499,7 @@ function wherego_posttypes_callback( $args ) {
 	$html .= '<p class="description">' . wp_kses_post( $args['desc'] ) . '</p>';
 
 	/** This filter has been defined in settings-page.php */
-	echo apply_filters( 'wherego_after_setting_output', $html, $args ); // WPCS: XSS OK.
+	echo apply_filters( 'wherego_after_setting_output', $html, $args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }
 
 
