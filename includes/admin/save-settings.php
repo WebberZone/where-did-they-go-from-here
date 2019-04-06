@@ -239,6 +239,23 @@ add_filter( 'wherego_settings_sanitize_textarea', 'wherego_sanitize_textarea_fie
 
 
 /**
+ * Sanitize checkbox fields
+ *
+ * @since 2.3.0
+ *
+ * @param  array $value The field value.
+ * @return string|int  $value  Sanitized value
+ */
+function wherego_sanitize_checkbox_field( $value ) {
+
+	$value = ( -1 === (int) $value ) ? 0 : 1;
+
+	return $value;
+}
+add_filter( 'wherego_settings_sanitize_checkbox', 'wherego_sanitize_checkbox_field' );
+
+
+/**
  * Sanitize post_types fields
  *
  * @since 2.1.0
@@ -253,6 +270,23 @@ function wherego_sanitize_post_types_field( $value ) {
 	return implode( ',', $post_types );
 }
 add_filter( 'wherego_settings_sanitize_post_types', 'wherego_sanitize_post_types_field' );
+
+
+/**
+ * Sanitize taxonomies fields
+ *
+ * @since 2.3.0
+ *
+ * @param  array $value The field value.
+ * @return string  $value  Sanitized value
+ */
+function wherego_sanitize_taxonomies_field( $value ) {
+
+	$taxonomies = is_array( $value ) ? array_map( 'sanitize_text_field', wp_unslash( $value ) ) : array();
+
+	return implode( ',', $taxonomies );
+}
+add_filter( 'wherego_settings_sanitize_taxonomies', 'wherego_sanitize_taxonomies_field' );
 
 
 /**
