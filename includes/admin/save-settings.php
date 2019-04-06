@@ -266,7 +266,7 @@ add_filter( 'wherego_settings_sanitize_post_types', 'wherego_sanitize_post_types
 function wherego_change_settings_on_save( $settings ) {
 
 	// Sanitize exclude_cat_slugs to save a new entry of exclude_categories.
-	if ( ! empty( $settings['exclude_cat_slugs'] ) ) {
+	if ( isset( $settings['exclude_cat_slugs'] ) ) {
 
 		$exclude_cat_slugs = array_unique( explode( ',', $settings['exclude_cat_slugs'] ) );
 
