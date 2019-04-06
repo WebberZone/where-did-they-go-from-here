@@ -11,7 +11,7 @@
 	margin: 0 !important;
 	padding: 0 !important;
 }
-.wherego_related li, .wherego_related a {
+.wherego_related li, .wherego_related a:not(.ignorestyle) {
 	float: left;
 	overflow: hidden;
 	position: relative;
@@ -27,7 +27,7 @@
 	background: #eee;
 	border-color: #bbb;
 }
-.wherego_related a {
+.wherego_related a:not(.ignorestyle) {
 	-webkit-box-shadow: none !important;
 	-moz-box-shadow: none !important;
 	box-shadow: none !important;

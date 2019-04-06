@@ -122,12 +122,17 @@ function get_wherego( $args = array() ) {
 			}
 		} // End foreach.
 		if ( isset( $args['show_credit'] ) && $args['show_credit'] ) {
-			$output .= wherego_before_list_item( $args, $result );
+			$output .= '<p style="clear:both"><small>';
 
 			/* translators: %s: Plugin URL. */
-			$output .= sprintf( __( 'Powered by <a href="%s" rel="nofollow">WebberZone Followed Posts</a>', 'where-did-they-go-from-here' ), esc_url( 'https://webberzone.com/plugins/webberzone-followed-posts/' ) );
+			$output .= sprintf(
+				/* translators: %1$s: Opening a tag, %2$s: Closing a tag */
+				esc_html__( 'Powered by %1$sWebberZone Followed Posts%2$s', 'where-did-they-go-from-here' ),
+				'<a href="https://webberzone.com/plugins/webberzone-followed-posts/" rel="nofollow" class="ignorestyle">',
+				'</a>'
+			);
 
-			$output .= wherego_after_list_item( $args, $result );
+			$output .= '</small></p>';
 
 		}
 		$output .= wherego_after_list( $args );
@@ -296,7 +301,7 @@ function wherego_heading_styles() {
 		wp_enqueue_style( 'wherego-style-grid-thumbs' );
 
 		$custom_css = "
-.wherego_related a {
+.wherego_related a:not(.ignorestyle) {
   width: {$thumb_width}px;
   height: {$thumb_height}px;
   text-decoration: none;
