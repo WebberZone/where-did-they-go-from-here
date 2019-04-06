@@ -102,6 +102,9 @@ This function takes an array of options similar to the shortcode above.
 
 = 2.3.0 =
 
+* Enhancements:
+	* Optimized version of default.png
+
 * Fixed:
 	* Migrate `custom_CSS` to `custom_css` - this only happens if `custom_css` doesn't already have a value
 	* Duplicate entries in "Exclude Categories" settings are removed on saving options
