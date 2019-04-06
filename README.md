@@ -1,10 +1,14 @@
 # WebberZone Followed Posts
 
-[![Build Status](https://travis-ci.org/WebberZone/where-did-they-go-from-here.svg?branch=master)](https://travis-ci.org/WebberZone/where-did-they-go-from-here) [![Code Climate](https://codeclimate.com/github/WebberZone/where-did-they-go-from-here/badges/gpa.svg)](https://codeclimate.com/github/WebberZone/where-did-they-go-from-here)
+[![WordPress Plugin Version](https://img.shields.io/wordpress/plugin/v/where-did-they-go-from-here.svg?style=flat-square)](https://wordpress.org/plugins/where-did-they-go-from-here/)
+[![License](https://img.shields.io/badge/license-GPL_v2%2B-orange.svg?style=flat-square)](http://opensource.org/licenses/GPL-2.0)
+[![WordPress Tested](https://img.shields.io/wordpress/v/where-did-they-go-from-here.svg?style=flat-square)](https://wordpress.org/plugins/where-did-they-go-from-here/)
+[![Build Status](https://travis-ci.org/WebberZone/where-did-they-go-from-here.svg?branch=master)](https://travis-ci.org/WebberZone/where-did-they-go-from-here)
+[![Code Climate](https://codeclimate.com/github/WebberZone/where-did-they-go-from-here/badges/gpa.svg)](https://codeclimate.com/github/WebberZone/where-did-they-go-from-here)
 
-__Requires:__ 4.5
+__Requires:__ 4.7
 
-__Tested up to:__ 5.0
+__Tested up to:__ 5.1
 
 __License:__ [GPL-2.0+](https://www.gnu.org/licenses/gpl-2.0.html)
 
@@ -19,8 +23,6 @@ Have you seen Amazon's product pages? Amazon is a great example of visitor reten
 Now you can implement the same feature on your WordPress blog. **WebberZone Followed Posts** let's you show "Readers who viewed this page, also viewed" links on your page.
 
 The plugin tracks the pages, posts and custom post types that visitors click through from the current post. You can then display these followed posts automatically at the bottom of your posts, using a shortcode or in your sidebar using the inbuilt widget.
-
-__If you're looking for a plugin that displays posts related to the content, look no further than [Contextual Related Posts](https://wordpress.org/plugins/contextual-related-posts/).__
 
 ### Key features
 
