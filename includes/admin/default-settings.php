@@ -320,7 +320,7 @@ function wherego_settings_thumbnail() {
 			'name'    => esc_html__( 'Thumbnail width', 'where-did-they-go-from-here' ),
 			'desc'    => '',
 			'type'    => 'number',
-			'options' => '250',
+			'options' => '150',
 			'size'    => 'small',
 		),
 		'thumb_height'       => array(
@@ -328,7 +328,7 @@ function wherego_settings_thumbnail() {
 			'name'    => esc_html__( 'Thumbnail height', 'where-did-they-go-from-here' ),
 			'desc'    => '',
 			'type'    => 'number',
-			'options' => '250',
+			'options' => '150',
 			'size'    => 'small',
 		),
 		'thumb_html'         => array(
@@ -473,7 +473,7 @@ function wherego_settings_feed() {
 			'name'    => esc_html__( 'Thumbnail width', 'where-did-they-go-from-here' ),
 			'desc'    => '',
 			'type'    => 'number',
-			'options' => '250',
+			'options' => '150',
 			'size'    => 'small',
 		),
 		'thumb_height_feed'  => array(
@@ -481,7 +481,7 @@ function wherego_settings_feed() {
 			'name'    => esc_html__( 'Thumbnail height', 'where-did-they-go-from-here' ),
 			'desc'    => '',
 			'type'    => 'number',
-			'options' => '250',
+			'options' => '150',
 			'size'    => 'small',
 		),
 	);
