@@ -16,6 +16,7 @@
 	overflow: hidden;
 	position: relative;
 	text-align: center;
+	line-height: 100%;
 }
 .wherego_related li {
 	margin: 5px !important;
