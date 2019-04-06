@@ -130,10 +130,10 @@ function wherego_settings_sanitize( $input = array() ) {
 	 * Filter the settings array before it is returned.
 	 *
 	 * @since 2.1.0
-	 * @param array $wherego_settings Settings array.
+	 * @param array $output Settings array.
 	 * @param array $input Input settings array.
 	 */
-	return apply_filters( 'wherego_settings_sanitize', $wherego_settings, $input );
+	return apply_filters( 'wherego_settings_sanitize', $output, $input );
 
 }
 
