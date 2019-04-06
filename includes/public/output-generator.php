@@ -277,6 +277,33 @@ function wherego_date( $args, $result ) {
 
 
 /**
+ * Returns the permalink of each list item.
+ *
+ * @since   2.3.0
+ *
+ * @param   array  $args   Array of arguments.
+ * @param   object $result Object of the current post result.
+ * @return  string  Space separated list of link attributes
+ */
+function wherego_permalink( $args, $result ) {
+
+	$link = get_permalink( $result->ID );
+
+	/**
+	 * Filter the title of each list item.
+	 *
+	 * @since   2.3.0
+	 *
+	 * @param   string  $title  Permalink of the post.
+	 * @param   object  $result Object of the current post result
+	 * @param   array   $args   Array of arguments
+	 */
+	return apply_filters( 'wherego_permalink', $link, $result, $args );
+
+}
+
+
+/**
  * Returns the formatted list item with link and and thumbnail for each list item.
  *
  * @since   2.0.0
@@ -289,15 +316,16 @@ function wherego_list_link( $args, $result ) {
 
 	$output          = '';
 	$title           = wherego_title( $args, $result );
+	$link            = wherego_permalink( $args, $result );
 	$link_attributes = wherego_link_attributes( $args );
 
+	$output .= '<a href="' . $link . '" ' . $link_attributes . '>';
+
 	if ( 'after' === $args['post_thumb_op'] ) {
-		$output .= '<a href="' . get_permalink( $result->ID ) . '" ' . $link_attributes . ' class="wherego_title">' . $title . '</a>'; // Add title if post thumbnail is to be displayed after.
+		$output .= '<span class="wherego_title">' . $title . '</span>'; // Add title when required by settings.
 	}
 
 	if ( 'inline' === $args['post_thumb_op'] || 'after' === $args['post_thumb_op'] || 'thumbs_only' === $args['post_thumb_op'] ) {
-		$output .= '<a href="' . get_permalink( $result->ID ) . '" ' . $link_attributes . '>';
-
 		$output .= wherego_get_the_post_thumbnail(
 			array(
 				'postid'             => $result->ID,
@@ -311,13 +339,13 @@ function wherego_list_link( $args, $result ) {
 				'class'              => 'wherego_thumb',
 			)
 		);
-
-		$output .= '</a>';
 	}
 
 	if ( 'inline' === $args['post_thumb_op'] || 'text_only' === $args['post_thumb_op'] ) {
-		$output .= '<a href="' . get_permalink( $result->ID ) . '" ' . $link_attributes . ' class="wherego_title">' . $title . '</a>'; // Add title when required by settings.
+		$output .= '<span class="wherego_title">' . $title . '</span>'; // Add title when required by settings.
 	}
+
+	$output .= '</a>';
 
 	/**
 	 * Filter Formatted list item with link and and thumbnail.

@@ -28,11 +28,11 @@ if ( ! defined( 'WPINC' ) ) {
 function wherego_get_registered_settings() {
 
 	$wherego_settings = array(
-		'general'   => crp_settings_general(),
-		'output'    => crp_settings_output(),
-		'thumbnail' => crp_settings_thumbnail(),
-		'styles'    => crp_settings_styles(),
-		'feed'      => crp_settings_feed(),
+		'general'   => wherego_settings_general(),
+		'output'    => wherego_settings_output(),
+		'thumbnail' => wherego_settings_thumbnail(),
+		'styles'    => wherego_settings_styles(),
+		'feed'      => wherego_settings_feed(),
 	);
 
 	/**
@@ -396,8 +396,16 @@ function wherego_settings_thumbnail() {
 function wherego_settings_styles() {
 
 	$settings = array(
-		'custom_CSS' => array(
-			'id'      => 'custom_CSS',
+		'wherego_styles' => array(
+			'id'      => 'wherego_styles',
+			'name'    => esc_html__( 'Followed Posts style', 'where-did-they-go-from-here' ),
+			'desc'    => '',
+			'type'    => 'radiodesc',
+			'default' => 'no_style',
+			'options' => wherego_get_styles(),
+		),
+		'custom_css'     => array(
+			'id'      => 'custom_css',
 			'name'    => esc_html__( 'Custom CSS', 'where-did-they-go-from-here' ),
 			/* translators: 1: Opening a tag, 2: Closing a tag, 3: Opening code tage, 4. Closing code tag. */
 			'desc'    => sprintf( esc_html__( 'Do not include %3$sstyle%4$s tags. Check out the %1$sFAQ%2$s for available CSS classes to style.', 'where-did-they-go-from-here' ), '<a href="' . esc_url( 'https://wordpress.org/plugins/where-did-they-go-from-here/faq/' ) . '" target="_blank">', '</a>', '<code>', '</code>' ),
@@ -487,3 +495,84 @@ function wherego_settings_feed() {
 	 */
 	return apply_filters( 'wherego_settings_feed', $settings );
 }
+
+/**
+ * Get the various styles.
+ *
+ * @since 2.3.0
+ * @return array Style options.
+ */
+function wherego_get_styles() {
+
+	$styles = array(
+		array(
+			'id'          => 'no_style',
+			'name'        => esc_html__( 'No styles', 'where-did-they-go-from-here' ),
+			'description' => esc_html__( 'Select this option if you plan to add your own styles', 'where-did-they-go-from-here' ) . '<br />',
+		),
+		array(
+			'id'          => 'text_only',
+			'name'        => esc_html__( 'Text only', 'where-did-they-go-from-here' ),
+			'description' => esc_html__( 'Disable thumbnails and no longer include the default style sheet', 'where-did-they-go-from-here' ) . '<br />',
+		),
+		array(
+			'id'          => 'grid',
+			'name'        => esc_html__( 'Grid thumbnails', 'where-did-they-go-from-here' ),
+			'description' => '<br /><img src="' . esc_url( plugins_url( 'includes/admin/images/wherego-grid-thumbs.png', WHEREGO_PLUGIN_FILE ) ) . '" width="500" /> <br />' . esc_html__( 'Enabling this option will turn on the thumbnails and force their width and height. It will also turn off the display of the author, excerpt and date if already enabled. Disabling this option will not revert any settings.', 'where-did-they-go-from-here' ),
+		),
+	);
+
+	/**
+	 * Filter the array containing the styles to add your own.
+	 *
+	 * @since 2.3.0
+	 *
+	 * @param string $styles Different styles.
+	 */
+	return apply_filters( 'wherego_get_styles', $styles );
+}
+
+/**
+ * Upgrade v2.0.x settings to v2.1.0.
+ *
+ * @since v2.1.0
+ * @return array Settings array
+ */
+function wherego_upgrade_settings() {
+	$old_settings = get_option( 'ald_wherego_settings' );
+
+	if ( empty( $old_settings ) ) {
+		return false;
+	}
+
+	// Start will assigning all the old settings to the new settings and we will unset later on.
+	$settings = $old_settings;
+
+	// Convert the add_to_{x} to the new settings format.
+	$add_to = array(
+		'content'           => 'add_to_content',
+		'page'              => 'add_to_page',
+		'feed'              => 'add_to_feed',
+		'home'              => 'add_to_home',
+		'category_archives' => 'add_to_category_archives',
+		'tag_archives'      => 'add_to_tag_archives',
+		'other_archives'    => 'add_to_archives',
+	);
+
+	// Convert the status of the mapped flags into a a comma-separated list.
+	foreach ( $add_to as $newkey => $oldkey ) {
+		if ( $old_settings[ $oldkey ] ) {
+			$settings['add_to'][ $newkey ] = $newkey;
+		}
+		unset( $settings[ $oldkey ] );
+	}
+
+	// Convert 'blank_output' to the new format: true = 'blank' and false = 'custom_text'.
+	$settings['blank_output'] = ! empty( $old_settings['blank_output'] ) ? 'blank' : 'custom_text';
+
+	$settings['custom_css'] = $old_settings['custom_CSS'];
+
+	return $settings;
+
+}
+

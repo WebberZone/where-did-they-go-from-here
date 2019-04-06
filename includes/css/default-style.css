@@ -1,0 +1,63 @@
+.wherego_related {
+	clear: both;
+	margin: 10px 0;
+}
+.wherego_related h3 {
+	margin: 0 !important;
+}
+.wherego_related ul {
+	list-style: none;
+	float: left;
+	margin: 0 !important;
+	padding: 0 !important;
+}
+.wherego_related li, .wherego_related a {
+	float: left;
+	overflow: hidden;
+	position: relative;
+	text-align: center;
+}
+.wherego_related li {
+	margin: 5px !important;
+	border: 1px solid #ddd;
+	padding: 0;
+	list-style: none;
+}
+.wherego_related li:hover {
+	background: #eee;
+	border-color: #bbb;
+}
+.wherego_related a {
+	-webkit-box-shadow: none !important;
+	-moz-box-shadow: none !important;
+	box-shadow: none !important;
+	text-decoration: none !important;
+}
+.wherego_related a:hover {
+	text-decoration: none;
+}
+.wherego_related .wherego_title {
+	color: #fff !important;
+	position: absolute;
+	display: block;
+	bottom: 0;
+	padding: 3px;
+	font-size: .9em;
+	text-shadow: .1em .1em .2em #000;
+	background-color: rgba(0, 0, 0, 0.5);
+}
+.wherego_related li:hover .wherego_title {
+	background-color: rgba(0, 0, 0, 0.8);
+}
+.wherego_related li {
+	vertical-align: bottom;
+	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.4);
+	-moz-box-shadow: 0 1px 2px rgba(0,0,0,.4);
+	box-shadow: 0 1px 2px rgba(0,0,0,.4);
+}
+.wherego_clear {
+	clear: both;
+}
+.wherego_title:visited {
+	color: #fff !important;
+}

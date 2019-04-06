@@ -281,3 +281,38 @@ function echo_wherego( $args = array() ) {
 }
 
 
+/**
+ * Enqueue styles.
+ *
+ * @since 2.3.0
+ */
+function wherego_heading_styles() {
+
+	$thumb_width  = wherego_get_option( 'thumb_width' );
+	$thumb_height = wherego_get_option( 'thumb_height' );
+
+	if ( 'grid' === wherego_get_option( 'wherego_styles' ) ) {
+		wp_register_style( 'wherego-style-grid-thumbs', plugins_url( 'includes/css/default-style.css', WHEREGO_PLUGIN_FILE ), array(), '1.0' );
+		wp_enqueue_style( 'wherego-style-grid-thumbs' );
+
+		$custom_css = "
+.wherego_related a {
+  width: {$thumb_width}px;
+  height: {$thumb_height}px;
+  text-decoration: none;
+}
+.wherego_related img {
+  max-width: {$thumb_width}px;
+  margin: auto;
+}
+.wherego_related .wherego_title {
+  width: 100%;
+}
+                ";
+
+		wp_add_inline_style( 'wherego-style-grid-thumbs', $custom_css );
+
+	}
+}
+add_action( 'wp_enqueue_scripts', 'wherego_heading_styles' );
+

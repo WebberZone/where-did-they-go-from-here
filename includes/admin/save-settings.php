@@ -38,7 +38,8 @@ function wherego_settings_sanitize( $input = array() ) {
 	parse_str( sanitize_text_field( wp_unslash( $_POST['_wp_http_referer'] ) ), $referrer ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
 
 	// Get the various settings we've registered.
-	$settings = wherego_get_registered_settings();
+	$settings       = wherego_get_registered_settings();
+	$settings_types = wherego_get_registered_settings_types();
 
 	// Check if we need to set to defaults.
 	$reset = isset( $_POST['settings_reset'] ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
@@ -47,7 +48,7 @@ function wherego_settings_sanitize( $input = array() ) {
 		wherego_settings_reset();
 		$wherego_settings = get_option( 'wherego_settings' );
 
-		add_settings_error( 'wherego-notices', '', __( 'Settings have been reset to their default values. Reload this page to view the updated settings', 'where-did-they-go-from-here' ), 'error' );
+		add_settings_error( 'wherego-notices', 'wherego_reset', __( 'Settings have been reset to their default values. Reload this page to view the updated settings', 'where-did-they-go-from-here' ), 'error' );
 
 		return $wherego_settings;
 	}
@@ -65,47 +66,65 @@ function wherego_settings_sanitize( $input = array() ) {
 	 */
 	$input = apply_filters( 'wherego_settings_' . $tab . '_sanitize', $input );
 
+	// Create out output array by merging the existing settings with the ones submitted.
+	$output = array_merge( $wherego_settings, $input );
+
 	// Loop through each setting being saved and pass it through a sanitization filter.
-	foreach ( $input as $key => $value ) {
+	foreach ( $settings_types as $key => $type ) {
 
-		// Get the setting type (checkbox, select, etc).
-		$type = isset( $settings[ $tab ][ $key ]['type'] ) ? $settings[ $tab ][ $key ]['type'] : false;
+		/**
+		 * Skip settings that are not really settings.
+		 *
+		 * @since 2.3.0
+		 * @param  array $non_setting_types Array of types which are not settings.
+		 */
+		$non_setting_types = apply_filters( 'wherego_non_setting_types', array( 'header', 'descriptive_text' ) );
 
-		if ( $type ) {
+		if ( in_array( $type, $non_setting_types, true ) ) {
+			continue;
+		}
+
+		if ( array_key_exists( $key, $output ) ) {
 
 			/**
-			 * Field type specific filter.
+			 * Field type filter.
 			 *
 			 * @since 2.1.0
-			 * @param  array $value Setting value.
+			 * @param array $output[$key] Setting value.
 			 * @param array $key Setting key.
 			 */
-			$input[ $key ] = apply_filters( 'wherego_settings_sanitize_' . $type, $value, $key );
+			$output[ $key ] = apply_filters( 'wherego_settings_sanitize_' . $type, $output[ $key ], $key );
 		}
 
 		/**
-		 * Filter the specific key so that it can be sanitized.
+		 * Field type filter for a specific key.
 		 *
 		 * @since 2.1.0
-		 * @param array $input[ $key ] Setting key value.
+		 * @param array $output[$key] Setting value.
 		 * @param array $key Setting key.
 		 */
-		$input[ $key ] = apply_filters( 'wherego_settings_sanitize_' . $key, $input[ $key ], $key );
-	}
+		$output[ $key ] = apply_filters( 'wherego_settings_sanitize' . $key, $output[ $key ], $key );
 
-	// Loop through the whitelist and unset any that are empty for the tab being saved.
-	if ( ! empty( $settings[ $tab ] ) ) {
-		foreach ( $settings[ $tab ] as $key => $value ) {
-			if ( empty( $input[ $key ] ) && ! empty( $wherego_settings[ $key ] ) ) {
-				unset( $wherego_settings[ $key ] );
-			}
+		// Delete any key that is not present when we submit the input array.
+		if ( ! isset( $input[ $key ] ) ) {
+			unset( $output[ $key ] );
+		}
+		// Delete any settings that are no longer part of our registered settings.
+		if ( array_key_exists( $key, $output ) && ! array_key_exists( $key, $settings_types ) ) {
+			unset( $output[ $key ] );
 		}
 	}
 
-	// Merge our new settings with the existing. Force (array) in case it is empty.
-	$wherego_settings = array_merge( (array) $wherego_settings, $input );
+	add_settings_error( 'wherego-notices', 'wherego_settings', esc_html__( 'Settings updated.', 'where-did-they-go-from-here' ), 'updated' );
 
-	add_settings_error( 'wherego-notices', '', esc_html__( 'Settings updated.', 'where-did-they-go-from-here' ), 'updated' );
+	// Overwrite settings if rounded thumbnail style is selected.
+	if ( 'grid' === $output['wherego_styles'] ) {
+		add_settings_error( 'wherego-notices', 'wherego-styles', __( 'Grid Thumbnails style selected. Post author, excerpt and date disabled. Thumbnail location set to inline before text. You can change this under the Styles tab.', 'where-did-they-go-from-here' ), 'updated' );
+	}
+	// Overwrite settings if text_only thumbnail style is selected.
+	if ( 'text_only' === $output['wherego_styles'] ) {
+		add_settings_error( 'wherego-notices', 'wherego-styles', __( 'Text only style selected. Thumbnail location set to text only. You can change this under the Styles tab.', 'where-did-they-go-from-here' ), 'updated' );
+	}
 
 	/**
 	 * Filter the settings array before it is returned.
@@ -237,15 +256,16 @@ add_filter( 'wherego_settings_sanitize_post_types', 'wherego_sanitize_post_types
 
 
 /**
- * Sanitize exclude_cat_slugs to save a new entry of exclude_categories
+ * Modify settings when they are being saved.
  *
- * @since 2.1.0
+ * @since 2.3.0
  *
  * @param  array $settings Settings array.
- * @return string  $settings  Sanitizied settings array.
+ * @return string  $settings  Sanitized settings array.
  */
-function wherego_sanitize_exclude_cat( $settings ) {
+function wherego_change_settings_on_save( $settings ) {
 
+	// Sanitize exclude_cat_slugs to save a new entry of exclude_categories.
 	if ( ! empty( $settings['exclude_cat_slugs'] ) ) {
 
 		$exclude_cat_slugs = array_unique( explode( ',', $settings['exclude_cat_slugs'] ) );
@@ -262,8 +282,19 @@ function wherego_sanitize_exclude_cat( $settings ) {
 
 	}
 
+	// Overwrite settings if grid thumbnail style is selected.
+	if ( 'grid' === $settings['wherego_styles'] ) {
+		$settings['show_excerpt']  = 0;
+		$settings['show_author']   = 0;
+		$settings['show_date']     = 0;
+		$settings['post_thumb_op'] = 'inline';
+	}
+	// Overwrite settings if text_only thumbnail style is selected.
+	if ( 'text_only' === $settings['wherego_styles'] ) {
+		$settings['post_thumb_op'] = 'text_only';
+	}
+
 	return $settings;
 }
-add_filter( 'wherego_settings_sanitize', 'wherego_sanitize_exclude_cat' );
-
+add_filter( 'wherego_settings_sanitize', 'wherego_change_settings_on_save' );
 
