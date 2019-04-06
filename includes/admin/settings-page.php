@@ -515,7 +515,9 @@ function wherego_posttypes_callback( $args ) {
 	}
 
 	// If post_types is empty or contains a query string then use parse_str else consider it comma-separated.
-	if ( false === strpos( $options, '=' ) ) {
+	if ( is_array( $options ) ) {
+		$post_types = $options;
+	} elseif ( ! is_array( $options ) && false === strpos( $options, '=' ) ) {
 		$post_types = explode( ',', $options );
 	} else {
 		parse_str( $options, $post_types );
@@ -527,6 +529,8 @@ function wherego_posttypes_callback( $args ) {
 		)
 	);
 	$posts_types_inc = array_intersect( $wp_post_types, $post_types );
+
+	$html .= sprintf( '<input type="hidden" name="wherego_settings[%1$s]" value="-1" />', sanitize_key( $args['id'] ) );
 
 	foreach ( $wp_post_types as $wp_post_type ) {
 
