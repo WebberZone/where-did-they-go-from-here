@@ -1,5 +1,43 @@
 This file holds the older changelog history for the plugin
 
+= 2.1.0 =
+* Features:
+	* Updated admin page based on the Settings API
+	* `post_types` argument can now be passed in csv format
+
+* Modifications
+	* Removed Freemius
+
+* Fixed:
+	* Metabox did not save when editing attachments
+
+= 2.0.2 =
+* Modifications:
+	* Reformatted parts of Freemius as per WordPress coding standards. Changed logo used in Freemius for Opt-in
+	* Renamed .pot file to where-did-they-go-from-here.pot
+
+= 2.0.1 =
+* Fixed:
+	* Limit for number of posts broke in v2.0.0
+
+= 2.0.0 =
+* Features:
+	* Multisite activation and uninstall
+	* Shortcode: Use `[wherego]` to display the followed posts
+	* Widget: Find it in your theme customizer or under Appearances &raquo; Widgets
+	* Integrated Freemius Insights
+
+* Modifications:
+	* Enhancements to the metabox where the list of followed posts are cleaned for incorrect post IDs or published posts when saving the post
+	* Replace wick with jQuery suggest which is bundled with WordPress. This is used to power the category exclusion setting in the Admin
+	* Tracker is modified to use `admin-ajax.php` and is more compatible if jQuery is loaded in the footer instead of header
+	* Removed all non en_US language files to allow for the WordPress.org repository translation
+
+* Deprecated:
+	* Modified: timthumb has been deprecated. The script is no longer included
+	* `ald_wherego` and `echo_ald_wherego` have been deprecated. Use `get_wherego` and `echo_wherego` respectively
+	* `wherego_related` id for the div has been deprecated. Use `.wherego_related` to style
+
 = 1.7.1 =
 * New: Fixed bug with `echo_ald_wherego` introduced in v1.7
 * New: You can now view the default image in the options page
