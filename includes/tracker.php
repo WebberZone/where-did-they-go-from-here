@@ -95,7 +95,7 @@ function wherego_enqueue_scripts() {
 
 	if ( is_singular() ) {
 
-		wp_enqueue_script( 'wherego_tracker', plugins_url( 'includes/js/wherego_tracker.js', WHEREGO_PLUGIN_FILE ), array( 'jquery' ), '1.0', true );
+		wp_enqueue_script( 'wherego_tracker', plugins_url( 'includes/js/wherego_tracker.min.js', WHEREGO_PLUGIN_FILE ), array( 'jquery' ), '1.0', true );
 
 		wp_localize_script(
 			'wherego_tracker',
