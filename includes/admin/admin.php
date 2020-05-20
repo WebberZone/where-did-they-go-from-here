@@ -32,159 +32,44 @@ function wherego_add_admin_pages_links() {
 	// Load the settings contextual help.
 	add_action( "load-$wherego_settings_page", 'wherego_settings_help' );
 
-	// Load the admin head.
-	add_action( "admin_head-$wherego_settings_page", 'wherego_adminhead' );
-
 }
 add_action( 'admin_menu', 'wherego_add_admin_pages_links' );
 
 
 /**
- * Function to add CSS and JS to the Admin header.
+ * Enqueue Admin JS
  *
- * @since 1.4
- * @return void
+ * @since 2.4.0
+ *
+ * @param string $hook The current admin page.
  */
-function wherego_adminhead() {
+function wherego_load_admin_scripts( $hook ) {
 
-	wp_enqueue_script( 'jquery' );
-	wp_enqueue_script( 'jquery-ui-autocomplete' );
-	wp_enqueue_script( 'jquery-ui-tabs' );
-	?>
-	<script type="text/javascript">
-	//<![CDATA[
-		// Function to add auto suggest.
-		jQuery(document).ready(function($) {
-			$.fn.wheregoTagsSuggest = function( options ) {
+	global $wherego_settings_page;
 
-				var cache;
-				var last;
-				var $element = $( this );
+	wp_register_script( 'wherego-admin-js', WHEREGO_PLUGIN_URL . 'includes/admin/js/admin-scripts.min.js', array( 'jquery', 'jquery-ui-tabs', 'jquery-ui-datepicker' ), '1.0', true );
+	wp_register_script( 'wherego-suggest-js', WHEREGO_PLUGIN_URL . 'includes/admin/js/wherego-suggest.min.js', array( 'jquery', 'jquery-ui-autocomplete' ), '1.0', true );
 
-				var taxonomy = $element.attr( 'data-wp-taxonomy' ) || 'category';
+	if ( $hook === $wherego_settings_page ) {
 
-				function split( val ) {
-					return val.split( /,\s*/ );
-				}
+		wp_enqueue_script( 'wherego-admin-js' );
+		wp_enqueue_script( 'wherego-suggest-js' );
+		wp_enqueue_script( 'plugin-install' );
+		add_thickbox();
 
-				function extractLast( term ) {
-					return split( term ).pop();
-				}
+		wp_enqueue_code_editor(
+			array(
+				'type'       => 'text/html',
+				'codemirror' => array(
+					'indentUnit' => 2,
+					'tabSize'    => 2,
+				),
+			)
+		);
 
-				$element.on( "keydown", function( event ) {
-						// Don't navigate away from the field on tab when selecting an item.
-						if ( event.keyCode === $.ui.keyCode.TAB &&
-						$( this ).autocomplete( 'instance' ).menu.active ) {
-							event.preventDefault();
-						}
-					})
-					.autocomplete({
-						minLength: 2,
-						source: function( request, response ) {
-							var term;
-
-							if ( last === request.term ) {
-								response( cache );
-								return;
-							}
-
-							term = extractLast( request.term );
-
-							if ( last === request.term ) {
-								response( cache );
-								return;
-							}
-
-							$.ajax({
-								type: 'POST',
-								dataType: 'json',
-								url: '<?php echo admin_url( 'admin-ajax.php' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>',
-								data: {
-									action: 'wherego_tag_search',
-									tax: taxonomy,
-									q: term
-								},
-								success: function( data ) {
-									cache = data;
-
-									response( data );
-								}
-							});
-
-							last = request.term;
-
-						},
-						search: function() {
-							// Custom minLength.
-							var term = extractLast( this.value );
-
-							if ( term.length < 2 ) {
-								return false;
-							}
-						},
-						focus: function( event, ui ) {
-							// Prevent value inserted on focus.
-							event.preventDefault();
-						},
-						select: function( event, ui ) {
-							var terms = split( this.value );
-
-							// Remove the last user input.
-							terms.pop();
-
-							// Add the selected item.
-							terms.push( ui.item.value );
-
-							// Add placeholder to get the comma-and-space at the end.
-							terms.push( "" );
-							this.value = terms.join( ", " );
-							return false;
-						}
-					});
-
-			};
-
-			$( '.category_autocomplete' ).each( function ( i, element ) {
-				$( element ).wheregoTagsSuggest();
-			});
-
-			// Prompt the user when they leave the page without saving the form.
-			formmodified=0;
-
-			$('form *').change(function(){
-				formmodified=1;
-			});
-
-			window.onbeforeunload = confirmExit;
-
-			function confirmExit() {
-				if (formmodified == 1) {
-					return "<?php esc_html__( 'New information not saved. Do you wish to leave the page?', 'where-did-they-go-from-here' ); ?>";
-				}
-			}
-
-			$( "input[name='submit']" ).click( function() {
-				formmodified = 0;
-			});
-
-			$( function() {
-				$( "#post-body-content" ).tabs({
-					create: function( event, ui ) {
-						$( ui.tab.find("a") ).addClass( "nav-tab-active" );
-					},
-					activate: function( event, ui ) {
-						$( ui.oldTab.find("a") ).removeClass( "nav-tab-active" );
-						$( ui.newTab.find("a") ).addClass( "nav-tab-active" );
-					}
-				});
-			});
-
-		});
-
-	//]]>
-	</script>
-	<?php
+	}
 }
+add_action( 'admin_enqueue_scripts', 'wherego_load_admin_scripts' );
 
 
 /**

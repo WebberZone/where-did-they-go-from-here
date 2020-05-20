@@ -405,12 +405,13 @@ function wherego_settings_styles() {
 			'options' => wherego_get_styles(),
 		),
 		'custom_css'     => array(
-			'id'      => 'custom_css',
-			'name'    => esc_html__( 'Custom CSS', 'where-did-they-go-from-here' ),
+			'id'          => 'custom_css',
+			'name'        => esc_html__( 'Custom CSS', 'where-did-they-go-from-here' ),
 			/* translators: 1: Opening a tag, 2: Closing a tag, 3: Opening code tage, 4. Closing code tag. */
-			'desc'    => sprintf( esc_html__( 'Do not include %3$sstyle%4$s tags. Check out the %1$sFAQ%2$s for available CSS classes to style.', 'where-did-they-go-from-here' ), '<a href="' . esc_url( 'https://wordpress.org/plugins/where-did-they-go-from-here/faq/' ) . '" target="_blank">', '</a>', '<code>', '</code>' ),
-			'type'    => 'textarea',
-			'options' => '',
+			'desc'        => sprintf( esc_html__( 'Do not include %3$sstyle%4$s tags. Check out the %1$sFAQ%2$s for available CSS classes to style.', 'where-did-they-go-from-here' ), '<a href="' . esc_url( 'https://wordpress.org/plugins/where-did-they-go-from-here/faq/' ) . '" target="_blank">', '</a>', '<code>', '</code>' ),
+			'type'        => 'textarea',
+			'options'     => '',
+			'field_class' => 'codemirror_css',
 		),
 	);
 
