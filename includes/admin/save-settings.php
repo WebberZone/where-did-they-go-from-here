@@ -302,7 +302,7 @@ function wherego_change_settings_on_save( $settings ) {
 	// Sanitize exclude_cat_slugs to save a new entry of exclude_categories.
 	if ( isset( $settings['exclude_cat_slugs'] ) ) {
 
-		$exclude_cat_slugs = array_unique( explode( ',', $settings['exclude_cat_slugs'] ) );
+		$exclude_cat_slugs = array_unique( str_getcsv( $settings['exclude_cat_slugs'] ) );
 
 		foreach ( $exclude_cat_slugs as $cat_name ) {
 			$cat = get_term_by( 'name', $cat_name, 'category' );
@@ -312,7 +312,7 @@ function wherego_change_settings_on_save( $settings ) {
 			}
 		}
 		$settings['exclude_categories'] = isset( $exclude_categories ) ? join( ',', $exclude_categories ) : '';
-		$settings['exclude_cat_slugs']  = isset( $exclude_category_slugs ) ? join( ',', $exclude_category_slugs ) : '';
+		$settings['exclude_cat_slugs']  = isset( $exclude_category_slugs ) ? wherego_str_putcsv( $exclude_category_slugs ) : '';
 
 	}
 
