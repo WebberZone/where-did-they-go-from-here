@@ -111,8 +111,9 @@ require_once WHEREGO_PLUGIN_DIR . 'includes/activate-deactivate.php';
 require_once WHEREGO_PLUGIN_DIR . 'includes/main.php';
 require_once WHEREGO_PLUGIN_DIR . 'includes/public/media.php';
 require_once WHEREGO_PLUGIN_DIR . 'includes/public/output-generator.php';
-require_once WHEREGO_PLUGIN_DIR . 'includes/tracker.php';
+require_once WHEREGO_PLUGIN_DIR . 'includes/cache.php';
 require_once WHEREGO_PLUGIN_DIR . 'includes/formatting.php';
+require_once WHEREGO_PLUGIN_DIR . 'includes/tracker.php';
 require_once WHEREGO_PLUGIN_DIR . 'includes/deprecated.php';
 
 /*

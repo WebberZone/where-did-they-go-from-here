@@ -97,9 +97,9 @@ function wherego_save_meta_box( $post_id ) {
 		return;
 	}
 
-	if ( isset( $_POST['wherego_post_ids'] ) && ! empty( $_POST['wherego_post_ids'] ) ) { // Input var okay.
+	if ( isset( $_POST['wherego_post_ids'] ) && ! empty( $_POST['wherego_post_ids'] ) ) {
 
-		$wherego_post_ids = array_map( 'intval', explode( ',', sanitize_text_field( wp_unslash( $_POST['wherego_post_ids'] ) ) ) ); // Input var okay.
+		$wherego_post_ids = array_map( 'intval', explode( ',', sanitize_text_field( wp_unslash( $_POST['wherego_post_ids'] ) ) ) );
 
 		foreach ( $wherego_post_ids as $key => $value ) {
 			if ( 'publish' !== get_post_status( $value ) ) {
@@ -115,6 +115,8 @@ function wherego_save_meta_box( $post_id ) {
 	} else {
 		delete_post_meta( $post_id, 'wheredidtheycomefrom' );
 	}
+
+	wherego_cache_delete_by_post( $post_id );
 
 }
 add_action( 'save_post', 'wherego_save_meta_box' );

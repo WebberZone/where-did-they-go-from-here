@@ -33,6 +33,17 @@ function get_wherego( $args = array() ) {
 	// Parse incomming $args into an array and merge it with $defaults.
 	$args = wp_parse_args( $args, $defaults );
 
+	// Check the cache first.
+	if ( ! empty( $args['cache'] ) && ! ( is_preview() || is_admin() || ( defined( 'REST_REQUEST' ) && REST_REQUEST ) ) ) {
+		$meta_key = wherego_cache_get_key( $args );
+
+		$output = get_post_meta( $post->ID, $meta_key, true );
+		if ( $output ) {
+			/** This filter has been defined in main.php */
+			return apply_filters( 'get_wherego', $output, $args );
+		}
+	}
+
 	$exclude_categories = array_map( 'intval', explode( ',', $args['exclude_categories'] ) );       // Extract categories to exclude.
 
 	// If post_types is empty or contains a query string then use parse_str else consider it comma-separated.
@@ -148,6 +159,11 @@ function get_wherego( $args = array() ) {
 	}
 
 	$output .= '</div>'; // Closing div of 'wherego_related'.
+
+	// Support caching to speed up retrieval.
+	if ( ! empty( $args['cache'] ) && ! ( is_preview() || is_admin() || ( defined( 'REST_REQUEST' ) && REST_REQUEST ) ) ) {
+		update_post_meta( $post->ID, $meta_key, $output, '' );
+	}
 
 	/**
 	 * Filter the output
@@ -321,3 +337,18 @@ function wherego_heading_styles() {
 }
 add_action( 'wp_enqueue_scripts', 'wherego_heading_styles' );
 
+
+/**
+ * Get the meta key based on a list of parameters.
+ *
+ * @since 2.4.0
+ *
+ * @param array $attr   Array of attributes.
+ * @return string Cache meta key
+ */
+function wherego_cache_get_key( $attr ) {
+
+	$meta_key = '_wherego_cache_' . md5( wp_json_encode( $attr ) );
+
+	return $meta_key;
+}

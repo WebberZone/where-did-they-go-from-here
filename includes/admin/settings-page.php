@@ -70,7 +70,6 @@ function wherego_options_page() {
 							'submit',
 							false
 						);
-
 						echo '&nbsp;&nbsp;';
 
 						// Reset button.
@@ -84,7 +83,10 @@ function wherego_options_page() {
 								'onclick' => "return confirm('{$confirm}');",
 							)
 						);
+						echo '&nbsp;&nbsp;';
+
 					?>
+						<input type="button" name="cache_clear" id="cache_clear"  value="<?php esc_attr_e( 'Clear cache', 'where-did-they-go-from-here' ); ?>" class="button button-secondary" onclick="return wheregoClearCache();" />
 					</p>
 				</div><!-- /#tab_id-->
 
