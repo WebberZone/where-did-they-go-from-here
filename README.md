@@ -1,14 +1,18 @@
 # WebberZone Followed Posts
 
+![Knowledge Base](https://raw.githubusercontent.com/WebberZone/where-did-they-go-from-here/master/wporg-assets/banner-1544x500.png)
+
 [![WordPress Plugin Version](https://img.shields.io/wordpress/plugin/v/where-did-they-go-from-here.svg?style=flat-square)](https://wordpress.org/plugins/where-did-they-go-from-here/)
-[![License](https://img.shields.io/badge/license-GPL_v2%2B-orange.svg?style=flat-square)](http://opensource.org/licenses/GPL-2.0)
+[![License](https://img.shields.io/badge/license-GPL_v2%2B-orange.svg?style=flat-square)](https://opensource.org/licenses/GPL-2.0)
 [![WordPress Tested](https://img.shields.io/wordpress/v/where-did-they-go-from-here.svg?style=flat-square)](https://wordpress.org/plugins/where-did-they-go-from-here/)
-[![Build Status](https://travis-ci.org/WebberZone/where-did-they-go-from-here.svg?branch=master)](https://travis-ci.org/WebberZone/where-did-they-go-from-here)
-[![Code Climate](https://codeclimate.com/github/WebberZone/where-did-they-go-from-here/badges/gpa.svg)](https://codeclimate.com/github/WebberZone/where-did-they-go-from-here)
+[![Required PHP](https://img.shields.io/wordpress/plugin/required-php/where-did-they-go-from-here?style=flat-square)](https://wordpress.org/plugins/where-did-they-go-from-here/)
+[![Active installs](https://img.shields.io/wordpress/plugin/installs/where-did-they-go-from-here?style=flat-square)](https://wordpress.org/plugins/where-did-they-go-from-here/)
 
-__Requires:__ 4.9
+__Requires:__ 5.6
 
-__Tested up to:__ 5.4
+__Tested up to:__ 5.9
+
+__Requires PHP:__ 7.1
 
 __License:__ [GPL-2.0+](https://www.gnu.org/licenses/gpl-2.0.html)
 

@@ -14,7 +14,7 @@
  * Plugin Name: WebberZone Followed Posts
  * Plugin URI:  https://webberzone.com/plugins/webberzone-followed-posts/
  * Description: The best way to display posts followed by users a.k.a. "Readers who viewed this page, also viewed" links
- * Version:     2.4.0
+ * Version:     3.0.0-beta1
  * Author:      Ajay D'Souza
  * Author URI:  https://webberzone.com
  * License:     GPL-2.0+
@@ -62,42 +62,6 @@ if ( ! defined( 'WHEREGO_PLUGIN_URL' ) ) {
 	define( 'WHEREGO_PLUGIN_URL', plugin_dir_url( WHEREGO_PLUGIN_FILE ) );
 }
 
-
-/**
- * Plugin settings.
- *
- * @since 1.6
- *
- * @var string
- */
-global  $wherego_settings;
-$wherego_settings = wherego_get_settings();
-
-
-/**
- * Get Settings.
- *
- * Retrieves all plugin settings
- *
- * @since 2.1.0
- * @return array Add to All settings
- */
-function wherego_get_settings() {
-
-	$settings = get_option( 'wherego_settings' );
-
-	/**
-	 * Settings array
-	 *
-	 * Retrieves all plugin settings
-	 *
-	 * @since 2.1.0
-	 * @param array $settings Settings array.
-	 */
-	return apply_filters( 'wherego_get_settings', $settings );
-}
-
-
 /*
  *----------------------------------------------------------------------------
  * Includes
@@ -143,4 +107,36 @@ if ( is_admin() || ( defined( 'WP_CLI' ) && WP_CLI ) ) {
 
 }
 
+/**
+ * Plugin settings.
+ *
+ * @since 1.6
+ *
+ * @var string
+ */
+global  $wherego_settings;
+$wherego_settings = wherego_get_settings();
 
+
+/**
+ * Get Settings.
+ *
+ * Retrieves all plugin settings
+ *
+ * @since 2.1.0
+ * @return array Add to All settings
+ */
+function wherego_get_settings() {
+
+	$settings = get_option( 'wherego_settings' );
+
+	/**
+	 * Settings array
+	 *
+	 * Retrieves all plugin settings
+	 *
+	 * @since 2.1.0
+	 * @param array $settings Settings array.
+	 */
+	return apply_filters( 'wherego_get_settings', $settings );
+}

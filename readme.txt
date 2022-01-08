@@ -3,9 +3,9 @@ Tags: followed posts, related posts, visitors, tracking, similar posts, where di
 Contributors: Ajay, webberzone
 Donate link: https://ajaydsouza.com/donate/
 Stable tag: 2.4.0
-Requires at least: 4.9
-Requires PHP: 5.6
-Tested up to: 5.4
+Requires at least: 5.6
+Requires PHP: 7.1
+Tested up to: 5.9
 License: GPLv2 or later
 
 Show "Readers who viewed this page, also viewed" a.k.a. followed posts on your page. Much like Amazon.com's product pages.

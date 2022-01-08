@@ -1,0 +1,20 @@
+{
+    "name": "webberzone/where-did-they-go-from-here",
+    "description": "WebberZone Followed Posts allows you to display a list of posts that are visited from the custom post.",
+    "type": "wordpress-plugin",
+    "keywords": [
+        "followed posts",
+        "where did they go from here"
+    ],
+    "license": "gpl-2.0-or-later",
+    "authors": [
+        {
+            "name": "WebberZone",
+            "email": "plugins@webberzone.com",
+            "role": "Developer"
+        }
+    ],
+    "requires": {
+        "php": ">=7.1"
+    }
+}
