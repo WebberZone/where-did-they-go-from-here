@@ -261,7 +261,7 @@ function wherego_settings_defaults() {
 				$options[ $option['id'] ] = 0;
 			}
 			// If an option is set.
-			if ( in_array( $option['type'], array( 'textarea', 'text', 'csv', 'numbercsv', 'posttypes', 'number' ), true ) && isset( $option['options'] ) ) {
+			if ( in_array( $option['type'], array( 'textarea', 'text', 'csv', 'numbercsv', 'posttypes', 'number', 'custom_css', 'color' ), true ) && isset( $option['options'] ) ) {
 				$options[ $option['id'] ] = $option['options'];
 			}
 			if ( in_array( $option['type'], array( 'multicheck', 'radio', 'select', 'radiodesc', 'thumbsizes' ), true ) && isset( $option['default'] ) ) {
@@ -318,4 +318,3 @@ function wherego_get_default_option( $key = '' ) {
 function wherego_settings_reset() {
 	delete_option( 'wherego_settings' );
 }
-
