@@ -328,14 +328,13 @@ function wherego_list_link( $args, $result ) {
 	if ( 'inline' === $args['post_thumb_op'] || 'after' === $args['post_thumb_op'] || 'thumbs_only' === $args['post_thumb_op'] ) {
 		$output .= wherego_get_the_post_thumbnail(
 			array(
-				'postid'             => $result->ID,
-				'thumb_height'       => $args['thumb_height'],
-				'thumb_width'        => $args['thumb_width'],
+				'post'               => $result,
+				'size'               => $args['thumb_size'],
 				'thumb_meta'         => $args['thumb_meta'],
 				'thumb_html'         => $args['thumb_html'],
 				'thumb_default'      => $args['thumb_default'],
-				'thumb_default_show' => ( isset( $args['thumb_default_show'] ) && $args['thumb_default_show'] ),
-				'scan_images'        => ( isset( $args['scan_images'] ) && $args['scan_images'] ),
+				'thumb_default_show' => $args['thumb_default_show'],
+				'scan_images'        => $args['scan_images'],
 				'class'              => 'wherego_thumb',
 			)
 		);

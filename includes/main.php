@@ -21,6 +21,8 @@ if ( ! defined( 'WPINC' ) ) {
 function get_wherego( $args = array() ) {
 	global $post, $wherego_settings;
 
+	$wherego_settings = wherego_get_settings();
+
 	$defaults = array(
 		'is_widget'    => false,
 		'is_shortcode' => false,
@@ -44,7 +46,10 @@ function get_wherego( $args = array() ) {
 		}
 	}
 
-	$exclude_categories = array_map( 'intval', explode( ',', $args['exclude_categories'] ) );       // Extract categories to exclude.
+	// Get thumbnail size.
+	list( $args['thumb_width'], $args['thumb_height'] ) = wherego_get_thumb_size( $args['thumb_size'] );
+
+	$exclude_categories = wp_parse_id_list( $args['exclude_categories'] );
 
 	// If post_types is empty or contains a query string then use parse_str else consider it comma-separated.
 	if ( ! empty( $args['post_types'] ) && is_array( $args['post_types'] ) ) {
@@ -55,10 +60,12 @@ function get_wherego( $args = array() ) {
 		parse_str( $args['post_types'], $post_types );  // Save post types in $post_types variable.
 	}
 
-	$results = get_post_meta( $post->ID, 'wheredidtheycomefrom', true );    // Extract posts list from the meta field.
+	// Extract posts list from the meta field.
+	$results = get_post_meta( $post->ID, 'wheredidtheycomefrom', true );
 
+	// Delete excluded post IDs.
 	if ( $results ) {
-		$results = array_diff( $results, array_map( 'intval', explode( ',', $args['exclude_post_ids'] ) ) );
+		$results = array_diff( $results, wp_parse_id_list( $args['exclude_post_ids'] ) );
 	}
 
 	$widget_class    = $args['is_widget'] ? 'wherego_related_widget' : 'wherego_related ';
@@ -228,7 +235,7 @@ add_action( 'wp_head', 'wherego_header' );
 function wherego_content( $content ) {
 
 	global $post, $wherego_id;
-	$wherego_id = intval( $post->ID );
+	$wherego_id = absint( $post->ID );
 
 	$add_to              = wherego_get_option( 'add_to', false );
 	$exclude_on_post_ids = explode( ',', wherego_get_option( 'exclude_on_post_ids' ) );

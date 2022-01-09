@@ -269,7 +269,7 @@ function wherego_textarea_callback( $args ) {
 
 	$class = sanitize_html_class( $args['field_class'] );
 
-	$html  = sprintf( '<textarea class="%3$s" cols="50" rows="20" id="wherego_settings[%1$s]" name="wherego_settings[%1$s]">%2$s</textarea>', sanitize_key( $args['id'] ), esc_textarea( stripslashes( $value ) ), 'large-text ' . $class );
+	$html  = sprintf( '<textarea class="%3$s" cols="50" rows="5" id="wherego_settings[%1$s]" name="wherego_settings[%1$s]">%2$s</textarea>', sanitize_key( $args['id'] ), esc_textarea( stripslashes( $value ) ), 'large-text ' . $class );
 	$html .= '<p class="description">' . wp_kses_post( $args['desc'] ) . '</p>';
 
 	/** This filter has been defined in settings-page.php */
@@ -606,6 +606,47 @@ function wherego_taxonomies_callback( $args ) {
 
 
 /**
+ * Callback for thumbnail sizes
+ *
+ * Renders list of radio boxes with various thumbnail sizes.
+ *
+ * @since 3.0.0
+ *
+ * @param array $args Array of arguments.
+ * @return void
+ */
+function wherego_thumbsizes_callback( $args ) {
+	global $wherego_settings;
+	$html = '';
+
+	foreach ( $args['options'] as $name => $option ) {
+		$checked = false;
+
+		if ( isset( $wherego_settings[ $args['id'] ] ) && $wherego_settings[ $args['id'] ] === $name ) {
+			$checked = true;
+		} elseif ( isset( $args['default'] ) && $args['default'] === $name && ! isset( $wherego_settings[ $args['id'] ] ) ) {
+			$checked = true;
+		}
+
+		$html .= sprintf( '<input name="wherego_settings[%1$s]" id="wherego_settings[%1$s][%2$s]" type="radio" value="%2$s" %3$s /> ', sanitize_key( $args['id'] ), $name, checked( true, $checked, false ) );
+		$html .= sprintf(
+			'<label for="wherego_settings[%1$s][%2$s]">%2$s (%3$sx%4$s%5$s)</label> <br />',
+			sanitize_key( $args['id'] ),
+			$name,
+			(int) $option['width'],
+			(int) $option['height'],
+			(bool) $option['crop'] ? ' ' . __( 'cropped' ) : ''
+		);
+	}
+
+	$html .= '<p class="description">' . wp_kses_post( $args['desc'] ) . '</p>';
+
+	/** This filter has been defined in settings-page.php */
+	echo apply_filters( 'wherego_after_setting_output', $html, $args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+}
+
+
+/**
  * Function to add an action to search for tags using Ajax.
  *
  * @since 2.1.0
@@ -687,4 +728,3 @@ function wherego_admin_thumbnail( $html, $args ) {
 	return $html;
 }
 add_filter( 'wherego_after_setting_output', 'wherego_admin_thumbnail', 10, 2 );
-

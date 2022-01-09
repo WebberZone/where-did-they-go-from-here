@@ -322,18 +322,26 @@ function wherego_settings_thumbnail() {
 				'text_only'   => esc_html__( 'Do not display thumbnails, only text', 'where-did-they-go-from-here' ),
 			),
 		),
+		'thumb_size'         => array(
+			'id'      => 'thumb_size',
+			'name'    => esc_html__( 'Thumbnail size', 'where-did-they-go-from-here' ),
+			'desc'    => esc_html__( 'You can choose from one of the registered image sizes', 'where-did-they-go-from-here' ),
+			'type'    => 'thumbsizes',
+			'default' => 'thumbnail',
+			'options' => wherego_get_all_image_sizes(),
+		),
 		'thumb_width'        => array(
 			'id'      => 'thumb_width',
-			'name'    => esc_html__( 'Thumbnail width', 'where-did-they-go-from-here' ),
-			'desc'    => '',
+			'name'    => esc_html__( 'Thumbnail container width', 'where-did-they-go-from-here' ),
+			'desc'    => esc_html__( 'Used to set the width of the image container (not the image width)', 'where-did-they-go-from-here' ),
 			'type'    => 'number',
 			'options' => '150',
 			'size'    => 'small',
 		),
 		'thumb_height'       => array(
 			'id'      => 'thumb_height',
-			'name'    => esc_html__( 'Thumbnail height', 'where-did-they-go-from-here' ),
-			'desc'    => '',
+			'name'    => esc_html__( 'Thumbnail container height', 'where-did-they-go-from-here' ),
+			'desc'    => esc_html__( 'Used to set the height of the image container (not the image height)', 'where-did-they-go-from-here' ),
 			'type'    => 'number',
 			'options' => '150',
 			'size'    => 'small',
@@ -346,9 +354,9 @@ function wherego_settings_thumbnail() {
 			'default' => 'html',
 			'options' => array(
 				/* translators: %s: Code. */
-				'css'  => sprintf( esc_html__( 'Use CSS to set the width and height: e.g. %s', 'where-did-they-go-from-here' ), '<code>style="max-width:250px;max-height:250px"</code>' ),
-				/* translators: %s: Code. */
 				'html' => sprintf( esc_html__( 'Use HTML attributes to set the width and height: e.g. %s', 'where-did-they-go-from-here' ), '<code>width="250" height="250"</code>' ),
+				/* translators: %s: Code. */
+				'css'  => sprintf( esc_html__( 'Use CSS to set the width and height: e.g. %s', 'where-did-they-go-from-here' ), '<code>style="max-width:250px;max-height:250px"</code>' ),
 				'none' => esc_html__( 'No width or height set. You will need to use external styles to force any width or height of your choice.', 'where-did-they-go-from-here' ),
 			),
 		),
