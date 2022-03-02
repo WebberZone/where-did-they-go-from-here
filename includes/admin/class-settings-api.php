@@ -1482,6 +1482,8 @@ if ( ! class_exists( 'Settings_API' ) ) :
 						)
 					);
 
+					echo '&nbsp;&nbsp;';
+
 					/**
 					 * Action to add more buttons in each tab.
 					 *
