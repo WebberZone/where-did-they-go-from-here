@@ -45,7 +45,8 @@ function wherego_delete_data() {
 		"
 		DELETE FROM {$wpdb->postmeta}
 		WHERE meta_key LIKE 'wheredidtheycomefrom'
-	"
+		OR `meta_key` LIKE '_wherego_cache_%'
+		"
 	);
 
 	delete_option( 'ald_wherego_settings' );

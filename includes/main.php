@@ -39,7 +39,7 @@ function get_wherego( $args = array() ) {
 	if ( ! empty( $args['cache'] ) && ! ( is_preview() || is_admin() || ( defined( 'REST_REQUEST' ) && REST_REQUEST ) ) ) {
 		$meta_key = wherego_cache_get_key( $args );
 
-		$output = get_post_meta( $post->ID, $meta_key, true );
+		$output = get_wherego_cache( $post->ID, $meta_key );
 		if ( $output ) {
 			/** This filter has been defined in main.php */
 			return apply_filters( 'get_wherego', $output, $args );
@@ -175,7 +175,7 @@ function get_wherego( $args = array() ) {
 
 	// Support caching to speed up retrieval.
 	if ( ! empty( $args['cache'] ) && ! ( is_preview() || is_admin() || ( defined( 'REST_REQUEST' ) && REST_REQUEST ) ) ) {
-		update_post_meta( $post->ID, $meta_key, $output, '' );
+		set_wherego_cache( $post->ID, $meta_key, $output );
 	}
 
 	/**
@@ -383,19 +383,4 @@ function wherego_get_style() {
 	 * @param int    $thumb_height Thumbnail height.
 	 */
 	return apply_filters( 'wherego_get_style', $style, $wherego_style, $thumb_width, $thumb_height );
-}
-
-/**
- * Get the meta key based on a list of parameters.
- *
- * @since 2.4.0
- *
- * @param array $attr   Array of attributes.
- * @return string Cache meta key
- */
-function wherego_cache_get_key( $attr ) {
-
-	$meta_key = '_wherego_cache_' . md5( wp_json_encode( $attr ) );
-
-	return $meta_key;
 }
