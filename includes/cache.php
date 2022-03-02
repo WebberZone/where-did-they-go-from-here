@@ -143,6 +143,7 @@ function wherego_cache_delete_by_post( $post_id = null ) {
 	if ( empty( $post_id ) ) {
 		return;
 	}
+	$flag = array();
 
 	// Clear cache of current post.
 	$default_meta_keys = wherego_cache_get_keys( $post_id );
