@@ -118,6 +118,14 @@ function wherego_save_meta_box( $post_id ) {
 
 	wherego_cache_delete_by_post( $post_id );
 
+	/**
+	 * Action triggered when saving meta box settings.
+	 *
+	 * @since   3.0.0
+	 *
+	 * @param   int $post_id    Post ID
+	 */
+	do_action( 'wherego_save_meta_box', $post_id );
 }
 add_action( 'save_post', 'wherego_save_meta_box' );
 add_action( 'edit_attachment', 'wherego_save_meta_box' );
