@@ -148,6 +148,12 @@ function wherego_get_the_post_thumbnail( $args = array() ) {
 		$pick      = 'video_thumb';
 	}
 
+	// If no thumb found and settings permit, use default thumb.
+	if ( ! $postimage && $args['thumb_default_show'] ) {
+		$postimage = $args['thumb_default'];
+		$pick      = 'default_thumb';
+	}
+
 	// If no thumb found and settings permit, use site icon.
 	if ( ! $postimage ) {
 		$postimage = get_site_icon_url( max( $args['thumb_width'], $args['thumb_height'] ) );
@@ -157,12 +163,6 @@ function wherego_get_the_post_thumbnail( $args = array() ) {
 	if ( ! $postimage ) {
 		$postimage = get_site_icon_url( min( $args['thumb_width'], $args['thumb_height'] ) );
 		$pick      = 'site_icon_min';
-	}
-
-	// If no thumb found and settings permit, use default thumb.
-	if ( ! $postimage && $args['thumb_default_show'] ) {
-		$postimage = $args['thumb_default'];
-		$pick      = 'default_thumb';
 	}
 
 	// Hopefully, we've found a thumbnail by now. If so, run it through the custom filter, check for SSL and create the image tag.
