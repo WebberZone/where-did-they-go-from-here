@@ -68,8 +68,9 @@ if ( ! defined( 'WHEREGO_PLUGIN_URL' ) ) {
  *----------------------------------------------------------------------------
  */
 
-require_once WHEREGO_PLUGIN_DIR . 'includes/admin/default-settings.php';
-require_once WHEREGO_PLUGIN_DIR . 'includes/admin/register-settings.php';
+require_once WHEREGO_PLUGIN_DIR . 'includes/admin/class-settings-api.php';
+require_once WHEREGO_PLUGIN_DIR . 'includes/admin/class-wzfp-settings.php';
+require_once WHEREGO_PLUGIN_DIR . 'includes/admin/options-api.php';
 require_once WHEREGO_PLUGIN_DIR . 'includes/i18n.php';
 require_once WHEREGO_PLUGIN_DIR . 'includes/activate-deactivate.php';
 require_once WHEREGO_PLUGIN_DIR . 'includes/main.php';
@@ -98,10 +99,6 @@ require_once WHEREGO_PLUGIN_DIR . 'includes/modules/class-wherego-widget.php';
 
 if ( is_admin() || ( defined( 'WP_CLI' ) && WP_CLI ) ) {
 
-	require_once WHEREGO_PLUGIN_DIR . 'includes/admin/admin.php';
-	require_once WHEREGO_PLUGIN_DIR . 'includes/admin/settings-page.php';
-	require_once WHEREGO_PLUGIN_DIR . 'includes/admin/save-settings.php';
-	require_once WHEREGO_PLUGIN_DIR . 'includes/admin/help-tab.php';
 	require_once WHEREGO_PLUGIN_DIR . 'includes/admin/admin-metabox.php';
 	require_once WHEREGO_PLUGIN_DIR . 'includes/admin/admin-columns.php';
 
