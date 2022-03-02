@@ -322,29 +322,68 @@ function echo_wherego( $args = array() ) {
  */
 function wherego_heading_styles() {
 
-	$thumb_width  = wherego_get_option( 'thumb_width' );
-	$thumb_height = wherego_get_option( 'thumb_height' );
+	$minimize    = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
+	$style_array = wherego_get_style();
 
-	if ( 'grid' === wherego_get_option( 'wherego_styles' ) ) {
-		wp_register_style( 'wherego-style-grid-thumbs', plugins_url( 'includes/css/default-style.css', WHEREGO_PLUGIN_FILE ), array(), '1.0' );
-		wp_enqueue_style( 'wherego-style-grid-thumbs' );
+	if ( ! empty( $style_array['name'] ) ) {
+		$style     = $style_array['name'];
+		$extra_css = $style_array['extra_css'];
 
-		$custom_css = "
-.wherego_related ul {
-	grid-template-columns: repeat(auto-fill, minmax({$thumb_width}px, 1fr));
-}
-.wherego_related ul li a img {
-	max-width:{$thumb_width}px;
-	max-height:{$thumb_height}px;
-}
-                ";
-
-		wp_add_inline_style( 'wherego-style-grid-thumbs', $custom_css );
-
+		wp_register_style( "wherego-style-{$style}", plugins_url( "includes/css/{$style}{$minimize}.css", WHEREGO_PLUGIN_FILE ), array(), '1.0.0' );
+		wp_enqueue_style( "wherego-style-{$style}" );
+		wp_add_inline_style( "wherego-style-{$style}", $extra_css );
 	}
 }
 add_action( 'wp_enqueue_scripts', 'wherego_heading_styles' );
 
+
+/**
+ * Get the current style for the followed posts.
+ *
+ * @since 3.0.0
+ *
+ * @return array Contains two elements:
+ *               'name' holding style name and 'extra_css' to be added inline.
+ */
+function wherego_get_style() {
+
+	$style         = array();
+	$thumb_width   = wherego_get_option( 'thumb_width' );
+	$thumb_height  = wherego_get_option( 'thumb_height' );
+	$wherego_style = wherego_get_option( 'wherego_styles' );
+
+	switch ( $wherego_style ) {
+		case 'grid':
+			$style['name']      = 'grid';
+			$style['extra_css'] = "
+			.wherego_related ul {
+				grid-template-columns: repeat(auto-fill, minmax({$thumb_width}px, 1fr));
+			}
+			.wherego_related ul li a img {
+				max-width:{$thumb_width}px;
+				max-height:{$thumb_height}px;
+			}
+			";
+			break;
+
+		default:
+			$style['name']      = '';
+			$style['extra_css'] = '';
+			break;
+	}
+
+	/**
+	 * Filter the style array which contains the name and extra_css.
+	 *
+	 * @since 3.0.0
+	 *
+	 * @param array  $style        Style array containing name and extra_css.
+	 * @param string $wherego_style    Style name.
+	 * @param int    $thumb_width  Thumbnail width.
+	 * @param int    $thumb_height Thumbnail height.
+	 */
+	return apply_filters( 'wherego_get_style', $style, $wherego_style, $thumb_width, $thumb_height );
+}
 
 /**
  * Get the meta key based on a list of parameters.
