@@ -68,6 +68,16 @@ function get_wherego( $args = array() ) {
 		$results = array_diff( $results, wp_parse_id_list( $args['exclude_post_ids'] ) );
 	}
 
+	/**
+	 * Filter object containing the post IDs.
+	 *
+	 * @since 3.0.0
+	 *
+	 * @param array $results Array containing the related post IDs
+	 * @param array $args    Arguments array.
+	 */
+	$results = apply_filters( 'get_wherego_posts_id', $results, $args );
+
 	$widget_class    = $args['is_widget'] ? 'wherego_related_widget' : 'wherego_related ';
 	$shortcode_class = $args['is_shortcode'] ? 'wherego_related_shortcode ' : '';
 
@@ -93,14 +103,10 @@ function get_wherego( $args = array() ) {
 
 		foreach ( $results as $result ) {
 
-			if ( 0 === (int) $result ) {
-				break;
-			}
-
 			$result = get_post( $result );
 
 			if ( ! $result || ! in_array( $result->post_type, $post_types, true ) ) {
-				break; // If this is not from our select post types, end loop.
+				continue;
 			}
 
 			$p_in_c = false;    // Variable to check if post exists in a particular category.
@@ -110,7 +116,7 @@ function get_wherego( $args = array() ) {
 			foreach ( $cats as $cat ) { // Loop to check if post exists in excluded category.
 				$p_in_c = ( in_array( $cat->cat_ID, $exclude_categories, true ) ) ? true : false;
 				if ( $p_in_c ) {
-					break;  // End loop if post found in category.
+					continue;
 				}
 			}
 
@@ -324,17 +330,12 @@ function wherego_heading_styles() {
 		wp_enqueue_style( 'wherego-style-grid-thumbs' );
 
 		$custom_css = "
-.wherego_related a:not(.ignorestyle) {
-  width: {$thumb_width}px;
-  height: {$thumb_height}px;
-  text-decoration: none;
+.wherego_related ul {
+	grid-template-columns: repeat(auto-fill, minmax({$thumb_width}px, 1fr));
 }
-.wherego_related img {
-  max-width: {$thumb_width}px;
-  margin: auto;
-}
-.wherego_related .wherego_title {
-  width: 100%;
+.wherego_related ul li a img {
+	max-width:{$thumb_width}px;
+	max-height:{$thumb_height}px;
 }
                 ";
 
