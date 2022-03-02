@@ -695,7 +695,7 @@ if ( ! class_exists( 'WZFP_Settings' ) ) :
 				array(
 					'id'          => 'grid',
 					'name'        => esc_html__( 'Grid thumbnails', 'where-did-they-go-from-here' ),
-					'description' => '<br /><img src="' . esc_url( plugins_url( 'includes/admin/images/wherego-grid-thumbs.png', WHEREGO_PLUGIN_FILE ) ) . '" width="500" /> <br />' . esc_html__( 'Enabling this option will turn on the thumbnails and force their width and height. It will also turn off the display of the author, excerpt and date if already enabled. Disabling this option will not revert any settings.', 'where-did-they-go-from-here' ),
+					'description' => esc_html__( 'Enabling this option will turn on the thumbnails and force their width and height. It will also turn off the display of the author, excerpt and date if already enabled. Disabling this option will not revert any settings.', 'where-did-they-go-from-here' ),
 				),
 			);
 
