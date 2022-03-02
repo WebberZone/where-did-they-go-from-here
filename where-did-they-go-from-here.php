@@ -62,6 +62,17 @@ if ( ! defined( 'WHEREGO_PLUGIN_URL' ) ) {
 	define( 'WHEREGO_PLUGIN_URL', plugin_dir_url( WHEREGO_PLUGIN_FILE ) );
 }
 
+/**
+ * Cache expiration time.
+ *
+ * @since 3.0.0
+ *
+ * @var int Cache time. Default is one week.
+ */
+if ( ! defined( 'WZP_CACHE_TIME' ) ) {
+	define( 'WZP_CACHE_TIME', WEEK_IN_SECONDS );
+}
+
 /*
  *----------------------------------------------------------------------------
  * Includes
