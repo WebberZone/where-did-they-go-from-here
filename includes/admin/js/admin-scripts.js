@@ -9,6 +9,30 @@ function wheregoClearCache() {
 }
 
 jQuery(document).ready(function($) {
+	// File browser.
+	$('.file-browser').on('click', function (event) {
+		event.preventDefault();
+
+		var self = $(this);
+
+		// Create the media frame.
+		var file_frame = wp.media.frames.file_frame = wp.media({
+			title: self.data('uploader_title'),
+			button: {
+				text: self.data('uploader_button_text'),
+			},
+			multiple: false
+		});
+
+		file_frame.on('select', function () {
+			attachment = file_frame.state().get('selection').first().toJSON();
+			self.prev('.file-url').val(attachment.url).change();
+		});
+
+		// Finally, open the modal
+		file_frame.open();
+	});
+
 	// Prompt the user when they leave the page without saving the form.
 	formmodified=0;
 
@@ -48,49 +72,12 @@ jQuery(document).ready(function($) {
 		});
 	});
 
-	// Initialise CodeMirror.
-	$( ".codemirror_html" ).each( function( index, element ) {
-		if( $( element ).length && typeof wp.codeEditor === 'object' ) {
-			var editorSettings = wp.codeEditor.defaultSettings ? _.clone( wp.codeEditor.defaultSettings ) : {};
-			editorSettings.codemirror = _.extend(
-				{},
-				editorSettings.codemirror,
-				{
-				}
-			);
-			var editor = wp.codeEditor.initialize( $( element ), editorSettings );
-			editor.codemirror.on( 'change', confirmFormChange );
-		}
+	// Initialise ColorPicker.
+	$( '.color-field' ).each( function ( i, element ) {
+		$( element ).wpColorPicker();
 	});
 
-	$( ".codemirror_js" ).each( function( index, element ) {
-		if( $( element ).length && typeof wp.codeEditor === 'object' ) {
-			var editorSettings = wp.codeEditor.defaultSettings ? _.clone( wp.codeEditor.defaultSettings ) : {};
-			editorSettings.codemirror = _.extend(
-				{},
-				editorSettings.codemirror,
-				{
-					mode: 'javascript',
-				}
-			);
-			var editor = wp.codeEditor.initialize( $( element ), editorSettings );
-			editor.codemirror.on( 'change', confirmFormChange );
-		}
+	$('.reset-default-thumb').click(function(){
+		document.getElementById("wherego_settings[thumb_default]").value = wherego_admin.thumb_default;
 	});
-
-	$( ".codemirror_css" ).each( function( index, element ) {
-		if( $( element ).length && typeof wp.codeEditor === 'object' ) {
-			var editorSettings = wp.codeEditor.defaultSettings ? _.clone( wp.codeEditor.defaultSettings ) : {};
-			editorSettings.codemirror = _.extend(
-				{},
-				editorSettings.codemirror,
-				{
-					mode: 'css',
-				}
-			);
-			var editor = wp.codeEditor.initialize( $( element ), editorSettings );
-			editor.codemirror.on( 'change', confirmFormChange );
-		}
-	});
-
 });

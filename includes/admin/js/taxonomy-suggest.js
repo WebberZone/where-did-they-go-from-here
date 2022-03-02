@@ -50,7 +50,7 @@ jQuery(document).ready(function($) {
 						q: term
 					},
 				}).done( function( data ) {
-					cache = data;
+					cache = data;console.log(data);
 					response( data );
 				});
 

@@ -1,12 +1,9 @@
 <?php
 /**
- * Register settings.
- *
- * Functions to register, read, write and update settings.
- * Portions of this code have been inspired by Easy Digital Downloads, WordPress Settings Sandbox, wordpress-settings-api-class, etc.
+ * WZ Followed Posts Options API.
  *
  * @link  https://webberzone.com
- * @since 2.1.0
+ * @since 3.0.0
  *
  * @package WHEREGO
  * @subpackage Admin/Register_Settings
@@ -25,19 +22,22 @@ if ( ! defined( 'WPINC' ) ) {
  *
  * @since 2.1.0
  *
- * @param string $key Key of the option to fetch.
- * @param mixed  $default Default value to fetch if option is missing.
+ * @param string $key Option to fetch.
+ * @param mixed  $default Default option.
  * @return mixed
  */
 function wherego_get_option( $key = '', $default = null ) {
-
 	global $wherego_settings;
+
+	if ( empty( $wherego_settings ) ) {
+		$wherego_settings = wherego_get_settings();
+	}
 
 	if ( is_null( $default ) ) {
 		$default = wherego_get_default_option( $key );
 	}
 
-	$value = ! empty( $wherego_settings[ $key ] ) ? $wherego_settings[ $key ] : $default;
+	$value = isset( $wherego_settings[ $key ] ) ? $wherego_settings[ $key ] : $default;
 
 	/**
 	 * Filter the value for the option being fetched.
@@ -66,7 +66,7 @@ function wherego_get_option( $key = '', $default = null ) {
 /**
  * Update an option
  *
- * Updates an wherego setting value in both the db and the global variable.
+ * Updates an ata setting value in both the db and the global variable.
  * Warning: Passing in an empty, false or null string value will remove
  *        the key from the wherego_options array.
  *
@@ -83,8 +83,8 @@ function wherego_update_option( $key = '', $value = false ) {
 		return false;
 	}
 
-	// If null value, delete.
-	if ( is_null( $value ) ) {
+	// If no value, delete.
+	if ( empty( $value ) ) {
 		$remove_option = wherego_delete_option( $key );
 		return $remove_option;
 	}
@@ -92,14 +92,7 @@ function wherego_update_option( $key = '', $value = false ) {
 	// First let's grab the current settings.
 	$options = get_option( 'wherego_settings' );
 
-	/**
-	 * Filters the value before it is updated
-	 *
-	 * @since 2.1.0
-	 *
-	 * @param  string|bool|int $value The value to set the key to
-	 * @param  string          $key   The Key to update
-	 */
+	// Let's let devs alter that value coming in.
 	$value = apply_filters( 'wherego_update_option', $value, $key );
 
 	// Next let's try to update the value.
@@ -118,7 +111,7 @@ function wherego_update_option( $key = '', $value = false ) {
 /**
  * Remove an option
  *
- * Removes an wherego setting value in both the db and the global variable.
+ * Removes an ata setting value in both the db and the global variable.
  *
  * @since 2.1.0
  *
@@ -152,95 +145,6 @@ function wherego_delete_option( $key = '' ) {
 
 
 /**
- * Register settings function
- *
- * @since 2.1.0
- *
- * @return void
- */
-function wherego_register_settings() {
-
-	if ( false === get_option( 'wherego_settings' ) ) {
-		add_option( 'wherego_settings', wherego_settings_defaults() );
-	}
-
-	foreach ( wherego_get_registered_settings() as $section => $settings ) {
-
-		add_settings_section(
-			'wherego_settings_' . $section, // ID used to identify this section and with which to register options, e.g. wherego_settings_general.
-			__return_null(),    // No title, we will handle this via a separate function.
-			'__return_false',   // No callback function needed. We'll process this separately.
-			'wherego_settings_' . $section  // Page on which these options will be added.
-		);
-
-		foreach ( $settings as $setting ) {
-
-			$args = wp_parse_args(
-				$setting,
-				array(
-					'section'          => $section,
-					'id'               => null,
-					'name'             => '',
-					'desc'             => '',
-					'type'             => null,
-					'options'          => '',
-					'max'              => null,
-					'min'              => null,
-					'step'             => null,
-					'size'             => null,
-					'field_class'      => '',
-					'field_attributes' => '',
-					'placeholder'      => '',
-				)
-			);
-
-			add_settings_field(
-				'wherego_settings[' . $args['id'] . ']', // ID of the settings field. We save it within the wherego_settings array.
-				$args['name'],     // Label of the setting.
-				function_exists( 'wherego_' . $args['type'] . '_callback' ) ? 'wherego_' . $args['type'] . '_callback' : 'wherego_missing_callback', // Function to handle the setting.
-				'wherego_settings_' . $section, // Page to display the setting. In our case it is the section as defined above.
-				'wherego_settings_' . $section, // Name of the section.
-				$args
-			);
-		}
-	}// End foreach.
-
-	// Register the settings into the options table.
-	register_setting( 'wherego_settings', 'wherego_settings', 'wherego_settings_sanitize' );
-}
-add_action( 'admin_init', 'wherego_register_settings' );
-
-
-/**
- * Flattens wherego_get_registered_settings() into $setting[id] => $setting[type] format.
- *
- * @since 2.3.0
- *
- * @return array Default settings
- */
-function wherego_get_registered_settings_types() {
-
-	$options = array();
-
-	// Populate some default values.
-	foreach ( wherego_get_registered_settings() as $tab => $settings ) {
-		foreach ( $settings as $option ) {
-			$options[ $option['id'] ] = $option['type'];
-		}
-	}
-
-	/**
-	 * Filters the settings array.
-	 *
-	 * @since 2.6.0
-	 *
-	 * @param array   $options Default settings.
-	 */
-	return apply_filters( 'wherego_get_settings_types', $options );
-}
-
-
-/**
  * Default settings.
  *
  * @since 2.1.0
@@ -252,7 +156,7 @@ function wherego_settings_defaults() {
 	$options = array();
 
 	// Populate some default values.
-	foreach ( wherego_get_registered_settings() as $tab => $settings ) {
+	foreach ( WZFP_Settings::get_registered_settings() as $tab => $settings ) {
 		foreach ( $settings as $option ) {
 			// When checkbox is set to true, set this to 1.
 			if ( 'checkbox' === $option['type'] && ! empty( $option['options'] ) ) {
@@ -261,7 +165,7 @@ function wherego_settings_defaults() {
 				$options[ $option['id'] ] = 0;
 			}
 			// If an option is set.
-			if ( in_array( $option['type'], array( 'textarea', 'text', 'csv', 'numbercsv', 'posttypes', 'number', 'custom_css', 'color' ), true ) && isset( $option['options'] ) ) {
+			if ( in_array( $option['type'], array( 'textarea', 'css', 'html', 'text', 'url', 'csv', 'color', 'numbercsv', 'postids', 'posttypes', 'number', 'wysiwyg', 'file', 'password' ), true ) && isset( $option['options'] ) ) {
 				$options[ $option['id'] ] = $option['options'];
 			}
 			if ( in_array( $option['type'], array( 'multicheck', 'radio', 'select', 'radiodesc', 'thumbsizes' ), true ) && isset( $option['default'] ) ) {
@@ -270,18 +174,12 @@ function wherego_settings_defaults() {
 		}
 	}
 
-	$upgraded_settings = wherego_upgrade_settings();
-
-	if ( false !== $upgraded_settings ) {
-		$options = array_merge( $options, $upgraded_settings );
-	}
-
 	/**
 	 * Filters the default settings array.
 	 *
 	 * @since 2.1.0
 	 *
-	 * @param array $options Default settings.
+	 * @param array   $options Default settings.
 	 */
 	return apply_filters( 'wherego_settings_defaults', $options );
 }
@@ -290,7 +188,7 @@ function wherego_settings_defaults() {
 /**
  * Get the default option for a specific key
  *
- * @since 2.1.0
+ * @since 1.3.0
  *
  * @param string $key Key of the option to fetch.
  * @return mixed
@@ -318,3 +216,66 @@ function wherego_get_default_option( $key = '' ) {
 function wherego_settings_reset() {
 	delete_option( 'wherego_settings' );
 }
+
+
+/**
+ * Function to add an action to search for tags using Ajax.
+ *
+ * @since 2.1.0
+ *
+ * @return void
+ */
+function wherego_tags_search() {
+
+	if ( ! isset( $_REQUEST['tax'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		wp_die( 0 );
+	}
+
+	$taxonomy = sanitize_key( $_REQUEST['tax'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	$tax      = get_taxonomy( $taxonomy );
+	if ( ! $tax ) {
+		wp_die( 0 );
+	}
+
+	if ( ! current_user_can( $tax->cap->assign_terms ) ) {
+		wp_die( -1 );
+	}
+
+	$s = isset( $_REQUEST['q'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['q'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+
+	$comma = _x( ',', 'tag delimiter' );
+	if ( ',' !== $comma ) {
+		$s = str_replace( $comma, ',', $s );
+	}
+	if ( false !== strpos( $s, ',' ) ) {
+		$s = explode( ',', $s );
+		$s = $s[ count( $s ) - 1 ];
+	}
+	$s = trim( $s );
+
+	/** This filter has been defined in /wp-admin/includes/ajax-actions.php */
+	$term_search_min_chars = (int) apply_filters( 'term_search_min_chars', 2, $tax, $s );
+
+	/*
+	 * Require $term_search_min_chars chars for matching (default: 2)
+	 * ensure it's a non-negative, non-zero integer.
+	 */
+	if ( ( 0 === $term_search_min_chars ) || ( strlen( $s ) < $term_search_min_chars ) ) {
+		wp_die();
+	}
+
+	$results = get_terms(
+		$taxonomy,
+		array(
+			'name__like' => $s,
+			'fields'     => 'names',
+			'hide_empty' => false,
+		)
+	);
+
+	echo wp_json_encode( $results );
+	wp_die();
+
+}
+add_action( 'wp_ajax_nopriv_wherego_tag_search', 'wherego_tags_search' );
+add_action( 'wp_ajax_wherego_tag_search', 'wherego_tags_search' );
