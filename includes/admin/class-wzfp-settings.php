@@ -248,6 +248,28 @@ if ( ! class_exists( 'WZFP_Settings' ) ) :
 						'other_archives'    => esc_html__( 'Other archives', 'where-did-they-go-from-here' ),
 					),
 				),
+				'track_users'        => array(
+					'id'      => 'track_users',
+					'name'    => esc_html__( 'Track user groups', 'where-did-they-go-from-here' ) . ':',
+					'desc'    => esc_html__( 'Uncheck above to disable tracking if the current user falls into any one of these groups.', 'where-did-they-go-from-here' ),
+					'type'    => 'multicheck',
+					'default' => array(
+						'editors' => 'editors',
+						'admins'  => 'admins',
+					),
+					'options' => array(
+						'authors' => esc_html__( 'Authors', 'where-did-they-go-from-here' ),
+						'editors' => esc_html__( 'Editors', 'where-did-they-go-from-here' ),
+						'admins'  => esc_html__( 'Admins', 'where-did-they-go-from-here' ),
+					),
+				),
+				'logged_in'          => array(
+					'id'      => 'logged_in',
+					'name'    => esc_html__( 'Track logged-in users', 'where-did-they-go-from-here' ),
+					'desc'    => esc_html__( 'Uncheck to stop tracking logged in users. Only logged out visitors will be tracked if this is disabled. Unchecking this will override the above setting.', 'where-did-they-go-from-here' ),
+					'type'    => 'checkbox',
+					'options' => true,
+				),
 				'wg_in_admin'        => array(
 					'id'      => 'wg_in_admin',
 					'name'    => esc_html__( 'Add admin column', 'where-did-they-go-from-here' ),
