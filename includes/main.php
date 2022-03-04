@@ -76,7 +76,7 @@ function get_wherego( $args = array() ) {
 	 * @param array $results Array containing the related post IDs
 	 * @param array $args    Arguments array.
 	 */
-	$results = apply_filters( 'get_wherego_posts_id', $results, $args );
+	$results = apply_filters( 'get_wherego_posts_id', (array) $results, $args );
 
 	$widget_class    = $args['is_widget'] ? 'wherego_related_widget' : 'wherego_related ';
 	$shortcode_class = $args['is_shortcode'] ? 'wherego_related_shortcode ' : '';
