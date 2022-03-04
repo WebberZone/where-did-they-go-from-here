@@ -96,23 +96,52 @@ add_action( 'wp_ajax_wherego_tracker', 'wherego_tracker_parser' );
 function wherego_enqueue_scripts() {
 	global $post;
 
-	if ( is_singular() ) {
+	$track_users = wherego_get_option( 'track_users' );
 
-		wp_enqueue_script( 'wherego_tracker', plugins_url( 'includes/js/wherego_tracker.min.js', WHEREGO_PLUGIN_FILE ), array( 'jquery' ), '1.0', true );
+	if ( is_singular() && ( 'draft' !== $post->post_status ) && ! is_customize_preview() ) {
 
-		wp_localize_script(
-			'wherego_tracker',
-			'ajax_wherego_tracker',
-			array(
-				'ajax_url'        => admin_url( 'admin-ajax.php' ),
-				'wherego_nonce'   => wp_create_nonce( 'wherego-tracker-nonce' ),
-				'wherego_id'      => $post->ID,
-				'wherego_sitevar' => wherego_get_referer(),
-				'wherego_rnd'     => wp_rand( 1, time() ),
-			)
-		);
+		$current_user        = wp_get_current_user();  // Let's get the current user.
+		$post_author         = ( (int) $current_user->ID === (int) $post->post_author ) ? true : false; // Is the current user the post author?
+		$current_user_admin  = ( current_user_can( 'manage_options' ) ) ? true : false;  // Is the current user an admin?
+		$current_user_editor = ( ( current_user_can( 'edit_others_posts' ) ) && ( ! current_user_can( 'manage_options' ) ) ) ? true : false;    // Is the current user an editor?
+
+		$include_code = true;
+		if ( ( $post_author ) && ( empty( $track_users['authors'] ) ) ) {
+			$include_code = false;
+		}
+		if ( ( $current_user_admin ) && ( empty( $track_users['admins'] ) ) ) {
+			$include_code = false;
+		}
+		if ( ( $current_user_editor ) && ( empty( $track_users['editors'] ) ) ) {
+			$include_code = false;
+		}
+		if ( ( $current_user->exists() ) && ( ! wherego_get_option( 'logged_in' ) ) ) {
+			$include_code = false;
+		}
+
+		if ( $include_code ) {
+
+			wp_enqueue_script(
+				'wherego_tracker',
+				plugins_url( 'includes/js/wherego_tracker.min.js', WHEREGO_PLUGIN_FILE ),
+				array( 'jquery' ),
+				'1.0',
+				true
+			);
+
+			wp_localize_script(
+				'wherego_tracker',
+				'ajax_wherego_tracker',
+				array(
+					'ajax_url'        => admin_url( 'admin-ajax.php' ),
+					'wherego_nonce'   => wp_create_nonce( 'wherego-tracker-nonce' ),
+					'wherego_id'      => $post->ID,
+					'wherego_sitevar' => wherego_get_referer(),
+					'wherego_rnd'     => wp_rand( 1, time() ),
+				)
+			);
+		}
 	}
-
 }
 add_action( 'wp_enqueue_scripts', 'wherego_enqueue_scripts' );
 
