@@ -25,7 +25,7 @@ class WhereGo_Widget extends WP_Widget {
 			'wherego_widget',
 			__( 'WebberZone Followed Posts', 'where-did-they-go-from-here' ),
 			array(
-				'description'                 => __( 'Selective refreshable widget.', 'where-did-they-go-from-here' ),
+				'description'                 => __( 'Display followed posts', 'where-did-they-go-from-here' ),
 				'customize_selective_refresh' => true,
 			)
 		);
@@ -41,28 +41,27 @@ class WhereGo_Widget extends WP_Widget {
 	 * @param array $instance Saved values from database.
 	 */
 	public function widget( $args, $instance ) {
-		global $wherego_settings;
+		global $post;
 
 		if ( ! is_singular() ) {
 			return;
 		}
 
-		$title = apply_filters( 'widget_title', empty( $instance['title'] ) ? wp_strip_all_tags( $wherego_settings['title'] ) : $instance['title'] );
+		$title = empty( $instance['title'] ) ? wp_strip_all_tags( str_replace( '%postname%', $post->post_title, wherego_get_option( 'title' ) ) ) : $instance['title'];
+		$title = apply_filters( 'widget_title', $title, $instance, $this->id_base );
 
-		$limit = isset( $instance['limit'] ) ? $instance['limit'] : $wherego_settings['limit'];
+		$limit = isset( $instance['limit'] ) ? $instance['limit'] : wherego_get_option( 'limit' );
 		if ( empty( $limit ) ) {
-			$limit = $wherego_settings['limit'];
+			$limit = wherego_get_option( 'limit' );
 		}
 
-		$post_thumb_op = isset( $instance['post_thumb_op'] ) ? $instance['post_thumb_op'] : 'text_only';
-
-		$thumb_height = ( isset( $instance['thumb_height'] ) && '' !== $instance['thumb_height'] ) ? intval( $instance['thumb_height'] ) : $wherego_settings['thumb_height'];
-		$thumb_width  = ( isset( $instance['thumb_width'] ) && '' !== $instance['thumb_width'] ) ? intval( $instance['thumb_width'] ) : $wherego_settings['thumb_width'];
-
-		$show_excerpt = isset( $instance['show_excerpt'] ) ? esc_attr( $instance['show_excerpt'] ) : '';
-		$show_author  = isset( $instance['show_author'] ) ? esc_attr( $instance['show_author'] ) : '';
-		$show_date    = isset( $instance['show_date'] ) ? esc_attr( $instance['show_date'] ) : '';
-		$post_types   = ! empty( $instance['post_types'] ) ? $instance['post_types'] : wherego_get_option( 'post_types' );
+		$post_thumb_op = isset( $instance['post_thumb_op'] ) ? esc_attr( $instance['post_thumb_op'] ) : 'text_only';
+		$thumb_height  = isset( $instance['thumb_height'] ) && ! empty( $instance['thumb_height'] ) ? esc_attr( $instance['thumb_height'] ) : wherego_get_option( 'thumb_height' );
+		$thumb_width   = isset( $instance['thumb_width'] ) && ! empty( $instance['thumb_width'] ) ? esc_attr( $instance['thumb_width'] ) : wherego_get_option( 'thumb_width' );
+		$show_excerpt  = isset( $instance['show_excerpt'] ) ? esc_attr( $instance['show_excerpt'] ) : '';
+		$show_author   = isset( $instance['show_author'] ) ? esc_attr( $instance['show_author'] ) : '';
+		$show_date     = isset( $instance['show_date'] ) ? esc_attr( $instance['show_date'] ) : '';
+		$post_types    = isset( $instance['post_types'] ) && ! empty( $instance['post_types'] ) ? $instance['post_types'] : wherego_get_option( 'post_types' );
 
 		$arguments = array(
 			'is_widget'     => 1,
@@ -267,4 +266,3 @@ function wherego_register_widget() {
 
 }
 add_action( 'widgets_init', 'wherego_register_widget' );
-
