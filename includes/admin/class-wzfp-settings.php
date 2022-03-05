@@ -887,14 +887,14 @@ if ( ! class_exists( 'WZFP_Settings' ) ) :
 					'id'      => 'wherego-settings-thumbnail',
 					'title'   => __( 'Thumbnail', 'where-did-they-go-from-here' ),
 					'content' =>
-						'<p>' . __( 'A separate set of  settings to control the thumbnail that can be displayed with the post lists. Choose the location of the thumbnail as well as its width and height. The plugin will searches for images to display in this order: meta-field, featured image, first image (if enabled) and default thumbnail (if enabled).', 'where-did-they-go-from-here' ) . '</p>' .
+						'<p>' . __( 'A separate set of  settings to control the thumbnail that can be displayed with the post lists. Choose the size and location of the thumbnail. The plugin will searches for images to display in this order: meta-field, featured image, first image (if enabled), default thumbnail (if enabled), site icon.', 'where-did-they-go-from-here' ) . '</p>' .
 						'<p>' . __( 'You must click the Save Changes button at the bottom of the screen for new settings to take effect.', 'where-did-they-go-from-here' ) . '</p>',
 				),
 				array(
 					'id'      => 'wherego-settings-styles',
 					'title'   => __( 'Styles', 'where-did-they-go-from-here' ),
 					'content' =>
-						'<p>' . __( 'Enter any custom CSS here. This will be added in the header of the site.', 'where-did-they-go-from-here' ) . '</p>' .
+						'<p>' . __( 'Select a style to display the posts. Enter any custom CSS which will be added in the header of the site.', 'where-did-they-go-from-here' ) . '</p>' .
 						'<p>' . __( 'You must click the Save Changes button at the bottom of the screen for new settings to take effect.', 'where-did-they-go-from-here' ) . '</p>',
 				),
 				array(
