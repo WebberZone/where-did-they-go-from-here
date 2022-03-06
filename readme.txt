@@ -2,7 +2,7 @@
 Tags: followed posts, related posts, where did they go from here
 Contributors: Ajay, webberzone
 Donate link: https://ajaydsouza.com/donate/
-Stable tag: 2.4.0
+Stable tag: 3.0.0
 Requires at least: 5.6
 Requires PHP: 7.1
 Tested up to: 5.9
@@ -116,5 +116,5 @@ For previous changelog entries check out the changelog.txt file included with th
 
 == Upgrade Notice ==
 
-= 2.4.0 =
-New caching system, auto-complete styles - view changelog for more details.
+= 3.0.0 =
+New features and enhancements - view release post and changelog for full details.
