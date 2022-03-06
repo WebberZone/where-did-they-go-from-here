@@ -84,7 +84,7 @@ function get_wherego( $args = array() ) {
 	$post_classes = $widget_class . $shortcode_class;
 
 	/**
-	 * Filter the classes added to the div wrapper of the Contextual Related Posts.
+	 * Filter the classes added to the div wrapper of the WebberZone Followed Posts.
 	 *
 	 * @since   2.0.0
 	 *

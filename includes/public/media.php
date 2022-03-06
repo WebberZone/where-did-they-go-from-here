@@ -241,7 +241,7 @@ function wherego_get_the_post_thumbnail( $args = array() ) {
 	}
 
 	/**
-	 * Filters post thumbnail created for Top 10.
+	 * Filters post thumbnail created for WebberZone Followed Posts.
 	 *
 	 * @since   1.7
 	 *
