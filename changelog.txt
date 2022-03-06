@@ -25,7 +25,7 @@ Release post: [https://webberzone.com/blog/followed-posts-v2-3-0/](https://webbe
 	* Migrate `custom_CSS` to `custom_css` - this only happens if `custom_css` doesn't already have a value
 	* Duplicate entries in "Exclude Categories" settings are removed on saving options
 	* PHP notices for `show_author` and `show_date`
-	* `crp_update_option` only deletes options when the value passed is null
+	* `wherego_update_option` only deletes options when the value passed is null
 	* Delete any deprecated settings on save should work properly
 
 = 2.2.0 =
