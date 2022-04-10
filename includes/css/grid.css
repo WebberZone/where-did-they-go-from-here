@@ -50,6 +50,7 @@
   align-items: center;
   flex: 1 1 auto;
   transition: ease 0.3s;
+  word-break: break-word;
 }
 
 .wherego_related ul li a span.wherego_title:hover {
