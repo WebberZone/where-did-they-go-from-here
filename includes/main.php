@@ -139,7 +139,7 @@ function get_wherego( $args = array() ) {
 
 				$output .= wherego_after_list_item( $args, $result );
 
-				$loop_counter++;
+				++$loop_counter;
 			}
 			if ( $loop_counter === (int) $args['limit'] ) {
 				break;  // End loop when related posts limit is reached.

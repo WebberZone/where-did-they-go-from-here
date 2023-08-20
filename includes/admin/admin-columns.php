@@ -52,7 +52,7 @@ function wherego_value( $column_name, $post_id ) {
 			$loop = 0;
 
 			foreach ( $lpids as $lpid ) {
-				$loop++;
+				++$loop;
 
 				if ( $loop > wherego_get_option( 'limit' ) ) {
 					break;
@@ -75,5 +75,3 @@ add_action( 'manage_posts_custom_column', 'wherego_value', 10, 2 );
 add_action( 'manage_pages_custom_column', 'wherego_value', 10, 2 );
 add_action( 'manage_media_custom_column', 'wherego_value', 10, 2 );
 add_action( 'manage_link_custom_column', 'wherego_value', 10, 2 );
-
-

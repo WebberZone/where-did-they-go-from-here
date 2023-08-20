@@ -154,7 +154,6 @@ if ( ! class_exists( 'WZFP_Settings' ) ) :
 			 * @param array $strings Translation strings.
 			 */
 			return apply_filters( self::$prefix . '_translation_strings', $strings );
-
 		}
 
 		/**
@@ -181,7 +180,6 @@ if ( ! class_exists( 'WZFP_Settings' ) ) :
 			 * @param array $settings_section Settings array
 			 */
 			return apply_filters( self::$prefix . '_settings_section', $settings_section );
-
 		}
 
 		/**
@@ -209,7 +207,6 @@ if ( ! class_exists( 'WZFP_Settings' ) ) :
 			 * @param array $settings Settings array
 			 */
 			return apply_filters( self::$prefix . '_registered_settings', $settings );
-
 		}
 
 		/**
@@ -790,7 +787,6 @@ if ( ! class_exists( 'WZFP_Settings' ) ) :
 				),
 				$links
 			);
-
 		}
 
 		/**
