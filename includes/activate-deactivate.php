@@ -55,7 +55,6 @@ register_activation_hook( WHEREGO_PLUGIN_FILE, 'wherego_activation_hook' );
 function wherego_single_activate() {
 
 	wherego_get_settings();
-
 }
 
 
@@ -75,8 +74,5 @@ function wherego_activate_new_site( $blog_id ) {
 	switch_to_blog( $blog_id );
 	wherego_single_activate();
 	restore_current_blog();
-
 }
 add_action( 'wpmu_new_blog', 'wherego_activate_new_site' );
-
-

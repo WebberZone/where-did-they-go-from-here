@@ -26,7 +26,6 @@ function wherego_ajax_clearcache() {
 			)
 		)
 	);
-
 }
 add_action( 'wp_ajax_wherego_clear_cache', 'wherego_ajax_clearcache' );
 
@@ -53,7 +52,7 @@ function wherego_cache_delete( $meta_keys = array() ) {
 	foreach ( $meta_keys as $meta_key ) {
 		$del_meta = delete_wherego_cache_by_key( $meta_key );
 		if ( $del_meta ) {
-			$loop++;
+			++$loop;
 		}
 	}
 

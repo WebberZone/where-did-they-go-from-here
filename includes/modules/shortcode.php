@@ -37,4 +37,3 @@ function wherego_shortcode( $atts ) {
 	return get_wherego( $atts );
 }
 add_shortcode( 'wherego', 'wherego_shortcode' );
-

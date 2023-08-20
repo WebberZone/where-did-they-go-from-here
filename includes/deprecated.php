@@ -18,7 +18,7 @@ if ( ! defined( 'WPINC' ) ) {
  * @since 1.0
  * @deprecated 2.0.0
  */
-define( 'ALD_WHEREGO_DIR', dirname( __FILE__ ) );
+define( 'ALD_WHEREGO_DIR', __DIR__ );
 
 
 /**
@@ -39,7 +39,7 @@ $wherego_path = plugin_dir_path( __FILE__ );
  *
  * @var string
  */
-$wherego_url = plugins_url() . '/' . plugin_basename( dirname( __FILE__ ) );
+$wherego_url = plugins_url() . '/' . plugin_basename( __DIR__ );
 
 
 /**
@@ -170,5 +170,3 @@ function wherego_default_options() {
 	 */
 	return apply_filters( 'wherego_default_options', $wherego_settings );
 }
-
-

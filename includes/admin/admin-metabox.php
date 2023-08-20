@@ -28,7 +28,6 @@ function wherego_add_meta_box( $post_type ) {
 			'advanced',
 			'default'
 		);
-
 }
 add_action( 'add_meta_boxes', 'wherego_add_meta_box' );
 

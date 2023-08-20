@@ -95,7 +95,6 @@ class WhereGo_Widget extends WP_Widget {
 		$output .= $args['after_widget'];
 
 		echo $output;   // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-
 	}
 
 	/**
@@ -263,6 +262,5 @@ class WhereGo_Widget extends WP_Widget {
 function wherego_register_widget() {
 
 	register_widget( 'WhereGo_Widget' );
-
 }
 add_action( 'widgets_init', 'wherego_register_widget' );

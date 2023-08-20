@@ -42,7 +42,6 @@ function wherego_link_attributes( $args ) {
 	$link_attributes = implode( ' ', $link_attributes );
 
 	return $link_attributes;
-
 }
 
 
@@ -96,7 +95,6 @@ function wherego_before_list( $args ) {
 	 * @param   array   $args   Array of arguments
 	 */
 	return apply_filters( 'wherego_before_list', $before_list, $args );
-
 }
 
 
@@ -121,7 +119,6 @@ function wherego_after_list( $args ) {
 	 * @param   array   $args   Array of arguments
 	 */
 	return apply_filters( 'wherego_after_list', $after_list, $args );
-
 }
 
 
@@ -148,7 +145,6 @@ function wherego_before_list_item( $args, $result ) {
 	 * @param   array   $args   Array of arguments
 	 */
 	return apply_filters( 'wherego_before_list_item', $before_list_item, $result, $args );
-
 }
 
 
@@ -175,7 +171,6 @@ function wherego_after_list_item( $args, $result ) {
 	 * @param   array   $args   Array of arguments
 	 */
 	return apply_filters( 'wherego_after_list_item', $after_list_item, $result, $args );
-
 }
 
 
@@ -202,7 +197,6 @@ function wherego_title( $args, $result ) {
 	 * @param   array   $args   Array of arguments
 	 */
 	return apply_filters( 'wherego_title', $title, $result, $args );
-
 }
 
 
@@ -244,7 +238,6 @@ function wherego_author( $args, $result ) {
 	 * @param   array   $args   Array of arguments
 	 */
 	return apply_filters( 'wherego_author', $wherego_author, $author_info, $result, $args );
-
 }
 
 
@@ -272,7 +265,6 @@ function wherego_date( $args, $result ) {
 	 * @param   array   $args   Array of arguments
 	 */
 	return apply_filters( 'wherego_date', $wherego_date, $result, $args );
-
 }
 
 
@@ -299,7 +291,6 @@ function wherego_permalink( $args, $result ) {
 	 * @param   array   $args   Array of arguments
 	 */
 	return apply_filters( 'wherego_permalink', $link, $result, $args );
-
 }
 
 
@@ -356,5 +347,4 @@ function wherego_list_link( $args, $result ) {
 	 * @param   array   $args   Array of arguments
 	 */
 	return apply_filters( 'wherego_list_link', $output, $result, $args );
-
 }

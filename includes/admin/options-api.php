@@ -202,7 +202,6 @@ function wherego_get_default_option( $key = '' ) {
 	} else {
 		return false;
 	}
-
 }
 
 
@@ -275,7 +274,6 @@ function wherego_tags_search() {
 
 	echo wp_json_encode( $results );
 	wp_die();
-
 }
 add_action( 'wp_ajax_nopriv_wherego_tag_search', 'wherego_tags_search' );
 add_action( 'wp_ajax_wherego_tag_search', 'wherego_tags_search' );
