@@ -39,6 +39,9 @@ function wherego_translate_ids( $results ) {
 	foreach ( $results as $result ) {
 
 		$result = wherego_object_id_cur_lang( $result );
+		if ( ! $result ) {
+			continue;
+		}
 
 		// If this is NULL or already processed ID or matches current post then skip processing this loop.
 		if ( ! $result->ID || in_array( $result->ID, $processed_ids ) || intval( $result->ID ) === intval( $post->ID ) ) { // phpcs:ignore WordPress.PHP.StrictInArray.MissingTrueStrict
