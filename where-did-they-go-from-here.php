@@ -4,7 +4,7 @@
  *
  * Display a list of posts that are visited from the custom post.
  *
- * @package   WHEREGO
+ * @package   WebberZone\WFP
  * @author    Ajay D'Souza
  * @license   GPL-2.0+
  * @link      https://webberzone.com
@@ -24,17 +24,26 @@
  * GitHub Plugin URI: https://github.com/WebberZone/where-did-they-go-from-here/
  */
 
+namespace WebberZone\WFP;
+
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
 /**
+ * Plugin Version
+ *
+ * @since 3.0.0
+ */
+if ( ! defined( 'WZP_VERSION' ) ) {
+	define( 'WZP_VERSION', '3.1.0' );
+}
+
+/**
  * Holds the filesystem directory path (with trailing slash) for WebberZone Followed Posts.
  *
  * @since 2.0.0
- *
- * @var string Plugin Root File
  */
 if ( ! defined( 'WHEREGO_PLUGIN_FILE' ) ) {
 	define( 'WHEREGO_PLUGIN_FILE', __FILE__ );
@@ -44,8 +53,6 @@ if ( ! defined( 'WHEREGO_PLUGIN_FILE' ) ) {
  * Holds the filesystem directory path (with trailing slash) for WebberZone Followed Posts.
  *
  * @since 2.0.0
- *
- * @var string Plugin folder path
  */
 if ( ! defined( 'WHEREGO_PLUGIN_DIR' ) ) {
 	define( 'WHEREGO_PLUGIN_DIR', plugin_dir_path( WHEREGO_PLUGIN_FILE ) );
@@ -55,8 +62,6 @@ if ( ! defined( 'WHEREGO_PLUGIN_DIR' ) ) {
  * Holds the filesystem directory path (with trailing slash) for WebberZone Followed Posts.
  *
  * @since 2.0.0
- *
- * @var string Plugin folder URL
  */
 if ( ! defined( 'WHEREGO_PLUGIN_URL' ) ) {
 	define( 'WHEREGO_PLUGIN_URL', plugin_dir_url( WHEREGO_PLUGIN_FILE ) );
@@ -66,54 +71,43 @@ if ( ! defined( 'WHEREGO_PLUGIN_URL' ) ) {
  * Cache expiration time.
  *
  * @since 3.0.0
+ */
+if ( ! defined( 'WFP_CACHE_TIME' ) ) {
+	define( 'WFP_CACHE_TIME', WEEK_IN_SECONDS );
+}
+
+// Load the autoloder.
+require_once WHEREGO_PLUGIN_DIR . 'includes/autoloader.php';
+
+/**
+ * The code that runs during plugin activation.
  *
- * @var int Cache time. Default is one week.
+ * @since 3.1.0
+ *
+ * @param bool $network_wide Whether the plugin is being activated network-wide.
  */
-if ( ! defined( 'WZP_CACHE_TIME' ) ) {
-	define( 'WZP_CACHE_TIME', WEEK_IN_SECONDS );
+function activate_wfp( $network_wide ) {
+	\WebberZone\WFP\Admin\Activator::activation_hook( $network_wide );
 }
+register_activation_hook( __FILE__, __NAMESPACE__ . '\activate_wfp' );
 
-/*
- *----------------------------------------------------------------------------
- * Includes
- *----------------------------------------------------------------------------
+/**
+ * The main function responsible for returning the one true WebberZone Snippetz instance to functions everywhere.
+ *
+ * @since 3.1.0
  */
-
-require_once WHEREGO_PLUGIN_DIR . 'includes/admin/class-settings-api.php';
-require_once WHEREGO_PLUGIN_DIR . 'includes/admin/class-wzfp-settings.php';
-require_once WHEREGO_PLUGIN_DIR . 'includes/admin/options-api.php';
-require_once WHEREGO_PLUGIN_DIR . 'includes/i18n.php';
-require_once WHEREGO_PLUGIN_DIR . 'includes/activate-deactivate.php';
-require_once WHEREGO_PLUGIN_DIR . 'includes/main.php';
-require_once WHEREGO_PLUGIN_DIR . 'includes/public/media.php';
-require_once WHEREGO_PLUGIN_DIR . 'includes/public/output-generator.php';
-require_once WHEREGO_PLUGIN_DIR . 'includes/cache.php';
-require_once WHEREGO_PLUGIN_DIR . 'includes/formatting.php';
-require_once WHEREGO_PLUGIN_DIR . 'includes/tracker.php';
-require_once WHEREGO_PLUGIN_DIR . 'includes/deprecated.php';
-
-/*
- *----------------------------------------------------------------------------
- * Modules
- *----------------------------------------------------------------------------
- */
-
-require_once WHEREGO_PLUGIN_DIR . 'includes/modules/shortcode.php';
-require_once WHEREGO_PLUGIN_DIR . 'includes/modules/class-wherego-widget.php';
-
-
-/*
- *----------------------------------------------------------------------------
- * Dashboard and Administrative Functionality
- *----------------------------------------------------------------------------
- */
-
-if ( is_admin() || ( defined( 'WP_CLI' ) && WP_CLI ) ) {
-
-	require_once WHEREGO_PLUGIN_DIR . 'includes/admin/admin-metabox.php';
-	require_once WHEREGO_PLUGIN_DIR . 'includes/admin/admin-columns.php';
-
+function load_wfp() {
+	\WebberZone\WFP\Main::get_instance();
 }
+add_action( 'plugins_loaded', __NAMESPACE__ . '\load_wfp' );
+
+/*
+ *----------------------------------------------------------------------------
+ * Include files
+ *----------------------------------------------------------------------------
+ */
+require_once WHEREGO_PLUGIN_DIR . 'includes/options-api.php';
+require_once WHEREGO_PLUGIN_DIR . 'includes/functions.php';
 
 /**
  * Plugin settings.
@@ -124,27 +118,3 @@ if ( is_admin() || ( defined( 'WP_CLI' ) && WP_CLI ) ) {
  */
 global  $wherego_settings;
 $wherego_settings = wherego_get_settings();
-
-
-/**
- * Get Settings.
- *
- * Retrieves all plugin settings
- *
- * @since 2.1.0
- * @return array Add to All settings
- */
-function wherego_get_settings() {
-
-	$settings = get_option( 'wherego_settings' );
-
-	/**
-	 * Settings array
-	 *
-	 * Retrieves all plugin settings
-	 *
-	 * @since 2.1.0
-	 * @param array $settings Settings array.
-	 */
-	return apply_filters( 'wherego_get_settings', $settings );
-}
