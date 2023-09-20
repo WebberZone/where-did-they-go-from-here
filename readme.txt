@@ -107,6 +107,9 @@ Complete plugin rewrite to use classes and autoloading.
 	* New functions `get_wfp()` and `the_wfp()` replace `get_wherego()` and `echo_wherego()`. The latter two will throw deprecated notices
 	* New shortcode `[wfp]` replaces `[wherego]`. The latter will continue to work but it is recommended that you replace the shortcode
 
+* Enhancements:
+	* Caching enabled by default - this will apply to new installs and if you reset the settings
+
 * Bug fix:
 	* PHP warning if a post was not found
 

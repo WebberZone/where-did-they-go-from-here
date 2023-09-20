@@ -298,7 +298,7 @@ class Settings {
 				'name'    => esc_html__( 'Enable cache', 'where-did-they-go-from-here' ),
 				'desc'    => esc_html__( 'If enabled, the HTML output is saved in a meta key on first page load which is then used on future page loads', 'where-did-they-go-from-here' ),
 				'type'    => 'checkbox',
-				'options' => false,
+				'options' => true,
 			),
 			'add_to'             => array(
 				'id'      => 'add_to',
