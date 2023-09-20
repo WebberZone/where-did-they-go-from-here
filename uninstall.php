@@ -2,7 +2,7 @@
 /**
  * Fired when the plugin is uninstalled
  *
- * @package WHEREGO
+ * @package WebberZone\WFP
  */
 
 if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
@@ -10,27 +10,23 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 }
 
 if ( ! is_multisite() ) {
-
 	wherego_delete_data();
-
 } else {
 
-	// Get all blogs in the network and activate plugin on each one.
-	$blogids = $wpdb->get_col( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching
-		"
-    	SELECT blogid FROM $wpdb->blogs
-		WHERE archived = '0' AND spam = '0' AND deleted = '0'
-	"
+	$sites = get_sites(
+		array(
+			'archived' => 0,
+			'spam'     => 0,
+			'deleted'  => 0,
+		)
 	);
 
-	foreach ( $blogids as $blogid ) {
-		switch_to_blog( $blogid );
+	foreach ( $sites as $site ) {
+		switch_to_blog( (int) $site->blog_id );
 		wherego_delete_data();
 	}
 
-	// Switch back to the current blog.
 	restore_current_blog();
-
 }
 
 /**

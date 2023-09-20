@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: WebberZone Followed Posts\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/where-did-they-"
 "go-from-here\n"
-"POT-Creation-Date: 2022-03-05 17:01+0000\n"
+"POT-Creation-Date: 2023-09-17 20:20+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Ajay D'Souza\n"
 "Language-Team: Ajay D'Souza\n"
@@ -12,627 +12,621 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-KeywordsList: __;_e;esc_html_e;esc_html_x:1,2c;esc_html__;"
 "esc_attr_e;esc_attr_x:1,2c;esc_attr__;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;"
 "_x:1,2c;_n:1,2;_n_noop:1,2;__ngettext:1,2;__ngettext_noop:1,2;_c,"
 "_nc:4c,1,2\n"
 "X-Poedit-Basepath: ..\n"
-"X-Generator: Poedit 3.0\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.3.1\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: vendor\n"
 
-#: includes/admin/admin-columns.php:23
-#: includes/admin/class-wzfp-settings.php:139
+#: includes/admin/class-columns.php:47
+#: includes/admin/settings/class-settings.php:225
 msgid "Followed Posts"
 msgstr ""
 
-#: includes/admin/admin-columns.php:68
+#: includes/admin/class-columns.php:88
 msgid "None"
 msgstr ""
 
-#: includes/admin/admin-metabox.php:25
-#: includes/admin/class-wzfp-settings.php:138
-#: includes/modules/class-wherego-widget.php:26
+#: includes/admin/class-metabox.php:78 includes/frontend/class-widget.php:26
 msgid "WebberZone Followed Posts"
 msgstr ""
 
-#: includes/admin/admin-metabox.php:53
-msgid "Followed posts' IDs:"
+#: includes/admin/class-metabox.php:103
+msgid "Followed posts' IDs"
 msgstr ""
 
-#: includes/admin/admin-metabox.php:55
+#: includes/admin/class-metabox.php:105
 msgid ""
 "Enter a comma separated list of valid post/page IDs. Save this post to see "
 "the updated list below."
 msgstr ""
 
-#: includes/admin/admin-metabox.php:59
+#: includes/admin/class-metabox.php:109
 msgid "Followed posts:"
 msgstr ""
 
-#: includes/admin/class-settings-api.php:194
-#: includes/admin/class-wzfp-settings.php:141
+#: includes/admin/settings/class-settings-api.php:241
+#: includes/admin/settings/class-settings.php:193
 msgid ""
 "Settings have been reset to their default values. Reload this page to view "
 "the updated settings."
 msgstr ""
 
-#: includes/admin/class-settings-api.php:195
-#: includes/admin/class-wzfp-settings.php:142
+#: includes/admin/settings/class-settings-api.php:242
+#: includes/admin/settings/class-settings.php:194
 msgid "Settings updated."
 msgstr ""
 
-#: includes/admin/class-settings-api.php:196
-#: includes/admin/class-wzfp-settings.php:143
+#: includes/admin/settings/class-settings-api.php:243
+#: includes/admin/settings/class-settings.php:195
 msgid "Save Changes"
 msgstr ""
 
-#: includes/admin/class-settings-api.php:197
-#: includes/admin/class-wzfp-settings.php:144
+#: includes/admin/settings/class-settings-api.php:244
+#: includes/admin/settings/class-settings.php:196
 msgid "Reset all settings"
 msgstr ""
 
-#: includes/admin/class-settings-api.php:198
-#: includes/admin/class-wzfp-settings.php:145
+#: includes/admin/settings/class-settings-api.php:245
+#: includes/admin/settings/class-settings.php:197
 msgid ""
 "Do you really want to reset all these settings to their default values?"
 msgstr ""
 
-#: includes/admin/class-settings-api.php:199
-#: includes/admin/class-wzfp-settings.php:146
+#: includes/admin/settings/class-settings-api.php:246
+#: includes/admin/settings/class-settings.php:198
 msgid "Modified from default setting"
 msgstr ""
 
-#: includes/admin/class-settings-api.php:517
+#: includes/admin/settings/class-settings-form.php:116
 #, php-format
 msgid "The callback function used for the %1$s setting is missing."
 msgstr ""
 
-#: includes/admin/class-settings-api.php:847
+#: includes/admin/settings/class-settings-form.php:455
 msgid "cropped"
 msgstr ""
 
-#: includes/admin/class-settings-api.php:1058
+#: includes/admin/settings/class-settings-form.php:671
 msgid "Choose File"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:95
-#, php-format
-msgid ""
-"Thank you for using %1$sWebberZone Followed Posts%2$s! Please %3$srate us"
-"%2$s on %3$sWordPress.org%2$s"
-msgstr ""
-
-#: includes/admin/class-wzfp-settings.php:140
+#: includes/admin/settings/class-settings.php:192
+#: includes/admin/settings/class-settings.php:224
 msgid "WebberZone Followed Posts Settings"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:169
-#: includes/admin/class-wzfp-settings.php:874
+#: includes/admin/settings/class-settings.php:241
+#: includes/admin/settings/class-settings.php:884
 msgid "General"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:170
-#: includes/admin/class-wzfp-settings.php:881
+#: includes/admin/settings/class-settings.php:242
+#: includes/admin/settings/class-settings.php:891
 msgid "Output"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:171
-#: includes/admin/class-wzfp-settings.php:888
+#: includes/admin/settings/class-settings.php:243
+#: includes/admin/settings/class-settings.php:898
 msgid "Thumbnail"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:172
-#: includes/admin/class-wzfp-settings.php:895
+#: includes/admin/settings/class-settings.php:244
+#: includes/admin/settings/class-settings.php:905
 msgid "Styles"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:173
-#: includes/admin/class-wzfp-settings.php:902
+#: includes/admin/settings/class-settings.php:245
+#: includes/admin/settings/class-settings.php:912
 msgid "Feed"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:226
+#: includes/admin/settings/class-settings.php:298
 msgid "Enable cache"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:227
+#: includes/admin/settings/class-settings.php:299
 msgid ""
 "If enabled, the HTML output is saved in a meta key on first page load "
 "which is then used on future page loads"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:233
+#: includes/admin/settings/class-settings.php:305
 msgid "Add followed posts to"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:235
+#: includes/admin/settings/class-settings.php:307
 #, php-format
 msgid ""
 "If you choose to disable this, please add %1$s to your template file where "
 "you want it displayed"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:242
+#: includes/admin/settings/class-settings.php:314
 msgid "Posts"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:243
+#: includes/admin/settings/class-settings.php:315
 msgid "Pages"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:244
+#: includes/admin/settings/class-settings.php:316
 msgid "Home page"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:245
+#: includes/admin/settings/class-settings.php:317
 msgid "Feeds"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:246
+#: includes/admin/settings/class-settings.php:318
 msgid "Category archives"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:247
+#: includes/admin/settings/class-settings.php:319
 msgid "Tag archives"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:248
+#: includes/admin/settings/class-settings.php:320
 msgid "Other archives"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:253
+#: includes/admin/settings/class-settings.php:325
 msgid "Track user groups"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:254
+#: includes/admin/settings/class-settings.php:326
 msgid ""
 "Uncheck above to disable tracking if the current user falls into any one "
 "of these groups."
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:261
+#: includes/admin/settings/class-settings.php:333
 msgid "Authors"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:262
+#: includes/admin/settings/class-settings.php:334
 msgid "Editors"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:263
+#: includes/admin/settings/class-settings.php:335
 msgid "Admins"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:268
+#: includes/admin/settings/class-settings.php:340
 msgid "Track logged-in users"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:269
+#: includes/admin/settings/class-settings.php:341
 msgid ""
 "Uncheck to stop tracking logged in users. Only logged out visitors will be "
 "tracked if this is disabled. Unchecking this will override the above "
 "setting."
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:275
+#: includes/admin/settings/class-settings.php:347
 msgid "Add admin column"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:276
+#: includes/admin/settings/class-settings.php:348
 msgid ""
 "Add a column in the All posts screen to display the list of followed posts"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:282
+#: includes/admin/settings/class-settings.php:354
 msgid "Link to plugin page"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:283
+#: includes/admin/settings/class-settings.php:355
 msgid ""
 "Add a no-follow link to the plugin page to announce to the world that "
 "you're using this plugin"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:289
+#: includes/admin/settings/class-settings.php:361
 msgid "List options"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:295
-#: includes/admin/class-wzfp-settings.php:644
+#: includes/admin/settings/class-settings.php:367
+#: includes/admin/settings/class-settings.php:716
 msgid "Number of posts to display"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:296
-#: includes/admin/class-wzfp-settings.php:645
+#: includes/admin/settings/class-settings.php:368
+#: includes/admin/settings/class-settings.php:717
 msgid "This is the maximum number of followed posts that will be displayed"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:303
-#: includes/modules/class-wherego-widget.php:187
+#: includes/admin/settings/class-settings.php:375
+#: includes/frontend/class-widget.php:187
 msgid "Post types to include"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:304
+#: includes/admin/settings/class-settings.php:376
 msgid ""
 "Select which post types you want to include in the list of posts. This "
 "field can be overridden using a comma separated list of post types when "
 "using the manual display."
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:310
+#: includes/admin/settings/class-settings.php:382
 msgid "Post/page IDs to exclude"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:311
+#: includes/admin/settings/class-settings.php:383
 msgid ""
 "Comma-separated list of post or page IDs to exclude from the list. e.g. "
 "188,320,500"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:317
+#: includes/admin/settings/class-settings.php:389
 msgid "Exclude Categories"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:318
+#: includes/admin/settings/class-settings.php:390
 msgid ""
 "Comma separated list of category slugs. The field above has an "
 "autocomplete so simply start typing in the starting letters and it will "
 "prompt you with options. Does not support custom taxonomies."
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:329
+#: includes/admin/settings/class-settings.php:401
 msgid "Exclude category IDs"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:330
+#: includes/admin/settings/class-settings.php:402
 msgid ""
 "This is a readonly field that is automatically populated based on the "
 "above input when the settings are saved."
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:359
+#: includes/admin/settings/class-settings.php:431
 msgid "Heading of posts"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:360
+#: includes/admin/settings/class-settings.php:432
 msgid "Displayed before the list of the posts as a the master heading"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:362
+#: includes/admin/settings/class-settings.php:434
 msgid "Readers who viewed this page, also viewed:"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:367
+#: includes/admin/settings/class-settings.php:439
 msgid "Show when no posts are found"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:373
+#: includes/admin/settings/class-settings.php:445
 msgid "Blank output"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:374
+#: includes/admin/settings/class-settings.php:446
 msgid "Display custom text"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:379
+#: includes/admin/settings/class-settings.php:451
 msgid "Custom text"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:380
+#: includes/admin/settings/class-settings.php:452
 msgid ""
 "Enter the custom text that will be displayed if the second option is "
 "selected above"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:382 includes/deprecated.php:109
+#: includes/admin/settings/class-settings.php:454
 msgid ""
 "Visitors have not browsed from this post. Become the first by clicking one "
 "of our related posts"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:386
+#: includes/admin/settings/class-settings.php:458
 msgid "Don't display on these posts/pages"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:387
+#: includes/admin/settings/class-settings.php:459
 msgid ""
 "Comma-separated list of post or page IDs where the list of posts will not "
 "be displayed. e.g. 188,320,500"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:393
+#: includes/admin/settings/class-settings.php:465
 msgid "Show post author in list"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:400
+#: includes/admin/settings/class-settings.php:472
 msgid "Show post date in list"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:407
+#: includes/admin/settings/class-settings.php:479
 msgid "Show post excerpt in list"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:414
+#: includes/admin/settings/class-settings.php:486
 msgid "Length of excerpt (in words)"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:422
+#: includes/admin/settings/class-settings.php:494
 msgid "Limit post title length (in characters)"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:430
+#: includes/admin/settings/class-settings.php:502
 msgid "Open links in new window"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:437
+#: includes/admin/settings/class-settings.php:509
 msgid "Add nofollow to links"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:444
+#: includes/admin/settings/class-settings.php:516
 msgid "Customize the output"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:445
+#: includes/admin/settings/class-settings.php:517
 msgid "HTML to display..."
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:450
+#: includes/admin/settings/class-settings.php:522
 msgid "Before the list of posts"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:457
+#: includes/admin/settings/class-settings.php:529
 msgid "After the list of posts"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:464
+#: includes/admin/settings/class-settings.php:536
 msgid "Before each list item"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:471
+#: includes/admin/settings/class-settings.php:543
 msgid "After each list item"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:499
-#: includes/admin/class-wzfp-settings.php:659
+#: includes/admin/settings/class-settings.php:571
+#: includes/admin/settings/class-settings.php:731
 msgid "Location of the post thumbnail"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:504
-#: includes/admin/class-wzfp-settings.php:664
+#: includes/admin/settings/class-settings.php:576
+#: includes/admin/settings/class-settings.php:736
 msgid "Display thumbnails inline with posts, before title"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:505
-#: includes/admin/class-wzfp-settings.php:665
+#: includes/admin/settings/class-settings.php:577
+#: includes/admin/settings/class-settings.php:737
 msgid "Display thumbnails inline with posts, after title"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:506
-#: includes/admin/class-wzfp-settings.php:666
+#: includes/admin/settings/class-settings.php:578
+#: includes/admin/settings/class-settings.php:738
 msgid "Display only thumbnails, no text"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:507
-#: includes/admin/class-wzfp-settings.php:667
+#: includes/admin/settings/class-settings.php:579
+#: includes/admin/settings/class-settings.php:739
 msgid "Do not display thumbnails, only text"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:512
+#: includes/admin/settings/class-settings.php:584
 msgid "Thumbnail size"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:513
+#: includes/admin/settings/class-settings.php:585
 msgid "You can choose from one of the registered image sizes"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:520
+#: includes/admin/settings/class-settings.php:592
 msgid "Thumbnail container width"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:521
+#: includes/admin/settings/class-settings.php:593
 msgid "Used to set the width of the image container (not the image width)"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:528
+#: includes/admin/settings/class-settings.php:600
 msgid "Thumbnail container height"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:529
+#: includes/admin/settings/class-settings.php:601
 msgid "Used to set the height of the image container (not the image height)"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:536
+#: includes/admin/settings/class-settings.php:608
 msgid "Thumbnail size attributes"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:542
+#: includes/admin/settings/class-settings.php:614
 #, php-format
 msgid "Use HTML attributes to set the width and height: e.g. %s"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:544
+#: includes/admin/settings/class-settings.php:616
 #, php-format
 msgid "Use CSS to set the width and height: e.g. %s"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:545
+#: includes/admin/settings/class-settings.php:617
 msgid ""
 "No width or height set. You will need to use external styles to force any "
 "width or height of your choice."
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:550
+#: includes/admin/settings/class-settings.php:622
 msgid "Thumbnail meta field name"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:551
+#: includes/admin/settings/class-settings.php:623
 msgid ""
 "The value of this field should contain the URL of the image and can be set "
 "in the metabox in the Edit Post screen"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:557
+#: includes/admin/settings/class-settings.php:629
 msgid "Get first image"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:558
+#: includes/admin/settings/class-settings.php:630
 msgid ""
 "The plugin will fetch the first image in the post content if this is "
 "enabled. This can slow down the loading of your page if the first image in "
 "the followed posts is large in file-size."
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:564
+#: includes/admin/settings/class-settings.php:636
 msgid "Use default thumbnail?"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:565
+#: includes/admin/settings/class-settings.php:637
 msgid ""
 "If checked, when no thumbnail is found, show a default one from the URL "
 "below. If not checked and no thumbnail is found, no image will be shown."
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:571
-#: includes/admin/class-wzfp-settings.php:981
+#: includes/admin/settings/class-settings.php:643
+#: includes/admin/settings/class-settings.php:1028
 msgid "Default thumbnail"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:572
+#: includes/admin/settings/class-settings.php:644
 msgid ""
 "Enter the full URL of the image that you wish to display if no thumbnail "
 "is found. This image will be displayed below."
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:600
+#: includes/admin/settings/class-settings.php:672
 msgid "Followed Posts style"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:608
+#: includes/admin/settings/class-settings.php:680
 msgid "Custom CSS"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:610
+#: includes/admin/settings/class-settings.php:682
 #, php-format
 msgid ""
 "Do not include %3$sstyle%4$s tags. Check out the %1$sFAQ%2$s for available "
 "CSS classes to style."
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:638
+#: includes/admin/settings/class-settings.php:710
 msgid "About this section"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:639
-#: includes/admin/class-wzfp-settings.php:904
+#: includes/admin/settings/class-settings.php:711
+#: includes/admin/settings/class-settings.php:914
 msgid ""
 "Below options override the followed posts settings for your blog feed. "
 "These only apply if you have selected to add followed posts to Feeds in "
 "the General Options tab."
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:652
+#: includes/admin/settings/class-settings.php:724
 msgid "Show post excerpt in list?"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:672
-#: includes/modules/class-wherego-widget.php:178
+#: includes/admin/settings/class-settings.php:744
+#: includes/frontend/class-widget.php:178
 msgid "Thumbnail width"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:680
-#: includes/modules/class-wherego-widget.php:183
+#: includes/admin/settings/class-settings.php:752
+#: includes/frontend/class-widget.php:183
 msgid "Thumbnail height"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:709
+#: includes/admin/settings/class-settings.php:781
 msgid "No styles"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:710
+#: includes/admin/settings/class-settings.php:782
 msgid "Select this option if you plan to add your own styles"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:714
-#: includes/modules/class-wherego-widget.php:173
+#: includes/admin/settings/class-settings.php:786
+#: includes/frontend/class-widget.php:173
 msgid "Text only"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:715
+#: includes/admin/settings/class-settings.php:787
 msgid "Disable thumbnails and no longer include the default style sheet"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:719
+#: includes/admin/settings/class-settings.php:791
 msgid "Grid thumbnails"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:720
+#: includes/admin/settings/class-settings.php:792
 msgid ""
 "Enabling this option will turn on the thumbnails and force their width and "
 "height. It will also turn off the display of the author, excerpt and date "
 "if already enabled. Disabling this option will not revert any settings."
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:789
+#: includes/admin/settings/class-settings.php:818
 msgid "Settings"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:809 includes/admin/sidebar.php:55
+#: includes/admin/settings/class-settings.php:837
+#: includes/admin/settings/sidebar.php:54
 msgid "Support"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:810
+#: includes/admin/settings/class-settings.php:838
 msgid "Donate"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:811
+#: includes/admin/settings/class-settings.php:839
 msgid "Contribute"
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:844
+#: includes/admin/settings/class-settings.php:855
 #, php-format
 msgid ""
-"For more information or how to get support visit the <a href=\"%s"
-"\">support site</a>."
+"For more information or how to get support visit the <a "
+"href=\"%s\">support site</a>."
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:846
+#: includes/admin/settings/class-settings.php:857
 #, php-format
 msgid ""
 "Support queries should be posted in the <a href=\"%s\">WordPress.org "
 "support forums</a>."
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:849
+#: includes/admin/settings/class-settings.php:860
 #, php-format
 msgid ""
 "<a href=\"%1$s\">Post an issue</a> on <a href=\"%2$s\">GitHub</a> (bug "
 "reports only)."
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:876
+#: includes/admin/settings/class-settings.php:886
 msgid ""
 "This screen provides basic settings that control the display and content "
 "of the list of followed posts."
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:877
-#: includes/admin/class-wzfp-settings.php:884
-#: includes/admin/class-wzfp-settings.php:891
-#: includes/admin/class-wzfp-settings.php:898
-#: includes/admin/class-wzfp-settings.php:905
+#: includes/admin/settings/class-settings.php:887
+#: includes/admin/settings/class-settings.php:894
+#: includes/admin/settings/class-settings.php:901
+#: includes/admin/settings/class-settings.php:908
+#: includes/admin/settings/class-settings.php:915
 msgid ""
 "You must click the Save Changes button at the bottom of the screen for new "
 "settings to take effect."
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:883
+#: includes/admin/settings/class-settings.php:893
 msgid ""
 "These settings allow you to the customize the output of the lists. You can "
 "adjust the header, customize the HTML, enable the excerpts, etc."
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:890
+#: includes/admin/settings/class-settings.php:900
 msgid ""
 "A separate set of  settings to control the thumbnail that can be displayed "
 "with the post lists. Choose the size and location of the thumbnail. The "
@@ -641,146 +635,153 @@ msgid ""
 "site icon."
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:897
+#: includes/admin/settings/class-settings.php:907
 msgid ""
 "Select a style to display the posts. Enter any custom CSS which will be "
 "added in the header of the site."
 msgstr ""
 
-#: includes/admin/class-wzfp-settings.php:1001
+#: includes/admin/settings/class-settings.php:937
+#, php-format
+msgid ""
+"Thank you for using %1$sWebberZone Followed Posts%2$s! Please %3$srate "
+"us%2$s on %3$sWordPress.org%2$s"
+msgstr ""
+
+#: includes/admin/settings/class-settings.php:1048
 msgid "Reset"
 msgstr ""
 
-#: includes/admin/options-api.php:246
-msgctxt "tag delimiter"
-msgid ","
-msgstr ""
-
-#: includes/admin/sidebar.php:20
-msgid "Support the development"
-msgstr ""
-
-#: includes/admin/sidebar.php:28
-msgid "Donation for WebberZone Followed Posts"
-msgstr ""
-
-#: includes/admin/sidebar.php:29
-msgid "Enter amount in GBP:"
-msgstr ""
-
-#: includes/admin/sidebar.php:33
-msgid "Send your donation to the author of"
-msgstr ""
-
-#: includes/admin/sidebar.php:40
-msgid "Quick links"
-msgstr ""
-
-#: includes/admin/sidebar.php:46
-msgid "WebberZone Followed Posts plugin page"
-msgstr ""
-
-#: includes/admin/sidebar.php:49
-msgid "Plugin on GitHub"
-msgstr ""
-
-#: includes/admin/sidebar.php:52
-msgid "FAQ"
-msgstr ""
-
-#: includes/admin/sidebar.php:58
-msgid "Reviews"
-msgstr ""
-
-#: includes/admin/sidebar.php:61
-msgid "Other plugins"
-msgstr ""
-
-#: includes/admin/sidebar.php:64
-msgid "Ajay's blog"
-msgstr ""
-
-#: includes/admin/sidebar.php:74
-msgid "Follow me"
-msgstr ""
-
-#: includes/cache.php:25
-msgid "Cache cleared"
-msgstr ""
-
-#: includes/cache.php:261
+#: includes/admin/settings/class-settings.php:1060
 msgid "Clear cache"
 msgstr ""
 
-#: includes/deprecated.php:108
-msgid "Readers who viewed this page, also viewed"
+#: includes/admin/settings/sidebar.php:19
+msgid "Support the development"
 msgstr ""
 
-#: includes/main.php:154
+#: includes/admin/settings/sidebar.php:27
+msgid "Donation for WebberZone Followed Posts"
+msgstr ""
+
+#: includes/admin/settings/sidebar.php:28
+msgid "Enter amount in GBP:"
+msgstr ""
+
+#: includes/admin/settings/sidebar.php:32
+msgid "Send your donation to the author of"
+msgstr ""
+
+#: includes/admin/settings/sidebar.php:39
+msgid "Quick links"
+msgstr ""
+
+#: includes/admin/settings/sidebar.php:45
+msgid "WebberZone Followed Posts plugin page"
+msgstr ""
+
+#: includes/admin/settings/sidebar.php:48
+msgid "Plugin on GitHub"
+msgstr ""
+
+#: includes/admin/settings/sidebar.php:51
+msgid "FAQ"
+msgstr ""
+
+#: includes/admin/settings/sidebar.php:57
+msgid "Reviews"
+msgstr ""
+
+#: includes/admin/settings/sidebar.php:60
+msgid "Other plugins"
+msgstr ""
+
+#: includes/admin/settings/sidebar.php:63
+msgid "Ajay's blog"
+msgstr ""
+
+#: includes/admin/settings/sidebar.php:73
+msgid "Follow me"
+msgstr ""
+
+#: includes/class-tracker.php:44
+msgid "WHEREGO: Security check failed"
+msgstr ""
+
+#: includes/class-tracker.php:93
+msgid "Updated - "
+msgstr ""
+
+#: includes/class-tracker.php:96
+msgid "No change - "
+msgstr ""
+
+#: includes/class-tracker.php:98
+msgid "Meta ID:"
+msgstr ""
+
+#: includes/class-tracker.php:101
+msgid "Not tracked - "
+msgstr ""
+
+#: includes/frontend/class-display.php:175
 #, php-format
 msgid "Powered by %1$sWebberZone Followed Posts%2$s"
 msgstr ""
 
-#: includes/modules/class-wherego-widget.php:28
-msgid "Display followed posts"
-msgstr ""
-
-#: includes/modules/class-wherego-widget.php:140
-msgid "Title"
-msgstr ""
-
-#: includes/modules/class-wherego-widget.php:145
-msgid "Number of posts"
-msgstr ""
-
-#: includes/modules/class-wherego-widget.php:151
-msgid "Show excerpt?"
-msgstr ""
-
-#: includes/modules/class-wherego-widget.php:157
-msgid "Show author?"
-msgstr ""
-
-#: includes/modules/class-wherego-widget.php:163
-msgid "Show date?"
-msgstr ""
-
-#: includes/modules/class-wherego-widget.php:168
-msgid "Thumbnail options"
-msgstr ""
-
-#: includes/modules/class-wherego-widget.php:170
-msgid "Thumbnails before title"
-msgstr ""
-
-#: includes/modules/class-wherego-widget.php:171
-msgid "Thumbnails after title"
-msgstr ""
-
-#: includes/modules/class-wherego-widget.php:172
-msgid "Thumbnails only"
-msgstr ""
-
-#: includes/public/output-generator.php:234
+#: includes/frontend/class-display.php:427
 msgid " by "
 msgstr ""
 
-#: includes/tracker.php:22
-msgid "WHEREGO: Security check failed"
+#: includes/frontend/class-display.php:580
+msgid "There is no excerpt because this is a protected post."
 msgstr ""
 
-#: includes/tracker.php:71
-msgid "Updated - "
+#: includes/frontend/class-widget.php:28
+msgid "Display followed posts"
 msgstr ""
 
-#: includes/tracker.php:74
-msgid "No change - "
+#: includes/frontend/class-widget.php:140
+msgid "Title"
 msgstr ""
 
-#: includes/tracker.php:76
-msgid "Meta ID:"
+#: includes/frontend/class-widget.php:145
+msgid "Number of posts"
 msgstr ""
 
-#: includes/tracker.php:79
-msgid "Not tracked - "
+#: includes/frontend/class-widget.php:151
+msgid "Show excerpt?"
+msgstr ""
+
+#: includes/frontend/class-widget.php:157
+msgid "Show author?"
+msgstr ""
+
+#: includes/frontend/class-widget.php:163
+msgid "Show date?"
+msgstr ""
+
+#: includes/frontend/class-widget.php:168
+msgid "Thumbnail options"
+msgstr ""
+
+#: includes/frontend/class-widget.php:170
+msgid "Thumbnails before title"
+msgstr ""
+
+#: includes/frontend/class-widget.php:171
+msgid "Thumbnails after title"
+msgstr ""
+
+#: includes/frontend/class-widget.php:172
+msgid "Thumbnails only"
+msgstr ""
+
+#: includes/options-api.php:266
+msgctxt "tag delimiter"
+msgid ","
+msgstr ""
+
+#: includes/util/class-cache.php:49
+msgid "Cache cleared"
 msgstr ""
