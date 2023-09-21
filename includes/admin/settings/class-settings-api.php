@@ -422,17 +422,47 @@ class Settings_API {
 	 */
 	public function admin_enqueue_scripts( $hook ) {
 
+		self::register_scripts_styles();
+
 		if ( $hook === $this->settings_page ) {
 			self::enqueue_scripts_styles();
 		}
 	}
 
 	/**
+	 * Registers scripts, styles bundled with the Settings API.
+	 */
+	public static function register_scripts_styles() {
+
+		$minimize = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
+
+		wp_register_script(
+			'wz-admin-js',
+			plugins_url( 'js/admin-scripts' . $minimize . '.js', __FILE__ ),
+			array( 'jquery', 'jquery-ui-autocomplete', 'jquery-ui-tabs' ),
+			self::VERSION,
+			true
+		);
+		wp_register_script(
+			'wz-codemirror-js',
+			plugins_url( 'js/apply-codemirror' . $minimize . '.js', __FILE__ ),
+			array( 'jquery' ),
+			self::VERSION,
+			true
+		);
+		wp_register_script(
+			'wz-taxonomy-suggest-js',
+			plugins_url( 'js/taxonomy-suggest' . $minimize . '.js', __FILE__ ),
+			array( 'jquery' ),
+			self::VERSION,
+			true
+		);
+	}
+
+	/**
 	 * Enqueues all scripts, styles, settings, and templates necessary to use the Settings API.
 	 */
 	public static function enqueue_scripts_styles() {
-
-		$minimize = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 
 		wp_enqueue_style( 'wp-color-picker' );
 
@@ -452,27 +482,9 @@ class Settings_API {
 			)
 		);
 
-		wp_enqueue_script(
-			'wz-admin-js',
-			plugins_url( 'js/admin-scripts' . $minimize . '.js', __FILE__ ),
-			array( 'jquery' ),
-			self::VERSION,
-			true
-		);
-		wp_enqueue_script(
-			'wz-codemirror-js',
-			plugins_url( 'js/apply-codemirror' . $minimize . '.js', __FILE__ ),
-			array( 'jquery' ),
-			self::VERSION,
-			true
-		);
-		wp_enqueue_script(
-			'wz-taxonomy-suggest-js',
-			plugins_url( 'js/taxonomy-suggest' . $minimize . '.js', __FILE__ ),
-			array( 'jquery' ),
-			self::VERSION,
-			true
-		);
+		wp_enqueue_script( 'wz-admin-js' );
+		wp_enqueue_script( 'wz-codemirror-js' );
+		wp_enqueue_script( 'wz-taxonomy-suggest-js' );
 	}
 
 	/**

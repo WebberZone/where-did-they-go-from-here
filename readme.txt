@@ -106,6 +106,7 @@ Complete plugin rewrite to use classes and autoloading.
 * Features
 	* New functions `get_wfp()` and `the_wfp()` replace `get_wherego()` and `echo_wherego()`. The latter two will throw deprecated notices
 	* New shortcode `[wfp]` replaces `[wherego]`. The latter will continue to work but it is recommended that you replace the shortcode
+	* New tools page can be found under Tools > WFP Tools. Import/Export settings and clear the cache from there
 
 * Enhancements:
 	* Caching enabled by default - this will apply to new installs and if you reset the settings
