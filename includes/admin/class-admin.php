@@ -61,15 +61,6 @@ class Admin {
 	public $metabox;
 
 	/**
-	 * Import Export functions.
-	 *
-	 * @since 3.1.0
-	 *
-	 * @var object Import Export functions.
-	 */
-	public $import_export;
-
-	/**
 	 * Tools page.
 	 *
 	 * @since 3.1.0
@@ -77,24 +68,6 @@ class Admin {
 	 * @var object Tools page.
 	 */
 	public $tools_page;
-
-	/**
-	 * Cron class.
-	 *
-	 * @since 3.1.0
-	 *
-	 * @var object Cron class.
-	 */
-	public $cron;
-
-	/**
-	 * Dashboard widgets.
-	 *
-	 * @since 3.1.0
-	 *
-	 * @var object Dashboard widgets.
-	 */
-	public $dashboard_widgets;
 
 	/**
 	 * Cache.
@@ -115,33 +88,6 @@ class Admin {
 	public $settings_page;
 
 	/**
-	 * Prefix which is used for creating the unique filters and actions.
-	 *
-	 * @since 3.1.0
-	 *
-	 * @var string Prefix.
-	 */
-	public static $prefix;
-
-	/**
-	 * Settings Key.
-	 *
-	 * @since 3.1.0
-	 *
-	 * @var string Settings Key.
-	 */
-	public $settings_key;
-
-	/**
-	 * The slug name to refer to this menu by (should be unique for this menu).
-	 *
-	 * @since 3.1.0
-	 *
-	 * @var string Menu slug.
-	 */
-	public $menu_slug;
-
-	/**
 	 * Main constructor class.
 	 *
 	 * @since 3.1.0
@@ -155,6 +101,7 @@ class Admin {
 		$this->admin_columns = new Columns();
 		$this->metabox       = new Metabox();
 		$this->cache         = new Cache();
+		$this->tools_page    = new Tools_Page();
 	}
 
 	/**
