@@ -110,10 +110,10 @@ final class Main {
 	 */
 	private function init() {
 		$this->language   = new Frontend\Language_Handler();
+		$this->styles     = new Frontend\Styles_Handler();
 		$this->tracker    = new Tracker();
 		$this->shortcodes = new Frontend\Shortcodes();
 		$this->blocks     = new Frontend\Blocks\Blocks();
-		$this->styles     = new Frontend\Styles_Handler();
 
 		$this->hooks();
 
