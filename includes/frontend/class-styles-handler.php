@@ -43,7 +43,7 @@ class Styles_Handler {
 				"wherego-style-{$style}",
 				plugins_url( "includes/css/{$style}{$minimize}.css", WHEREGO_PLUGIN_FILE ),
 				array(),
-				WZP_VERSION
+				WFP_VERSION
 			);
 			wp_enqueue_style( "wherego-style-{$style}" );
 			wp_add_inline_style( "wherego-style-{$style}", $extra_css );
@@ -54,7 +54,7 @@ class Styles_Handler {
 			'wherego-custom-css',
 			false,
 			array(),
-			WZP_VERSION
+			WFP_VERSION
 		);
 
 		// Load Custom CSS.

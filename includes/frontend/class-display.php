@@ -50,6 +50,7 @@ class Display {
 			'is_block'     => false,
 			'echo'         => true,
 			'heading'      => true,
+			'extra_class'  => '',
 		);
 		$defaults = array_merge( $defaults, wherego_settings_defaults(), $wherego_settings );
 
@@ -99,10 +100,19 @@ class Display {
 		 */
 		$results = apply_filters( 'get_wherego_posts_id', (array) $results, $args );
 
-		$widget_class    = $args['is_widget'] ? 'wherego_related_widget' : 'wherego_related ';
-		$shortcode_class = $args['is_shortcode'] ? 'wherego_related_shortcode ' : '';
+		// Override wherego_styles if post_thumb_op is text_only.
+		$args['wherego_styles'] = ( 'text_only' === $args['post_thumb_op'] ) ? 'text_only' : $args['wherego_styles'];
+		$style_array            = Styles_Handler::get_style( $args['wherego_styles'] );
 
-		$post_classes = $widget_class . $shortcode_class;
+		$post_classes = array(
+			'main'        => 'wz-followed-posts',
+			'widget'      => $args['is_widget'] ? 'wherego_related_widget wz-followed-posts-widget' : 'wherego_related',
+			'shortcode'   => $args['is_shortcode'] ? 'wherego_related_shortcode wz-followed-posts-shortcode' : '',
+			'block'       => $args['is_block'] ? 'wz-followed-posts-block' : '',
+			'extra_class' => $args['extra_class'],
+			'style'       => ! empty( $style_array['name'] ) ? 'wz-followed-posts-' . $style_array['name'] : '',
+		);
+		$post_classes = join( ' ', $post_classes );
 
 		/**
 		 * Filter the classes added to the div wrapper of the WebberZone Followed Posts.
@@ -183,12 +193,20 @@ class Display {
 
 		} else {
 			$output .= ( $args['blank_output'] ) ? ' ' : '<p>' . $args['blank_output_text'] . '</p>';
+			$output .= $args['is_block'] ? __(
+				'This is a placeholder for the followed posts block. There are no followed posts to display.',
+				'where-did-they-go-from-here'
+			) : '';
 		}// End if.
 
 		// Check if the opening list tag is missing in the output, it means all of our results were eliminated cause of the category filter.
 		if ( false === ( strpos( $output, $args['before_list_item'] ) ) ) {
 			$output  = '<div class="wherego_related">';
 			$output .= ( $args['blank_output'] ) ? ' ' : '<p>' . $args['blank_output_text'] . '</p>';
+			$output .= $args['is_block'] ? __(
+				'This is a placeholder for the followed posts block. There are no followed posts to display.',
+				'where-did-they-go-from-here'
+			) : '';
 		}
 
 		$output .= '</div>'; // Closing div of 'wherego_related'.

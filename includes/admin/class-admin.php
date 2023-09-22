@@ -124,7 +124,7 @@ class Admin {
 			'wherego-admin-columns',
 			false,
 			array(),
-			WZP_VERSION
+			WFP_VERSION
 		);
 	}
 

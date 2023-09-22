@@ -1,15 +1,15 @@
-.wherego_related {
+.wz-followed-posts.wz-followed-posts-grid {
   clear: both;
   margin: 10px 0;
   width: 100%;
 }
 
-.wherego_related h3 {
+.wz-followed-posts.wz-followed-posts-grid h3 {
   margin: 0;
   clear: both;
 }
 
-.wherego_related ul {
+.wz-followed-posts.wz-followed-posts-grid ul {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -18,7 +18,7 @@
   grid-gap: 10px;
 }
 
-.wherego_related ul li {
+.wz-followed-posts.wz-followed-posts-grid ul li {
   text-align: center;
   line-height: 120%;
   border: 1px solid #ddd;
@@ -27,7 +27,7 @@
   transition: ease 0.3s;
 }
 
-.wherego_related ul li a {
+.wz-followed-posts.wz-followed-posts-grid ul li a {
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -35,12 +35,12 @@
   color: #fff;
 }
 
-.wherego_related ul li a img {
+.wz-followed-posts.wz-followed-posts-grid ul li a img {
   margin: 0 auto;
   max-width: 100%;
 }
 
-.wherego_related ul li a span.wherego_title {
+.wz-followed-posts.wz-followed-posts-grid ul li a span.wherego_title {
   background-color: rgba(0, 0, 0, 0.5);
   padding: 5px;
   color: #fff;
@@ -53,11 +53,11 @@
   word-break: break-word;
 }
 
-.wherego_related ul li a span.wherego_title:hover {
+.wz-followed-posts.wz-followed-posts-grid ul li a span.wherego_title:hover {
   background-color: #333;
 }
 
-.wherego_related ul li:hover {
+.wz-followed-posts.wz-followed-posts-grid ul li:hover {
   background-color: #ccc;
 }
 
