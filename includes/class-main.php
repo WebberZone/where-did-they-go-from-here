@@ -61,6 +61,15 @@ final class Main {
 	public $tracker;
 
 	/**
+	 * Blocks.
+	 *
+	 * @since 3.1.0
+	 *
+	 * @var object Blocks.
+	 */
+	public $blocks;
+
+	/**
 	 * Styles.
 	 *
 	 * @since 3.1.0
@@ -103,6 +112,7 @@ final class Main {
 		$this->language   = new Frontend\Language_Handler();
 		$this->tracker    = new Tracker();
 		$this->shortcodes = new Frontend\Shortcodes();
+		$this->blocks     = new Frontend\Blocks\Blocks();
 		$this->styles     = new Frontend\Styles_Handler();
 
 		$this->hooks();
