@@ -53,6 +53,9 @@ class Shortcodes {
 			'wfp'
 		);
 
+		// Enqueue the stylesheet for the selected style for this block.
+		Styles_Handler::enqueue_style( $atts['wherego_styles'] );
+
 		return get_wfp( $atts );
 	}
 }

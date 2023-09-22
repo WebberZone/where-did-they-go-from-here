@@ -7,6 +7,8 @@
 
 namespace WebberZone\WFP\Frontend;
 
+use WebberZone\WFP\Admin\Settings\Settings;
+
 if ( ! defined( 'WPINC' ) ) {
 	die;
 }
@@ -19,39 +21,72 @@ if ( ! defined( 'WPINC' ) ) {
 class Styles_Handler {
 
 	/**
+	 * Prefix.
+	 *
+	 * @since 3.1.0
+	 *
+	 * @var string $prefix Prefix.
+	 */
+	private static $prefix = 'wherego';
+
+	/**
 	 * Constructor class.
 	 *
 	 * @since 3.1.0
 	 */
 	public function __construct() {
-		add_action( 'wp_enqueue_scripts', array( __CLASS__, 'register_styles' ) );
+		add_action( 'wp_enqueue_scripts', array( __CLASS__, 'wp_enqueue_scripts' ) );
 	}
 
 	/**
-	 * Enqueue styles.
+	 * Enqueue scripts and styles.
+	 *
+	 * @since 3.1.0
+	 */
+	public static function wp_enqueue_scripts() {
+		self::register_styles();
+		self::enqueue_style( wherego_get_option( 'wherego_styles' ) );
+	}
+
+	/**
+	 * Register styles.
+	 *
+	 * @since 3.1.0
+	 *
+	 * @return array Style names.
 	 */
 	public static function register_styles() {
 
 		$minimize    = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
-		$style_array = self::get_style();
+		$styles      = Settings::get_styles();
+		$style_names = array();
 
-		if ( ! empty( $style_array['name'] ) ) {
-			$style     = $style_array['name'];
-			$extra_css = $style_array['extra_css'];
+		foreach ( $styles as $style ) {
 
-			wp_register_style(
-				"wherego-style-{$style}",
-				plugins_url( "includes/css/{$style}{$minimize}.css", WHEREGO_PLUGIN_FILE ),
-				array(),
-				WFP_VERSION
-			);
-			wp_enqueue_style( "wherego-style-{$style}" );
-			wp_add_inline_style( "wherego-style-{$style}", $extra_css );
+			$style_array = self::get_style( $style['id'] );
+
+			if ( ! empty( $style_array['name'] ) ) {
+				$style     = $style_array['name'];
+				$extra_css = $style_array['extra_css'];
+
+				$style_name = self::$prefix . "-style-{$style}";
+
+				wp_register_style(
+					$style_name,
+					plugins_url( "includes/css/{$style}{$minimize}.css", WHEREGO_PLUGIN_FILE ),
+					array(),
+					WFP_VERSION
+				);
+				wp_add_inline_style( $style_name, $extra_css );
+				$style_names[] = $style_name;
+			}
 		}
 
 		// Register and enqueue $custom_css.
+		$custom_css_name = self::$prefix . '-custom-css';
+		$style_names[]   = $custom_css_name;
 		wp_register_style(
-			'wherego-custom-css',
+			$custom_css_name,
 			false,
 			array(),
 			WFP_VERSION
@@ -60,9 +95,10 @@ class Styles_Handler {
 		// Load Custom CSS.
 		$custom_css = stripslashes( \wherego_get_option( 'custom_css' ) );
 		if ( $custom_css ) {
-			wp_add_inline_style( 'wherego-custom-css', $custom_css );
-			wp_enqueue_style( 'wherego-custom-css' );
+			wp_add_inline_style( $custom_css_name, $custom_css );
 		}
+
+		return $style_names;
 	}
 
 	/**
@@ -86,10 +122,10 @@ class Styles_Handler {
 			case 'grid':
 				$style_array['name']      = 'grid';
 				$style_array['extra_css'] = "
-				.wherego_related ul {
+				.wz-followed-posts.wz-followed-posts-grid ul {
 					grid-template-columns: repeat(auto-fill, minmax({$thumb_width}px, 1fr));
 				}
-				.wherego_related ul li a img {
+				.wz-followed-posts.wz-followed-posts-grid ul li a img {
 					max-width:{$thumb_width}px;
 					max-height:{$thumb_height}px;
 				}
@@ -113,5 +149,21 @@ class Styles_Handler {
 		 * @param int    $thumb_height Thumbnail height.
 		 */
 		return apply_filters( 'wherego_get_style', $style_array, $wherego_style, $thumb_width, $thumb_height );
+	}
+
+	/**
+	 * Enqueue a specific styles.
+	 *
+	 * @since 3.1.0
+	 *
+	 * @param string $style Style name.
+	 */
+	public static function enqueue_style( $style ) {
+		$style_array = self::get_style( $style );
+
+		if ( ! empty( $style_array['name'] ) ) {
+			$style_name = "wherego-style-{$style_array['name']}";
+			wp_enqueue_style( $style_name );
+		}
 	}
 }

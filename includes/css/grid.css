@@ -38,6 +38,9 @@
 .wz-followed-posts.wz-followed-posts-grid ul li a img {
   margin: 0 auto;
   max-width: 100%;
+  height: 100%;
+  object-fit: cover;
+  flex: 1 1 auto;
 }
 
 .wz-followed-posts.wz-followed-posts-grid ul li a span.wherego_title {
