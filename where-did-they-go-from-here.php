@@ -14,7 +14,7 @@
  * Plugin Name: WebberZone Followed Posts
  * Plugin URI:  https://webberzone.com/plugins/webberzone-followed-posts/
  * Description: The best way to display posts followed by users a.k.a. "Readers who viewed this page, also viewed" links
- * Version:     3.1.0-beta1
+ * Version:     3.1.0-RC1
  * Author:      Ajay D'Souza
  * Author URI:  https://webberzone.com
  * License:     GPL-2.0+
@@ -36,8 +36,8 @@ if ( ! defined( 'WPINC' ) ) {
  *
  * @since 3.0.0
  */
-if ( ! defined( 'WZP_VERSION' ) ) {
-	define( 'WZP_VERSION', '3.1.0' );
+if ( ! defined( 'WFP_VERSION' ) ) {
+	define( 'WFP_VERSION', '3.1.0' );
 }
 
 /**
