@@ -107,7 +107,14 @@ class Tools_Page {
 		ob_start();
 		?>
 	<div class="wrap">
-		<h1><?php esc_html_e( 'Followed Posts Tools', 'where-did-they-go-from-here' ); ?></h1>
+		<h1><?php esc_html_e( 'WebberZone Followed Posts Tools', 'where-did-they-go-from-here' ); ?></h1>
+		<?php do_action( 'wherego_tools_page_header' ); ?>
+
+		<p>
+			<a class="button button-primary" href="<?php echo esc_url( admin_url( 'options-general.php?page=wherego_options_page' ) ); ?>">
+			<?php esc_html_e( 'Visit the Settings page', 'where-did-they-go-from-here' ); ?>
+			</a>
+		<p>
 
 		<?php settings_errors(); ?>
 
@@ -134,7 +141,7 @@ class Tools_Page {
 				</p>
 				<p><input type="hidden" name="wherego_action" value="export_settings" /></p>
 				<p>
-					<?php submit_button( esc_html__( 'Export Settings', 'where-did-they-go-from-here' ), 'primary', 'wherego_export_settings', false ); ?>
+					<?php submit_button( esc_html__( 'Export Settings', 'where-did-they-go-from-here' ), 'secondary', 'wherego_export_settings', false ); ?>
 				</p>
 
 				<?php wp_nonce_field( 'wherego_export_settings_nonce', 'wherego_export_settings_nonce' ); ?>
@@ -149,7 +156,7 @@ class Tools_Page {
 					<input type="file" name="import_settings_file" />
 				</p>
 				<p>
-					<?php submit_button( esc_html__( 'Import Settings', 'where-did-they-go-from-here' ), 'primary', 'wherego_import_settings', false ); ?>
+					<?php submit_button( esc_html__( 'Import Settings', 'where-did-they-go-from-here' ), 'secondary', 'wherego_import_settings', false ); ?>
 				</p>
 
 				<input type="hidden" name="wherego_action" value="import_settings" />

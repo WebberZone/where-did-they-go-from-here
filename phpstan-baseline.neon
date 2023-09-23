@@ -26,6 +26,11 @@ parameters:
 			path: includes/autoloader.php
 
 		-
+			message: "#^Constant WHEREGO_PLUGIN_DIR not found\\.$#"
+			count: 1
+			path: includes/frontend/blocks/class-blocks.php
+
+		-
 			message: "#^Variable \\$meta_key might not be defined\\.$#"
 			count: 1
 			path: includes/frontend/class-display.php

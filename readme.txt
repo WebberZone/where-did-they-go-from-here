@@ -63,7 +63,6 @@ __If you're looking for a plugin that displays posts related to the content, loo
 6. Meta box in Edit Posts screen
 7. WordPress widget
 
-
 == Frequently Asked Questions ==
 
 Check out the [FAQ on the plugin page](https://wordpress.org/plugins/where-did-they-go-from-here/#faq) for a detailed list of questions and answers.
