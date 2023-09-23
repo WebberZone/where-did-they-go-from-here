@@ -153,6 +153,7 @@ class Settings {
 		add_filter( 'wherego_after_setting_output', array( $this, 'display_admin_thumbnail' ), 10, 2 );
 		add_filter( 'wherego_setting_field_description', array( $this, 'reset_default_thumb_setting' ), 10, 2 );
 		add_action( 'wherego_settings_form_buttons', array( $this, 'cache_button' ) );
+		add_action( 'wherego_settings_page_header', array( $this, 'settings_page_header' ), 11 );
 	}
 
 	/**
@@ -326,6 +327,7 @@ class Settings {
 				'desc'    => esc_html__( 'Uncheck above to disable tracking if the current user falls into any one of these groups.', 'where-did-they-go-from-here' ),
 				'type'    => 'multicheck',
 				'default' => array(
+					'authors' => 'authors',
 					'editors' => 'editors',
 					'admins'  => 'admins',
 				),
@@ -1058,6 +1060,21 @@ class Settings {
 	public static function cache_button() {
 		?>
 	<input type="button" name="cache_clear" id="cache_clear"  value="<?php esc_attr_e( 'Clear cache', 'where-did-they-go-from-here' ); ?>" class="button button-secondary delete" onclick="return clearCache();" />
+		<?php
+	}
+
+	/**
+	 * Function to add a link below the page header of the settings page.
+	 *
+	 * @since 3.1.0
+	 */
+	public function settings_page_header() {
+		?>
+			<p>
+				<a class="button button-primary" href="<?php echo esc_url( admin_url( 'tools.php?page=wherego_tools_page' ) ); ?>">
+				<?php esc_html_e( 'Visit the Tools page', 'where-did-they-go-from-here' ); ?>
+				</a>
+			<p>
 		<?php
 	}
 }
