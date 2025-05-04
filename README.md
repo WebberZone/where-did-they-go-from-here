@@ -8,11 +8,11 @@
 [![Required PHP](https://img.shields.io/wordpress/plugin/required-php/where-did-they-go-from-here?style=flat-square)](https://wordpress.org/plugins/where-did-they-go-from-here/)
 [![Active installs](https://img.shields.io/wordpress/plugin/installs/where-did-they-go-from-here?style=flat-square)](https://wordpress.org/plugins/where-did-they-go-from-here/)
 
-__Requires:__ 5.6
+__Requires:__ 6.3
 
-__Tested up to:__ 6.3
+__Tested up to:__ 6.8
 
-__Requires PHP:__ 7.2
+__Requires PHP:__ 7.4
 
 __License:__ [GPL-2.0+](https://www.gnu.org/licenses/gpl-2.0.html)
 
