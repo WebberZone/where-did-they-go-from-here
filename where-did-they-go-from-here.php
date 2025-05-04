@@ -8,13 +8,13 @@
  * @author    Ajay D'Souza
  * @license   GPL-2.0+
  * @link      https://webberzone.com
- * @copyright 2008-2023 Ajay D'Souza
+ * @copyright 2008-2025 Ajay D'Souza
  *
  * @wordpress-plugin
  * Plugin Name: WebberZone Followed Posts
  * Plugin URI:  https://webberzone.com/plugins/webberzone-followed-posts/
- * Description: The best way to display posts followed by users a.k.a. "Readers who viewed this page, also viewed" links
- * Version:     3.1.1-beta1
+ * Description: Effortlessly showcase the posts that users follow on your WordPress site.
+ * Version:     3.1.1
  * Author:      Ajay D'Souza
  * Author URI:  https://webberzone.com
  * License:     GPL-2.0+
@@ -37,7 +37,7 @@ if ( ! defined( 'WPINC' ) ) {
  * @since 3.0.0
  */
 if ( ! defined( 'WFP_VERSION' ) ) {
-	define( 'WFP_VERSION', '3.1.0' );
+	define( 'WFP_VERSION', '3.1.1' );
 }
 
 /**
