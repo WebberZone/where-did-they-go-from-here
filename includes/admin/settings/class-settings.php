@@ -936,7 +936,7 @@ class Settings {
 	public static function get_admin_footer_text() {
 		return sprintf(
 			/* translators: 1: Opening achor tag with Plugin page link, 2: Closing anchor tag, 3: Opening anchor tag with review link. */
-			__( 'Thank you for using %1$sWebberZone Followed Posts%2$s! Please %3$srate us%2$s on %3$sWordPress.org%2$s', 'knowledgebase' ),
+			__( 'Thank you for using %1$sWebberZone Followed Posts%2$s! Please %3$srate us%2$s on %3$sWordPress.org%2$s', 'where-did-they-go-from-here' ),
 			'<a href="https://webberzone.com/plugins/where-did-they-go-from-here/" target="_blank">',
 			'</a>',
 			'<a href="https://wordpress.org/support/plugin/where-did-they-go-from-here/reviews/#new-post" target="_blank">'
