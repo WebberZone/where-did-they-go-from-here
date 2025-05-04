@@ -121,4 +121,21 @@ class Helpers {
 		 */
 		return apply_filters( 'wherego_trim_char', $input, $count, $more, $break_words );
 	}
+
+	/**
+	 * Sanitize args.
+	 *
+	 * @since 3.1.1
+	 *
+	 * @param array $args Array of arguments.
+	 * @return array Sanitized array of arguments.
+	 */
+	public static function sanitize_args( $args ): array {
+		foreach ( $args as $key => $value ) {
+			if ( is_string( $value ) ) {
+				$args[ $key ] = wp_kses_post( $value );
+			}
+		}
+		return $args;
+	}
 }

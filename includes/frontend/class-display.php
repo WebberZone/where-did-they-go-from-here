@@ -56,6 +56,7 @@ class Display {
 
 		// Parse incomming $args into an array and merge it with $defaults.
 		$args = wp_parse_args( $args, $defaults );
+		$args = Helpers::sanitize_args( $args );
 
 		// Check the cache first.
 		if ( ! empty( $args['cache'] ) && ! ( is_preview() || is_admin() || ( defined( 'REST_REQUEST' ) && REST_REQUEST ) ) ) {
