@@ -55,7 +55,6 @@ class Language_Handler {
 		$processed_results = array();
 
 		foreach ( $results as $result ) {
-
 			$result = self::object_id_cur_lang( $result );
 			if ( ! $result ) {
 				continue;
@@ -85,20 +84,19 @@ class Language_Handler {
 	 * @return \WP_Post|array|null Post opbject, updated if needed.
 	 */
 	public static function object_id_cur_lang( $post ) {
-
 		$return_original_if_missing = false;
 
 		$post         = get_post( $post );
 		$current_lang = apply_filters( 'wpml_current_language', null );
 
 		// Polylang implementation.
-		if ( function_exists( 'pll_get_post' ) ) {
+		if ( function_exists( 'pll_get_post' ) && ! empty( $post ) ) {
 			$post = pll_get_post( $post->ID );
 			$post = get_post( $post );
 		}
 
 		// WPML implementation.
-		if ( class_exists( 'SitePress' ) ) {
+		if ( class_exists( 'SitePress' ) && ! empty( $post ) ) {
 			/**
 			 * Filter to modify if the original language ID is returned.
 			 *
