@@ -43,6 +43,9 @@ class Settings_Wizard extends Settings_Wizard_API {
 		parent::__construct( $settings_key, $prefix, $args );
 
 		add_action( 'wherego_activate', array( $this, 'trigger_wizard_on_activation' ) );
+		add_action( 'admin_init', array( $this, 'maybe_redirect_to_wizard' ) );
+		add_action( 'admin_init', array( $this, 'maybe_handle_notice_dismissal' ) );
+		add_action( 'admin_notices', array( $this, 'maybe_render_wizard_notice' ) );
 	}
 
 	/**
@@ -53,6 +56,103 @@ class Settings_Wizard extends Settings_Wizard_API {
 	public function trigger_wizard_on_activation() {
 		set_transient( 'wherego_show_wizard_activation_redirect', true, HOUR_IN_SECONDS );
 		update_option( 'wherego_show_wizard', true );
+	}
+
+	/**
+	 * Redirect to the wizard after activation if it has been triggered.
+	 *
+	 * @since 3.2.0
+	 */
+	public function maybe_redirect_to_wizard() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
+		$page = sanitize_key( (string) filter_input( INPUT_GET, 'page', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
+		if ( 'wherego_wizard' === $page ) {
+			return;
+		}
+
+		if ( $this->is_wizard_completed() ) {
+			return;
+		}
+
+		$triggered = get_transient( 'wherego_show_wizard_activation_redirect' ) || get_option( 'wherego_show_wizard', false );
+		if ( ! $triggered ) {
+			return;
+		}
+
+		delete_transient( 'wherego_show_wizard_activation_redirect' );
+		wp_safe_redirect( admin_url( 'admin.php?page=wherego_wizard' ) );
+		exit;
+	}
+
+	/**
+	 * Handle dismissal of the wizard notice.
+	 *
+	 * @since 3.2.0
+	 */
+	public function maybe_handle_notice_dismissal() {
+		$dismiss = sanitize_key( (string) filter_input( INPUT_GET, 'wherego_dismiss_wizard_notice', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
+		if ( '1' !== $dismiss ) {
+			return;
+		}
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
+		$nonce = sanitize_text_field( (string) filter_input( INPUT_GET, '_wpnonce', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
+		if ( ! wp_verify_nonce( $nonce, 'wherego_dismiss_wizard_notice' ) ) {
+			return;
+		}
+
+		update_option( 'wherego_wizard_notice_dismissed', true );
+	}
+
+	/**
+	 * Render a dismissible admin notice to run the setup wizard.
+	 *
+	 * @since 3.2.0
+	 */
+	public function maybe_render_wizard_notice() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
+		$page = sanitize_key( (string) filter_input( INPUT_GET, 'page', FILTER_SANITIZE_FULL_SPECIAL_CHARS ) );
+		if ( 'wherego_wizard' === $page ) {
+			return;
+		}
+
+		if ( $this->is_wizard_completed() || get_option( 'wherego_wizard_notice_dismissed', false ) ) {
+			return;
+		}
+
+		$triggered = get_transient( 'wherego_show_wizard_activation_redirect' ) || get_option( 'wherego_show_wizard', false );
+		if ( ! $triggered ) {
+			return;
+		}
+
+		$dismiss_url = wp_nonce_url(
+			add_query_arg( 'wherego_dismiss_wizard_notice', '1' ),
+			'wherego_dismiss_wizard_notice'
+		);
+		?>
+		<div class="notice notice-info is-dismissible">
+			<p>
+				<?php esc_html_e( 'Welcome to WebberZone Followed Posts! Would you like to run the setup wizard to configure the plugin?', 'where-did-they-go-from-here' ); ?>
+			</p>
+			<p>
+				<a href="<?php echo esc_url( admin_url( 'admin.php?page=wherego_wizard' ) ); ?>" class="button button-primary">
+					<?php esc_html_e( 'Run Setup Wizard', 'where-did-they-go-from-here' ); ?>
+				</a>
+				<a href="<?php echo esc_url( $dismiss_url ); ?>" class="button button-secondary" style="margin-left: 8px;">
+					<?php esc_html_e( 'Dismiss', 'where-did-they-go-from-here' ); ?>
+				</a>
+			</p>
+		</div>
+		<?php
 	}
 
 	/**
