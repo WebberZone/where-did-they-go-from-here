@@ -138,4 +138,78 @@ class Helpers {
 		}
 		return $args;
 	}
+
+	/**
+	 * Check if the current request is from a bot.
+	 *
+	 * @since 3.2.0
+	 *
+	 * @return bool True if the request is from a bot.
+	 */
+	public static function is_bot(): bool {
+		$user_agent = isset( $_SERVER['HTTP_USER_AGENT'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) ) : '';
+
+		if ( empty( $user_agent ) ) {
+			return true;
+		}
+
+		$bot_patterns = array(
+			'bot',
+			'crawl',
+			'slurp',
+			'spider',
+			'mediapartners',
+			'facebookexternalhit',
+			'googlebot',
+			'bingbot',
+			'yandex',
+			'baidu',
+			'duckduckbot',
+			'archive.org',
+			'semrush',
+			'ahrefs',
+			'mj12bot',
+			'dotbot',
+			'rogerbot',
+			'screaming frog',
+			'lighthouse',
+			'pingdom',
+			'gtmetrix',
+			'pagespeed',
+		);
+
+		/**
+		 * Filter the bot patterns.
+		 *
+		 * @since 3.2.0
+		 *
+		 * @param array $bot_patterns Array of bot patterns.
+		 */
+		$bot_patterns = apply_filters( 'wherego_bot_patterns', $bot_patterns );
+
+		$user_agent_lower = strtolower( $user_agent );
+
+		foreach ( $bot_patterns as $pattern ) {
+			if ( false !== strpos( $user_agent_lower, strtolower( $pattern ) ) ) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * Get the current page URL.
+	 *
+	 * @since 3.2.0
+	 *
+	 * @return string Current page URL.
+	 */
+	public static function get_current_url(): string {
+		$protocol = is_ssl() ? 'https://' : 'http://';
+		$host     = isset( $_SERVER['HTTP_HOST'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_HOST'] ) ) : '';
+		$uri      = isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '';
+
+		return $protocol . $host . $uri;
+	}
 }

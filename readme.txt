@@ -2,7 +2,7 @@
 Tags: followed posts, related posts, where did they go from here
 Contributors: Ajay, webberzone
 Donate link: https://ajaydsouza.com/donate/
-Stable tag: 3.1.2
+Stable tag: 3.2.0
 Requires at least: 6.3
 Requires PHP: 7.4
 Tested up to: 6.8
@@ -98,6 +98,25 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 == Changelog ==
 
+= 3.2.0 =
+
+* New
+	* REST API tracking endpoint.
+	* REST API endpoint to retrieve followed posts by post ID.
+	* Vanilla JavaScript tracker (no jQuery dependency).
+	* Tracker type setting (REST API based or Ajax based).
+	* Debug mode for tracker responses.
+	* Dashboard widget showing posts with followed links.
+	* New display styles: Left thumbnails and Text only.
+
+* Improved
+	* REST API responses for followed posts return WordPress REST-style post objects.
+	* Tracking data storage capped at 100 followed posts (filterable).
+
+* Developer
+	* Centralized hook registration via Hook Registry.
+	* Modernized Options API with class-based settings handling.
+
 = 3.1.2 =
 
 * Bug fix: Check if post is empty before processing.
@@ -141,6 +160,9 @@ Release post: [https://webberzone.com/blog/followed-posts-v3-0-0/](https://webbe
 For previous changelog entries check out the changelog.txt file included with the plugin or [view the releases on Github](https://github.com/WebberZone/where-did-they-go-from-here/releases).
 
 == Upgrade Notice ==
+
+= 3.2.0 =
+* New: REST API tracking and endpoint to query followed posts.
 
 = 3.1.2 =
 * Bug fix: Check if post is empty before processing.
