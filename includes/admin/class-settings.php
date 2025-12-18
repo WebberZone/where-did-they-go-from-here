@@ -8,8 +8,10 @@
  * @package WebberZone\WFP
  */
 
-namespace WebberZone\WFP\Admin\Settings;
+namespace WebberZone\WFP\Admin;
 
+use WebberZone\WFP\Admin\Settings\Settings_API;
+use WebberZone\WFP\Admin\Settings\Settings_Sanitize;
 use WebberZone\WFP\Frontend\Media_Handler;
 use WebberZone\WFP\Util\Cache;
 use WebberZone\WFP\Util\Helpers;
@@ -153,7 +155,26 @@ class Settings {
 		add_filter( 'wherego_after_setting_output', array( $this, 'display_admin_thumbnail' ), 10, 2 );
 		add_filter( 'wherego_setting_field_description', array( $this, 'reset_default_thumb_setting' ), 10, 2 );
 		add_action( 'wherego_settings_form_buttons', array( $this, 'cache_button' ) );
+		add_action( 'wherego_settings_form_buttons', array( $this, 'add_wizard_button' ) );
 		add_action( 'wherego_settings_page_header', array( $this, 'settings_page_header' ), 11 );
+
+		add_action( 'wp_ajax_nopriv_' . self::$prefix . '_taxonomy_search_tom_select', array( __CLASS__, 'taxonomy_search_tom_select' ) );
+		add_action( 'wp_ajax_' . self::$prefix . '_taxonomy_search_tom_select', array( __CLASS__, 'taxonomy_search_tom_select' ) );
+	}
+
+	/**
+	 * Add a button to the settings page to start the settings wizard.
+	 *
+	 * @since 3.2.0
+	 */
+	public function add_wizard_button() {
+		printf(
+			'<br /><a aria-label="%s" class="button button-secondary" href="%s" title="%s" style="margin-top: 10px;">%s</a>',
+			esc_attr__( 'Start Setup Wizard', 'where-did-they-go-from-here' ),
+			esc_url( admin_url( 'admin.php?page=wherego_wizard' ) ),
+			esc_attr__( 'Start Setup Wizard', 'where-did-they-go-from-here' ),
+			esc_html__( 'Start Setup Wizard', 'where-did-they-go-from-here' )
+		);
 	}
 
 	/**
@@ -344,6 +365,24 @@ class Settings {
 				'type'    => 'checkbox',
 				'options' => true,
 			),
+			'tracker_type'       => array(
+				'id'      => 'tracker_type',
+				'name'    => esc_html__( 'Tracker type', 'where-did-they-go-from-here' ),
+				'desc'    => esc_html__( 'Choose the method used to track user navigation. REST API is recommended for better performance.', 'where-did-they-go-from-here' ),
+				'type'    => 'radio',
+				'default' => 'rest_based',
+				'options' => array(
+					'rest_based' => esc_html__( 'REST API based (recommended)', 'where-did-they-go-from-here' ),
+					'ajax'       => esc_html__( 'Ajax based', 'where-did-they-go-from-here' ),
+				),
+			),
+			'debug_mode'         => array(
+				'id'      => 'debug_mode',
+				'name'    => esc_html__( 'Debug mode', 'where-did-they-go-from-here' ),
+				'desc'    => esc_html__( 'Enable debug mode to log tracker responses to the browser console.', 'where-did-they-go-from-here' ),
+				'type'    => 'checkbox',
+				'options' => false,
+			),
 			'wg_in_admin'        => array(
 				'id'      => 'wg_in_admin',
 				'name'    => esc_html__( 'Add admin column', 'where-did-they-go-from-here' ),
@@ -393,10 +432,8 @@ class Settings {
 				'type'             => 'csv',
 				'options'          => '',
 				'size'             => 'large',
-				'field_class'      => 'category_autocomplete',
-				'field_attributes' => array(
-					'data-wp-taxonomy' => 'category',
-				),
+				'field_class'      => 'ts_autocomplete',
+				'field_attributes' => self::get_taxonomy_search_field_attributes( 'category' ),
 			),
 			'exclude_categories' => array(
 				'id'          => 'exclude_categories',
@@ -786,7 +823,12 @@ class Settings {
 			array(
 				'id'          => 'text_only',
 				'name'        => esc_html__( 'Text only', 'where-did-they-go-from-here' ),
-				'description' => esc_html__( 'Disable thumbnails and no longer include the default style sheet', 'where-did-they-go-from-here' ) . '<br />',
+				'description' => esc_html__( 'A clean text-only list style without thumbnails.', 'where-did-they-go-from-here' ) . '<br />',
+			),
+			array(
+				'id'          => 'left_thumbs',
+				'name'        => esc_html__( 'Left thumbnails', 'where-did-they-go-from-here' ),
+				'description' => esc_html__( 'Thumbnails displayed on the left with post details on the right.', 'where-did-they-go-from-here' ) . '<br />',
 			),
 			array(
 				'id'          => 'grid',
@@ -982,9 +1024,23 @@ class Settings {
 			$exclude_cat_slugs = array_unique( str_getcsv( $settings['exclude_cat_slugs'] ) );
 
 			foreach ( $exclude_cat_slugs as $cat_name ) {
-				$cat = get_term_by( 'name', $cat_name, 'category' );
-				if ( isset( $cat->term_id ) ) {
-					$exclude_categories[]     = $cat->term_id;
+				$cat_name = trim( (string) $cat_name );
+				if ( '' === $cat_name ) {
+					continue;
+				}
+
+				$taxonomy = 'category';
+				$term_id  = 0;
+
+				if ( preg_match( '/^(.*)\s+\(([^:]+):(\d+)\)$/', $cat_name, $matches ) ) {
+					$taxonomy = sanitize_key( $matches[2] );
+					$term_id  = absint( $matches[3] );
+					$cat_name = trim( $matches[1] );
+				}
+
+				$cat = $term_id ? get_term_by( 'id', $term_id, $taxonomy ) : get_term_by( 'name', $cat_name, $taxonomy );
+				if ( $cat && ! is_wp_error( $cat ) && isset( $cat->term_id ) ) {
+					$exclude_categories[]     = (int) $cat->term_id;
 					$exclude_category_slugs[] = $cat->name;
 				}
 			}
@@ -1009,6 +1065,96 @@ class Settings {
 		Cache::delete();
 
 		return $settings;
+	}
+
+	/**
+	 * Handle Tom Select taxonomy search AJAX requests.
+	 *
+	 * @since 3.2.0
+	 *
+	 * @return void
+	 */
+	public static function taxonomy_search_tom_select() {
+		if ( ! isset( $_REQUEST['nonce'] ) ) {
+			wp_send_json_error( array( 'message' => 'Missing nonce' ) );
+		}
+
+		$nonce_valid = wp_verify_nonce( sanitize_key( $_REQUEST['nonce'] ), self::$prefix . '_taxonomy_search_tom_select' );
+		if ( ! $nonce_valid ) {
+			wp_send_json_error(
+				array(
+					'message'         => 'Invalid nonce',
+					'received_nonce'  => sanitize_key( $_REQUEST['nonce'] ),
+					'expected_action' => self::$prefix . '_taxonomy_search_tom_select',
+				)
+			);
+		}
+
+		if ( ! isset( $_REQUEST['endpoint'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			wp_send_json_error( 'Missing endpoint' );
+		}
+
+		$taxonomy = sanitize_key( $_REQUEST['endpoint'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$tax      = get_taxonomy( $taxonomy );
+
+		if ( ! $tax || ! current_user_can( $tax->cap->assign_terms ) ) {
+			wp_send_json_error( 'Invalid taxonomy or insufficient permissions' );
+		}
+
+		$search_term = isset( $_REQUEST['q'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['q'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+
+		$comma = _x( ',', 'tag delimiter', 'where-did-they-go-from-here' );
+		if ( ',' !== $comma ) {
+			$search_term = str_replace( $comma, ',', $search_term );
+		}
+		if ( false !== strpos( $search_term, ',' ) ) {
+			$search_term = explode( ',', $search_term );
+			$search_term = $search_term[ count( $search_term ) - 1 ];
+		}
+		$search_term = trim( $search_term );
+
+		/** This filter has been defined in /wp-admin/includes/ajax-actions.php */
+		$term_search_min_chars = (int) apply_filters( 'term_search_min_chars', 2, $tax, $search_term );
+
+		if ( ( 0 === $term_search_min_chars ) || ( strlen( $search_term ) < $term_search_min_chars ) ) {
+			wp_send_json_success( array() );
+		}
+
+		$terms = get_terms(
+			array(
+				'taxonomy'   => $taxonomy,
+				'name__like' => $search_term,
+				'hide_empty' => false,
+			)
+		);
+
+		$results = array();
+		foreach ( (array) $terms as $term ) {
+			$formatted_string = sprintf( '%s (%s:%d)', $term->name, $term->taxonomy, (int) $term->term_id );
+			$results[]        = array(
+				'value' => $formatted_string,
+				'text'  => $term->name,
+			);
+		}
+
+		wp_send_json_success( $results );
+	}
+
+	/**
+	 * Get field attributes for Tom Select taxonomy search fields.
+	 *
+	 * @since 3.2.0
+	 *
+	 * @param string $taxonomy The taxonomy to search.
+	 * @return array Field attributes array.
+	 */
+	private static function get_taxonomy_search_field_attributes( $taxonomy ) {
+		return array(
+			'data-wp-prefix'   => strtoupper( (string) self::$prefix ),
+			'data-wp-action'   => self::$prefix . '_taxonomy_search_tom_select',
+			'data-wp-nonce'    => wp_create_nonce( self::$prefix . '_taxonomy_search_tom_select' ),
+			'data-wp-endpoint' => $taxonomy,
+		);
 	}
 
 

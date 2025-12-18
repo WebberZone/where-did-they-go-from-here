@@ -7,6 +7,13 @@
 
 namespace WebberZone\WFP;
 
+use WebberZone\WFP\Admin\Admin;
+use WebberZone\WFP\Frontend\Blocks\Blocks;
+use WebberZone\WFP\Frontend\Language_Handler;
+use WebberZone\WFP\Frontend\Shortcodes;
+use WebberZone\WFP\Frontend\Styles_Handler;
+use WebberZone\WFP\Util\Hook_Registry;
+
 if ( ! defined( 'WPINC' ) ) {
 	exit;
 }
@@ -20,6 +27,8 @@ final class Main {
 	/**
 	 * The single instance of the class.
 	 *
+	 * @since 3.1.0
+	 *
 	 * @var Main
 	 */
 	private static $instance;
@@ -29,54 +38,54 @@ final class Main {
 	 *
 	 * @since 3.1.0
 	 *
-	 * @var object Admin.
+	 * @var Admin|null Admin instance.
 	 */
-	public $admin;
+	public ?Admin $admin = null;
 
 	/**
 	 * Shortcodes.
 	 *
 	 * @since 3.1.0
 	 *
-	 * @var object Shortcodes.
+	 * @var Shortcodes Shortcodes handler.
 	 */
-	public $shortcodes;
+	public Shortcodes $shortcodes;
 
 	/**
-	 * Counter.
+	 * Language Handler.
 	 *
 	 * @since 3.1.0
 	 *
-	 * @var object Language Handler.
+	 * @var Language_Handler Language handler.
 	 */
-	public $language;
+	public Language_Handler $language;
 
 	/**
 	 * Tracker.
 	 *
 	 * @since 3.1.0
 	 *
-	 * @var object Tracker.
+	 * @var Tracker Tracker instance.
 	 */
-	public $tracker;
+	public Tracker $tracker;
 
 	/**
 	 * Blocks.
 	 *
 	 * @since 3.1.0
 	 *
-	 * @var object Blocks.
+	 * @var Blocks Blocks handler.
 	 */
-	public $blocks;
+	public Blocks $blocks;
 
 	/**
 	 * Styles.
 	 *
 	 * @since 3.1.0
 	 *
-	 * @var object Styles.
+	 * @var Styles_Handler Styles handler.
 	 */
-	public $styles;
+	public Styles_Handler $styles;
 
 	/**
 	 * Gets the instance of the class.
@@ -118,7 +127,7 @@ final class Main {
 		$this->hooks();
 
 		if ( is_admin() ) {
-			$this->admin = new Admin\Admin();
+			$this->admin = new Admin();
 		}
 	}
 
@@ -128,11 +137,12 @@ final class Main {
 	 * @since 3.1.0
 	 */
 	public function hooks() {
-		add_action( 'init', array( $this, 'initiate_plugin' ) );
-		add_action( 'widgets_init', array( $this, 'register_widgets' ) );
-		add_filter( 'the_content', array( $this, 'the_content' ) );
-		add_filter( 'the_excerpt_rss', array( $this, 'add_to_feed' ) );
-		add_filter( 'the_content_feed', array( $this, 'add_to_feed' ) );
+		Hook_Registry::add_action( 'init', array( $this, 'initiate_plugin' ) );
+		Hook_Registry::add_action( 'widgets_init', array( $this, 'register_widgets' ) );
+		Hook_Registry::add_action( 'rest_api_init', array( $this, 'register_rest_routes' ) );
+		Hook_Registry::add_filter( 'the_content', array( $this, 'the_content' ) );
+		Hook_Registry::add_filter( 'the_excerpt_rss', array( $this, 'add_to_feed' ) );
+		Hook_Registry::add_filter( 'the_content_feed', array( $this, 'add_to_feed' ) );
 	}
 
 	/**
@@ -151,6 +161,16 @@ final class Main {
 	 */
 	public function register_widgets() {
 		register_widget( '\WebberZone\WFP\Frontend\Widget' );
+	}
+
+	/**
+	 * Register REST API routes.
+	 *
+	 * @since 3.2.0
+	 */
+	public function register_rest_routes() {
+		$controller = new Frontend\REST_API();
+		$controller->register_routes();
 	}
 
 	/**

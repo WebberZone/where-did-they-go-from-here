@@ -1,11 +1,8 @@
 <?php
 /**
- * Class to display and save a Metabox.
+ * Metabox API class.
  *
- * @link  https://webberzone.com
- * @since 2.0.0
- *
- * @package WebberZone\WFP
+ * @package WebberZone\Top_Ten\Admin\Settings
  */
 
 namespace WebberZone\WFP\Admin\Settings;
@@ -16,10 +13,9 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 /**
- * ATA Metabox class to register the metabox for ata_snippets post type.
- *
- * @since 2.0.0
+ * Metabox API class.
  */
+#[\AllowDynamicProperties]
 class Metabox_API {
 
 	/**
@@ -27,7 +23,7 @@ class Metabox_API {
 	 *
 	 * @var   string
 	 */
-	const VERSION = '2.2.0';
+	const VERSION = '2.3.0';
 
 	/**
 	 * Settings Key.
@@ -58,11 +54,11 @@ class Metabox_API {
 	protected $title;
 
 	/**
-	 * Text to show to indicate a checkbox has been modified from its default value.
+	 * Translation strings.
 	 *
-	 * @var string Checkbox Modified Text.
+	 * @var array Translation strings.
 	 */
-	public $checkbox_modified_text;
+	public $translation_strings;
 
 	/**
 	 * Array containing the settings' fields.
@@ -77,20 +73,21 @@ class Metabox_API {
 	 * @param array|string $args {
 	 *     Array or string of arguments. Default is blank array.
 	 *
-	 *     @type string $settings_key        Admin menu type. See add_custom_menu_page() for options.
-	 *     @type string $prefix              Parent menu slug.
-	 *     @type string $post_type           Admin menu slug.
-	 *     @type array  $registered_settings Settings fields array.
+	 *     @type string                     $settings_key           Settings key - is used to prepare the form fields. It is not the meta key.
+	 *     @type string                     $prefix              Used to create the meta keys. The meta key format is _{$prefix}_{$setting_id}.
+	 *     @type string|array|\WP_Screen    $post_type           The post type(s) on which to show the box.
+	 *     @type array                      $registered_settings Settings fields array.
+	 *     @type array                      $translation_strings Translation strings.
 	 * }
 	 */
 	public function __construct( $args ) {
 		$defaults = array(
-			'settings_key'           => '',
-			'prefix'                 => '',
-			'post_type'              => '',
-			'title'                  => '',
-			'registered_settings'    => array(),
-			'checkbox_modified_text' => '',
+			'settings_key'        => '',
+			'prefix'              => '',
+			'post_type'           => '',
+			'title'               => '',
+			'registered_settings' => array(),
+			'translation_strings' => array(),
 		);
 
 		$args = wp_parse_args( $args, $defaults );
@@ -99,9 +96,9 @@ class Metabox_API {
 			$this->$name = $value;
 		}
 
+		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
 		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ) );
 		add_action( "save_post_{$this->post_type}", array( $this, 'save' ) );
-		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
 	}
 
 	/**
@@ -154,34 +151,11 @@ class Metabox_API {
 			)
 		);
 
-		wp_enqueue_script(
-			'wz-admin-js',
-			plugins_url( 'js/admin-scripts' . $minimize . '.js', __FILE__ ),
-			array( 'jquery' ),
-			self::VERSION,
-			true
-		);
-		wp_enqueue_script(
-			'wz-codemirror-js',
-			plugins_url( 'js/apply-codemirror' . $minimize . '.js', __FILE__ ),
-			array( 'jquery' ),
-			self::VERSION,
-			true
-		);
-		wp_enqueue_script(
-			'wz-taxonomy-suggest-js',
-			plugins_url( 'js/taxonomy-suggest' . $minimize . '.js', __FILE__ ),
-			array( 'jquery' ),
-			self::VERSION,
-			true
-		);
-		wp_enqueue_script(
-			'wz-media-selector-js',
-			plugins_url( 'js/media-selector' . $minimize . '.js', __FILE__ ),
-			array( 'jquery' ),
-			self::VERSION,
-			true
-		);
+		// Enqueue WZ Admin JS.
+		wp_enqueue_script( 'wz-admin-js' );
+		wp_enqueue_script( 'wz-codemirror-js' );
+		wp_enqueue_script( 'wz-taxonomy-suggest-js' );
+		wp_enqueue_script( 'wz-media-selector-js' );
 	}
 
 	/**
@@ -212,13 +186,18 @@ class Metabox_API {
 			return;
 		}
 
-		$settings_sanitize = new Settings_Sanitize();
+		$settings_sanitize = new Settings_Sanitize(
+			array(
+				'settings_key' => $this->settings_key,
+				'prefix'       => $this->prefix,
+			)
+		);
 
 		$posted = $_POST[ $this->settings_key ]; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized,WordPress.Security.ValidatedSanitizedInput.MissingUnslash
 
 		foreach ( $this->registered_settings as $setting ) {
 			$id   = $setting['id'];
-			$type = isset( $setting['type'] ) ? $setting['type'] : 'text';
+			$type = $setting['type'] ?? 'text';
 
 			/**
 			 * Skip settings that are not really settings.
@@ -244,7 +223,7 @@ class Metabox_API {
 		/**
 		 * Filter the post meta array which contains post-specific settings.
 		 *
-		 * @param array $post_meta Array of ATA metabox settings.
+		 * @param array $post_meta Array of metabox settings.
 		 * @param int   $post_id   Post ID
 		 */
 		$post_meta = apply_filters( "{$this->prefix}_meta_key", $post_meta, $post_id );
@@ -276,9 +255,9 @@ class Metabox_API {
 
 		$settings_form = new Settings_Form(
 			array(
-				'settings_key'           => $this->settings_key,
-				'prefix'                 => $this->prefix,
-				'checkbox_modified_text' => $this->checkbox_modified_text,
+				'settings_key'        => $this->settings_key,
+				'prefix'              => $this->prefix,
+				'translation_strings' => $this->translation_strings,
 			)
 		);
 
@@ -306,8 +285,8 @@ class Metabox_API {
 
 			$id            = $args['id'];
 			$value         = get_post_meta( $post->ID, "_{$this->prefix}_{$id}", true );
-			$args['value'] = ! empty( $value ) ? $value : ( isset( $args['default'] ) ? $args['default'] : $args['options'] );
-			$type          = isset( $args['type'] ) ? $args['type'] : 'text';
+			$args['value'] = ! empty( $value ) ? $value : ( $args['default'] ?? '' );
+			$type          = $args['type'] ?? 'text';
 			$callback      = method_exists( $settings_form, "callback_{$type}" ) ? array( $settings_form, "callback_{$type}" ) : array( $settings_form, 'callback_missing' );
 
 			echo '<tr>';
@@ -320,7 +299,7 @@ class Metabox_API {
 		echo '</table>';
 
 		/**
-		 * Action triggered when displaying WFP meta box.
+		 * Action triggered when displaying the meta box.
 		 *
 		 * @param object $post  Post object.
 		 */
@@ -352,7 +331,7 @@ class Metabox_API {
 				$ids   = array();
 				$names = array();
 
-				$taxes = array_unique( str_getcsv( $settings[ $key ] ) );
+				$taxes = array_unique( str_getcsv( $settings[ $key ], ',', '"', '' ) );
 
 				foreach ( $taxes as $tax ) {
 					$tax_name = get_term_by( 'name', $tax, $fields['tax'] );
@@ -363,7 +342,7 @@ class Metabox_API {
 					}
 				}
 				$settings[ $fields['ids_field'] ] = join( ',', $ids );
-				$settings[ $key ]                 = \WebberZone\WFP\Util\Helpers::str_putcsv( $names );
+				$settings[ $key ]                 = Settings_Sanitize::str_putcsv( $names );
 			} else {
 				$settings[ $fields['ids_field'] ] = '';
 			}

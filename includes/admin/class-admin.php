@@ -79,6 +79,15 @@ class Admin {
 	public $cache;
 
 	/**
+	 * Dashboard Widgets.
+	 *
+	 * @since 3.2.0
+	 *
+	 * @var Dashboard_Widgets Dashboard widgets.
+	 */
+	public $dashboard_widgets;
+
+	/**
 	 * Settings Page in Admin area.
 	 *
 	 * @since 3.1.0
@@ -86,6 +95,15 @@ class Admin {
 	 * @var string Settings Page.
 	 */
 	public $settings_page;
+
+	/**
+	 * Settings Wizard.
+	 *
+	 * @since 3.2.0
+	 *
+	 * @var Settings_Wizard Settings Wizard instance.
+	 */
+	public $settings_wizard;
 
 	/**
 	 * Main constructor class.
@@ -96,12 +114,14 @@ class Admin {
 		$this->hooks();
 
 		// Initialise admin classes.
-		$this->settings      = new Settings\Settings();
-		$this->activator     = new Activator();
-		$this->admin_columns = new Columns();
-		$this->metabox       = new Metabox();
-		$this->cache         = new Cache();
-		$this->tools_page    = new Tools_Page();
+		$this->settings          = new Settings();
+		$this->settings_wizard   = new Settings_Wizard();
+		$this->activator         = new Activator();
+		$this->admin_columns     = new Columns();
+		$this->metabox           = new Metabox();
+		$this->cache             = new Cache();
+		$this->tools_page        = new Tools_Page();
+		$this->dashboard_widgets = new Dashboard_Widgets();
 	}
 
 	/**
@@ -134,6 +154,6 @@ class Admin {
 	 * @since 3.1.0
 	 */
 	public static function display_admin_sidebar() {
-		require_once WHEREGO_PLUGIN_DIR . 'includes/admin/settings/sidebar.php';
+		require_once WHEREGO_PLUGIN_DIR . 'includes/admin/sidebar.php';
 	}
 }

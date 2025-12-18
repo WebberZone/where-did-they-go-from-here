@@ -70,7 +70,7 @@ if ( ! defined( 'WPINC' ) ) {
 
 <div class="postbox-container">
 	<div id="followdiv" class="postbox meta-box-sortables">
-		<h2 class='hndle'><span><?php esc_html_e( 'Follow me', 'add-to-all' ); ?></span></h2>
+		<h2 class='hndle'><span><?php esc_html_e( 'Follow me', 'where-did-they-go-from-here' ); ?></span></h2>
 
 		<div class="inside" style="text-align: center">
 			<a href="https://facebook.com/webberzone/" target="_blank"><img src="<?php echo esc_url( WHEREGO_PLUGIN_URL . 'includes/admin/images/fb.png' ); ?>" width="100" height="100"></a> <a href="https://twitter.com/webberzonewp/" target="_blank"><img src="<?php echo esc_url( WHEREGO_PLUGIN_URL . 'includes/admin/images/twitter.jpg' ); ?>" width="100" height="100"></a>
