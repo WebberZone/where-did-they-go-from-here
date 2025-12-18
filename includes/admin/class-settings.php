@@ -1080,7 +1080,7 @@ class Settings {
 		// Sanitize exclude_cat_slugs to save a new entry of exclude_categories.
 		if ( isset( $settings['exclude_cat_slugs'] ) ) {
 
-			$exclude_cat_slugs = array_unique( str_getcsv( $settings['exclude_cat_slugs'] ) );
+			$exclude_cat_slugs = array_unique( str_getcsv( $settings['exclude_cat_slugs'], ',', '"', '' ) );
 
 			foreach ( $exclude_cat_slugs as $cat_name ) {
 				$cat_name = trim( (string) $cat_name );
