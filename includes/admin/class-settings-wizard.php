@@ -177,4 +177,36 @@ class Settings_Wizard extends Settings_Wizard_API {
 	protected function get_completion_redirect_url() {
 		return admin_url( 'admin.php?page=wherego_options_page' );
 	}
+
+	/**
+	 * Override the render completion page to show WFP specific content.
+	 *
+	 * @since 3.2.0
+	 */
+	protected function render_completion_page() {
+		?>
+		<div class="wrap wizard-wrap wizard-complete">
+			<div class="wizard-completion-header">
+				<h1><?php echo esc_html( $this->translation_strings['wizard_complete'] ); ?></h1>
+				<p class="wizard-completion-message">
+					<?php echo esc_html( $this->translation_strings['setup_complete'] ); ?>
+				</p>
+			</div>
+
+			<div class="wizard-completion-content">
+				<div class="wizard-completion-actions">
+					<a href="<?php echo esc_url( $this->get_completion_redirect_url() ); ?>" class="button button-primary button-large">
+						<?php esc_html_e( 'Go to Settings', 'where-did-they-go-from-here' ); ?>
+					</a>
+					<a href="<?php echo esc_url( admin_url( 'admin.php?page=wherego_tools_page' ) ); ?>" class="button button-secondary button-large">
+						<?php esc_html_e( 'Go to Tools', 'where-did-they-go-from-here' ); ?>
+					</a>
+					<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="button button-secondary button-large" target="_blank" rel="noopener noreferrer">
+						<?php esc_html_e( 'View Site', 'where-did-they-go-from-here' ); ?>
+					</a>
+				</div>
+			</div>
+		</div>
+		<?php
+	}
 }

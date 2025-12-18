@@ -87,7 +87,7 @@ class Dashboard_Widgets {
 					<?php esc_html_e( 'Settings', 'where-did-they-go-from-here' ); ?>
 				</a>
 				|
-				<a href="<?php echo esc_url( admin_url( 'tools.php?page=wfp_tools_page' ) ); ?>">
+				<a href="<?php echo esc_url( admin_url( 'tools.php?page=wherego_tools_page' ) ); ?>">
 					<?php esc_html_e( 'Tools', 'where-did-they-go-from-here' ); ?>
 				</a>
 			</p>
