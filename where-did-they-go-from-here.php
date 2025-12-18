@@ -21,7 +21,6 @@
  * License URI: https://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain: where-did-they-go-from-here
  * Domain Path: /languages
- * GitHub Plugin URI: https://github.com/WebberZone/where-did-they-go-from-here/
  */
 
 namespace WebberZone\WFP;
