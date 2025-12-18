@@ -307,6 +307,65 @@ class Settings {
 	}
 
 	/**
+	 * Get settings defaults.
+	 *
+	 * @since 3.2.0
+	 *
+	 * @return array Default settings.
+	 */
+	public static function settings_defaults() {
+		$defaults = array();
+
+		$settings      = self::get_registered_settings();
+		$default_types = array(
+			'color',
+			'css',
+			'csv',
+			'file',
+			'html',
+			'multicheck',
+			'number',
+			'numbercsv',
+			'password',
+			'postids',
+			'posttypes',
+			'radio',
+			'radiodesc',
+			'repeater',
+			'select',
+			'sensitive',
+			'taxonomies',
+			'text',
+			'textarea',
+			'thumbsizes',
+			'url',
+			'wysiwyg',
+		);
+
+		foreach ( $settings as $section_settings ) {
+			foreach ( $section_settings as $setting ) {
+				if ( ! isset( $setting['id'] ) ) {
+					continue;
+				}
+
+				$setting_id    = $setting['id'];
+				$setting_type  = $setting['type'] ?? '';
+				$default_value = '';
+
+				if ( 'checkbox' === $setting_type ) {
+					$default_value = isset( $setting['default'] ) ? (int) (bool) $setting['default'] : 0;
+				} elseif ( isset( $setting['default'] ) && in_array( $setting_type, $default_types, true ) ) {
+					$default_value = $setting['default'];
+				}
+
+				$defaults[ $setting_id ] = $default_value;
+			}
+		}
+
+		return apply_filters( self::$prefix . '_settings_defaults', $defaults );
+	}
+
+	/**
 	 * Returns the General settings.
 	 *
 	 * @since 3.0.0
