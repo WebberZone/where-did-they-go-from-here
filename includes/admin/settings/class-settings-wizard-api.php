@@ -7,8 +7,6 @@
 
 namespace WebberZone\WFP\Admin\Settings;
 
-use WebberZone\WFP\Admin\Settings\Settings_Sanitize;
-
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
 	die;

@@ -7,7 +7,7 @@
 
 namespace WebberZone\WFP\Frontend;
 
-use WebberZone\WFP\Admin\Settings\Settings;
+use WebberZone\WFP\Admin\Settings;
 
 if ( ! defined( 'WPINC' ) ) {
 	die;

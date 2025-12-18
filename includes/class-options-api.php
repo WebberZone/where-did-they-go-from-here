@@ -10,6 +10,7 @@
 namespace WebberZone\WFP;
 
 use WebberZone\WFP\Util\Hook_Registry;
+use WebberZone\WFP\Admin\Settings;
 
 if ( ! defined( 'WPINC' ) ) {
 	die;
@@ -230,35 +231,7 @@ class Options_API {
 	 * @return array Default settings.
 	 */
 	public static function get_settings_defaults() {
-		$options = array();
-
-		// Populate some default values.
-		foreach ( Admin\Settings\Settings::get_registered_settings() as $tab => $settings ) {
-			foreach ( $settings as $option ) {
-				// When checkbox is set to true, set this to 1.
-				if ( 'checkbox' === $option['type'] && ! empty( $option['options'] ) ) {
-					$options[ $option['id'] ] = 1;
-				} else {
-					$options[ $option['id'] ] = 0;
-				}
-				// If an option is set.
-				if ( in_array( $option['type'], array( 'textarea', 'css', 'html', 'text', 'url', 'csv', 'color', 'numbercsv', 'postids', 'posttypes', 'number', 'wysiwyg', 'file', 'password' ), true ) && isset( $option['options'] ) ) {
-					$options[ $option['id'] ] = $option['options'];
-				}
-				if ( in_array( $option['type'], array( 'multicheck', 'radio', 'select', 'radiodesc', 'thumbsizes' ), true ) && isset( $option['default'] ) ) {
-					$options[ $option['id'] ] = $option['default'];
-				}
-			}
-		}
-
-		/**
-		 * Filters the default settings array.
-		 *
-		 * @since 3.2.0
-		 *
-		 * @param array $options Default settings.
-		 */
-		return apply_filters( self::FILTER_PREFIX . '_settings_defaults', $options );
+		return Settings::settings_defaults();
 	}
 
 	/**
