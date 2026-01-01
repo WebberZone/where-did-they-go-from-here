@@ -10,6 +10,7 @@ namespace WebberZone\WFP;
 use WebberZone\WFP\Admin\Admin;
 use WebberZone\WFP\Frontend\Blocks\Blocks;
 use WebberZone\WFP\Frontend\Language_Handler;
+use WebberZone\WFP\Frontend\REST_API;
 use WebberZone\WFP\Frontend\Shortcodes;
 use WebberZone\WFP\Frontend\Styles_Handler;
 use WebberZone\WFP\Util\Hook_Registry;
@@ -90,6 +91,15 @@ class Main {
 	public Admin $admin;
 
 	/**
+	 * REST API.
+	 *
+	 * @since 3.2.0
+	 *
+	 * @var REST_API REST API handler.
+	 */
+	public REST_API $rest_api;
+
+	/**
 	 * Gets the instance of the class.
 	 *
 	 * @since 3.1.0
@@ -125,6 +135,7 @@ class Main {
 		$this->tracker    = new Tracker();
 		$this->shortcodes = new Shortcodes();
 		$this->blocks     = new Blocks();
+		$this->rest_api   = new REST_API();
 
 		$this->hooks();
 
@@ -182,27 +193,7 @@ class Main {
 	 * @since 3.2.0
 	 */
 	public function register_rest_routes() {
-		register_rest_route(
-			'wfp/v1',
-			'/tracker',
-			array(
-				'methods'             => 'POST',
-				'callback'            => array( $this->tracker, 'process_tracking' ),
-				'permission_callback' => '__return_true',
-				'args'                => array(
-					'post_id' => array(
-						'required'          => true,
-						'sanitize_callback' => 'absint',
-						'type'              => 'integer',
-					),
-					'referer' => array(
-						'required'          => false,
-						'sanitize_callback' => 'esc_url_raw',
-						'type'              => 'string',
-					),
-				),
-			)
-		);
+		$this->rest_api->register_routes();
 	}
 
 	/**

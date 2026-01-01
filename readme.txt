@@ -101,6 +101,9 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 = 3.2.0 =
 
 * New:
+	* REST API support for getting followed posts
+	* Added `GET /wp-json/wfp/v1/followed-posts/{id}` endpoint
+	* Added `POST /wp-json/wfp/v1/tracker` endpoint for tracking
 	* Modern admin interface matching other WebberZone plugins
 	* Updated sidebar with improved organization and navigation
 
@@ -108,10 +111,14 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 	* Enhanced PHP and WordPress compatibility testing
 	* Better dependency management and build processes
 	* Updated security reporting links
+	* JavaScript tracker now auto-detects REST API vs AJAX mode
+	* Added pagination support to REST API endpoint
 
 * Bug fixes:
 	* Resolved PHP warnings when accessing null post properties
 	* Fixed WordPress compatibility issues
+	* Fixed REST API tracker to properly handle JSON requests
+	* Fixed GitHub issue #21 - REST API support
 
 For previous changelog entries check out the changelog.txt file included with the plugin or [view the releases on Github](https://github.com/WebberZone/where-did-they-go-from-here/releases).
 
