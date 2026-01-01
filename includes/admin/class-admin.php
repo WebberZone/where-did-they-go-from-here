@@ -139,7 +139,7 @@ class Admin {
 		$this->cache             = new Cache();
 		$this->tools_page        = new Tools_Page();
 		$this->dashboard_widgets = new Dashboard_Widgets();
-		$this->admin_banner      = new Admin_Banner();
+		$this->admin_banner      = new Admin_Banner( $this->get_admin_banner_config() );
 		$this->admin_notices     = new Admin_Notices();
 	}
 
@@ -164,6 +164,45 @@ class Admin {
 			false,
 			array(),
 			WFP_VERSION
+		);
+	}
+
+	/**
+	 * Retrieve the configuration array for the admin banner.
+	 *
+	 * @since 3.2.0
+	 *
+	 * @return array<string, mixed>
+	 */
+	private function get_admin_banner_config(): array {
+		return array(
+			'capability' => 'manage_options',
+			'prefix'     => 'wherego',
+			'screen_ids' => array(
+				'edit-post',
+				'post',
+				'edit-page',
+				'page',
+				'wherego_page_wherego_options_page',
+				'wherego_page_wherego_tools_page',
+			),
+			'page_slugs' => array(
+				'wherego_options_page',
+				'wherego_tools_page',
+			),
+			'strings'    => array(
+				'region_label' => esc_html__( 'Followed Posts quick links', 'where-did-they-go-from-here' ),
+				'items'        => array(
+					array(
+						'label' => esc_html__( 'Settings', 'where-did-they-go-from-here' ),
+						'url'   => admin_url( 'admin.php?page=wherego_options_page' ),
+					),
+					array(
+						'label' => esc_html__( 'Tools', 'where-did-they-go-from-here' ),
+						'url'   => admin_url( 'admin.php?page=wherego_tools_page' ),
+					),
+				),
+			),
 		);
 	}
 

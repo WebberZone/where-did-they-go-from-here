@@ -2,12 +2,13 @@
 /**
  * Admin Notices class.
  *
- * @package WebberZone\WFP\Admin
+ * @package WebberZone\WFP
  */
 
 namespace WebberZone\WFP\Admin;
 
 use WebberZone\WFP\Util\Cache;
+use WebberZone\WFP\Util\Hook_Registry;
 
 if ( ! defined( 'WPINC' ) ) {
 	die;
@@ -62,7 +63,7 @@ class Admin_Notices {
 		}
 
 		if ( ! \wherego_get_option( 'cache' ) ) {
-			$this->admin_notices_api->register(
+			$this->admin_notices_api->register_notice(
 				array(
 					'id'          => 'wfp_cache_disabled',
 					'type'        => 'info',
@@ -93,7 +94,7 @@ class Admin_Notices {
 		$logged_in   = \wherego_get_option( 'logged_in', true );
 
 		if ( empty( $track_users ) && ! $logged_in ) {
-			$this->admin_notices_api->register(
+			$this->admin_notices_api->register_notice(
 				array(
 					'id'          => 'wfp_tracking_disabled',
 					'type'        => 'warning',

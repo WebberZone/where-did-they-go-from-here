@@ -260,6 +260,7 @@ class Settings_Wizard extends Settings_Wizard_API {
 			'previous_step'   => __( 'Previous Step', 'where-did-they-go-from-here' ),
 			'finish_setup'    => __( 'Finish Setup', 'where-did-they-go-from-here' ),
 			'skip_wizard'     => __( 'Skip Wizard', 'where-did-they-go-from-here' ),
+			/* translators: %1$d: current step number, %2$d: total steps */
 			'step_of'         => __( 'Step %1$d of %2$d', 'where-did-they-go-from-here' ),
 			'wizard_complete' => __( 'Setup Complete!', 'where-did-they-go-from-here' ),
 			'setup_complete'  => __( 'Your Followed Posts plugin has been configured successfully.', 'where-did-they-go-from-here' ),
