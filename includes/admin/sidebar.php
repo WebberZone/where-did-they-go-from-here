@@ -2,11 +2,10 @@
 /**
  * Sidebar
  *
- * @link  https://webberzone.com
- * @since 1.0.0
- *
  * @package WebberZone\WFP
  */
+
+use WebberZone\WFP\Admin\Admin;
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
@@ -15,57 +14,58 @@ if ( ! defined( 'WPINC' ) ) {
 
 ?>
 <div class="postbox-container">
-	<div id="donatediv" class="postbox meta-box-sortables">
-		<h2 class='hndle'><span><?php esc_html_e( 'Support the development', 'where-did-they-go-from-here' ); ?></span></h2>
-
-		<div class="inside" style="text-align: center">
-			<div id="donate-form">
-				<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-					<input type="hidden" name="cmd" value="_donations">
-					<input type="hidden" name="business" value="donate@ajaydsouza.com">
-					<input type="hidden" name="lc" value="IN">
-					<input type="hidden" name="item_name" value="<?php esc_html_e( 'Donation for WebberZone Followed Posts', 'where-did-they-go-from-here' ); ?>">
-					<input type="hidden" name="item_number" value="wherego_plugin_settings"> <strong><?php esc_html_e( 'Enter amount in GBP:', 'where-did-they-go-from-here' ); ?></strong>
-					<input name="amount" value="10.00" size="6" type="text">
-					<br>
-					<input type="hidden" name="currency_code" value="GBP">
-					<input type="image" src="<?php echo esc_url( WHEREGO_PLUGIN_URL . 'includes/admin/images/paypal-donate.png' ); ?>" style="max-width:75%" border="0" name="submit" alt="<?php esc_html_e( 'Send your donation to the author of', 'where-did-they-go-from-here' ); ?> WebberZone Followed Posts">
-				</form>
-			</div><!-- /#donate-form -->
-		</div><!-- /.inside -->
-	</div><!-- /.postbox -->
+	<?php Admin::pro_upgrade_banner(); ?>
 
 	<div id="qlinksdiv" class="postbox meta-box-sortables">
 		<h2 class='hndle metabox-holder'><span><?php esc_html_e( 'Quick links', 'where-did-they-go-from-here' ); ?></span></h2>
 
 		<div class="inside">
 			<div id="quick-links">
-				<ul>
+				<ul class="subsub">
 					<li>
-						<a href="https://webberzone.com/plugins/webberzone-followed-posts/"><?php esc_html_e( 'WebberZone Followed Posts plugin page', 'where-did-they-go-from-here' ); ?></a>
+						<a href="https://webberzone.com/plugins/webberzone-followed-posts/" target="_blank"><?php esc_html_e( 'WebberZone Followed Posts plugin page', 'where-did-they-go-from-here' ); ?></a>
 					</li>
 					<li>
-						<a href="https://github.com/WebberZone/where-did-they-go-from-here"><?php esc_html_e( 'Plugin on GitHub', 'where-did-they-go-from-here' ); ?></a>
+						<a href="https://webberzone.com/support/product/webberzone-followed-posts/" target="_blank"><?php esc_html_e( 'Knowledge Base', 'where-did-they-go-from-here' ); ?></a>
 					</li>
 					<li>
-						<a href="https://wordpress.org/plugins/where-did-they-go-from-here/faq/"><?php esc_html_e( 'FAQ', 'where-did-they-go-from-here' ); ?></a>
+						<a href="https://wordpress.org/plugins/where-did-they-go-from-here/faq/" target="_blank"><?php esc_html_e( 'FAQ', 'where-did-they-go-from-here' ); ?></a>
 					</li>
 					<li>
-						<a href="https://wordpress.org/support/plugin/where-did-they-go-from-here"><?php esc_html_e( 'Support', 'where-did-they-go-from-here' ); ?></a>
+						<a href="https://webberzone.com/support/" target="_blank"><?php esc_html_e( 'Support', 'where-did-they-go-from-here' ); ?></a>
 					</li>
 					<li>
-						<a href="https://wordpress.org/support/view/plugin-reviews/where-did-they-go-from-here"><?php esc_html_e( 'Reviews', 'where-did-they-go-from-here' ); ?></a>
+						<a href="https://wordpress.org/support/plugin/where-did-they-go-from-here/reviews/" target="_blank"><?php esc_html_e( 'Reviews', 'where-did-they-go-from-here' ); ?></a>
 					</li>
 					<li>
-						<a href="https://webberzone.com/plugins/"><?php esc_html_e( 'Other plugins', 'where-did-they-go-from-here' ); ?></a>
+						<a href="https://github.com/webberzone/where-did-they-go-from-here" target="_blank"><?php esc_html_e( 'Github repository', 'where-did-they-go-from-here' ); ?></a>
 					</li>
 					<li>
-						<a href="https://ajaydsouza.com/"><?php esc_html_e( "Ajay's blog", 'where-did-they-go-from-here' ); ?></a>
+						<a href="https://ajaydsouza.com/" target="_blank"><?php esc_html_e( "Ajay's blog", 'where-did-they-go-from-here' ); ?></a>
 					</li>
 				</ul>
 			</div>
 		</div><!-- /.inside -->
 	</div><!-- /.postbox -->
+
+	<div id="pluginsdiv" class="postbox meta-box-sortables">
+		<h2 class='hndle metabox-holder'><span><?php esc_html_e( 'WebberZone plugins', 'where-did-they-go-from-here' ); ?></span></h2>
+
+		<div class="inside">
+			<div id="quick-links">
+				<ul class="subsub">
+					<li><a href="https://webberzone.com/plugins/contextual-related-posts/" target="_blank"><?php esc_html_e( 'Contextual Related Posts', 'where-did-they-go-from-here' ); ?></a></li>
+					<li><a href="https://webberzone.com/plugins/top-10/" target="_blank"><?php esc_html_e( 'Top 10', 'where-did-they-go-from-here' ); ?></a></li>
+					<li><a href="https://webberzone.com/plugins/better-search/" target="_blank"><?php esc_html_e( 'Better Search', 'where-did-they-go-from-here' ); ?></a></li>
+					<li><a href="https://webberzone.com/plugins/add-to-all/" target="_blank"><?php esc_html_e( 'Snippetz', 'where-did-they-go-from-here' ); ?></a></li>
+					<li><a href="https://webberzone.com/plugins/knowledgebase/" target="_blank"><?php esc_html_e( 'Knowledgebase', 'where-did-they-go-from-here' ); ?></a></li>
+					<li><a href="https://webberzone.com/plugins/popular-authors/" target="_blank"><?php esc_html_e( 'Popular Authors', 'where-did-they-go-from-here' ); ?></a></li>
+					<li><a href="https://webberzone.com/plugins/autoclose/" target="_blank"><?php esc_html_e( 'Auto Close', 'where-did-they-go-from-here' ); ?></a></li>
+				</ul>
+			</div>
+		</div><!-- /.inside -->
+	</div><!-- /.postbox -->
+
 </div>
 
 <div class="postbox-container">
@@ -73,7 +73,8 @@ if ( ! defined( 'WPINC' ) ) {
 		<h2 class='hndle'><span><?php esc_html_e( 'Follow me', 'where-did-they-go-from-here' ); ?></span></h2>
 
 		<div class="inside" style="text-align: center">
-			<a href="https://facebook.com/webberzone/" target="_blank"><img src="<?php echo esc_url( WHEREGO_PLUGIN_URL . 'includes/admin/images/fb.png' ); ?>" width="100" height="100"></a> <a href="https://twitter.com/webberzonewp/" target="_blank"><img src="<?php echo esc_url( WHEREGO_PLUGIN_URL . 'includes/admin/images/twitter.jpg' ); ?>" width="100" height="100"></a>
+			<a href="https://x.com/webberzone/" target="_blank"><img src="<?php echo esc_url( plugins_url( 'images/x.png', __FILE__ ) ); ?>" alt="<?php esc_attr_e( 'Follow WebberZone on X', 'where-did-they-go-from-here' ); ?>" width="100" height="100"></a>
+			<a href="https://facebook.com/webberzone/" target="_blank"><img src="<?php echo esc_url( plugins_url( 'images/fb.png', __FILE__ ) ); ?>" alt="<?php esc_attr_e( 'Follow WebberZone on Facebook', 'where-did-they-go-from-here' ); ?>" width="100" height="100"></a>
 		</div><!-- /.inside -->
 	</div><!-- /.postbox -->
 </div>

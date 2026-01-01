@@ -2,7 +2,7 @@
 /**
  * Media Handler class.
  *
- * @package WebberZone\Top_Ten\Frontend
+ * @package WebberZone\WFP\Frontend
  */
 
 namespace WebberZone\WFP\Frontend;

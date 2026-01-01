@@ -59,7 +59,7 @@ class Display {
 		$args = Helpers::sanitize_args( $args );
 
 		// Check the cache first.
-		if ( ! empty( $args['cache'] ) && ! ( is_preview() || is_admin() || ( defined( 'REST_REQUEST' ) && REST_REQUEST ) ) ) {
+		if ( ! empty( $args['cache'] ) && ! ( is_preview() || is_admin() || ( defined( 'REST_REQUEST' ) && REST_REQUEST ) ) && ! empty( $post ) ) {
 			$meta_key = Cache::get_key( $args );
 
 			$output = Cache::get_cache( $post->ID, $meta_key );
@@ -84,7 +84,7 @@ class Display {
 		}
 
 		// Extract posts list from the meta field.
-		$results = get_post_meta( $post->ID, 'wheredidtheycomefrom', true );
+		$results = ! empty( $post ) ? get_post_meta( $post->ID, 'wheredidtheycomefrom', true ) : array();
 
 		// Delete excluded post IDs.
 		if ( $results ) {
@@ -213,7 +213,7 @@ class Display {
 		$output .= '</div>'; // Closing div of 'wherego_related'.
 
 		// Support caching to speed up retrieval.
-		if ( ! empty( $args['cache'] ) && ! ( is_preview() || is_admin() || ( defined( 'REST_REQUEST' ) && REST_REQUEST ) ) ) {
+		if ( ! empty( $args['cache'] ) && ! ( is_preview() || is_admin() || ( defined( 'REST_REQUEST' ) && REST_REQUEST ) ) && ! empty( $post ) ) {
 			Cache::set_cache( $post->ID, $meta_key, $output );
 		}
 

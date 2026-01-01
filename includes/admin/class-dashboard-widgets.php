@@ -1,157 +1,113 @@
 <?php
 /**
- * Dashboard Widgets.
+ * Dashboard Widgets class.
  *
- * @since 3.2.0
- *
- * @package WebberZone\WFP
+ * @package WebberZone\WFP\Admin
  */
 
 namespace WebberZone\WFP\Admin;
 
-use WebberZone\WFP\Util\Hook_Registry;
+use WebberZone\WFP\Util\Helpers;
 
 if ( ! defined( 'WPINC' ) ) {
-	exit;
+	die;
 }
 
 /**
- * Dashboard Widgets class.
+ * Dashboard Widgets Class.
  *
  * @since 3.2.0
  */
 class Dashboard_Widgets {
 
 	/**
-	 * Constructor.
+	 * Constructor class.
 	 *
 	 * @since 3.2.0
 	 */
 	public function __construct() {
-		Hook_Registry::add_action( 'wp_dashboard_setup', array( $this, 'register_dashboard_widgets' ) );
+		add_action( 'wp_dashboard_setup', array( $this, 'wp_dashboard_setup' ) );
+		add_action( 'wp_network_dashboard_setup', array( $this, 'wp_network_dashboard_setup' ) );
 	}
 
 	/**
-	 * Register dashboard widgets.
+	 * Function to add the widgets to the Dashboard.
 	 *
 	 * @since 3.2.0
 	 */
-	public function register_dashboard_widgets() {
-		if ( current_user_can( 'manage_options' ) ) {
+	public static function wp_dashboard_setup() {
+
+		/**
+		 * Filter whether to register the dashboard widgets.
+		 *
+		 * @since 3.2.0
+		 *
+		 * @param bool $dashboard_setup Whether to register the dashboard widgets.
+		 */
+		$dashboard_setup = apply_filters( 'wherego_dashboard_setup', true );
+
+		if ( $dashboard_setup && current_user_can( 'manage_options' ) ) {
 			wp_add_dashboard_widget(
-				'wfp_dashboard_widget',
-				__( 'WebberZone Followed Posts', 'where-did-they-go-from-here' ),
-				array( $this, 'render_dashboard_widget' )
+				'wherego_dashboard_widget',
+				__( 'WebberZone Followed Posts - Top Tracked', 'where-did-they-go-from-here' ),
+				array( __CLASS__, 'dashboard_widget_function' ),
+				array( __CLASS__, 'dashboard_widget_control' )
 			);
 		}
 	}
 
 	/**
-	 * Render the dashboard widget.
+	 * Function to add the widgets to the Network Dashboard.
 	 *
 	 * @since 3.2.0
 	 */
-	public function render_dashboard_widget() {
-		$posts_with_tracking = $this->get_posts_with_most_tracking();
-		?>
-		<div class="wfp-dashboard-widget">
-			<h4><?php esc_html_e( 'Posts with Most Followed Links', 'where-did-they-go-from-here' ); ?></h4>
-
-			<?php if ( ! empty( $posts_with_tracking ) ) : ?>
-				<table class="widefat striped">
-					<thead>
-						<tr>
-							<th><?php esc_html_e( 'Post', 'where-did-they-go-from-here' ); ?></th>
-							<th><?php esc_html_e( 'Followed Links', 'where-did-they-go-from-here' ); ?></th>
-						</tr>
-					</thead>
-					<tbody>
-						<?php foreach ( $posts_with_tracking as $post_data ) : ?>
-							<tr>
-								<td>
-									<a href="<?php echo esc_url( get_edit_post_link( $post_data['post_id'] ) ); ?>">
-										<?php echo esc_html( get_the_title( $post_data['post_id'] ) ); ?>
-									</a>
-								</td>
-								<td><?php echo absint( $post_data['count'] ); ?></td>
-							</tr>
-						<?php endforeach; ?>
-					</tbody>
-				</table>
-			<?php else : ?>
-				<p><?php esc_html_e( 'No tracking data available yet.', 'where-did-they-go-from-here' ); ?></p>
-			<?php endif; ?>
-
-			<p class="wfp-dashboard-links">
-				<a href="<?php echo esc_url( admin_url( 'options-general.php?page=wherego_options_page' ) ); ?>">
-					<?php esc_html_e( 'Settings', 'where-did-they-go-from-here' ); ?>
-				</a>
-				|
-				<a href="<?php echo esc_url( admin_url( 'tools.php?page=wherego_tools_page' ) ); ?>">
-					<?php esc_html_e( 'Tools', 'where-did-they-go-from-here' ); ?>
-				</a>
-			</p>
-		</div>
-		<?php
+	public static function wp_network_dashboard_setup() {
+		self::wp_dashboard_setup();
 	}
 
 	/**
-	 * Get posts with the most followed links.
+	 * Function that displays the Followed Posts dashboard widget.
 	 *
 	 * @since 3.2.0
-	 *
-	 * @param int $limit Number of posts to return.
-	 * @return array Array of post data with counts.
 	 */
-	public function get_posts_with_most_tracking( $limit = 10 ) {
-		global $wpdb;
+	public static function dashboard_widget_function() {
+		$settings = get_option( 'wherego_dashboard_widget', array() );
+		$number   = isset( $settings['number'] ) ? absint( $settings['number'] ) : 5;
 
-		$cache_key = 'wfp_dashboard_top_posts_' . $limit;
-		$cached    = wp_cache_get( $cache_key, 'wfp' );
-
-		if ( false !== $cached ) {
-			return $cached;
-		}
-
-		$results = $wpdb->get_results( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching
-			$wpdb->prepare(
-				"SELECT post_id, meta_value
-				FROM {$wpdb->postmeta}
-				WHERE meta_key = 'wheredidtheycomefrom'
-				AND meta_value != ''
-				LIMIT %d",
-				$limit * 2
-			),
-			ARRAY_A
+		$args = array(
+			'number' => $number,
+			'stats'  => true,
 		);
 
-		if ( empty( $results ) ) {
-			wp_cache_set( $cache_key, array(), 'wfp', HOUR_IN_SECONDS );
-			return array();
+		echo esc_html( get_wfp( $args ) );
+	}
+
+	/**
+	 * Function that creates the controls for the Followed Posts dashboard widget.
+	 *
+	 * @since 3.2.0
+	 */
+	public static function dashboard_widget_control() {
+		if ( isset( $_POST['wherego_dashboard_widget_submit'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+			$number   = isset( $_POST['wherego_dashboard_widget_number'] ) ? absint( $_POST['wherego_dashboard_widget_number'] ) : 5; // phpcs:ignore WordPress.Security.NonceVerification.Missing
+			$settings = array(
+				'number' => $number,
+			);
+			update_option( 'wherego_dashboard_widget', $settings );
 		}
 
-		$posts_data = array();
-		foreach ( $results as $row ) {
-			$meta_value = maybe_unserialize( $row['meta_value'] );
-			if ( is_array( $meta_value ) ) {
-				$posts_data[] = array(
-					'post_id' => absint( $row['post_id'] ),
-					'count'   => count( $meta_value ),
-				);
-			}
-		}
-
-		// Sort by count descending.
-		usort(
-			$posts_data,
-			function ( $a, $b ) {
-				return $b['count'] - $a['count'];
-			}
-		);
-
-		$posts_data = array_slice( $posts_data, 0, $limit );
-		wp_cache_set( $cache_key, $posts_data, 'wfp', HOUR_IN_SECONDS );
-
-		return $posts_data;
+		$settings = get_option( 'wherego_dashboard_widget', array() );
+		$number   = isset( $settings['number'] ) ? absint( $settings['number'] ) : 5;
+		?>
+		<p>
+			<label for="wherego_dashboard_widget_number">
+				<?php esc_html_e( 'Number of posts to display:', 'where-did-they-go-from-here' ); ?>
+				<input class="tiny-text" id="wherego_dashboard_widget_number" name="wherego_dashboard_widget_number" type="number" step="1" min="1" max="20" value="<?php echo esc_attr( $number ); ?>" />
+			</label>
+		</p>
+		<p>
+			<input type="hidden" name="wherego_dashboard_widget_submit" value="1" />
+		</p>
+		<?php
 	}
 }
