@@ -1,3 +1,66 @@
+= 3.2.0 =
+
+Release post: [https://webberzone.com/blog/webberzone-followed-posts-v3-2-0/](https://webberzone.com/blog/webberzone-followed-posts-v3-2-0/)
+
+* Major Features:
+	* Complete plugin modernization with PHP 7.4+ typed properties and modern coding standards
+	* New Hook_Registry system for centralized hook management
+	* REST API integration with wfp/v1/tracker endpoint for modern tracking
+	* Vanilla JavaScript tracker (no jQuery dependency) with minified version
+	* New dashboard widget showing top tracked posts
+	* Modern Admin_Banner and Admin_Notices system for better admin experience
+	* New CSS styles: left_thumbs and text_only with minified versions
+	* Enhanced tracker with REST API and AJAX options plus debug mode
+
+* Architecture Improvements:
+	* PSR-4 autoloading with proper namespace structure (WebberZone\WFP)
+	* Options_API class with constants for better settings management
+	* Hook_Registry for centralized and consistent hook registration
+	* Modern class-based architecture throughout the plugin
+	* Improved error handling and security practices
+	* Better separation of concerns with dedicated classes
+
+* New Settings:
+	* tracker_type - Choose between REST API (default) or AJAX based tracking
+	* debug_mode - Enable console logging for tracker debugging
+	* left_thumbs style - Thumbnails on left with post details on right
+	* text_only style - Clean text-only list without thumbnails
+
+* Admin Enhancements:
+	* Modern sidebar matching Knowledgebase Pro structure
+	* Admin_Banner system for promotional/informational banners
+	* Admin_Notices_API for managing dismissible admin messages
+	* Updated social media links (X.com instead of Twitter)
+	* Improved plugin ecosystem showcase
+	* Better support and donation options
+
+* Frontend Improvements:
+	* Vanilla JS tracker with better performance and no jQuery dependency
+	* REST API endpoint for modern tracking (wfp/v1/tracker)
+	* Enhanced CSS styles with responsive design
+	* Better thumbnail handling and media management
+	* Improved caching system with better performance
+
+* Code Quality:
+	* Full PHPCS compliance (0 errors, 0 warnings)
+	* PHPStan compatibility with proper type hints
+	* Modern PHP 7.4+ features throughout
+	* Better documentation and code organization
+	* Improved security with proper input validation
+
+* Bug Fixes:
+	* Fixed null property warnings in Display class
+	* Proper handling of missing global $post object
+	* Better error handling in edge cases
+	* Improved compatibility with various WordPress contexts
+
+* Developer Experience:
+	* Better code organization and maintainability
+	* Consistent hook management with Hook_Registry
+	* Modern development practices and standards
+	* Better documentation and inline comments
+	* Improved extensibility with proper filters and actions
+
 This file holds the older changelog history for the plugin
 
 = 2.4.0 =
