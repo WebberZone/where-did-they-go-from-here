@@ -58,14 +58,7 @@ class REST_API extends \WP_REST_Controller {
 					'methods'             => \WP_REST_Server::READABLE,
 					'callback'            => array( $this, 'get_followed_posts' ),
 					'permission_callback' => '__return_true',
-					'args'                => array(
-						'id' => array(
-							'description'       => __( 'Post ID to get followed posts for.', 'where-did-they-go-from-here' ),
-							'type'              => 'integer',
-							'required'          => true,
-							'sanitize_callback' => 'absint',
-						),
-					),
+					'args'                => $this->get_followed_posts_args(),
 				),
 			)
 		);
@@ -91,6 +84,35 @@ class REST_API extends \WP_REST_Controller {
 				'type'              => 'string',
 				'required'          => true,
 				'sanitize_callback' => 'sanitize_text_field',
+			),
+		);
+	}
+
+	/**
+	 * Get the arguments for the followed posts endpoint.
+	 *
+	 * @since 3.2.0
+	 *
+	 * @return array Arguments.
+	 */
+	public function get_followed_posts_args() {
+		return array(
+			'id'       => array(
+				'description'       => __( 'Post ID to get followed posts for.', 'where-did-they-go-from-here' ),
+				'type'              => 'integer',
+				'required'          => true,
+				'sanitize_callback' => 'absint',
+				'validate_callback' => function ( $param ) {
+					return is_numeric( $param );
+				},
+			),
+			'per_page' => array(
+				'description'       => __( 'Maximum number of items to return.', 'where-did-they-go-from-here' ),
+				'type'              => 'integer',
+				'default'           => 10,
+				'minimum'           => 1,
+				'maximum'           => 100,
+				'sanitize_callback' => 'absint',
 			),
 		);
 	}
@@ -126,7 +148,12 @@ class REST_API extends \WP_REST_Controller {
 	 * @return \WP_REST_Response|\WP_Error Response object on success, or WP_Error object on failure.
 	 */
 	public function get_followed_posts( $request ) {
-		$post_id = absint( $request->get_param( 'id' ) );
+		$post_id  = absint( $request->get_param( 'id' ) );
+		$per_page = absint( $request->get_param( 'per_page' ) );
+
+		if ( empty( $per_page ) ) {
+			$per_page = 10;
+		}
 
 		$post = get_post( $post_id );
 		if ( ! $post ) {
@@ -144,17 +171,21 @@ class REST_API extends \WP_REST_Controller {
 			return rest_ensure_response(
 				array(
 					'post_id'        => $post_id,
+					'total'          => 0,
 					'followed_posts' => array(),
 				)
 			);
 		}
+
+		$total_followed = count( $followed_ids );
+		$followed_ids   = array_slice( $followed_ids, 0, $per_page );
 
 		$posts = get_posts(
 			array(
 				'post_type'      => 'any',
 				'post__in'       => $followed_ids,
 				'orderby'        => 'post__in',
-				'posts_per_page' => count( $followed_ids ),
+				'posts_per_page' => $per_page,
 				'post_status'    => 'publish',
 				'no_found_rows'  => true,
 			)
@@ -175,6 +206,8 @@ class REST_API extends \WP_REST_Controller {
 		return rest_ensure_response(
 			array(
 				'post_id'        => $post_id,
+				'total'          => $total_followed,
+				'returned'       => count( $data ),
 				'followed_posts' => $data,
 			)
 		);
