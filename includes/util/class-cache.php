@@ -25,7 +25,7 @@ class Cache {
 	 * @since 3.1.0
 	 */
 	public function __construct() {
-		add_action( 'wp_ajax_wherego_clear_cache', array( $this, 'ajax_clearcache' ) );
+		Hook_Registry::add_action( 'wp_ajax_wherego_clear_cache', array( $this, 'ajax_clearcache' ) );
 	}
 
 	/**

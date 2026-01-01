@@ -1,69 +1,63 @@
-= 3.2.0 =
-
-Release post: [https://webberzone.com/blog/webberzone-followed-posts-v3-2-0/](https://webberzone.com/blog/webberzone-followed-posts-v3-2-0/)
-
-* Major Features:
-	* Complete plugin modernization with PHP 7.4+ typed properties and modern coding standards
-	* New Hook_Registry system for centralized hook management
-	* REST API integration with wfp/v1/tracker endpoint for modern tracking
-	* Vanilla JavaScript tracker (no jQuery dependency) with minified version
-	* New dashboard widget showing top tracked posts
-	* Modern Admin_Banner and Admin_Notices system for better admin experience
-	* New CSS styles: left_thumbs and text_only with minified versions
-	* Enhanced tracker with REST API and AJAX options plus debug mode
-
-* Architecture Improvements:
-	* PSR-4 autoloading with proper namespace structure (WebberZone\WFP)
-	* Options_API class with constants for better settings management
-	* Hook_Registry for centralized and consistent hook registration
-	* Modern class-based architecture throughout the plugin
-	* Improved error handling and security practices
-	* Better separation of concerns with dedicated classes
-
-* New Settings:
-	* tracker_type - Choose between REST API (default) or AJAX based tracking
-	* debug_mode - Enable console logging for tracker debugging
-	* left_thumbs style - Thumbnails on left with post details on right
-	* text_only style - Clean text-only list without thumbnails
-
-* Admin Enhancements:
-	* Modern sidebar matching Knowledgebase Pro structure
-	* Admin_Banner system for promotional/informational banners
-	* Admin_Notices_API for managing dismissible admin messages
-	* Updated social media links (X.com instead of Twitter)
-	* Improved plugin ecosystem showcase
-	* Better support and donation options
-
-* Frontend Improvements:
-	* Vanilla JS tracker with better performance and no jQuery dependency
-	* REST API endpoint for modern tracking (wfp/v1/tracker)
-	* Enhanced CSS styles with responsive design
-	* Better thumbnail handling and media management
-	* Improved caching system with better performance
-
-* Code Quality:
-	* Full PHPCS compliance (0 errors, 0 warnings)
-	* PHPStan compatibility with proper type hints
-	* Modern PHP 7.4+ features throughout
-	* Better documentation and code organization
-	* Improved security with proper input validation
-
-* Bug Fixes:
-	* Fixed null property warnings in Display class
-	* Proper handling of missing global $post object
-	* Better error handling in edge cases
-	* Improved compatibility with various WordPress contexts
-
-* Developer Experience:
-	* Better code organization and maintainability
-	* Consistent hook management with Hook_Registry
-	* Modern development practices and standards
-	* Better documentation and inline comments
-	* Improved extensibility with proper filters and actions
-
 This file holds the older changelog history for the plugin
 
-= 2.4.0 =
+= 3.2.0 =
+
+* New
+	* REST API tracking endpoint.
+	* REST API endpoint to retrieve followed posts by post ID.
+	* Vanilla JavaScript tracker (no jQuery dependency).
+	* Tracker type setting (REST API based or Ajax based).
+	* Debug mode for tracker responses.
+	* Dashboard widget showing posts with followed links.
+	* New display styles: Left thumbnails and Text only.
+
+* Improved
+	* REST API responses for followed posts return WordPress REST-style post objects.
+	* Tracking data storage capped at 100 followed posts (filterable).
+
+* Developer
+	* Centralized hook registration via Hook Registry.
+	* Modernized Options API with class-based settings handling.
+
+= 3.1.2 =
+
+* Bug fix: Check if post is empty before processing.
+
+= 3.1.1 =
+
+* Bug fix: Sanitize args.
+
+= 3.1.0 =
+
+Release post: [https://webberzone.com/announcements/followed-posts-v3-1-0/](https://webberzone.com/announcements/followed-posts-v3-1-0/)
+
+Complete plugin rewrite to use classes and autoloading.
+
+* Features
+	* New block for the block editor. Find it under widgets or using "followed posts" or "where did they go from here"
+	* New functions `get_wfp()` and `the_wfp()` replace `get_wherego()` and `echo_wherego()`. The latter two will throw deprecated notices
+	* New shortcode `[wfp]` replaces `[wherego]`. The latter will continue to work but it is recommended that you replace the shortcode
+	* New tools page can be found under Tools > WFP Tools. Import/Export settings and clear the cache from there
+
+* Enhancements:
+	* Caching enabled by default - this will apply to new installs and if you reset the settings
+
+* Bug fix:
+	* PHP warning if a post was not found
+
+= 3.0.0 =
+
+Release post: [https://webberzone.com/blog/followed-posts-v3-0-0/](https://webberzone.com/blog/followed-posts-v3-0-0/)
+
+* Features:
+	* Support for PolyLang and WPML
+	* New options to stop tracking logged in users, authors, editors or admins
+
+* Enhancements:
+    * Improved caching with inbuilt expiry. Use WFP_CACHE_TIME in your wp-config.php to set how long the cache should be set for. Default is one week. Setting it to `false` will disable expiry
+	* Upgraded post thumbnail handling: Select the thumbnail size. The plugin will also check for site icons before the default thumbnail is selected
+	* Upgraded settings to new Settings_API class
+	* Grid thumbnail style has been redone to use CSS grid and flexbox. Please pick the correct thumbnail size in the Thumbnail settings= 2.4.0 =
 
 Release post: [https://webberzone.com/blog/followed-posts-v2-4-0/](https://webberzone.com/blog/followed-posts-v2-4-0/)
 

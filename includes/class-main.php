@@ -1,6 +1,6 @@
 <?php
 /**
- * Main plugin class.
+ * Main class.
  *
  * @package WebberZone\WFP
  */
@@ -14,42 +14,26 @@ use WebberZone\WFP\Frontend\Shortcodes;
 use WebberZone\WFP\Frontend\Styles_Handler;
 use WebberZone\WFP\Util\Hook_Registry;
 
+// If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
-	exit;
+	die;
 }
 
 /**
- * Main plugin class.
+ * Main class.
  *
  * @since 3.1.0
  */
-final class Main {
+class Main {
+
 	/**
-	 * The single instance of the class.
+	 * Single instance of the class.
 	 *
 	 * @since 3.1.0
 	 *
 	 * @var Main
 	 */
 	private static $instance;
-
-	/**
-	 * Admin.
-	 *
-	 * @since 3.1.0
-	 *
-	 * @var Admin|null Admin instance.
-	 */
-	public ?Admin $admin = null;
-
-	/**
-	 * Shortcodes.
-	 *
-	 * @since 3.1.0
-	 *
-	 * @var Shortcodes Shortcodes handler.
-	 */
-	public Shortcodes $shortcodes;
 
 	/**
 	 * Language Handler.
@@ -65,9 +49,18 @@ final class Main {
 	 *
 	 * @since 3.1.0
 	 *
-	 * @var Tracker Tracker instance.
+	 * @var Tracker Tracker handler.
 	 */
 	public Tracker $tracker;
+
+	/**
+	 * Shortcodes.
+	 *
+	 * @since 3.1.0
+	 *
+	 * @var Shortcodes Shortcodes handler.
+	 */
+	public Shortcodes $shortcodes;
 
 	/**
 	 * Blocks.
@@ -86,6 +79,15 @@ final class Main {
 	 * @var Styles_Handler Styles handler.
 	 */
 	public Styles_Handler $styles;
+
+	/**
+	 * Admin.
+	 *
+	 * @since 3.2.0
+	 *
+	 * @var Admin Admin handler.
+	 */
+	public Admin $admin;
 
 	/**
 	 * Gets the instance of the class.
@@ -118,14 +120,24 @@ final class Main {
 	 * @since 3.1.0
 	 */
 	private function init() {
-		$this->language   = new Frontend\Language_Handler();
-		$this->styles     = new Frontend\Styles_Handler();
+		$this->language   = new Language_Handler();
+		$this->styles     = new Styles_Handler();
 		$this->tracker    = new Tracker();
-		$this->shortcodes = new Frontend\Shortcodes();
-		$this->blocks     = new Frontend\Blocks\Blocks();
+		$this->shortcodes = new Shortcodes();
+		$this->blocks     = new Blocks();
 
 		$this->hooks();
 
+		// Initialize admin on init action to ensure translations are loaded.
+		Hook_Registry::add_action( 'init', array( $this, 'init_admin' ) );
+	}
+
+	/**
+	 * Initialize admin components.
+	 *
+	 * @since 3.2.0
+	 */
+	public function init_admin(): void {
 		if ( is_admin() ) {
 			$this->admin = new Admin();
 		}
@@ -151,16 +163,17 @@ final class Main {
 	 * @since 3.1.0
 	 */
 	public function initiate_plugin() {
-		Frontend\Media_Handler::add_image_sizes();
+		$this->language->load_plugin_textdomain();
+		$this->styles->register_styles();
 	}
 
 	/**
-	 * Initialise the WFP widgets.
+	 * Register widgets.
 	 *
 	 * @since 3.1.0
 	 */
 	public function register_widgets() {
-		register_widget( '\WebberZone\WFP\Frontend\Widget' );
+		register_widget( 'WebberZone\WFP\Frontend\Widget' );
 	}
 
 	/**
@@ -169,75 +182,71 @@ final class Main {
 	 * @since 3.2.0
 	 */
 	public function register_rest_routes() {
-		$controller = new Frontend\REST_API();
-		$controller->register_routes();
+		register_rest_route(
+			'wfp/v1',
+			'/tracker',
+			array(
+				'methods'             => 'POST',
+				'callback'            => array( $this->tracker, 'process_tracking' ),
+				'permission_callback' => '__return_true',
+				'args'                => array(
+					'post_id' => array(
+						'required'          => true,
+						'sanitize_callback' => 'absint',
+						'type'              => 'integer',
+					),
+					'referer' => array(
+						'required'          => false,
+						'sanitize_callback' => 'esc_url_raw',
+						'type'              => 'string',
+					),
+				),
+			)
+		);
 	}
 
 	/**
-	 * Filter `the_content` to add the followed posts.
+	 * Filter the content to add the related posts.
 	 *
 	 * @since 3.1.0
 	 *
 	 * @param string $content Post content.
-	 * @return string Updated post content.
+	 * @return string Modified content.
 	 */
-	public static function the_content( $content ) {
-		global $post, $wherego_id;
-		$wherego_id = absint( $post->ID );
-
-		$add_to              = \wherego_get_option( 'add_to', false );
-		$exclude_on_post_ids = explode( ',', \wherego_get_option( 'exclude_on_post_ids' ) );
-
-		// Exit if the post is in the exclusion list.
-		if ( in_array( $post->ID, $exclude_on_post_ids, true ) ) {
+	public function the_content( $content ) {
+		if ( ! is_singular() ) {
 			return $content;
 		}
 
-		$conditions = array(
-			'is_single'   => 'content',
-			'is_page'     => 'page',
-			'is_home'     => 'home',
-			'is_category' => 'category_archives',
-			'is_tag'      => 'tag_archives',
-		);
+		$wherego_content = $this->shortcodes->get_related_posts( array() );
 
-		foreach ( $conditions as $condition => $option ) {
-			if ( call_user_func( $condition ) && ! empty( $add_to[ $option ] ) ) {
-				return $content . get_wfp();
-			}
-		}
-
-		if ( ( is_tax() || is_author() || is_date() ) && ! empty( $add_to['archives'] ) ) {
-			return $content . get_wfp();
+		if ( ! empty( $wherego_content ) ) {
+			return $content . $wherego_content;
 		}
 
 		return $content;
 	}
 
 	/**
-	 * Function to add the followed posts automatically to the feeds.
+	 * Add to feed.
 	 *
 	 * @since 3.1.0
 	 *
-	 * @param string $content Post content.
-	 * @return string Updated post content.
+	 * @param string $content Feed content.
+	 * @return string Modified content.
 	 */
-	public static function add_to_feed( $content ) {
-		$show_excerpt_feed  = \wherego_get_option( 'show_excerpt_feed' );
-		$limit_feed         = \wherego_get_option( 'limit_feed' );
-		$post_thumb_op_feed = \wherego_get_option( 'post_thumb_op_feed' );
-		$add_to             = \wherego_get_option( 'add_to' );
+	public function add_to_feed( $content ) {
+		$wherego_content = $this->shortcodes->get_related_posts(
+			array(
+				'is_widget' => 1,
+				'echo'      => false,
+			)
+		);
 
-		if ( ! empty( $add_to['feed'] ) ) {
-			return $content . get_wfp(
-				array(
-					'limit'         => $limit_feed,
-					'show_excerpt'  => $show_excerpt_feed,
-					'post_thumb_op' => $post_thumb_op_feed,
-				)
-			);
-		} else {
-			return $content;
+		if ( ! empty( $wherego_content ) ) {
+			return $content . $wherego_content;
 		}
+
+		return $content;
 	}
 }

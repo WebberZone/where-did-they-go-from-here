@@ -99,7 +99,7 @@ register_activation_hook( __FILE__, __NAMESPACE__ . '\activate_wfp' );
 function load_wfp() {
 	\WebberZone\WFP\Main::get_instance();
 }
-add_action( 'plugins_loaded', __NAMESPACE__ . '\load_wfp' );
+Hook_Registry::add_action( 'plugins_loaded', __NAMESPACE__ . '\load_wfp' );
 
 /*
  *----------------------------------------------------------------------------
@@ -110,6 +110,13 @@ require_once WHEREGO_PLUGIN_DIR . 'includes/options-api.php';
 require_once WHEREGO_PLUGIN_DIR . 'includes/functions.php';
 
 /**
+ * Initialize the Options API.
+ *
+ * @since 3.2.0
+ */
+\WebberZone\WFP\Options_API::init();
+
+/**
  * Plugin settings.
  *
  * @since 1.6
@@ -118,10 +125,3 @@ require_once WHEREGO_PLUGIN_DIR . 'includes/functions.php';
  */
 global $wherego_settings;
 $wherego_settings = wherego_get_settings();
-
-/**
- * Initialize the Options API.
- *
- * @since 3.2.0
- */
-\WebberZone\WFP\Options_API::init();

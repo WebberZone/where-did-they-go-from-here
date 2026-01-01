@@ -86,6 +86,23 @@ class Admin {
 	 * @var Dashboard_Widgets Dashboard widgets.
 	 */
 	public $dashboard_widgets;
+	/**
+	 * Admin Banner.
+	 *
+	 * @since 3.2.0
+	 *
+	 * @var Admin_Banner Admin banner.
+	 */
+	public $admin_banner;
+
+	/**
+	 * Admin Notices.
+	 *
+	 * @since 3.2.0
+	 *
+	 * @var Admin_Notices Admin notices.
+	 */
+	public $admin_notices;
 
 	/**
 	 * Settings Page in Admin area.
@@ -122,6 +139,8 @@ class Admin {
 		$this->cache             = new Cache();
 		$this->tools_page        = new Tools_Page();
 		$this->dashboard_widgets = new Dashboard_Widgets();
+		$this->admin_banner      = new Admin_Banner();
+		$this->admin_notices     = new Admin_Notices();
 	}
 
 	/**
@@ -155,5 +174,29 @@ class Admin {
 	 */
 	public static function display_admin_sidebar() {
 		require_once WHEREGO_PLUGIN_DIR . 'includes/admin/sidebar.php';
+	}
+
+	/**
+	 * Display Pro upgrade banner.
+	 *
+	 * @since 3.2.0
+	 *
+	 * @param bool   $donate      Whether to show the donate banner.
+	 * @param string $custom_text Custom text to show in the banner.
+	 */
+	public static function pro_upgrade_banner( $donate = true, $custom_text = '' ) {
+		?>
+			<div id="pro-upgrade-banner">
+				<div class="inside">
+					<?php if ( ! empty( $custom_text ) ) : ?>
+						<p><?php echo wp_kses_post( $custom_text ); ?></p>
+					<?php endif; ?>
+
+					<?php if ( $donate ) : ?>
+						<p><a href="https://wzn.io/donate-wz" target="_blank"><img src="<?php echo esc_url( plugins_url( 'images/support.webp', __FILE__ ) ); ?>" alt="<?php esc_html_e( 'Support the development - Send us a donation today.', 'where-did-they-go-from-here' ); ?>" width="300" height="169" style="max-width: 100%;" /></a></p>
+					<?php endif; ?>
+				</div>
+			</div>
+		<?php
 	}
 }

@@ -212,4 +212,36 @@ class Helpers {
 
 		return $protocol . $host . $uri;
 	}
+	/**
+	 * Format a number with thousands separator.
+	 *
+	 * @since 3.2.0
+	 *
+	 * @param int|float $number Number to format.
+	 * @return string Formatted number.
+	 */
+	public static function format_number( $number ): string {
+		return number_format_i18n( (float) $number );
+	}
+
+	/**
+	 * Parse a CSV string to an array of integers.
+	 *
+	 * @since 3.2.0
+	 *
+	 * @param string $csv CSV string to parse.
+	 * @return array Array of integers.
+	 */
+	public static function parse_csv_to_int_array( string $csv ): array {
+		if ( empty( $csv ) ) {
+			return array();
+		}
+
+		$items = explode( ',', $csv );
+		$items = array_map( 'trim', $items );
+		$items = array_filter( $items, 'is_numeric' );
+		$items = array_map( 'absint', $items );
+
+		return array_values( $items );
+	}
 }
