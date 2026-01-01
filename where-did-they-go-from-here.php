@@ -18,7 +18,7 @@
  * Author:      Ajay D'Souza
  * Author URI:  https://webberzone.com
  * License:     GPL-2.0+
- * License URI: https://www.gnu.org/licenses/gpl-2.0.txt
+ * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain: where-did-they-go-from-here
  * Domain Path: /languages
  */
@@ -99,7 +99,7 @@ register_activation_hook( __FILE__, __NAMESPACE__ . '\activate_wfp' );
 function load_wfp() {
 	\WebberZone\WFP\Main::get_instance();
 }
-Hook_Registry::add_action( 'plugins_loaded', __NAMESPACE__ . '\load_wfp' );
+add_action( 'plugins_loaded', __NAMESPACE__ . '\load_wfp' );
 
 /*
  *----------------------------------------------------------------------------
