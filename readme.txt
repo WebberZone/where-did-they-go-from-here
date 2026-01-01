@@ -123,4 +123,4 @@ For previous changelog entries check out the changelog.txt file included with th
 == Upgrade Notice ==
 
 = 3.2.0 =
-[ ]]
+Major release; see changelog for further information.
