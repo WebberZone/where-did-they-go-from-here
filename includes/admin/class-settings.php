@@ -1098,7 +1098,7 @@ class Settings {
 				}
 
 				$cat = $term_id ? get_term_by( 'id', $term_id, $taxonomy ) : get_term_by( 'name', $cat_name, $taxonomy );
-				if ( $cat && ! is_wp_error( $cat ) && isset( $cat->term_id ) ) {
+				if ( $cat instanceof \WP_Term ) {
 					$exclude_categories[]     = (int) $cat->term_id;
 					$exclude_category_slugs[] = $cat->name;
 				}
