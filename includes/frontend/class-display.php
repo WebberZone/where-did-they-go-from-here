@@ -58,6 +58,9 @@ class Display {
 		$args = wp_parse_args( $args, $defaults );
 		$args = Helpers::sanitize_args( $args );
 
+		// Initialize meta_key variable.
+		$meta_key = '';
+
 		// Check the cache first.
 		if ( ! empty( $args['cache'] ) && ! ( is_preview() || is_admin() || ( defined( 'REST_REQUEST' ) && REST_REQUEST ) ) && ! empty( $post ) ) {
 			$meta_key = Cache::get_key( $args );

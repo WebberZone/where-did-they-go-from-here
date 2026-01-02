@@ -213,13 +213,13 @@ class Cache {
 
 		$value = get_post_meta( $post_id, $meta_key, true );
 
-		if ( ! WFP_CACHE_TIME ) {
+		if ( (int) WFP_CACHE_TIME <= 0 ) {
 			return $value;
 		}
 
 		if ( $value ) {
 			$expires = (int) get_post_meta( $post_id, $cache_expires, true );
-			if ( $expires < time() || empty( $expires ) ) {
+			if ( $expires < time() ) {
 				self::delete_cache( $post_id, $meta_key );
 				return false;
 			} else {

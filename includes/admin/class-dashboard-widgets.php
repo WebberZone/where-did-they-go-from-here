@@ -102,7 +102,7 @@ class Dashboard_Widgets {
 		<p>
 			<label for="wherego_dashboard_widget_number">
 				<?php esc_html_e( 'Number of posts to display:', 'where-did-they-go-from-here' ); ?>
-				<input class="tiny-text" id="wherego_dashboard_widget_number" name="wherego_dashboard_widget_number" type="number" step="1" min="1" max="20" value="<?php echo esc_attr( $number ); ?>" />
+				<input class="tiny-text" id="wherego_dashboard_widget_number" name="wherego_dashboard_widget_number" type="number" step="1" min="1" max="20" value="<?php echo esc_attr( (string) $number ); ?>" />
 			</label>
 		</p>
 		<p>

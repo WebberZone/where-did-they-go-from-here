@@ -163,9 +163,9 @@ class Main {
 		Hook_Registry::add_action( 'init', array( $this, 'initiate_plugin' ) );
 		Hook_Registry::add_action( 'widgets_init', array( $this, 'register_widgets' ) );
 		Hook_Registry::add_action( 'rest_api_init', array( $this, 'register_rest_routes' ) );
-		Hook_Registry::add_filter( 'the_content', array( $this, 'the_content' ) );
-		Hook_Registry::add_filter( 'the_excerpt_rss', array( $this, 'add_to_feed' ) );
-		Hook_Registry::add_filter( 'the_content_feed', array( $this, 'add_to_feed' ) );
+		Hook_Registry::add_filter( 'the_content', array( __CLASS__, 'the_content' ) );
+		Hook_Registry::add_filter( 'the_excerpt_rss', array( __CLASS__, 'add_to_feed' ) );
+		Hook_Registry::add_filter( 'the_content_feed', array( __CLASS__, 'add_to_feed' ) );
 	}
 
 	/**
@@ -174,17 +174,16 @@ class Main {
 	 * @since 3.1.0
 	 */
 	public function initiate_plugin() {
-		$this->language->load_plugin_textdomain();
-		$this->styles->register_styles();
+		Frontend\Media_Handler::add_image_sizes();
 	}
 
 	/**
-	 * Register widgets.
+	 * Initialise the WFP widgets.
 	 *
 	 * @since 3.1.0
 	 */
 	public function register_widgets() {
-		register_widget( 'WebberZone\WFP\Frontend\Widget' );
+		register_widget( '\WebberZone\WFP\Frontend\Widget' );
 	}
 
 	/**
@@ -197,47 +196,70 @@ class Main {
 	}
 
 	/**
-	 * Filter the content to add the related posts.
+	 * Filter `the_content` to add the followed posts.
 	 *
 	 * @since 3.1.0
 	 *
 	 * @param string $content Post content.
-	 * @return string Modified content.
+	 * @return string Updated post content.
 	 */
-	public function the_content( $content ) {
-		if ( ! is_singular() ) {
+	public static function the_content( $content ) {
+		global $post, $wherego_id;
+		$wherego_id = absint( $post->ID );
+
+		$add_to              = \wherego_get_option( 'add_to', false );
+		$exclude_on_post_ids = explode( ',', \wherego_get_option( 'exclude_on_post_ids' ) );
+
+		// Exit if the post is in the exclusion list.
+		if ( in_array( $post->ID, $exclude_on_post_ids, true ) ) {
 			return $content;
 		}
 
-		$wherego_content = $this->shortcodes->get_related_posts( array() );
+		$conditions = array(
+			'is_single'   => 'content',
+			'is_page'     => 'page',
+			'is_home'     => 'home',
+			'is_category' => 'category_archives',
+			'is_tag'      => 'tag_archives',
+		);
 
-		if ( ! empty( $wherego_content ) ) {
-			return $content . $wherego_content;
+		foreach ( $conditions as $condition => $option ) {
+			if ( call_user_func( $condition ) && ! empty( $add_to[ $option ] ) ) {
+				return $content . get_wfp();
+			}
+		}
+
+		if ( ( is_tax() || is_author() || is_date() ) && ! empty( $add_to['archives'] ) ) {
+			return $content . get_wfp();
 		}
 
 		return $content;
 	}
 
 	/**
-	 * Add to feed.
+	 * Function to add the followed posts automatically to the feeds.
 	 *
 	 * @since 3.1.0
 	 *
-	 * @param string $content Feed content.
-	 * @return string Modified content.
+	 * @param string $content Post content.
+	 * @return string Updated post content.
 	 */
-	public function add_to_feed( $content ) {
-		$wherego_content = $this->shortcodes->get_related_posts(
-			array(
-				'is_widget' => 1,
-				'echo'      => false,
-			)
-		);
+	public static function add_to_feed( $content ) {
+		$show_excerpt_feed  = \wherego_get_option( 'show_excerpt_feed' );
+		$limit_feed         = \wherego_get_option( 'limit_feed' );
+		$post_thumb_op_feed = \wherego_get_option( 'post_thumb_op_feed' );
+		$add_to             = \wherego_get_option( 'add_to' );
 
-		if ( ! empty( $wherego_content ) ) {
-			return $content . $wherego_content;
+		if ( ! empty( $add_to['feed'] ) ) {
+			return $content . get_wfp(
+				array(
+					'limit'         => $limit_feed,
+					'show_excerpt'  => $show_excerpt_feed,
+					'post_thumb_op' => $post_thumb_op_feed,
+				)
+			);
+		} else {
+			return $content;
 		}
-
-		return $content;
 	}
 }
