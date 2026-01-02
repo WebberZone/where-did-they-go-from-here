@@ -60,6 +60,35 @@ function the_wfp( $args = array() ) {
 }
 
 /**
+ * Get registered settings types for cache key generation.
+ *
+ * @since 3.1.0
+ *
+ * @return array Array of setting types keyed by setting ID.
+ */
+function wherego_get_registered_settings_types() {
+	static $setting_types = null;
+
+	if ( null === $setting_types ) {
+		$setting_types = array();
+
+		$settings_api  = new \WebberZone\WFP\Admin\Settings();
+		$setting_types = $settings_api->settings_api->get_registered_settings_types();
+
+		/**
+		 * Filter the settings types array for cache key generation.
+		 *
+		 * @since 3.1.0
+		 *
+		 * @param array $setting_types Array of setting types keyed by setting ID.
+		 */
+		$setting_types = apply_filters( 'wherego_registered_settings_types', $setting_types );
+	}
+
+	return $setting_types;
+}
+
+/**
  * Manual install.
  *
  * @since 1.0
