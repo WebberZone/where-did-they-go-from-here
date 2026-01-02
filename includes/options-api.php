@@ -47,6 +47,33 @@ function wherego_get_option( $key = '', $default_value = null ) {
 
 
 /**
+ * Get registered settings types for cache key generation.
+ *
+ * @since 3.1.0
+ *
+ * @return array Array of setting types keyed by setting ID.
+ */
+function wherego_get_registered_settings_types() {
+	$options = array();
+
+	// Populate some default values.
+	foreach ( \WebberZone\WFP\Admin\Settings::get_registered_settings() as $tab => $settings ) {
+		foreach ( $settings as $option ) {
+			$options[ $option['id'] ] = $option['type'];
+		}
+	}
+
+	/**
+	 * Filter the settings types array for cache key generation.
+	 *
+	 * @since 3.1.0
+	 *
+	 * @param array $options Array of setting types keyed by setting ID.
+	 */
+	return apply_filters( 'wherego_registered_settings_types', $options );
+}
+
+/**
  * Update an option.
  *
  * Updates a setting value in both the db and the global variable.
@@ -55,7 +82,7 @@ function wherego_get_option( $key = '', $default_value = null ) {
  *
  * @param string          $key   The Key to update.
  * @param string|bool|int $value The value to set the key to.
- * @return boolean True if updated, false if not.
+ * @return boolean true if updated, false if not.
  */
 function wherego_update_option( $key = '', $value = null ) {
 	if ( is_null( $value ) ) {
