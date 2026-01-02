@@ -124,53 +124,62 @@ class Tools_Page {
 
 			<form method="post" >
 
-				<h2 style="padding-left:0px"><?php esc_html_e( 'Clear cache', 'where-did-they-go-from-here' ); ?></h2>
-				<p>
-					<input type="button" name="cache_clear" id="cache_clear"  value="<?php esc_attr_e( 'Clear cache', 'where-did-they-go-from-here' ); ?>" class="button button-secondary delete" onclick="return clearCache();" />
-				</p>
-				<p class="description">
-					<?php esc_html_e( 'Clear the Followed Posts cache. This will also be cleared automatically when you save the settings page.', 'where-did-they-go-from-here' ); ?>
-				</p>
-			</form>
+				<div class="postbox">
+					<h2><span><?php esc_html_e( 'Clear cache', 'where-did-they-go-from-here' ); ?></span></h2>
+					<div class="inside">
+						<p>
+							<input type="button" name="cache_clear" id="cache_clear"  value="<?php esc_attr_e( 'Clear cache', 'where-did-they-go-from-here' ); ?>" class="button button-secondary delete" onclick="return clearCache();" />
+						</p>
+						<p class="description">
+							<?php esc_html_e( 'Clear the Followed Posts cache. This will also be cleared automatically when you save the settings page.', 'where-did-they-go-from-here' ); ?>
+						</p>
+					</div>
+				</div>
 
-			<form method="post">
+				<div class="postbox">
+					<h2><span><?php esc_html_e( 'Export settings', 'where-did-they-go-from-here' ); ?></span></h2>
+					<div class="inside">
+						<p class="description">
+							<?php esc_html_e( 'Export the plugin settings for this site as a .json file. This allows you to easily import the configuration into another site.', 'where-did-they-go-from-here' ); ?>
+						</p>
+						<p><input type="hidden" name="wherego_action" value="export_settings" /></p>
+						<p>
+							<?php submit_button( esc_html__( 'Export Settings', 'where-did-they-go-from-here' ), 'secondary', 'wherego_export_settings', false ); ?>
+						</p>
 
-				<h2 style="padding-left:0px"><?php esc_html_e( 'Export/Import settings', 'where-did-they-go-from-here' ); ?></h2>
-				<p class="description">
-					<?php esc_html_e( 'Export the plugin settings for this site as a .json file. This allows you to easily import the configuration into another site.', 'where-did-they-go-from-here' ); ?>
-				</p>
-				<p><input type="hidden" name="wherego_action" value="export_settings" /></p>
-				<p>
-					<?php submit_button( esc_html__( 'Export Settings', 'where-did-they-go-from-here' ), 'secondary', 'wherego_export_settings', false ); ?>
-				</p>
+						<?php wp_nonce_field( 'wherego_export_settings_nonce', 'wherego_export_settings_nonce' ); ?>
+					</div>
+				</div>
 
-				<?php wp_nonce_field( 'wherego_export_settings_nonce', 'wherego_export_settings_nonce' ); ?>
-			</form>
+				<div class="postbox">
+					<h2><span><?php esc_html_e( 'Import settings', 'where-did-they-go-from-here' ); ?></span></h2>
+					<div class="inside">
+						<p class="description">
+							<?php esc_html_e( 'Import the plugin settings from a .json file. This file can be obtained by exporting the settings on this or another site using the form above. Please ensure that this file has not been edited, as importing an incorrect file can break your installation!', 'where-did-they-go-from-here' ); ?>
+						</p>
+						<p>
+							<input type="file" name="import_settings_file" />
+						</p>
+						<p>
+							<?php submit_button( esc_html__( 'Import Settings', 'where-did-they-go-from-here' ), 'secondary', 'wherego_import_settings', false ); ?>
+						</p>
 
-			<form method="post" enctype="multipart/form-data">
+						<input type="hidden" name="wherego_action" value="import_settings" />
+						<?php wp_nonce_field( 'wherego_import_settings_nonce', 'wherego_import_settings_nonce' ); ?>
+					</div>
+				</div>
 
-				<p class="description">
-					<?php esc_html_e( 'Import the plugin settings from a .json file. This file can be obtained by exporting the settings on this or another site using the form above. Please ensure that this file has not been edited, as importing an incorrect file can break your installation!', 'where-did-they-go-from-here' ); ?>
-				</p>
-				<p>
-					<input type="file" name="import_settings_file" />
-				</p>
-				<p>
-					<?php submit_button( esc_html__( 'Import Settings', 'where-did-they-go-from-here' ), 'secondary', 'wherego_import_settings', false ); ?>
-				</p>
-
-				<input type="hidden" name="wherego_action" value="import_settings" />
-				<?php wp_nonce_field( 'wherego_import_settings_nonce', 'wherego_import_settings_nonce' ); ?>
-			</form>
-
-			<form method="post">
-				<h2 style="padding-left:0px"><?php esc_html_e( 'Other tools', 'where-did-they-go-from-here' ); ?></h2>
-				<p class="description">
-					<?php esc_html_e( 'From v2, Followed Posts stores the settings in a new key in the database. This will delete the old settings for the current blog.', 'where-did-they-go-from-here' ); ?>
-				</p>
-				<p>
-					<input name="wherego_delete_old_settings" type="submit" id="wherego_delete_old_settings" value="<?php esc_attr_e( 'Delete old settings', 'where-did-they-go-from-here' ); ?>" class="button button-secondary" onclick="if (!confirm('<?php esc_attr_e( 'This will delete the settings before v2.5.x. Proceed?', 'where-did-they-go-from-here' ); ?>')) return false;" />
-				</p>
+				<div class="postbox">
+					<h2><span><?php esc_html_e( 'Other tools', 'where-did-they-go-from-here' ); ?></span></h2>
+					<div class="inside">
+						<p class="description">
+							<?php esc_html_e( 'From v2, Followed Posts stores the settings in a new key in the database. This will delete the old settings for the current blog.', 'where-did-they-go-from-here' ); ?>
+						</p>
+						<p>
+							<input name="wherego_delete_old_settings" type="submit" id="wherego_delete_old_settings" value="<?php esc_attr_e( 'Delete old settings', 'where-did-they-go-from-here' ); ?>" class="button button-secondary" onclick="if (!confirm('<?php esc_attr_e( 'This will delete the settings before v2.5.x. Proceed?', 'where-did-they-go-from-here' ); ?>')) return false;" />
+						</p>
+					</div>
+				</div>
 
 				<?php wp_nonce_field( 'wherego-tools-settings' ); ?>
 			</form>
@@ -180,7 +189,7 @@ class Tools_Page {
 		<div id="postbox-container-1" class="postbox-container">
 
 			<div id="side-sortables" class="meta-box-sortables ui-sortable">
-				<?php include_once 'settings/sidebar.php'; ?>
+				<?php include_once 'sidebar.php'; ?>
 			</div><!-- /#side-sortables -->
 
 		</div><!-- /#postbox-container-1 -->

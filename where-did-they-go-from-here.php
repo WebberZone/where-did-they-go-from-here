@@ -94,12 +94,25 @@ register_activation_hook( __FILE__, __NAMESPACE__ . '\activate_wfp' );
 /**
  * The main function responsible for returning the one true WebberZone Snippetz instance to functions everywhere.
  *
- * @since 3.1.0
+ * @since 3.2.0
  */
-function load_wfp() {
+function load() {
 	\WebberZone\WFP\Main::get_instance();
 }
-add_action( 'plugins_loaded', __NAMESPACE__ . '\load_wfp' );
+add_action( 'plugins_loaded', __NAMESPACE__ . '\load' );
+
+if ( ! function_exists( 'wz_wfp' ) ) {
+	/**
+	 * Get the main WebberZone Followed Posts instance.
+	 *
+	 * @since 3.0.0
+	 * @return Main Main instance.
+	 */
+	function wz_wfp() {
+		return Main::get_instance();
+	}
+}
+
 
 /*
  *----------------------------------------------------------------------------
