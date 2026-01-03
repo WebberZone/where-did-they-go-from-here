@@ -83,7 +83,13 @@ class REST_API extends \WP_REST_Controller {
 				'description'       => __( 'Referrer URL.', 'where-did-they-go-from-here' ),
 				'type'              => 'string',
 				'required'          => true,
-				'sanitize_callback' => 'sanitize_text_field',
+				'sanitize_callback' => 'sanitize_url',
+			),
+			'wfp_debug'   => array(
+				'description'       => __( 'Debug mode.', 'where-did-they-go-from-here' ),
+				'type'              => 'integer',
+				'default'           => 0,
+				'sanitize_callback' => 'absint',
 			),
 		);
 	}
@@ -128,15 +134,21 @@ class REST_API extends \WP_REST_Controller {
 	public function update_tracker( $request ) {
 		$id      = $request->get_param( 'wfp_id' );
 		$sitevar = $request->get_param( 'wfp_sitevar' );
+		$debug   = $request->get_param( 'wfp_debug' );
 
 		$result = Tracker::process_tracking( $id, $sitevar );
 
-		return rest_ensure_response(
-			array(
-				'success' => true,
-				'message' => $result,
-			)
-		);
+		// If the debug parameter is set then we return the result else we send a No Content response.
+		if ( 1 === $debug ) {
+			return rest_ensure_response(
+				array(
+					'success' => true,
+					'message' => $result,
+				)
+			);
+		} else {
+			return new \WP_REST_Response( null, 204 );
+		}
 	}
 
 	/**

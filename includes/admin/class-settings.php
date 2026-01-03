@@ -952,16 +952,16 @@ class Settings {
 	 */
 	public function get_help_sidebar() {
 		$help_sidebar =
-			/* translators: 1: Plugin support site link. */
-			'<p>' . sprintf( __( 'For more information or how to get support visit the <a href="%s">support site</a>.', 'where-did-they-go-from-here' ), esc_url( 'https://webberzone.com/support/' ) ) . '</p>' .
-			/* translators: 1: WordPress.org support forums link. */
-			'<p>' . sprintf( __( 'Support queries should be posted in the <a href="%s">WordPress.org support forums</a>.', 'where-did-they-go-from-here' ), esc_url( 'https://wordpress.org/support/plugin/where-did-they-go-from-here' ) ) . '</p>' .
-			'<p>' . sprintf(
-				/* translators: 1: Github issues link, 2: Github plugin page link. */
-				__( '<a href="%1$s">Post an issue</a> on <a href="%2$s">GitHub</a> (bug reports only).', 'where-did-they-go-from-here' ),
-				esc_url( 'https://github.com/ajaydsouza/where-did-they-go-from-here/issues' ),
-				esc_url( 'https://github.com/ajaydsouza/where-did-they-go-from-here' )
-			) . '</p>';
+		/* translators: 1: Plugin support site link. */
+		'<p>' . sprintf( __( 'For more information or how to get support visit the <a href="%s">support site</a>.', 'where-did-they-go-from-here' ), esc_url( 'https://webberzone.com/support/' ) ) . '</p>' .
+		/* translators: 1: WordPress.org support forums link. */
+		'<p>' . sprintf( __( 'Support queries should be posted in the <a href="%s">WordPress.org support forums</a>.', 'where-did-they-go-from-here' ), esc_url( 'https://wordpress.org/support/plugin/where-did-they-go-from-here' ) ) . '</p>' .
+		'<p>' . sprintf(
+			/* translators: 1: Github issues link, 2: Github plugin page link. */
+			__( '<a href="%1$s">Post an issue</a> on <a href="%2$s">GitHub</a> (bug reports only).', 'where-did-they-go-from-here' ),
+			esc_url( 'https://github.com/ajaydsouza/where-did-they-go-from-here/issues' ),
+			esc_url( 'https://github.com/ajaydsouza/where-did-they-go-from-here' )
+		) . '</p>';
 
 		/**
 		 * Filter to modify the help sidebar content.
@@ -1034,7 +1034,7 @@ class Settings {
 	 */
 	public static function get_admin_footer_text() {
 		return sprintf(
-			/* translators: 1: Opening achor tag with Plugin page link, 2: Closing anchor tag, 3: Opening anchor tag with review link. */
+		/* translators: 1: Opening achor tag with Plugin page link, 2: Closing anchor tag, 3: Opening anchor tag with review link. */
 			__( 'Thank you for using %1$sWebberZone Followed Posts%2$s! Please %3$srate us%2$s on %3$sWordPress.org%2$s', 'where-did-they-go-from-here' ),
 			'<a href="https://webberzone.com/plugins/where-did-they-go-from-here/" target="_blank">',
 			'</a>',
@@ -1049,18 +1049,25 @@ class Settings {
 	 */
 	public function admin_enqueue_scripts() {
 
+		// Enqueue the admin script for clearCache function.
+		wp_enqueue_script( 'wherego-admin-js' );
+		wp_localize_script(
+			'wherego-admin-js',
+			'wherego_admin_data',
+			array(
+				'security' => wp_create_nonce( 'wherego-admin' ),
+				'strings'  => array(
+					'clear_cache'    => esc_html__( 'Clear cache', 'where-did-they-go-from-here' ),
+					'clearing_cache' => esc_html__( 'Clearing cache', 'where-did-they-go-from-here' ),
+				),
+			)
+		);
+
 		wp_localize_script(
 			'wz-admin-js',
 			'wherego_admin',
 			array(
 				'thumb_default' => WHEREGO_PLUGIN_URL . 'default.png',
-			)
-		);
-		wp_localize_script(
-			'wz-admin-js',
-			'wherego_admin_data',
-			array(
-				'security' => wp_create_nonce( 'wherego-admin' ),
 			)
 		);
 	}

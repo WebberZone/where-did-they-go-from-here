@@ -7,7 +7,7 @@
  * @since 3.2.0
  */
 
-(function () {
+document.addEventListener('DOMContentLoaded', function () {
 	'use strict';
 
 	// Ensure wfpTrackerArgs is available.
@@ -15,47 +15,34 @@
 		return;
 	}
 
-	/**
-	 * Send tracking data to the server.
-	 */
-	function sendTrackingData() {
-		var isRestAPI = wfpTrackerArgs.ajax_url.indexOf('/wp-json/') !== -1;
-		var fetchOptions = {
-			method: 'POST',
-			credentials: 'same-origin',
+	// Only track if we have a valid referrer from the same site.
+	if (wfpTrackerArgs.wfp_sitevar && wfpTrackerArgs.wfp_id > 0) {
+		var params = {
+			action: 'wherego_tracker',
+			wfp_id: wfpTrackerArgs.wfp_id,
+			wfp_sitevar: wfpTrackerArgs.wfp_sitevar,
+			wfp_debug: wfpTrackerArgs.wfp_debug,
+			wfp_rnd: wfpTrackerArgs.wfp_rnd
 		};
 
-		if (isRestAPI) {
-			fetchOptions.headers = {
-				'Content-Type': 'application/json',
-			};
-			fetchOptions.body = JSON.stringify({
-				wfp_id: wfpTrackerArgs.wfp_id,
-				wfp_sitevar: wfpTrackerArgs.wfp_sitevar,
-			});
-		} else {
-			var data = new FormData();
-			data.append('action', 'wherego_tracker');
-			data.append('wfp_id', wfpTrackerArgs.wfp_id);
-			data.append('wfp_sitevar', wfpTrackerArgs.wfp_sitevar);
-			data.append('wfp_debug', wfpTrackerArgs.wfp_debug);
-			data.append('wfp_rnd', wfpTrackerArgs.wfp_rnd);
-			fetchOptions.body = data;
-		}
-
-		fetch(wfpTrackerArgs.ajax_url, fetchOptions)
+		fetch(wfpTrackerArgs.ajax_url, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded',
+				'Cache-Control': 'no-cache'
+			},
+			body: new URLSearchParams(params).toString()
+		})
 			.then(function (response) {
-				if (wfpTrackerArgs.wfp_debug === 1) {
-					if (isRestAPI) {
-						return response.json();
-					}
-					return response.text();
+				if (!response.ok && 204 !== response.status) {
+					throw new Error('Tracker request failed');
 				}
-				return null;
+
+				return response.text();
 			})
-			.then(function (result) {
-				if (wfpTrackerArgs.wfp_debug === 1 && result) {
-					console.log('WFP Tracker:', result);
+			.then(function (data) {
+				if (wfpTrackerArgs.wfp_debug === 1 && data) {
+					console.log('WFP Tracker:', data);
 				}
 			})
 			.catch(function (error) {
@@ -64,14 +51,4 @@
 				}
 			});
 	}
-
-	// Only track if we have a valid referrer from the same site.
-	if (wfpTrackerArgs.wfp_sitevar && wfpTrackerArgs.wfp_id > 0) {
-		// Use requestIdleCallback if available, otherwise setTimeout.
-		if ('requestIdleCallback' in window) {
-			window.requestIdleCallback(sendTrackingData, { timeout: 2000 });
-		} else {
-			setTimeout(sendTrackingData, 100);
-		}
-	}
-})();
+});

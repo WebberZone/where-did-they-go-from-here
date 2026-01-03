@@ -69,12 +69,16 @@ class Tools_Page {
 	 */
 	public function admin_enqueue_scripts( $hook ) {
 		if ( $hook === $this->parent_id ) {
-			wp_enqueue_script( 'wz-admin-js' );
+			// Localize the admin script for clearCache function.
 			wp_localize_script(
-				'wz-admin-js',
+				'wherego-admin-js',
 				'wherego_admin_data',
 				array(
 					'security' => wp_create_nonce( 'wherego-admin' ),
+					'strings'  => array(
+						'clear_cache'    => esc_html__( 'Clear cache', 'where-did-they-go-from-here' ),
+						'clearing_cache' => esc_html__( 'Clearing cache', 'where-did-they-go-from-here' ),
+					),
 				)
 			);
 		}

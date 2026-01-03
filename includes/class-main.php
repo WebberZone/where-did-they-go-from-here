@@ -163,9 +163,9 @@ class Main {
 		Hook_Registry::add_action( 'init', array( $this, 'initiate_plugin' ) );
 		Hook_Registry::add_action( 'widgets_init', array( $this, 'register_widgets' ) );
 		Hook_Registry::add_action( 'rest_api_init', array( $this, 'register_rest_routes' ) );
-		Hook_Registry::add_filter( 'the_content', array( __CLASS__, 'the_content' ) );
-		Hook_Registry::add_filter( 'the_excerpt_rss', array( __CLASS__, 'add_to_feed' ) );
-		Hook_Registry::add_filter( 'the_content_feed', array( __CLASS__, 'add_to_feed' ) );
+		Hook_Registry::add_filter( 'the_content', array( $this, 'the_content' ) );
+		Hook_Registry::add_filter( 'the_excerpt_rss', array( $this, 'add_to_feed' ) );
+		Hook_Registry::add_filter( 'the_content_feed', array( $this, 'add_to_feed' ) );
 	}
 
 	/**
@@ -207,8 +207,9 @@ class Main {
 		global $post, $wherego_id;
 		$wherego_id = absint( $post->ID );
 
-		$add_to              = \wherego_get_option( 'add_to', false );
-		$exclude_on_post_ids = explode( ',', \wherego_get_option( 'exclude_on_post_ids' ) );
+		$add_to = wp_parse_list( \wherego_get_option( 'add_to', false ) );
+
+		$exclude_on_post_ids = wp_parse_id_list( \wherego_get_option( 'exclude_on_post_ids' ) );
 
 		// Exit if the post is in the exclusion list.
 		if ( in_array( $post->ID, $exclude_on_post_ids, true ) ) {
@@ -224,12 +225,12 @@ class Main {
 		);
 
 		foreach ( $conditions as $condition => $option ) {
-			if ( call_user_func( $condition ) && ! empty( $add_to[ $option ] ) ) {
+			if ( call_user_func( $condition ) && in_array( $option, $add_to, true ) ) {
 				return $content . get_wfp();
 			}
 		}
 
-		if ( ( is_tax() || is_author() || is_date() ) && ! empty( $add_to['archives'] ) ) {
+		if ( ( is_tax() || is_author() || is_date() ) && in_array( 'archives', $add_to, true ) ) {
 			return $content . get_wfp();
 		}
 

@@ -83,7 +83,7 @@ class Language_Handler {
 		$current_lang = apply_filters( 'wpml_current_language', null );
 
 		// Polylang implementation.
-		if ( function_exists( 'pll_get_post' ) ) {
+		if ( function_exists( 'pll_get_post' ) && $post ) {
 			$post = \pll_get_post( $post->ID );
 			$post = get_post( $post );
 		}
@@ -95,12 +95,14 @@ class Language_Handler {
 		 * @since 2.2.3
 		 *
 		 * @param bool $return_original_if_missing Flag to return original post ID if translated post ID is missing.
-		 * @param int  $id                         Post ID
+		 * @param int  $id                         Post ID.
 		 */
-		$return_original_if_missing = apply_filters( 'wherego_wpml_return_original', $return_original_if_missing, $post->ID );
+		$return_original_if_missing = apply_filters( 'wherego_wpml_return_original', $return_original_if_missing, $post ? $post->ID : 0 );
 
-		$post = apply_filters( 'wpml_object_id', $post->ID, $post->post_type, $return_original_if_missing, $current_lang );
-		$post = get_post( $post );
+		if ( $post ) {
+			$post = apply_filters( 'wpml_object_id', $post->ID, $post->post_type, $return_original_if_missing, $current_lang );
+			$post = get_post( $post );
+		}
 
 		/**
 		 * Filters Post object for current language.
