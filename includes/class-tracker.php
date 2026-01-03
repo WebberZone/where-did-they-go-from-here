@@ -130,7 +130,7 @@ class Tracker {
 			return;
 		}
 
-		$track_users = wherego_get_option( 'track_users' );
+		$track_users = wp_parse_list( wherego_get_option( 'track_users' ) );
 
 		if ( is_singular() ) {
 			$current_user        = wp_get_current_user();
@@ -139,13 +139,13 @@ class Tracker {
 			$current_user_editor = current_user_can( 'edit_others_posts' ) && ! current_user_can( 'manage_options' );
 
 			$include_code = true;
-			if ( $post_author && empty( $track_users['authors'] ) ) {
+			if ( $post_author && ! in_array( 'authors', $track_users, true ) ) {
 				$include_code = false;
 			}
-			if ( $current_user_admin && empty( $track_users['admins'] ) ) {
+			if ( $current_user_admin && ! in_array( 'admins', $track_users, true ) ) {
 				$include_code = false;
 			}
-			if ( $current_user_editor && empty( $track_users['editors'] ) ) {
+			if ( $current_user_editor && ! in_array( 'editors', $track_users, true ) ) {
 				$include_code = false;
 			}
 			if ( $current_user->exists() && ! wherego_get_option( 'logged_in' ) ) {

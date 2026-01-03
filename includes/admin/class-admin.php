@@ -150,10 +150,11 @@ class Admin {
 	 */
 	public function hooks() {
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
+		add_action( 'wp_ajax_wherego_clear_cache', array( $this, 'clear_cache_ajax' ) );
 	}
 
 	/**
-	 * Enqueue scripts in admin area.
+	 * Enqueue admin scripts and styles.
 	 *
 	 * @since 3.1.0
 	 */
@@ -164,6 +165,28 @@ class Admin {
 			false,
 			array(),
 			WFP_VERSION
+		);
+
+		$minimize = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
+
+		wp_enqueue_script(
+			'wherego-admin-js',
+			plugins_url( 'js/admin-scripts' . $minimize . '.js', __FILE__ ),
+			array( 'jquery' ),
+			WFP_VERSION,
+			true
+		);
+
+		wp_localize_script(
+			'wherego-admin-js',
+			'wherego_admin_data',
+			array(
+				'security' => wp_create_nonce( 'wherego-admin' ),
+				'strings'  => array(
+					'clear_cache'    => esc_html__( 'Clear cache', 'where-did-they-go-from-here' ),
+					'clearing_cache' => esc_html__( 'Clearing cache', 'where-did-they-go-from-here' ),
+				),
+			)
 		);
 	}
 
@@ -248,5 +271,34 @@ class Admin {
 				</div>
 			</div>
 		<?php
+	}
+
+	/**
+	 * AJAX handler to clear the cache.
+	 *
+	 * @since 3.2.0
+	 */
+	public function clear_cache_ajax() {
+		check_ajax_referer( 'wherego-admin', 'security' );
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_send_json_error(
+				array(
+					'message' => esc_html__( 'You do not have permission to clear the cache.', 'where-did-they-go-from-here' ),
+				)
+			);
+		}
+
+		$count = Cache::delete();
+
+		wp_send_json_success(
+			array(
+				'message' => sprintf(
+					/* translators: %d: Number of cache entries deleted. */
+					esc_html__( 'Cache cleared successfully! %d entries deleted.', 'where-did-they-go-from-here' ),
+					$count
+				),
+			)
+		);
 	}
 }

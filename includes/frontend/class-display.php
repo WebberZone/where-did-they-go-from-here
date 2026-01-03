@@ -87,11 +87,15 @@ class Display {
 		}
 
 		// Extract posts list from the meta field.
-		$results = ! empty( $post ) ? get_post_meta( $post->ID, 'wheredidtheycomefrom', true ) : array();
+		$results = get_post_meta( $post->ID, 'wheredidtheycomefrom', true );
+		if ( ! is_array( $results ) ) {
+			$results = array();
+		}
 
 		// Delete excluded post IDs.
-		if ( $results ) {
+		if ( ! empty( $results ) ) {
 			$results = array_diff( $results, wp_parse_id_list( $args['exclude_post_ids'] ) );
+			$results = array_diff( $results, array( $post->ID ) ); // Exclude current post to prevent self-linking.
 		}
 
 		/**
