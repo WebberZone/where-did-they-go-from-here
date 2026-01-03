@@ -14,6 +14,7 @@ use WebberZone\WFP\Admin\Settings\Settings_API;
 use WebberZone\WFP\Admin\Settings\Settings_Sanitize;
 use WebberZone\WFP\Frontend\Media_Handler;
 use WebberZone\WFP\Util\Cache;
+use WebberZone\WFP\Util\Hook_Registry;
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
@@ -146,18 +147,18 @@ class Settings {
 		self::$prefix       = 'wherego';
 		$this->menu_slug    = 'wherego_options_page';
 
-		add_action( 'admin_menu', array( $this, 'initialise_settings' ) );
-		add_filter( 'plugin_row_meta', array( $this, 'plugin_row_meta' ), 11, 2 );
-		add_filter( 'plugin_action_links_' . plugin_basename( WHEREGO_PLUGIN_FILE ), array( $this, 'plugin_actions_links' ) );
-		add_filter( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ), 99 );
-		add_filter( 'wherego_settings_sanitize', array( $this, 'change_settings_on_save' ), 99 );
-		add_filter( 'wherego_after_setting_output', array( $this, 'display_admin_thumbnail' ), 10, 2 );
-		add_filter( 'wherego_setting_field_description', array( $this, 'reset_default_thumb_setting' ), 10, 2 );
-		add_action( 'wherego_settings_form_buttons', array( $this, 'cache_button' ) );
-		add_action( 'wherego_settings_form_buttons', array( $this, 'add_wizard_button' ) );
+		Hook_Registry::add_action( 'admin_menu', array( $this, 'initialise_settings' ) );
+		Hook_Registry::add_filter( 'plugin_row_meta', array( $this, 'plugin_row_meta' ), 11, 2 );
+		Hook_Registry::add_filter( 'plugin_action_links_' . plugin_basename( WHEREGO_PLUGIN_FILE ), array( $this, 'plugin_actions_links' ) );
+		Hook_Registry::add_filter( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ), 99 );
+		Hook_Registry::add_filter( 'wherego_settings_sanitize', array( $this, 'change_settings_on_save' ), 99 );
+		Hook_Registry::add_filter( 'wherego_after_setting_output', array( $this, 'display_admin_thumbnail' ), 10, 2 );
+		Hook_Registry::add_filter( 'wherego_setting_field_description', array( $this, 'reset_default_thumb_setting' ), 10, 2 );
+		Hook_Registry::add_action( 'wherego_settings_form_buttons', array( $this, 'cache_button' ) );
+		Hook_Registry::add_action( 'wherego_settings_form_buttons', array( $this, 'add_wizard_button' ) );
 
-		add_action( 'wp_ajax_nopriv_' . self::$prefix . '_taxonomy_search_tom_select', array( __CLASS__, 'taxonomy_search_tom_select' ) );
-		add_action( 'wp_ajax_' . self::$prefix . '_taxonomy_search_tom_select', array( __CLASS__, 'taxonomy_search_tom_select' ) );
+		Hook_Registry::add_action( 'wp_ajax_nopriv_' . self::$prefix . '_taxonomy_search_tom_select', array( __CLASS__, 'taxonomy_search_tom_select' ) );
+		Hook_Registry::add_action( 'wp_ajax_' . self::$prefix . '_taxonomy_search_tom_select', array( __CLASS__, 'taxonomy_search_tom_select' ) );
 	}
 
 	/**

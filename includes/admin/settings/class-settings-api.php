@@ -7,6 +7,8 @@
 
 namespace WebberZone\WFP\Admin\Settings;
 
+use WebberZone\WFP\Util\Hook_Registry;
+
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
 	die;
@@ -172,11 +174,11 @@ class Settings_API {
 	 * Adds the functions to the appropriate WordPress hooks.
 	 */
 	public function hooks() {
-		add_action( 'admin_menu', array( $this, 'admin_menu' ), 11 );
-		add_action( 'admin_init', array( $this, 'admin_init' ) );
-		add_filter( 'admin_footer_text', array( $this, 'admin_footer_text' ) );
-		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
-		add_filter( 'admin_body_class', array( $this, 'admin_body_class' ) );
+		Hook_Registry::add_action( 'admin_menu', array( $this, 'admin_menu' ), 11 );
+		Hook_Registry::add_action( 'admin_init', array( $this, 'admin_init' ) );
+		Hook_Registry::add_filter( 'admin_footer_text', array( $this, 'admin_footer_text' ) );
+		Hook_Registry::add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
+		Hook_Registry::add_filter( 'admin_body_class', array( $this, 'admin_body_class' ) );
 	}
 
 	/**
@@ -427,7 +429,7 @@ class Settings_API {
 		}
 
 		// Load the settings contextual help.
-		add_action( 'load-' . $this->settings_page, array( $this, 'settings_help' ) );
+		Hook_Registry::add_action( 'load-' . $this->settings_page, array( $this, 'settings_help' ) );
 	}
 
 	/**
