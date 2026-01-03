@@ -51,7 +51,7 @@ class Tools_Page {
 
 		$this->parent_id = add_management_page(
 			esc_html__( 'WebberZone Followed Posts Tools', 'where-did-they-go-from-here' ),
-			esc_html__( 'WFP Tools', 'where-did-they-go-from-here' ),
+			esc_html__( 'Followed Posts Tools', 'where-did-they-go-from-here' ),
 			'manage_options',
 			'wherego_tools_page',
 			array( $this, 'render_page' )
@@ -109,12 +109,6 @@ class Tools_Page {
 	<div class="wrap">
 		<h1><?php esc_html_e( 'WebberZone Followed Posts Tools', 'where-did-they-go-from-here' ); ?></h1>
 		<?php do_action( 'wherego_tools_page_header' ); ?>
-
-		<p>
-			<a class="button button-primary" href="<?php echo esc_url( admin_url( 'options-general.php?page=wherego_options_page' ) ); ?>">
-			<?php esc_html_e( 'Visit the Settings page', 'where-did-they-go-from-here' ); ?>
-			</a>
-		<p>
 
 		<?php settings_errors(); ?>
 

@@ -179,12 +179,8 @@ class Admin {
 			'capability' => 'manage_options',
 			'prefix'     => 'wherego',
 			'screen_ids' => array(
-				'edit-post',
-				'post',
-				'edit-page',
-				'page',
-				'wherego_page_wherego_options_page',
-				'wherego_page_wherego_tools_page',
+				'settings_page_wherego_options_page',
+				'tools_page_wherego_tools_page',
 			),
 			'page_slugs' => array(
 				'wherego_options_page',
@@ -192,15 +188,30 @@ class Admin {
 			),
 			'strings'    => array(
 				'region_label' => esc_html__( 'Followed Posts quick links', 'where-did-they-go-from-here' ),
-				'items'        => array(
-					array(
-						'label' => esc_html__( 'Settings', 'where-did-they-go-from-here' ),
-						'url'   => admin_url( 'admin.php?page=wherego_options_page' ),
-					),
-					array(
-						'label' => esc_html__( 'Tools', 'where-did-they-go-from-here' ),
-						'url'   => admin_url( 'admin.php?page=wherego_tools_page' ),
-					),
+				'nav_label'    => esc_html__( 'Followed Posts admin shortcuts', 'where-did-they-go-from-here' ),
+				'eyebrow'      => esc_html__( 'WebberZone Followed Posts', 'where-did-they-go-from-here' ),
+				'title'        => esc_html__( 'Track and display followed posts on your site.', 'where-did-they-go-from-here' ),
+				'text'         => esc_html__( 'Jump to your most-used tools, manage content faster, and explore more WebberZone plugins.', 'where-did-they-go-from-here' ),
+			),
+			'sections'   => array(
+				'settings' => array(
+					'label'      => esc_html__( 'Settings', 'where-did-they-go-from-here' ),
+					'url'        => admin_url( 'options-general.php?page=wherego_options_page' ),
+					'screen_ids' => array( 'settings_page_wherego_options_page' ),
+					'page_slugs' => array( 'wherego_options_page' ),
+				),
+				'tools'    => array(
+					'label'      => esc_html__( 'Tools', 'where-did-they-go-from-here' ),
+					'url'        => admin_url( 'tools.php?page=wherego_tools_page' ),
+					'screen_ids' => array( 'tools_page_wherego_tools_page' ),
+					'page_slugs' => array( 'wherego_tools_page' ),
+				),
+				'plugins'  => array(
+					'label'  => esc_html__( 'WebberZone Plugins', 'where-did-they-go-from-here' ),
+					'url'    => 'https://webberzone.com/plugins/',
+					'type'   => 'secondary',
+					'target' => '_blank',
+					'rel'    => 'noopener noreferrer',
 				),
 			),
 		);
