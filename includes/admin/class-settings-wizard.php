@@ -8,6 +8,7 @@
 namespace WebberZone\WFP\Admin;
 
 use WebberZone\WFP\Admin\Settings\Settings_Wizard_API;
+use WebberZone\WFP\Util\Hook_Registry;
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
@@ -42,10 +43,10 @@ class Settings_Wizard extends Settings_Wizard_API {
 
 		parent::__construct( $settings_key, $prefix, $args );
 
-		add_action( 'wherego_activate', array( $this, 'trigger_wizard_on_activation' ) );
-		add_action( 'admin_init', array( $this, 'maybe_redirect_to_wizard' ) );
-		add_action( 'admin_init', array( $this, 'maybe_handle_notice_dismissal' ) );
-		add_action( 'admin_notices', array( $this, 'maybe_render_wizard_notice' ) );
+		Hook_Registry::add_action( 'wherego_activate', array( $this, 'trigger_wizard_on_activation' ) );
+		Hook_Registry::add_action( 'admin_init', array( $this, 'maybe_redirect_to_wizard' ) );
+		Hook_Registry::add_action( 'admin_init', array( $this, 'maybe_handle_notice_dismissal' ) );
+		Hook_Registry::add_action( 'admin_notices', array( $this, 'maybe_render_wizard_notice' ) );
 	}
 
 	/**

@@ -7,6 +7,8 @@
 
 namespace WebberZone\WFP\Admin;
 
+use WebberZone\WFP\Util\Hook_Registry;
+
 if ( ! defined( 'WPINC' ) ) {
 	die;
 }
@@ -24,7 +26,7 @@ class Activator {
 	 * @since 3.1.0
 	 */
 	public function __construct() {
-		add_action( 'wp_initialize_site', array( __CLASS__, 'activate_new_site' ) );
+		Hook_Registry::add_action( 'wp_initialize_site', array( __CLASS__, 'activate_new_site' ) );
 	}
 
 	/**

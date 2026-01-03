@@ -10,6 +10,8 @@
 
 namespace WebberZone\WFP\Admin;
 
+use WebberZone\WFP\Util\Hook_Registry;
+
 if ( ! defined( 'WPINC' ) ) {
 	die;
 }
@@ -36,10 +38,10 @@ class Tools_Page {
 	 * @since 3.1.0
 	 */
 	public function __construct() {
-		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
-		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ), 99 );
-		add_filter( 'admin_init', array( $this, 'process_settings_import' ), 9 );
-		add_filter( 'admin_init', array( $this, 'process_settings_export' ) );
+		Hook_Registry::add_action( 'admin_menu', array( $this, 'admin_menu' ) );
+		Hook_Registry::add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ), 99 );
+		Hook_Registry::add_filter( 'admin_init', array( $this, 'process_settings_import' ), 9 );
+		Hook_Registry::add_filter( 'admin_init', array( $this, 'process_settings_export' ) );
 	}
 
 	/**
@@ -57,7 +59,7 @@ class Tools_Page {
 			array( $this, 'render_page' )
 		);
 
-		add_action( 'load-' . $this->parent_id, array( $this, 'help_tabs' ) );
+		Hook_Registry::add_action( 'load-' . $this->parent_id, array( $this, 'help_tabs' ) );
 	}
 
 	/**

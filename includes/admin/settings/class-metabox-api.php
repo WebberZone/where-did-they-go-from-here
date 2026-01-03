@@ -7,6 +7,8 @@
 
 namespace WebberZone\WFP\Admin\Settings;
 
+use WebberZone\WFP\Util\Hook_Registry;
+
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
 	die;
@@ -96,9 +98,9 @@ class Metabox_API {
 			$this->$name = $value;
 		}
 
-		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
-		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ) );
-		add_action( "save_post_{$this->post_type}", array( $this, 'save' ) );
+		Hook_Registry::add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
+		Hook_Registry::add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ) );
+		Hook_Registry::add_action( "save_post_{$this->post_type}", array( $this, 'save' ) );
 	}
 
 	/**

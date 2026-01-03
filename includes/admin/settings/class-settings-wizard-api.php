@@ -7,6 +7,8 @@
 
 namespace WebberZone\WFP\Admin\Settings;
 
+use WebberZone\WFP\Util\Hook_Registry;
+
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
 	die;
@@ -169,9 +171,9 @@ class Settings_Wizard_API {
 	 * Adds the functions to the appropriate WordPress hooks.
 	 */
 	public function hooks() {
-		add_action( 'admin_menu', array( $this, 'admin_menu' ), $this->args['admin_menu_position'] );
-		add_action( 'admin_init', array( $this, 'process_step' ) );
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+		Hook_Registry::add_action( 'admin_menu', array( $this, 'admin_menu' ), $this->args['admin_menu_position'] );
+		Hook_Registry::add_action( 'admin_init', array( $this, 'process_step' ) );
+		Hook_Registry::add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 	}
 
 	/**
