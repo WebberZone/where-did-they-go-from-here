@@ -106,6 +106,7 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 		* Added `POST /wp-json/wfp/v1/tracker` endpoint for tracking
 	* Modern admin interface matching other WebberZone plugins
 	* Updated sidebar with improved organization and navigation
+	* CRP Integration - Feed followed posts to Contextual Related Posts plugin for enhanced related posts display
 
 * Improvements:
 	* Enhanced PHP and WordPress compatibility testing

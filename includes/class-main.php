@@ -14,6 +14,7 @@ use WebberZone\WFP\Frontend\REST_API;
 use WebberZone\WFP\Frontend\Shortcodes;
 use WebberZone\WFP\Frontend\Styles_Handler;
 use WebberZone\WFP\Util\Hook_Registry;
+use WebberZone\WFP\CRP_Integration;
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
@@ -100,6 +101,15 @@ class Main {
 	public REST_API $rest_api;
 
 	/**
+	 * CRP Integration.
+	 *
+	 * @since 3.2.0
+	 *
+	 * @var CRP_Integration CRP Integration handler.
+	 */
+	public ?CRP_Integration $crp_integration = null;
+
+	/**
 	 * Gets the instance of the class.
 	 *
 	 * @since 3.1.0
@@ -130,12 +140,13 @@ class Main {
 	 * @since 3.1.0
 	 */
 	private function init() {
-		$this->language   = new Language_Handler();
-		$this->styles     = new Styles_Handler();
-		$this->tracker    = new Tracker();
-		$this->shortcodes = new Shortcodes();
-		$this->blocks     = new Blocks();
-		$this->rest_api   = new REST_API();
+		$this->language        = new Language_Handler();
+		$this->styles          = new Styles_Handler();
+		$this->tracker         = new Tracker();
+		$this->shortcodes      = new Shortcodes();
+		$this->blocks          = new Blocks();
+		$this->rest_api        = new REST_API();
+		$this->crp_integration = new CRP_Integration();
 
 		$this->hooks();
 

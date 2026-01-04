@@ -1,24 +1,5 @@
 This file holds the older changelog history for the plugin
 
-= 3.2.0 =
-
-* New
-	* REST API tracking endpoint.
-	* REST API endpoint to retrieve followed posts by post ID.
-	* Vanilla JavaScript tracker (no jQuery dependency).
-	* Tracker type setting (REST API based or Ajax based).
-	* Debug mode for tracker responses.
-	* Dashboard widget showing posts with followed links.
-	* New display styles: Left thumbnails and Text only.
-
-* Improved
-	* REST API responses for followed posts return WordPress REST-style post objects.
-	* Tracking data storage capped at 100 followed posts (filterable).
-
-* Developer
-	* Centralized hook registration via Hook Registry.
-	* Modernized Options API with class-based settings handling.
-
 = 3.1.2 =
 
 * Bug fix: Check if post is empty before processing.
