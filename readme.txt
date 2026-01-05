@@ -105,18 +105,26 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 		* Added `GET /wp-json/wfp/v1/followed-posts/{id}` endpoint
 		* Added `POST /wp-json/wfp/v1/tracker` endpoint for tracking
 	* Modern admin interface matching other WebberZone plugins
-	* Updated sidebar with improved organization and navigation
+		* Updated sidebar with improved organization and navigation
+		* New admin banner with sections-based navigation
 	* CRP Integration - Feed followed posts to Contextual Related Posts plugin for enhanced related posts display
+	* Vanilla JavaScript tracker - Complete rewrite with no jQuery dependency
+	* New display styles - Added 'Left thumbnails' and 'Text only' layouts
+	* Dashboard widget - Quick overview of posts with the most followed links
+	* Hook Registry system - Centralized hook management for better code organization
 
 * Improvements:
 	* Enhanced PHP and WordPress compatibility testing
 	* Better dependency management and build processes
-	* Updated security reporting links
 	* JavaScript tracker now auto-detects REST API vs AJAX mode
 	* Added pagination support to REST API endpoint
+	* Improved cache management with AJAX handler for clearing cache
+	* Tools page UI redesigned with postbox styling for better WordPress consistency
+	* Settings API refactored to use static methods for better performance
 
 * Bug fixes:
 	* Resolved PHP warnings when accessing null post properties
+	* Fixed WordPress compatibility issues with latest versions
 	* Fixed WordPress compatibility issues
 
 For previous changelog entries check out the changelog.txt file included with the plugin or [view the releases on Github](https://github.com/WebberZone/where-did-they-go-from-here/releases).
