@@ -41,6 +41,10 @@ class Display {
 	public static function followed_posts( $args = array() ) {
 		global $post, $wherego_settings;
 
+		if ( ! $post ) {
+			return '';
+		}
+
 		$wherego_settings = wherego_get_settings();
 
 		$defaults = array(
@@ -62,7 +66,7 @@ class Display {
 		$meta_key = '';
 
 		// Check the cache first.
-		if ( ! empty( $args['cache'] ) && ! ( is_preview() || is_admin() || ( defined( 'REST_REQUEST' ) && REST_REQUEST ) ) && ! empty( $post ) ) {
+		if ( ! empty( $args['cache'] ) && ! ( is_preview() || is_admin() || ( defined( 'REST_REQUEST' ) && REST_REQUEST ) ) ) {
 			$meta_key = Cache::get_key( $args );
 
 			$output = Cache::get_cache( $post->ID, $meta_key );
@@ -220,7 +224,7 @@ class Display {
 		$output .= '</div>'; // Closing div of 'wherego_related'.
 
 		// Support caching to speed up retrieval.
-		if ( ! empty( $args['cache'] ) && ! ( is_preview() || is_admin() || ( defined( 'REST_REQUEST' ) && REST_REQUEST ) ) && ! empty( $post ) ) {
+		if ( ! empty( $args['cache'] ) && ! ( is_preview() || is_admin() || ( defined( 'REST_REQUEST' ) && REST_REQUEST ) ) ) {
 			Cache::set_cache( $post->ID, $meta_key, $output );
 		}
 
