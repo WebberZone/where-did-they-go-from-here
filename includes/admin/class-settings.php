@@ -1050,8 +1050,14 @@ class Settings {
 	 */
 	public function admin_enqueue_scripts() {
 
-		// Enqueue the admin script for clearCache function.
 		wp_enqueue_script( 'wherego-admin-js' );
+		wp_localize_script(
+			'wherego-admin-js',
+			'wherego_admin',
+			array(
+				'thumb_default' => WHEREGO_PLUGIN_URL . 'default.png',
+			)
+		);
 		wp_localize_script(
 			'wherego-admin-js',
 			'wherego_admin_data',
@@ -1061,14 +1067,6 @@ class Settings {
 					'clear_cache'    => esc_html__( 'Clear cache', 'where-did-they-go-from-here' ),
 					'clearing_cache' => esc_html__( 'Clearing cache', 'where-did-they-go-from-here' ),
 				),
-			)
-		);
-
-		wp_localize_script(
-			'wz-admin-js',
-			'wherego_admin',
-			array(
-				'thumb_default' => WHEREGO_PLUGIN_URL . 'default.png',
 			)
 		);
 	}
