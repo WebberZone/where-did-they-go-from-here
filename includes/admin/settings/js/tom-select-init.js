@@ -38,7 +38,7 @@
                     const termName = match ? match[1] : savedValue;
                     return { value: savedValue, text: termName };
                 });
-                
+
                 // Merge saved options with existing options, avoiding duplicates
                 const allOptions = [...formattedOptions];
                 savedOptions.forEach(savedOption => {
@@ -46,7 +46,7 @@
                         allOptions.push(savedOption);
                     }
                 });
-                
+
                 // Replace formattedOptions with merged options
                 formattedOptions.length = 0;
                 formattedOptions.push(...allOptions);
@@ -64,7 +64,7 @@
             // Get any custom config from data attributes
             let customConfig = {};
             const configAttr = element.getAttribute('data-ts-config');
-            
+
             if (configAttr) {
                 try {
                     customConfig = JSON.parse(configAttr);
