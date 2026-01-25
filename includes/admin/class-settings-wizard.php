@@ -277,7 +277,7 @@ class Settings_Wizard extends Settings_Wizard_API {
 	 * @return string Redirect URL.
 	 */
 	protected function get_completion_redirect_url() {
-		return admin_url( 'admin.php?page=wherego_options_page' );
+		return admin_url( 'options-general.php?page=wherego_options_page' );
 	}
 
 	/**
