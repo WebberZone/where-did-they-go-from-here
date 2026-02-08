@@ -63,8 +63,8 @@ msgid "Settings have been imported successfully"
 msgstr ""
 
 #: includes/admin/class-admin.php:186
-#: includes/admin/class-settings.php:1061
-#: includes/admin/class-settings.php:1244
+#: includes/admin/class-settings.php:1067
+#: includes/admin/class-settings.php:1242
 #: includes/admin/class-tools-page.php:81
 #: includes/admin/class-tools-page.php:128
 #: includes/admin/class-tools-page.php:131
@@ -531,7 +531,7 @@ msgid "If checked, when no thumbnail is found, show a default one from the URL b
 msgstr ""
 
 #: includes/admin/class-settings.php:740
-#: includes/admin/class-settings.php:1212
+#: includes/admin/class-settings.php:1210
 msgid "Default thumbnail"
 msgstr ""
 
@@ -817,17 +817,17 @@ msgid "This is a placeholder for the followed posts block. Visit the front end o
 msgstr ""
 
 #. translators: %1$s: Opening a tag, %2$s: Closing a tag
-#: includes/frontend/class-display.php:193
+#: includes/frontend/class-display.php:197
 #, php-format
 msgid "Powered by %1$sWebberZone Followed Posts%2$s"
 msgstr ""
 
-#: includes/frontend/class-display.php:204
-#: includes/frontend/class-display.php:214
+#: includes/frontend/class-display.php:208
+#: includes/frontend/class-display.php:218
 msgid "This is a placeholder for the followed posts block. There are no followed posts to display."
 msgstr ""
 
-#: includes/frontend/class-display.php:453
+#: includes/frontend/class-display.php:457
 msgid " by "
 msgstr ""
 
@@ -867,7 +867,7 @@ msgstr ""
 msgid "Thumbnails only"
 msgstr ""
 
-#: includes/admin/class-settings.php:1142
+#: includes/admin/class-settings.php:1140
 #: includes/class-options-api.php:297
 msgctxt "tag delimiter"
 msgid ","
@@ -911,7 +911,7 @@ msgid "%1$s: Tracking is disabled for all users. No tracking data will be collec
 msgstr ""
 
 #: includes/admin/class-admin.php:187
-#: includes/admin/class-settings.php:1062
+#: includes/admin/class-settings.php:1068
 #: includes/admin/class-tools-page.php:82
 msgid "Clearing cache"
 msgstr ""

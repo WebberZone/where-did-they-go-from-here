@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-01-08T15:29:41+00:00\n"
+"POT-Creation-Date: 2026-02-08T10:30:50+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: where-did-they-go-from-here\n"
@@ -55,8 +55,8 @@ msgid "%1$s: Tracking is disabled for all users. No tracking data will be collec
 msgstr ""
 
 #: includes/admin/class-admin.php:186
-#: includes/admin/class-settings.php:1061
-#: includes/admin/class-settings.php:1244
+#: includes/admin/class-settings.php:1067
+#: includes/admin/class-settings.php:1242
 #: includes/admin/class-tools-page.php:81
 #: includes/admin/class-tools-page.php:128
 #: includes/admin/class-tools-page.php:131
@@ -64,7 +64,7 @@ msgid "Clear cache"
 msgstr ""
 
 #: includes/admin/class-admin.php:187
-#: includes/admin/class-settings.php:1062
+#: includes/admin/class-settings.php:1068
 #: includes/admin/class-tools-page.php:82
 msgid "Clearing cache"
 msgstr ""
@@ -657,7 +657,7 @@ msgid "If checked, when no thumbnail is found, show a default one from the URL b
 msgstr ""
 
 #: includes/admin/class-settings.php:740
-#: includes/admin/class-settings.php:1212
+#: includes/admin/class-settings.php:1210
 msgid "Default thumbnail"
 msgstr ""
 
@@ -802,7 +802,7 @@ msgstr ""
 msgid "Thank you for using %1$sWebberZone Followed Posts%2$s! Please %3$srate us%2$s on %3$sWordPress.org%2$s"
 msgstr ""
 
-#: includes/admin/class-settings.php:1142
+#: includes/admin/class-settings.php:1140
 #: includes/class-options-api.php:297
 msgctxt "tag delimiter"
 msgid ","
@@ -998,17 +998,17 @@ msgid "Maximum number of followed posts to feed to CRP. Set to 0 for no limit."
 msgstr ""
 
 #. translators: %1$s: Opening a tag, %2$s: Closing a tag
-#: includes/frontend/class-display.php:193
+#: includes/frontend/class-display.php:197
 #, php-format
 msgid "Powered by %1$sWebberZone Followed Posts%2$s"
 msgstr ""
 
-#: includes/frontend/class-display.php:204
-#: includes/frontend/class-display.php:214
+#: includes/frontend/class-display.php:208
+#: includes/frontend/class-display.php:218
 msgid "This is a placeholder for the followed posts block. There are no followed posts to display."
 msgstr ""
 
-#: includes/frontend/class-display.php:453
+#: includes/frontend/class-display.php:457
 msgid " by "
 msgstr ""
 
