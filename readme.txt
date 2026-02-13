@@ -121,6 +121,7 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 	* Improved cache management with AJAX handler for clearing cache
 	* Tools page UI redesigned with postbox styling for better WordPress consistency
 	* Settings API refactored to use static methods for better performance
+	* Media Handler now supports the FIFU WordPress plugin for featured image detection.
 
 * Bug fixes:
 	* Resolved PHP warnings when accessing null post properties
