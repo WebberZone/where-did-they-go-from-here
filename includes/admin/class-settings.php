@@ -937,7 +937,7 @@ class Settings {
 		if ( false !== strpos( $file, 'where-did-they-go-from-here.php' ) ) {
 			$new_links = array(
 				'support'    => '<a href = "https://wordpress.org/support/plugin/where-did-they-go-from-here">' . esc_html__( 'Support', 'where-did-they-go-from-here' ) . '</a>',
-				'donate'     => '<a href = "https://ajaydsouza.com/donate/">' . esc_html__( 'Donate', 'where-did-they-go-from-here' ) . '</a>',
+				'donate'     => '<a href = "https://wzn.io/donate-wz">' . esc_html__( 'Donate', 'where-did-they-go-from-here' ) . '</a>',
 				'contribute' => '<a href = "https://github.com/WebberZone/where-did-they-go-from-here">' . esc_html__( 'Contribute', 'where-did-they-go-from-here' ) . '</a>',
 			);
 

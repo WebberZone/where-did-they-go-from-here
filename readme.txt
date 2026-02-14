@@ -1,7 +1,7 @@
 === WZ Followed Posts - Display what visitors are reading ===
 Tags: followed posts, related posts, where did they go from here
 Contributors: Ajay, webberzone
-Donate link: https://ajaydsouza.com/donate/
+Donate link: https://wzn.io/donate-wz
 Stable tag: 3.2.0
 Requires at least: 6.6
 Requires PHP: 7.4
