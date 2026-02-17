@@ -44,7 +44,7 @@ class REST_API extends \WP_REST_Controller {
 				array(
 					'methods'             => \WP_REST_Server::CREATABLE,
 					'callback'            => array( $this, 'update_tracker' ),
-					'permission_callback' => '__return_true',
+					'permission_callback' => array( $this, 'permissions_check' ),
 					'args'                => $this->get_tracker_args(),
 				),
 			)
@@ -57,11 +57,33 @@ class REST_API extends \WP_REST_Controller {
 				array(
 					'methods'             => \WP_REST_Server::READABLE,
 					'callback'            => array( $this, 'get_followed_posts' ),
-					'permission_callback' => '__return_true',
+					'permission_callback' => array( $this, 'permissions_check' ),
 					'args'                => $this->get_followed_posts_args(),
 				),
 			)
 		);
+	}
+
+	/**
+	 * Permissions callback for REST endpoints.
+	 *
+	 * @since 3.2.0
+	 *
+	 * @param \WP_REST_Request $request Request instance.
+	 * @return bool|\WP_Error
+	 */
+	public function permissions_check( $request ) {
+		$context = $request->get_param( 'context' );
+
+		if ( 'edit' === $context && ! current_user_can( 'edit_posts' ) ) {
+			return new \WP_Error(
+				'rest_forbidden_context',
+				__( 'Sorry, you are not allowed to view this context.', 'where-did-they-go-from-here' ),
+				array( 'status' => rest_authorization_required_code() )
+			);
+		}
+
+		return apply_filters( 'wfp_rest_api_permissions_check', true, $request );
 	}
 
 	/**
@@ -119,6 +141,12 @@ class REST_API extends \WP_REST_Controller {
 				'minimum'           => 1,
 				'maximum'           => 100,
 				'sanitize_callback' => 'absint',
+			),
+			'context'  => array(
+				'description' => __( 'Scope under which the request is made.', 'where-did-they-go-from-here' ),
+				'type'        => 'string',
+				'enum'        => array( 'view', 'embed', 'edit' ),
+				'default'     => 'view',
 			),
 		);
 	}
@@ -207,6 +235,10 @@ class REST_API extends \WP_REST_Controller {
 		foreach ( $posts as $followed_post ) {
 			$post_type_obj = get_post_type_object( $followed_post->post_type );
 			if ( ! $post_type_obj || empty( $post_type_obj->public ) ) {
+				continue;
+			}
+
+			if ( 'edit' === $request->get_param( 'context' ) && ! current_user_can( 'edit_post', $followed_post->ID ) ) {
 				continue;
 			}
 
