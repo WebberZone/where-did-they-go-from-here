@@ -958,7 +958,7 @@ class Settings {
 		/* translators: 1: WordPress.org support forums link. */
 		'<p>' . sprintf( __( 'Support queries should be posted in the <a href="%s">WordPress.org support forums</a>.', 'where-did-they-go-from-here' ), esc_url( 'https://wordpress.org/support/plugin/where-did-they-go-from-here' ) ) . '</p>' .
 		'<p>' . sprintf(
-			/* translators: 1: Github issues link, 2: Github plugin page link. */
+			/* translators: 1: Github Issues link, 2: Github page. */
 			__( '<a href="%1$s">Post an issue</a> on <a href="%2$s">GitHub</a> (bug reports only).', 'where-did-they-go-from-here' ),
 			esc_url( 'https://github.com/ajaydsouza/where-did-they-go-from-here/issues' ),
 			esc_url( 'https://github.com/ajaydsouza/where-did-they-go-from-here' )
