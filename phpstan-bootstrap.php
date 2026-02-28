@@ -22,7 +22,7 @@ if ( ! defined( 'WHEREGO_PLUGIN_URL' ) ) {
 }
 
 if ( ! defined( 'WFP_VERSION' ) ) {
-	define( 'WFP_VERSION', '3.2.0-beta1' );
+	define( 'WFP_VERSION', '3.2.0' );
 }
 
 if ( ! defined( 'WFP_CACHE_TIME' ) ) {

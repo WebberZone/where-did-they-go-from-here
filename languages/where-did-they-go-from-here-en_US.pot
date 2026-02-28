@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-2.0+.
 msgid ""
 msgstr ""
-"Project-Id-Version: WebberZone Followed Posts 3.2.0-beta1\n"
+"Project-Id-Version: WebberZone Followed Posts 3.2.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/where-did-they-go-from-here\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-02-08T10:30:50+00:00\n"
+"POT-Creation-Date: 2026-02-28T12:02:24+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: where-did-they-go-from-here\n"
@@ -764,7 +764,6 @@ msgstr ""
 msgid "Support queries should be posted in the <a href=\"%s\">WordPress.org support forums</a>."
 msgstr ""
 
-#. translators: 1: Github issues link, 2: Github plugin page link.
 #. translators: 1: Github Issues link, 2: Github page.
 #: includes/admin/class-settings.php:962
 #: includes/admin/class-tools-page.php:301
@@ -1012,27 +1011,35 @@ msgstr ""
 msgid " by "
 msgstr ""
 
-#: includes/frontend/class-rest-api.php:77
+#: includes/frontend/class-rest-api.php:81
+msgid "Sorry, you are not allowed to view this context."
+msgstr ""
+
+#: includes/frontend/class-rest-api.php:99
 msgid "Current post ID."
 msgstr ""
 
-#: includes/frontend/class-rest-api.php:83
+#: includes/frontend/class-rest-api.php:105
 msgid "Referrer URL."
 msgstr ""
 
-#: includes/frontend/class-rest-api.php:89
+#: includes/frontend/class-rest-api.php:111
 msgid "Debug mode."
 msgstr ""
 
-#: includes/frontend/class-rest-api.php:107
+#: includes/frontend/class-rest-api.php:129
 msgid "Post ID to get followed posts for."
 msgstr ""
 
-#: includes/frontend/class-rest-api.php:116
+#: includes/frontend/class-rest-api.php:138
 msgid "Maximum number of items to return."
 msgstr ""
 
-#: includes/frontend/class-rest-api.php:174
+#: includes/frontend/class-rest-api.php:146
+msgid "Scope under which the request is made."
+msgstr ""
+
+#: includes/frontend/class-rest-api.php:202
 msgid "Invalid post ID."
 msgstr ""
 
