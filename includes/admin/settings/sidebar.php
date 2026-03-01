@@ -2,7 +2,7 @@
 /**
  * Sidebar template.
  *
- * @package WebberZone\Contextual_Related_Posts
+ * @package WebberZone\WFP
  */
 
 ?>
