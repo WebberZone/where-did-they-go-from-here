@@ -499,7 +499,7 @@ class Settings {
 				'desc'        => esc_html__( 'This is a readonly field that is automatically populated based on the above input when the settings are saved.', 'where-did-they-go-from-here' ),
 				'type'        => 'text',
 				'default'     => '',
-				'field_class' => 'category_autocomplete',
+				'field_class' => 'ts_autocomplete',
 				'readonly'    => true,
 			),
 		);
@@ -1081,6 +1081,7 @@ class Settings {
 	 */
 	public function change_settings_on_save( $settings ) {
 
+		// Sanitize exclude_cat_slugs to save a new entry of exclude_categories.
 		Settings_Sanitize::sanitize_tax_slugs( $settings, 'exclude_cat_slugs', 'exclude_categories' );
 
 		// Overwrite settings if grid thumbnail style is selected.
@@ -1109,11 +1110,13 @@ class Settings {
 	 * @return void
 	 */
 	public static function taxonomy_search_tom_select() {
+		// Verify nonce.
 		if ( ! isset( $_REQUEST['nonce'] ) ) {
 			wp_send_json_error( array( 'message' => 'Missing nonce' ) );
 		}
 
 		$nonce_valid = wp_verify_nonce( sanitize_key( $_REQUEST['nonce'] ), self::$prefix . '_taxonomy_search_tom_select' );
+
 		if ( ! $nonce_valid ) {
 			wp_send_json_error(
 				array(
@@ -1128,12 +1131,7 @@ class Settings {
 			wp_send_json_error( 'Missing endpoint' );
 		}
 
-		$taxonomy = sanitize_key( $_REQUEST['endpoint'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		$tax      = get_taxonomy( $taxonomy );
-
-		if ( ! $tax || ! current_user_can( $tax->cap->assign_terms ) ) {
-			wp_send_json_error( 'Invalid taxonomy or insufficient permissions' );
-		}
+		$endpoint = sanitize_key( $_REQUEST['endpoint'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
 		$search_term = isset( $_REQUEST['q'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['q'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
@@ -1147,9 +1145,83 @@ class Settings {
 		}
 		$search_term = trim( $search_term );
 
+		if ( 'meta_keys' === $endpoint ) {
+			if ( ! current_user_can( 'manage_options' ) ) {
+				wp_send_json_error( 'Insufficient permissions' );
+			}
+
+			if ( strlen( $search_term ) < 2 ) {
+				wp_send_json_success( array() );
+			}
+
+			global $wpdb;
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+			$keys = $wpdb->get_col(
+				$wpdb->prepare(
+					"SELECT DISTINCT meta_key FROM {$wpdb->postmeta} WHERE meta_key LIKE %s ORDER BY meta_key ASC LIMIT 20",
+					'%' . $wpdb->esc_like( $search_term ) . '%'
+				)
+			);
+
+			$results = array();
+			foreach ( (array) $keys as $meta_key ) {
+				if ( is_string( $meta_key ) && '' !== $meta_key ) {
+					$results[] = array(
+						'value' => $meta_key,
+						'text'  => $meta_key,
+					);
+				}
+			}
+
+			wp_send_json_success( $results );
+		}
+
+		if ( 'public_taxonomies' === $endpoint ) {
+			$taxonomies = (array) get_taxonomies( array( 'public' => true ), 'objects' );
+			$taxonomy   = array();
+			$tax        = null;
+
+			foreach ( $taxonomies as $taxonomy_name => $taxonomy_object ) {
+				if ( ! is_string( $taxonomy_name ) || '' === $taxonomy_name ) {
+					continue;
+				}
+
+				if ( empty( $taxonomy_object->cap->assign_terms ) ) {
+					continue;
+				}
+
+				if ( ! current_user_can( $taxonomy_object->cap->assign_terms ) ) {
+					continue;
+				}
+
+				$taxonomy[] = $taxonomy_name;
+			}
+
+			if ( empty( $taxonomy ) ) {
+				wp_send_json_success( array() );
+			}
+
+			$tax = get_taxonomy( $taxonomy[0] );
+		} else {
+			$taxonomy = $endpoint;
+			$tax      = get_taxonomy( $taxonomy );
+
+			if ( ! $tax ) {
+				wp_send_json_error( 'Invalid taxonomy' );
+			}
+
+			if ( ! current_user_can( $tax->cap->assign_terms ) ) {
+				wp_send_json_error( 'Insufficient permissions' );
+			}
+		}
+
 		/** This filter has been defined in /wp-admin/includes/ajax-actions.php */
 		$term_search_min_chars = (int) apply_filters( 'term_search_min_chars', 2, $tax, $search_term );
 
+		/*
+		 * Require $term_search_min_chars chars for matching (default: 2)
+		 * ensure it's a non-negative, non-zero integer.
+		 */
 		if ( ( 0 === $term_search_min_chars ) || ( strlen( $search_term ) < $term_search_min_chars ) ) {
 			wp_send_json_success( array() );
 		}
@@ -1158,13 +1230,16 @@ class Settings {
 			array(
 				'taxonomy'   => $taxonomy,
 				'name__like' => $search_term,
+				'orderby'    => 'name',
+				'order'      => 'ASC',
+				'number'     => 20,
 				'hide_empty' => false,
 			)
 		);
 
 		$results = array();
 		foreach ( (array) $terms as $term ) {
-			$formatted_string = sprintf( '%s (%s:%d)', $term->name, $term->taxonomy, (int) $term->term_taxonomy_id );
+			$formatted_string = "{$term->name} ({$term->taxonomy}:{$term->term_taxonomy_id})";
 			$results[]        = array(
 				'value' => $formatted_string,
 				'text'  => $term->name,
