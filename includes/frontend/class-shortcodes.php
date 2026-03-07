@@ -41,6 +41,8 @@ class Shortcodes {
 	public static function wfp( $atts ) {
 		global $wherego_settings;
 
+		$wherego_settings = $wherego_settings ?: wherego_get_settings();
+
 		$atts = shortcode_atts(
 			array_merge(
 				$wherego_settings,

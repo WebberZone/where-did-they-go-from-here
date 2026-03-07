@@ -75,13 +75,15 @@ class Tracker {
 		$sitevar_safe = str_replace( '/', '\/', $sitevar );
 
 		// Check that we are tracking our own site.
-		$matchvar = preg_match( "/$siteurl_host/i", $sitevar_safe );
+		$matchvar = preg_match( '/' . preg_quote( $siteurl_host, '/' ) . '/i', $sitevar_safe );
 
 		if ( $id > 0 && $matchvar ) {
 			// Figure out the ID of the post the viewer came from.
 			$post_id_came_from = url_to_postid( $tempsitevar );
 
 			if ( ! empty( $post_id_came_from ) && (int) $id !== (int) $post_id_came_from ) {
+				// Note: This is a read-modify-write without locking. On high-traffic posts,
+				// concurrent requests may overwrite each other's data (last writer wins).
 				$linkpostids = get_post_meta( $post_id_came_from, 'wheredidtheycomefrom', true );
 
 				if ( is_array( $linkpostids ) && ! in_array( $id, $linkpostids, true ) ) {
@@ -184,7 +186,7 @@ class Tracker {
 					'wfp_id'      => absint( $post->ID ),
 					'wfp_sitevar' => self::get_referer(),
 					'wfp_debug'   => $debug_mode,
-					'wfp_rnd'     => wp_rand( 1, time() ),
+					'wfp_rnd'     => wp_rand( 1, 999999 ),
 				);
 
 				/**

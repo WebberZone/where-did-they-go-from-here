@@ -135,7 +135,7 @@ class Display {
 		 */
 		$post_classes = apply_filters( 'wherego_post_class', $post_classes );
 
-		$output = '<div class="' . $post_classes . '">';
+		$output = '<div class="' . esc_attr( $post_classes ) . '">';
 
 		if ( $results ) {
 			$loop_counter = 0;
@@ -288,7 +288,7 @@ class Display {
 		$title = '';
 
 		if ( $args['heading'] && ! $args['is_widget'] ) {
-			$title = str_replace( '%postname%', $post->post_title, $args['title'] );    // Replace %postname% with the title of the current post.
+			$title = str_replace( '%postname%', esc_html( get_the_title( $post ) ), $args['title'] );    // Replace %postname% with the title of the current post.
 		}
 
 		/**
@@ -454,7 +454,7 @@ class Display {
 		 */
 		$author_name = apply_filters( 'wherego_author_name', $author_name, $author_info );
 
-		$wherego_author = '<span class="wherego_author"> ' . __( ' by ', 'where-did-they-go-from-here' ) . '<a href="' . $author_link . '">' . $author_name . '</a></span> ';
+		$wherego_author = '<span class="wherego_author"> ' . __( ' by ', 'where-did-they-go-from-here' ) . '<a href="' . esc_url( $author_link ) . '">' . esc_html( $author_name ) . '</a></span> ';
 
 		/**
 		 * Filter the text with the author details.
@@ -538,7 +538,7 @@ class Display {
 		$link            = self::get_permalink( $args, $result );
 		$link_attributes = self::link_attributes( $args );
 
-		$output .= '<a href="' . $link . '" ' . $link_attributes . '>';
+		$output .= '<a href="' . esc_url( $link ) . '" ' . $link_attributes . '>';
 
 		if ( 'after' === $args['post_thumb_op'] ) {
 			$output .= '<span class="wherego_title">' . $title . '</span>'; // Add title when required by settings.
@@ -607,7 +607,7 @@ class Display {
 		}
 
 		if ( post_password_required( $post ) ) {
-			$output = __( 'There is no excerpt because this is a protected post.', 'where-do-they-go-from-here' );
+			$output = __( 'There is no excerpt because this is a protected post.', 'where-did-they-go-from-here' );
 		}
 
 		/**
