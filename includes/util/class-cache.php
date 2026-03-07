@@ -25,33 +25,7 @@ class Cache {
 	 * @since 3.1.0
 	 */
 	public function __construct() {
-		Hook_Registry::add_action( 'wp_ajax_wherego_clear_cache', array( $this, 'ajax_clearcache' ) );
 	}
-
-	/**
-	 * Function to clear the Followed Posts Cache with Ajax.
-	 *
-	 * @since 2.4.0
-	 */
-	public function ajax_clearcache() {
-		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_die();
-		}
-		check_ajax_referer( 'wherego-admin', 'security' );
-
-		$this->delete();
-
-		exit(
-			wp_json_encode(
-				array(
-					'success' => 1,
-					/* translators: 1: Number of entries. */
-					'message' => __( 'Cache cleared', 'where-did-they-go-from-here' ),
-				)
-			)
-		);
-	}
-
 
 	/**
 	 * Delete the Followed Posts cache.
@@ -386,7 +360,7 @@ class Cache {
 		if ( $value ) {
 			$expires = (int) get_post_meta( $post_id, $cache_expires, true );
 			if ( $expires < time() ) {
-				self::delete_cache( $post_id, $meta_key );
+				self::delete_cache( $post_id, $key );
 				return false;
 			} else {
 				return $value;
