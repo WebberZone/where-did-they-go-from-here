@@ -61,6 +61,7 @@ if ( ! defined( 'WPINC' ) ) {
 					<li><a href="https://webberzone.com/plugins/knowledgebase/" target="_blank"><?php esc_html_e( 'Knowledgebase', 'where-did-they-go-from-here' ); ?></a></li>
 					<li><a href="https://webberzone.com/plugins/popular-authors/" target="_blank"><?php esc_html_e( 'Popular Authors', 'where-did-they-go-from-here' ); ?></a></li>
 					<li><a href="https://webberzone.com/plugins/autoclose/" target="_blank"><?php esc_html_e( 'Auto Close', 'where-did-they-go-from-here' ); ?></a></li>
+					<li><a href="https://webberzone.com/plugins/webberzone-link-warnings/" target="_blank"><?php esc_html_e( 'Link Warnings', 'where-did-they-go-from-here' ); ?></a></li>
 				</ul>
 			</div>
 		</div><!-- /.inside -->
