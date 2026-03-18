@@ -14,7 +14,7 @@ if ( ! defined( 'WPINC' ) ) {
 
 ?>
 <div class="postbox-container">
-	<?php Admin::pro_upgrade_banner(); ?>
+	<a href="https://wzn.io/donate-wz" target="_blank" rel="noopener noreferrer"><img src="<?php echo esc_url( plugins_url( 'images/support.webp', __FILE__ ) ); ?>" alt="<?php esc_attr_e( 'Support WebberZone Followed Posts', 'where-did-they-go-from-here' ); ?>" style="max-width: 100%; height: auto;"></a>
 
 	<div id="qlinksdiv" class="postbox meta-box-sortables">
 		<h2 class='hndle metabox-holder'><span><?php esc_html_e( 'Quick links', 'where-did-they-go-from-here' ); ?></span></h2>
@@ -71,11 +71,11 @@ if ( ! defined( 'WPINC' ) ) {
 
 <div class="postbox-container">
 	<div id="followdiv" class="postbox meta-box-sortables">
-		<h2 class='hndle'><span><?php esc_html_e( 'Follow me', 'where-did-they-go-from-here' ); ?></span></h2>
+		<h2 class="metabox-holder"><span><?php esc_html_e( 'Follow us', 'where-did-they-go-from-here' ); ?></span></h2>
 
 		<div class="inside" style="text-align: center">
-			<a href="https://x.com/webberzone/" target="_blank"><img src="<?php echo esc_url( plugins_url( 'images/x.png', __FILE__ ) ); ?>" alt="<?php esc_attr_e( 'Follow WebberZone on X', 'where-did-they-go-from-here' ); ?>" width="100" height="100"></a>
-			<a href="https://facebook.com/webberzone/" target="_blank"><img src="<?php echo esc_url( plugins_url( 'images/fb.png', __FILE__ ) ); ?>" alt="<?php esc_attr_e( 'Follow WebberZone on Facebook', 'where-did-they-go-from-here' ); ?>" width="100" height="100"></a>
+			<a href="https://x.com/webberzone/" target="_blank" rel="noopener noreferrer"><img src="<?php echo esc_url( plugins_url( 'images/x.png', __FILE__ ) ); ?>" width="100" height="100" alt="X (Twitter)"></a>
+			<a href="https://facebook.com/webberzone/" target="_blank" rel="noopener noreferrer"><img src="<?php echo esc_url( plugins_url( 'images/fb.png', __FILE__ ) ); ?>" width="100" height="100" alt="Facebook"></a>
 		</div><!-- /.inside -->
 	</div><!-- /.postbox -->
 </div>
