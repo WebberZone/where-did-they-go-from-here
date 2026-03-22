@@ -10,6 +10,8 @@
 
 namespace WebberZone\WFP\Admin;
 
+use WebberZone\WFP\Util\Hook_Registry;
+
 if ( ! defined( 'WPINC' ) ) {
 	die;
 }
@@ -27,12 +29,12 @@ class Columns {
 	 * @since 3.1.0
 	 */
 	public function __construct() {
-		add_filter( 'manage_posts_columns', array( $this, 'add_columns' ) );
-		add_filter( 'manage_pages_columns', array( $this, 'add_columns' ) );
-		add_filter( 'manage_media_columns', array( $this, 'add_columns' ) );
-		add_action( 'manage_posts_custom_column', array( $this, 'wherego_value' ), 10, 2 );
-		add_action( 'manage_pages_custom_column', array( $this, 'wherego_value' ), 10, 2 );
-		add_action( 'manage_media_custom_column', array( $this, 'wherego_value' ), 10, 2 );
+		Hook_Registry::add_filter( 'manage_posts_columns', array( $this, 'add_columns' ) );
+		Hook_Registry::add_filter( 'manage_pages_columns', array( $this, 'add_columns' ) );
+		Hook_Registry::add_filter( 'manage_media_columns', array( $this, 'add_columns' ) );
+		Hook_Registry::add_action( 'manage_posts_custom_column', array( $this, 'wherego_value' ), 10, 2 );
+		Hook_Registry::add_action( 'manage_pages_custom_column', array( $this, 'wherego_value' ), 10, 2 );
+		Hook_Registry::add_action( 'manage_media_custom_column', array( $this, 'wherego_value' ), 10, 2 );
 	}
 
 	/**

@@ -64,10 +64,10 @@
   background-color: #ccc;
 }
 
-.wherego_clear {
+.wz-followed-posts.wz-followed-posts-grid .wherego_clear {
   clear: both;
 }
 
-.wherego_title:visited {
+.wz-followed-posts.wz-followed-posts-grid .wherego_title:visited {
   color: #fff !important;
 }

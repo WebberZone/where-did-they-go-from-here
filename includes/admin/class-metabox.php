@@ -13,6 +13,7 @@
 namespace WebberZone\WFP\Admin;
 
 use WebberZone\WFP\Util\Cache;
+use WebberZone\WFP\Util\Hook_Registry;
 
 if ( ! defined( 'WPINC' ) ) {
 	die;
@@ -31,9 +32,9 @@ class Metabox {
 	 * @since 3.1.0
 	 */
 	public function __construct() {
-		add_action( 'add_meta_boxes', array( $this, 'add_meta_box' ) );
-		add_action( 'save_post', array( $this, 'save_meta_box' ) );
-		add_action( 'edit_attachment', array( $this, 'save_meta_box' ) );
+		Hook_Registry::add_action( 'add_meta_boxes', array( $this, 'add_meta_box' ) );
+		Hook_Registry::add_action( 'save_post', array( $this, 'save_meta_box' ) );
+		Hook_Registry::add_action( 'edit_attachment', array( $this, 'save_meta_box' ) );
 	}
 
 	/**

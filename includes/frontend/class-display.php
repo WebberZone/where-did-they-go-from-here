@@ -41,6 +41,10 @@ class Display {
 	public static function followed_posts( $args = array() ) {
 		global $post, $wherego_settings;
 
+		if ( ! $post ) {
+			return '';
+		}
+
 		$wherego_settings = wherego_get_settings();
 
 		$defaults = array(
@@ -57,6 +61,9 @@ class Display {
 		// Parse incomming $args into an array and merge it with $defaults.
 		$args = wp_parse_args( $args, $defaults );
 		$args = Helpers::sanitize_args( $args );
+
+		// Initialize meta_key variable.
+		$meta_key = '';
 
 		// Check the cache first.
 		if ( ! empty( $args['cache'] ) && ! ( is_preview() || is_admin() || ( defined( 'REST_REQUEST' ) && REST_REQUEST ) ) ) {
@@ -85,10 +92,14 @@ class Display {
 
 		// Extract posts list from the meta field.
 		$results = get_post_meta( $post->ID, 'wheredidtheycomefrom', true );
+		if ( ! is_array( $results ) ) {
+			$results = array();
+		}
 
 		// Delete excluded post IDs.
-		if ( $results ) {
+		if ( ! empty( $results ) ) {
 			$results = array_diff( $results, wp_parse_id_list( $args['exclude_post_ids'] ) );
+			$results = array_diff( $results, array( $post->ID ) ); // Exclude current post to prevent self-linking.
 		}
 
 		/**
@@ -124,7 +135,7 @@ class Display {
 		 */
 		$post_classes = apply_filters( 'wherego_post_class', $post_classes );
 
-		$output = '<div class="' . $post_classes . '">';
+		$output = '<div class="' . esc_attr( $post_classes ) . '">';
 
 		if ( $results ) {
 			$loop_counter = 0;
@@ -277,7 +288,7 @@ class Display {
 		$title = '';
 
 		if ( $args['heading'] && ! $args['is_widget'] ) {
-			$title = str_replace( '%postname%', $post->post_title, $args['title'] );    // Replace %postname% with the title of the current post.
+			$title = str_replace( '%postname%', esc_html( get_the_title( $post ) ), $args['title'] );    // Replace %postname% with the title of the current post.
 		}
 
 		/**
@@ -443,7 +454,7 @@ class Display {
 		 */
 		$author_name = apply_filters( 'wherego_author_name', $author_name, $author_info );
 
-		$wherego_author = '<span class="wherego_author"> ' . __( ' by ', 'where-did-they-go-from-here' ) . '<a href="' . $author_link . '">' . $author_name . '</a></span> ';
+		$wherego_author = '<span class="wherego_author"> ' . __( ' by ', 'where-did-they-go-from-here' ) . '<a href="' . esc_url( $author_link ) . '">' . esc_html( $author_name ) . '</a></span> ';
 
 		/**
 		 * Filter the text with the author details.
@@ -527,7 +538,7 @@ class Display {
 		$link            = self::get_permalink( $args, $result );
 		$link_attributes = self::link_attributes( $args );
 
-		$output .= '<a href="' . $link . '" ' . $link_attributes . '>';
+		$output .= '<a href="' . esc_url( $link ) . '" ' . $link_attributes . '>';
 
 		if ( 'after' === $args['post_thumb_op'] ) {
 			$output .= '<span class="wherego_title">' . $title . '</span>'; // Add title when required by settings.
@@ -596,7 +607,7 @@ class Display {
 		}
 
 		if ( post_password_required( $post ) ) {
-			$output = __( 'There is no excerpt because this is a protected post.', 'where-do-they-go-from-here' );
+			$output = __( 'There is no excerpt because this is a protected post.', 'where-did-they-go-from-here' );
 		}
 
 		/**

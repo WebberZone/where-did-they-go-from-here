@@ -7,7 +7,8 @@
 
 namespace WebberZone\WFP\Frontend;
 
-use WebberZone\WFP\Admin\Settings\Settings;
+use WebberZone\WFP\Admin\Settings;
+use WebberZone\WFP\Util\Hook_Registry;
 
 if ( ! defined( 'WPINC' ) ) {
 	die;
@@ -35,7 +36,7 @@ class Styles_Handler {
 	 * @since 3.1.0
 	 */
 	public function __construct() {
-		add_action( 'wp_enqueue_scripts', array( __CLASS__, 'wp_enqueue_scripts' ) );
+		Hook_Registry::add_action( 'wp_enqueue_scripts', array( __CLASS__, 'wp_enqueue_scripts' ) );
 	}
 
 	/**
@@ -102,7 +103,7 @@ class Styles_Handler {
 	}
 
 	/**
-	 * Get the current style for the popular posts.
+	 * Get the current style for the followed posts.
 	 *
 	 * @since 3.1.0
 	 *
@@ -132,6 +133,21 @@ class Styles_Handler {
 				";
 				break;
 
+			case 'left_thumbs':
+				$style_array['name']      = 'left-thumbs';
+				$style_array['extra_css'] = "
+				.wfp_related .wfp_thumb img {
+					max-width:{$thumb_width}px;
+					max-height:{$thumb_height}px;
+				}
+				";
+				break;
+
+			case 'text_only':
+				$style_array['name']      = 'text-only';
+				$style_array['extra_css'] = '';
+				break;
+
 			default:
 				$style_array['name']      = '';
 				$style_array['extra_css'] = '';
@@ -143,10 +159,10 @@ class Styles_Handler {
 		 *
 		 * @since 3.0.0
 		 *
-		 * @param array  $style_array  Style array containing name and extra_css.
-		 * @param string $wherego_style    Style name.
-		 * @param int    $thumb_width  Thumbnail width.
-		 * @param int    $thumb_height Thumbnail height.
+		 * @param array  $style_array     Style array containing name and extra_css.
+		 * @param string $wherego_style   Style name.
+		 * @param int    $thumb_width     Thumbnail width.
+		 * @param int    $thumb_height    Thumbnail height.
 		 */
 		return apply_filters( 'wherego_get_style', $style_array, $wherego_style, $thumb_width, $thumb_height );
 	}

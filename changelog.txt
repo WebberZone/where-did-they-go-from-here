@@ -1,6 +1,44 @@
 This file holds the older changelog history for the plugin
 
-= 2.4.0 =
+= 3.1.2 =
+
+* Bug fix: Check if post is empty before processing.
+
+= 3.1.1 =
+
+* Bug fix: Sanitize args.
+
+= 3.1.0 =
+
+Release post: [https://webberzone.com/announcements/followed-posts-v3-1-0/](https://webberzone.com/announcements/followed-posts-v3-1-0/)
+
+Complete plugin rewrite to use classes and autoloading.
+
+* Features
+	* New block for the block editor. Find it under widgets or using "followed posts" or "where did they go from here"
+	* New functions `get_wfp()` and `the_wfp()` replace `get_wherego()` and `echo_wherego()`. The latter two will throw deprecated notices
+	* New shortcode `[wfp]` replaces `[wherego]`. The latter will continue to work but it is recommended that you replace the shortcode
+	* New tools page can be found under Tools > WFP Tools. Import/Export settings and clear the cache from there
+
+* Enhancements:
+	* Caching enabled by default - this will apply to new installs and if you reset the settings
+
+* Bug fix:
+	* PHP warning if a post was not found
+
+= 3.0.0 =
+
+Release post: [https://webberzone.com/blog/followed-posts-v3-0-0/](https://webberzone.com/blog/followed-posts-v3-0-0/)
+
+* Features:
+	* Support for PolyLang and WPML
+	* New options to stop tracking logged in users, authors, editors or admins
+
+* Enhancements:
+    * Improved caching with inbuilt expiry. Use WFP_CACHE_TIME in your wp-config.php to set how long the cache should be set for. Default is one week. Setting it to `false` will disable expiry
+	* Upgraded post thumbnail handling: Select the thumbnail size. The plugin will also check for site icons before the default thumbnail is selected
+	* Upgraded settings to new Settings_API class
+	* Grid thumbnail style has been redone to use CSS grid and flexbox. Please pick the correct thumbnail size in the Thumbnail settings= 2.4.0 =
 
 Release post: [https://webberzone.com/blog/followed-posts-v2-4-0/](https://webberzone.com/blog/followed-posts-v2-4-0/)
 
