@@ -8,11 +8,13 @@
  * @package WebberZone\WFP
  */
 
-namespace WebberZone\WFP\Admin\Settings;
+namespace WebberZone\WFP\Admin;
 
+use WebberZone\WFP\Admin\Settings\Settings_API;
+use WebberZone\WFP\Admin\Settings\Settings_Sanitize;
 use WebberZone\WFP\Frontend\Media_Handler;
 use WebberZone\WFP\Util\Cache;
-use WebberZone\WFP\Util\Helpers;
+use WebberZone\WFP\Util\Hook_Registry;
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
@@ -145,15 +147,33 @@ class Settings {
 		self::$prefix       = 'wherego';
 		$this->menu_slug    = 'wherego_options_page';
 
-		add_action( 'admin_menu', array( $this, 'initialise_settings' ) );
-		add_filter( 'plugin_row_meta', array( $this, 'plugin_row_meta' ), 11, 2 );
-		add_filter( 'plugin_action_links_' . plugin_basename( WHEREGO_PLUGIN_FILE ), array( $this, 'plugin_actions_links' ) );
-		add_filter( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ), 99 );
-		add_filter( 'wherego_settings_sanitize', array( $this, 'change_settings_on_save' ), 99 );
-		add_filter( 'wherego_after_setting_output', array( $this, 'display_admin_thumbnail' ), 10, 2 );
-		add_filter( 'wherego_setting_field_description', array( $this, 'reset_default_thumb_setting' ), 10, 2 );
-		add_action( 'wherego_settings_form_buttons', array( $this, 'cache_button' ) );
-		add_action( 'wherego_settings_page_header', array( $this, 'settings_page_header' ), 11 );
+		Hook_Registry::add_action( 'admin_menu', array( $this, 'initialise_settings' ) );
+		Hook_Registry::add_filter( 'plugin_row_meta', array( $this, 'plugin_row_meta' ), 11, 2 );
+		Hook_Registry::add_filter( 'plugin_action_links_' . plugin_basename( WHEREGO_PLUGIN_FILE ), array( $this, 'plugin_actions_links' ) );
+		Hook_Registry::add_filter( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ), 99 );
+		Hook_Registry::add_filter( 'wherego_settings_sanitize', array( $this, 'change_settings_on_save' ), 99 );
+		Hook_Registry::add_filter( 'wherego_after_setting_output', array( $this, 'display_admin_thumbnail' ), 10, 2 );
+		Hook_Registry::add_filter( 'wherego_setting_field_description', array( $this, 'reset_default_thumb_setting' ), 10, 2 );
+		Hook_Registry::add_action( 'wherego_settings_form_buttons', array( $this, 'cache_button' ) );
+		Hook_Registry::add_action( 'wherego_settings_form_buttons', array( $this, 'add_wizard_button' ) );
+
+		Hook_Registry::add_action( 'wp_ajax_nopriv_' . self::$prefix . '_taxonomy_search_tom_select', array( __CLASS__, 'taxonomy_search_tom_select' ) );
+		Hook_Registry::add_action( 'wp_ajax_' . self::$prefix . '_taxonomy_search_tom_select', array( __CLASS__, 'taxonomy_search_tom_select' ) );
+	}
+
+	/**
+	 * Add a button to the settings page to start the settings wizard.
+	 *
+	 * @since 3.2.0
+	 */
+	public function add_wizard_button() {
+		printf(
+			'<br /><a aria-label="%s" class="button button-secondary" href="%s" title="%s" style="margin-top: 10px;">%s</a>',
+			esc_attr__( 'Start Setup Wizard', 'where-did-they-go-from-here' ),
+			esc_url( admin_url( 'admin.php?page=wherego_wizard' ) ),
+			esc_attr__( 'Start Setup Wizard', 'where-did-they-go-from-here' ),
+			esc_html__( 'Start Setup Wizard', 'where-did-they-go-from-here' )
+		);
 	}
 
 	/**
@@ -286,6 +306,65 @@ class Settings {
 	}
 
 	/**
+	 * Get settings defaults.
+	 *
+	 * @since 3.2.0
+	 *
+	 * @return array Default settings.
+	 */
+	public static function settings_defaults() {
+		$defaults = array();
+
+		$settings      = self::get_registered_settings();
+		$default_types = array(
+			'color',
+			'css',
+			'csv',
+			'file',
+			'html',
+			'multicheck',
+			'number',
+			'numbercsv',
+			'password',
+			'postids',
+			'posttypes',
+			'radio',
+			'radiodesc',
+			'repeater',
+			'select',
+			'sensitive',
+			'taxonomies',
+			'text',
+			'textarea',
+			'thumbsizes',
+			'url',
+			'wysiwyg',
+		);
+
+		foreach ( $settings as $section_settings ) {
+			foreach ( $section_settings as $setting ) {
+				if ( ! isset( $setting['id'] ) ) {
+					continue;
+				}
+
+				$setting_id    = $setting['id'];
+				$setting_type  = $setting['type'] ?? '';
+				$default_value = '';
+
+				if ( 'checkbox' === $setting_type ) {
+					$default_value = isset( $setting['default'] ) ? (int) (bool) $setting['default'] : 0;
+				} elseif ( isset( $setting['default'] ) && in_array( $setting_type, $default_types, true ) ) {
+					$default_value = $setting['default'];
+				}
+
+				$defaults[ $setting_id ] = $default_value;
+			}
+		}
+
+		return apply_filters( self::$prefix . '_settings_defaults', $defaults );
+	}
+
+	/**
 	 * Returns the General settings.
 	 *
 	 * @since 3.0.0
@@ -299,7 +378,7 @@ class Settings {
 				'name'    => esc_html__( 'Enable cache', 'where-did-they-go-from-here' ),
 				'desc'    => esc_html__( 'If enabled, the HTML output is saved in a meta key on first page load which is then used on future page loads', 'where-did-they-go-from-here' ),
 				'type'    => 'checkbox',
-				'options' => true,
+				'default' => true,
 			),
 			'add_to'             => array(
 				'id'      => 'add_to',
@@ -342,21 +421,39 @@ class Settings {
 				'name'    => esc_html__( 'Track logged-in users', 'where-did-they-go-from-here' ),
 				'desc'    => esc_html__( 'Uncheck to stop tracking logged in users. Only logged out visitors will be tracked if this is disabled. Unchecking this will override the above setting.', 'where-did-they-go-from-here' ),
 				'type'    => 'checkbox',
-				'options' => true,
+				'default' => true,
+			),
+			'tracker_type'       => array(
+				'id'      => 'tracker_type',
+				'name'    => esc_html__( 'Tracker type', 'where-did-they-go-from-here' ),
+				'desc'    => esc_html__( 'Choose the method used to track user navigation. REST API is recommended for better performance.', 'where-did-they-go-from-here' ),
+				'type'    => 'radio',
+				'default' => 'rest_based',
+				'options' => array(
+					'rest_based' => esc_html__( 'REST API based (recommended)', 'where-did-they-go-from-here' ),
+					'ajax'       => esc_html__( 'Ajax based', 'where-did-they-go-from-here' ),
+				),
+			),
+			'debug_mode'         => array(
+				'id'      => 'debug_mode',
+				'name'    => esc_html__( 'Debug mode', 'where-did-they-go-from-here' ),
+				'desc'    => esc_html__( 'Enable debug mode to log tracker responses to the browser console.', 'where-did-they-go-from-here' ),
+				'type'    => 'checkbox',
+				'default' => false,
 			),
 			'wg_in_admin'        => array(
 				'id'      => 'wg_in_admin',
 				'name'    => esc_html__( 'Add admin column', 'where-did-they-go-from-here' ),
 				'desc'    => esc_html__( 'Add a column in the All posts screen to display the list of followed posts', 'where-did-they-go-from-here' ),
 				'type'    => 'checkbox',
-				'options' => true,
+				'default' => true,
 			),
 			'show_credit'        => array(
 				'id'      => 'show_credit',
 				'name'    => esc_html__( 'Link to plugin page', 'where-did-they-go-from-here' ),
 				'desc'    => esc_html__( "Add a no-follow link to the plugin page to announce to the world that you're using this plugin", 'where-did-they-go-from-here' ),
 				'type'    => 'checkbox',
-				'options' => false,
+				'default' => false,
 			),
 			'list_header'        => array(
 				'id'   => 'list_header',
@@ -369,7 +466,7 @@ class Settings {
 				'name'    => esc_html__( 'Number of posts to display', 'where-did-they-go-from-here' ),
 				'desc'    => esc_html__( 'This is the maximum number of followed posts that will be displayed', 'where-did-they-go-from-here' ),
 				'type'    => 'number',
-				'options' => '6',
+				'default' => '6',
 				'size'    => 'small',
 			),
 			'post_types'         => array(
@@ -377,34 +474,32 @@ class Settings {
 				'name'    => esc_html__( 'Post types to include', 'where-did-they-go-from-here' ),
 				'desc'    => esc_html__( 'Select which post types you want to include in the list of posts. This field can be overridden using a comma separated list of post types when using the manual display.', 'where-did-they-go-from-here' ),
 				'type'    => 'posttypes',
-				'options' => 'post',
+				'default' => 'post',
 			),
 			'exclude_post_ids'   => array(
 				'id'      => 'exclude_post_ids',
 				'name'    => esc_html__( 'Post/page IDs to exclude', 'where-did-they-go-from-here' ),
 				'desc'    => esc_html__( 'Comma-separated list of post or page IDs to exclude from the list. e.g. 188,320,500', 'where-did-they-go-from-here' ),
 				'type'    => 'numbercsv',
-				'options' => '',
+				'default' => '',
 			),
 			'exclude_cat_slugs'  => array(
 				'id'               => 'exclude_cat_slugs',
 				'name'             => esc_html__( 'Exclude Categories', 'where-did-they-go-from-here' ),
 				'desc'             => esc_html__( 'Comma separated list of category slugs. The field above has an autocomplete so simply start typing in the starting letters and it will prompt you with options. Does not support custom taxonomies.', 'where-did-they-go-from-here' ),
 				'type'             => 'csv',
-				'options'          => '',
+				'default'          => '',
 				'size'             => 'large',
-				'field_class'      => 'category_autocomplete',
-				'field_attributes' => array(
-					'data-wp-taxonomy' => 'category',
-				),
+				'field_class'      => 'ts_autocomplete',
+				'field_attributes' => self::get_taxonomy_search_field_attributes( 'category' ),
 			),
 			'exclude_categories' => array(
 				'id'          => 'exclude_categories',
 				'name'        => esc_html__( 'Exclude category IDs', 'where-did-they-go-from-here' ),
 				'desc'        => esc_html__( 'This is a readonly field that is automatically populated based on the above input when the settings are saved.', 'where-did-they-go-from-here' ),
 				'type'        => 'text',
-				'options'     => '',
-				'field_class' => 'category_autocomplete',
+				'default'     => '',
+				'field_class' => 'ts_autocomplete',
 				'readonly'    => true,
 			),
 		);
@@ -433,7 +528,7 @@ class Settings {
 				'name'    => esc_html__( 'Heading of posts', 'where-did-they-go-from-here' ),
 				'desc'    => esc_html__( 'Displayed before the list of the posts as a the master heading', 'where-did-they-go-from-here' ),
 				'type'    => 'text',
-				'options' => '<h3>' . esc_html__( 'Readers who viewed this page, also viewed:', 'where-did-they-go-from-here' ) . '</h3>',
+				'default' => '<h3>' . esc_html__( 'Readers who viewed this page, also viewed:', 'where-did-they-go-from-here' ) . '</h3>',
 				'size'    => 'large',
 			),
 			'blank_output'            => array(
@@ -453,42 +548,42 @@ class Settings {
 				'name'    => esc_html__( 'Custom text', 'where-did-they-go-from-here' ),
 				'desc'    => esc_html__( 'Enter the custom text that will be displayed if the second option is selected above', 'where-did-they-go-from-here' ),
 				'type'    => 'textarea',
-				'options' => esc_html__( 'Visitors have not browsed from this post. Become the first by clicking one of our related posts', 'where-did-they-go-from-here' ),
+				'default' => esc_html__( 'Visitors have not browsed from this post. Become the first by clicking one of our related posts', 'where-did-they-go-from-here' ),
 			),
 			'exclude_on_post_ids'     => array(
 				'id'      => 'exclude_on_post_ids',
 				'name'    => esc_html__( "Don't display on these posts/pages", 'where-did-they-go-from-here' ),
 				'desc'    => esc_html__( 'Comma-separated list of post or page IDs where the list of posts will not be displayed. e.g. 188,320,500', 'where-did-they-go-from-here' ),
 				'type'    => 'numbercsv',
-				'options' => '',
+				'default' => '',
 			),
 			'show_author'             => array(
 				'id'      => 'show_author',
 				'name'    => esc_html__( 'Show post author in list', 'where-did-they-go-from-here' ),
 				'desc'    => '',
 				'type'    => 'checkbox',
-				'options' => false,
+				'default' => false,
 			),
 			'show_date'               => array(
 				'id'      => 'show_date',
 				'name'    => esc_html__( 'Show post date in list', 'where-did-they-go-from-here' ),
 				'desc'    => '',
 				'type'    => 'checkbox',
-				'options' => false,
+				'default' => false,
 			),
 			'show_excerpt'            => array(
 				'id'      => 'show_excerpt',
 				'name'    => esc_html__( 'Show post excerpt in list', 'where-did-they-go-from-here' ),
 				'desc'    => '',
 				'type'    => 'checkbox',
-				'options' => false,
+				'default' => false,
 			),
 			'excerpt_length'          => array(
 				'id'      => 'excerpt_length',
 				'name'    => esc_html__( 'Length of excerpt (in words)', 'where-did-they-go-from-here' ),
 				'desc'    => '',
 				'type'    => 'number',
-				'options' => '10',
+				'default' => '10',
 				'size'    => 'small',
 			),
 			'title_length'            => array(
@@ -496,7 +591,7 @@ class Settings {
 				'name'    => esc_html__( 'Limit post title length (in characters)', 'where-did-they-go-from-here' ),
 				'desc'    => '',
 				'type'    => 'number',
-				'options' => '60',
+				'default' => '60',
 				'size'    => 'small',
 			),
 			'link_new_window'         => array(
@@ -504,14 +599,14 @@ class Settings {
 				'name'    => esc_html__( 'Open links in new window', 'where-did-they-go-from-here' ),
 				'desc'    => '',
 				'type'    => 'checkbox',
-				'options' => false,
+				'default' => false,
 			),
 			'link_nofollow'           => array(
 				'id'      => 'link_nofollow',
 				'name'    => esc_html__( 'Add nofollow to links', 'where-did-they-go-from-here' ),
 				'desc'    => '',
 				'type'    => 'checkbox',
-				'options' => false,
+				'default' => false,
 			),
 			'customize_output_header' => array(
 				'id'   => 'customize_output_header',
@@ -524,28 +619,28 @@ class Settings {
 				'name'    => esc_html__( 'Before the list of posts', 'where-did-they-go-from-here' ),
 				'desc'    => '',
 				'type'    => 'text',
-				'options' => '<ul>',
+				'default' => '<ul>',
 			),
 			'after_list'              => array(
 				'id'      => 'after_list',
 				'name'    => esc_html__( 'After the list of posts', 'where-did-they-go-from-here' ),
 				'desc'    => '',
 				'type'    => 'text',
-				'options' => '</ul>',
+				'default' => '</ul>',
 			),
 			'before_list_item'        => array(
 				'id'      => 'before_list_item',
 				'name'    => esc_html__( 'Before each list item', 'where-did-they-go-from-here' ),
 				'desc'    => '',
 				'type'    => 'text',
-				'options' => '<li>',
+				'default' => '<li>',
 			),
 			'after_list_item'         => array(
 				'id'      => 'after_list_item',
 				'name'    => esc_html__( 'After each list item', 'where-did-they-go-from-here' ),
 				'desc'    => '',
 				'type'    => 'text',
-				'options' => '</li>',
+				'default' => '</li>',
 			),
 		);
 
@@ -594,7 +689,7 @@ class Settings {
 				'name'    => esc_html__( 'Thumbnail container width', 'where-did-they-go-from-here' ),
 				'desc'    => esc_html__( 'Used to set the width of the image container (not the image width)', 'where-did-they-go-from-here' ),
 				'type'    => 'number',
-				'options' => '150',
+				'default' => '150',
 				'size'    => 'small',
 			),
 			'thumb_height'       => array(
@@ -602,7 +697,7 @@ class Settings {
 				'name'    => esc_html__( 'Thumbnail container height', 'where-did-they-go-from-here' ),
 				'desc'    => esc_html__( 'Used to set the height of the image container (not the image height)', 'where-did-they-go-from-here' ),
 				'type'    => 'number',
-				'options' => '150',
+				'default' => '150',
 				'size'    => 'small',
 			),
 			'thumb_html'         => array(
@@ -624,28 +719,28 @@ class Settings {
 				'name'    => esc_html__( 'Thumbnail meta field name', 'where-did-they-go-from-here' ),
 				'desc'    => esc_html__( 'The value of this field should contain the URL of the image and can be set in the metabox in the Edit Post screen', 'where-did-they-go-from-here' ),
 				'type'    => 'text',
-				'options' => 'post-image',
+				'default' => 'post-image',
 			),
 			'scan_images'        => array(
 				'id'      => 'scan_images',
 				'name'    => esc_html__( 'Get first image', 'where-did-they-go-from-here' ),
 				'desc'    => esc_html__( 'The plugin will fetch the first image in the post content if this is enabled. This can slow down the loading of your page if the first image in the followed posts is large in file-size.', 'where-did-they-go-from-here' ),
 				'type'    => 'checkbox',
-				'options' => true,
+				'default' => true,
 			),
 			'thumb_default_show' => array(
 				'id'      => 'thumb_default_show',
 				'name'    => esc_html__( 'Use default thumbnail?', 'where-did-they-go-from-here' ),
 				'desc'    => esc_html__( 'If checked, when no thumbnail is found, show a default one from the URL below. If not checked and no thumbnail is found, no image will be shown.', 'where-did-they-go-from-here' ),
 				'type'    => 'checkbox',
-				'options' => true,
+				'default' => true,
 			),
 			'thumb_default'      => array(
 				'id'      => 'thumb_default',
 				'name'    => esc_html__( 'Default thumbnail', 'where-did-they-go-from-here' ),
 				'desc'    => esc_html__( 'Enter the full URL of the image that you wish to display if no thumbnail is found. This image will be displayed below.', 'where-did-they-go-from-here' ),
 				'type'    => 'file',
-				'options' => WHEREGO_PLUGIN_URL . 'default.png',
+				'default' => WHEREGO_PLUGIN_URL . 'default.png',
 				'size'    => 'large',
 			),
 		);
@@ -683,7 +778,7 @@ class Settings {
 				/* translators: 1: Opening a tag, 2: Closing a tag, 3: Opening code tage, 4. Closing code tag. */
 				'desc'        => sprintf( esc_html__( 'Do not include %3$sstyle%4$s tags. Check out the %1$sFAQ%2$s for available CSS classes to style.', 'where-did-they-go-from-here' ), '<a href="' . esc_url( 'https://wordpress.org/plugins/where-did-they-go-from-here/faq/' ) . '" target="_blank">', '</a>', '<code>', '</code>' ),
 				'type'        => 'textarea',
-				'options'     => '',
+				'default'     => '',
 				'field_class' => 'codemirror_css',
 			),
 		);
@@ -718,7 +813,7 @@ class Settings {
 				'name'    => esc_html__( 'Number of posts to display', 'where-did-they-go-from-here' ),
 				'desc'    => esc_html__( 'This is the maximum number of followed posts that will be displayed', 'where-did-they-go-from-here' ),
 				'type'    => 'number',
-				'options' => '6',
+				'default' => '6',
 				'size'    => 'small',
 			),
 			'show_excerpt_feed'  => array(
@@ -726,7 +821,7 @@ class Settings {
 				'name'    => esc_html__( 'Show post excerpt in list?', 'where-did-they-go-from-here' ),
 				'desc'    => '',
 				'type'    => 'checkbox',
-				'options' => false,
+				'default' => false,
 			),
 			'post_thumb_op_feed' => array(
 				'id'      => 'post_thumb_op_feed',
@@ -746,7 +841,7 @@ class Settings {
 				'name'    => esc_html__( 'Thumbnail width', 'where-did-they-go-from-here' ),
 				'desc'    => '',
 				'type'    => 'number',
-				'options' => '150',
+				'default' => '150',
 				'size'    => 'small',
 			),
 			'thumb_height_feed'  => array(
@@ -754,7 +849,7 @@ class Settings {
 				'name'    => esc_html__( 'Thumbnail height', 'where-did-they-go-from-here' ),
 				'desc'    => '',
 				'type'    => 'number',
-				'options' => '150',
+				'default' => '150',
 				'size'    => 'small',
 			),
 		);
@@ -786,7 +881,12 @@ class Settings {
 			array(
 				'id'          => 'text_only',
 				'name'        => esc_html__( 'Text only', 'where-did-they-go-from-here' ),
-				'description' => esc_html__( 'Disable thumbnails and no longer include the default style sheet', 'where-did-they-go-from-here' ) . '<br />',
+				'description' => esc_html__( 'A clean text-only list style without thumbnails.', 'where-did-they-go-from-here' ) . '<br />',
+			),
+			array(
+				'id'          => 'left_thumbs',
+				'name'        => esc_html__( 'Left thumbnails', 'where-did-they-go-from-here' ),
+				'description' => esc_html__( 'Thumbnails displayed on the left with post details on the right.', 'where-did-they-go-from-here' ) . '<br />',
 			),
 			array(
 				'id'          => 'grid',
@@ -837,7 +937,7 @@ class Settings {
 		if ( false !== strpos( $file, 'where-did-they-go-from-here.php' ) ) {
 			$new_links = array(
 				'support'    => '<a href = "https://wordpress.org/support/plugin/where-did-they-go-from-here">' . esc_html__( 'Support', 'where-did-they-go-from-here' ) . '</a>',
-				'donate'     => '<a href = "https://ajaydsouza.com/donate/">' . esc_html__( 'Donate', 'where-did-they-go-from-here' ) . '</a>',
+				'donate'     => '<a href = "https://wzn.io/donate-wz">' . esc_html__( 'Donate', 'where-did-they-go-from-here' ) . '</a>',
 				'contribute' => '<a href = "https://github.com/WebberZone/where-did-they-go-from-here">' . esc_html__( 'Contribute', 'where-did-they-go-from-here' ) . '</a>',
 			);
 
@@ -853,16 +953,16 @@ class Settings {
 	 */
 	public function get_help_sidebar() {
 		$help_sidebar =
-			/* translators: 1: Plugin support site link. */
-			'<p>' . sprintf( __( 'For more information or how to get support visit the <a href="%s">support site</a>.', 'where-did-they-go-from-here' ), esc_url( 'https://webberzone.com/support/' ) ) . '</p>' .
-			/* translators: 1: WordPress.org support forums link. */
-			'<p>' . sprintf( __( 'Support queries should be posted in the <a href="%s">WordPress.org support forums</a>.', 'where-did-they-go-from-here' ), esc_url( 'https://wordpress.org/support/plugin/where-did-they-go-from-here' ) ) . '</p>' .
-			'<p>' . sprintf(
-				/* translators: 1: Github issues link, 2: Github plugin page link. */
-				__( '<a href="%1$s">Post an issue</a> on <a href="%2$s">GitHub</a> (bug reports only).', 'where-did-they-go-from-here' ),
-				esc_url( 'https://github.com/ajaydsouza/where-did-they-go-from-here/issues' ),
-				esc_url( 'https://github.com/ajaydsouza/where-did-they-go-from-here' )
-			) . '</p>';
+		/* translators: 1: Plugin support site link. */
+		'<p>' . sprintf( __( 'For more information or how to get support visit the <a href="%s">support site</a>.', 'where-did-they-go-from-here' ), esc_url( 'https://webberzone.com/support/' ) ) . '</p>' .
+		/* translators: 1: WordPress.org support forums link. */
+		'<p>' . sprintf( __( 'Support queries should be posted in the <a href="%s">WordPress.org support forums</a>.', 'where-did-they-go-from-here' ), esc_url( 'https://wordpress.org/support/plugin/where-did-they-go-from-here' ) ) . '</p>' .
+		'<p>' . sprintf(
+			/* translators: 1: Github Issues link, 2: Github page. */
+			__( '<a href="%1$s">Post an issue</a> on <a href="%2$s">GitHub</a> (bug reports only).', 'where-did-they-go-from-here' ),
+			esc_url( 'https://github.com/ajaydsouza/where-did-they-go-from-here/issues' ),
+			esc_url( 'https://github.com/ajaydsouza/where-did-they-go-from-here' )
+		) . '</p>';
 
 		/**
 		 * Filter to modify the help sidebar content.
@@ -935,7 +1035,7 @@ class Settings {
 	 */
 	public static function get_admin_footer_text() {
 		return sprintf(
-			/* translators: 1: Opening achor tag with Plugin page link, 2: Closing anchor tag, 3: Opening anchor tag with review link. */
+		/* translators: 1: Opening achor tag with Plugin page link, 2: Closing anchor tag, 3: Opening anchor tag with review link. */
 			__( 'Thank you for using %1$sWebberZone Followed Posts%2$s! Please %3$srate us%2$s on %3$sWordPress.org%2$s', 'where-did-they-go-from-here' ),
 			'<a href="https://webberzone.com/plugins/where-did-they-go-from-here/" target="_blank">',
 			'</a>',
@@ -950,18 +1050,23 @@ class Settings {
 	 */
 	public function admin_enqueue_scripts() {
 
+		wp_enqueue_script( 'wherego-admin-js' );
 		wp_localize_script(
-			'wz-admin-js',
+			'wherego-admin-js',
 			'wherego_admin',
 			array(
 				'thumb_default' => WHEREGO_PLUGIN_URL . 'default.png',
 			)
 		);
 		wp_localize_script(
-			'wz-admin-js',
+			'wherego-admin-js',
 			'wherego_admin_data',
 			array(
 				'security' => wp_create_nonce( 'wherego-admin' ),
+				'strings'  => array(
+					'clear_cache'    => esc_html__( 'Clear cache', 'where-did-they-go-from-here' ),
+					'clearing_cache' => esc_html__( 'Clearing cache', 'where-did-they-go-from-here' ),
+				),
 			)
 		);
 	}
@@ -977,21 +1082,7 @@ class Settings {
 	public function change_settings_on_save( $settings ) {
 
 		// Sanitize exclude_cat_slugs to save a new entry of exclude_categories.
-		if ( isset( $settings['exclude_cat_slugs'] ) ) {
-
-			$exclude_cat_slugs = array_unique( str_getcsv( $settings['exclude_cat_slugs'] ) );
-
-			foreach ( $exclude_cat_slugs as $cat_name ) {
-				$cat = get_term_by( 'name', $cat_name, 'category' );
-				if ( isset( $cat->term_id ) ) {
-					$exclude_categories[]     = $cat->term_id;
-					$exclude_category_slugs[] = $cat->name;
-				}
-			}
-			$settings['exclude_categories'] = isset( $exclude_categories ) ? join( ',', $exclude_categories ) : '';
-			$settings['exclude_cat_slugs']  = isset( $exclude_category_slugs ) ? Helpers::str_putcsv( $exclude_category_slugs ) : '';
-
-		}
+		Settings_Sanitize::sanitize_tax_slugs( $settings, 'exclude_cat_slugs', 'exclude_categories' );
 
 		// Overwrite settings if grid thumbnail style is selected.
 		if ( 'grid' === $settings['wherego_styles'] ) {
@@ -1009,6 +1100,170 @@ class Settings {
 		Cache::delete();
 
 		return $settings;
+	}
+
+	/**
+	 * Handle Tom Select taxonomy search AJAX requests.
+	 *
+	 * @since 3.2.0
+	 *
+	 * @return void
+	 */
+	public static function taxonomy_search_tom_select() {
+		// Verify nonce.
+		if ( ! isset( $_REQUEST['nonce'] ) ) {
+			wp_send_json_error( array( 'message' => 'Missing nonce' ) );
+		}
+
+		$nonce_valid = wp_verify_nonce( sanitize_key( $_REQUEST['nonce'] ), self::$prefix . '_taxonomy_search_tom_select' );
+
+		if ( ! $nonce_valid ) {
+			wp_send_json_error(
+				array(
+					'message'         => 'Invalid nonce',
+					'received_nonce'  => sanitize_key( $_REQUEST['nonce'] ),
+					'expected_action' => self::$prefix . '_taxonomy_search_tom_select',
+				)
+			);
+		}
+
+		if ( ! isset( $_REQUEST['endpoint'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			wp_send_json_error( 'Missing endpoint' );
+		}
+
+		$endpoint = sanitize_key( $_REQUEST['endpoint'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+
+		$search_term = isset( $_REQUEST['q'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['q'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+
+		$comma = _x( ',', 'tag delimiter', 'where-did-they-go-from-here' );
+		if ( ',' !== $comma ) {
+			$search_term = str_replace( $comma, ',', $search_term );
+		}
+		if ( false !== strpos( $search_term, ',' ) ) {
+			$search_term = explode( ',', $search_term );
+			$search_term = $search_term[ count( $search_term ) - 1 ];
+		}
+		$search_term = trim( $search_term );
+
+		if ( 'meta_keys' === $endpoint ) {
+			if ( ! current_user_can( 'manage_options' ) ) {
+				wp_send_json_error( 'Insufficient permissions' );
+			}
+
+			if ( strlen( $search_term ) < 2 ) {
+				wp_send_json_success( array() );
+			}
+
+			global $wpdb;
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+			$keys = $wpdb->get_col(
+				$wpdb->prepare(
+					"SELECT DISTINCT meta_key FROM {$wpdb->postmeta} WHERE meta_key LIKE %s ORDER BY meta_key ASC LIMIT 20",
+					'%' . $wpdb->esc_like( $search_term ) . '%'
+				)
+			);
+
+			$results = array();
+			foreach ( (array) $keys as $meta_key ) {
+				if ( is_string( $meta_key ) && '' !== $meta_key ) {
+					$results[] = array(
+						'value' => $meta_key,
+						'text'  => $meta_key,
+					);
+				}
+			}
+
+			wp_send_json_success( $results );
+		}
+
+		if ( 'public_taxonomies' === $endpoint ) {
+			$taxonomies = (array) get_taxonomies( array( 'public' => true ), 'objects' );
+			$taxonomy   = array();
+			$tax        = null;
+
+			foreach ( $taxonomies as $taxonomy_name => $taxonomy_object ) {
+				if ( ! is_string( $taxonomy_name ) || '' === $taxonomy_name ) {
+					continue;
+				}
+
+				if ( empty( $taxonomy_object->cap->assign_terms ) ) {
+					continue;
+				}
+
+				if ( ! current_user_can( $taxonomy_object->cap->assign_terms ) ) {
+					continue;
+				}
+
+				$taxonomy[] = $taxonomy_name;
+			}
+
+			if ( empty( $taxonomy ) ) {
+				wp_send_json_success( array() );
+			}
+
+			$tax = get_taxonomy( $taxonomy[0] );
+		} else {
+			$taxonomy = $endpoint;
+			$tax      = get_taxonomy( $taxonomy );
+
+			if ( ! $tax ) {
+				wp_send_json_error( 'Invalid taxonomy' );
+			}
+
+			if ( ! current_user_can( $tax->cap->assign_terms ) ) {
+				wp_send_json_error( 'Insufficient permissions' );
+			}
+		}
+
+		/** This filter has been defined in /wp-admin/includes/ajax-actions.php */
+		$term_search_min_chars = (int) apply_filters( 'term_search_min_chars', 2, $tax, $search_term );
+
+		/*
+		 * Require $term_search_min_chars chars for matching (default: 2)
+		 * ensure it's a non-negative, non-zero integer.
+		 */
+		if ( ( 0 === $term_search_min_chars ) || ( strlen( $search_term ) < $term_search_min_chars ) ) {
+			wp_send_json_success( array() );
+		}
+
+		$terms = get_terms(
+			array(
+				'taxonomy'   => $taxonomy,
+				'name__like' => $search_term,
+				'orderby'    => 'name',
+				'order'      => 'ASC',
+				'number'     => 20,
+				'hide_empty' => false,
+			)
+		);
+
+		$results = array();
+		foreach ( (array) $terms as $term ) {
+			$formatted_string = "{$term->name} ({$term->taxonomy}:{$term->term_taxonomy_id})";
+			$results[]        = array(
+				'value' => $formatted_string,
+				'text'  => $term->name,
+			);
+		}
+
+		wp_send_json_success( $results );
+	}
+
+	/**
+	 * Get field attributes for Tom Select taxonomy search fields.
+	 *
+	 * @since 3.2.0
+	 *
+	 * @param string $taxonomy The taxonomy to search.
+	 * @return array Field attributes array.
+	 */
+	private static function get_taxonomy_search_field_attributes( $taxonomy ) {
+		return array(
+			'data-wp-prefix'   => strtoupper( (string) self::$prefix ),
+			'data-wp-action'   => self::$prefix . '_taxonomy_search_tom_select',
+			'data-wp-nonce'    => wp_create_nonce( self::$prefix . '_taxonomy_search_tom_select' ),
+			'data-wp-endpoint' => $taxonomy,
+		);
 	}
 
 
@@ -1060,21 +1315,6 @@ class Settings {
 	public static function cache_button() {
 		?>
 	<input type="button" name="cache_clear" id="cache_clear"  value="<?php esc_attr_e( 'Clear cache', 'where-did-they-go-from-here' ); ?>" class="button button-secondary delete" onclick="return clearCache();" />
-		<?php
-	}
-
-	/**
-	 * Function to add a link below the page header of the settings page.
-	 *
-	 * @since 3.1.0
-	 */
-	public function settings_page_header() {
-		?>
-			<p>
-				<a class="button button-primary" href="<?php echo esc_url( admin_url( 'tools.php?page=wherego_tools_page' ) ); ?>">
-				<?php esc_html_e( 'Visit the Tools page', 'where-did-they-go-from-here' ); ?>
-				</a>
-			<p>
 		<?php
 	}
 }

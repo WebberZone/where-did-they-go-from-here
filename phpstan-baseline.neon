@@ -1,51 +1,6 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Constant WHEREGO_PLUGIN_DIR not found\\.$#"
-			count: 1
-			path: includes/admin/class-admin.php
-
-		-
-			message: "#^Variable \\$menu_page might not be defined\\.$#"
-			count: 1
-			path: includes/admin/settings/class-settings-api.php
-
-		-
-			message: "#^Constant WHEREGO_PLUGIN_URL not found\\.$#"
-			count: 3
-			path: includes/admin/settings/class-settings.php
-
-		-
-			message: "#^Constant WHEREGO_PLUGIN_URL not found\\.$#"
-			count: 3
-			path: includes/admin/settings/sidebar.php
-
-		-
-			message: "#^Constant WHEREGO_PLUGIN_DIR not found\\.$#"
-			count: 1
-			path: includes/autoloader.php
-
-		-
-			message: "#^Constant WHEREGO_PLUGIN_DIR not found\\.$#"
-			count: 1
-			path: includes/frontend/blocks/class-blocks.php
-
-		-
-			message: "#^Variable \\$meta_key might not be defined\\.$#"
-			count: 1
-			path: includes/frontend/class-display.php
-
-		-
-			message: "#^Method WebberZone\\\\WFP\\\\Frontend\\\\Widget\\:\\:form\\(\\) should return string but return statement is missing\\.$#"
-			count: 1
-			path: includes/frontend/class-widget.php
-
-		-
-			message: "#^Negated boolean expression is always false\\.$#"
-			count: 1
-			path: includes/util/class-cache.php
-
-		-
-			message: "#^Variable \\$expires in empty\\(\\) always exists and is not falsy\\.$#"
+			message: "#^Comparison operation \"\\<\\=\" between 604800 and 0 is always false\\.$#"
 			count: 1
 			path: includes/util/class-cache.php

@@ -9,6 +9,7 @@
 namespace WebberZone\WFP\Frontend\Blocks;
 
 use WebberZone\WFP\Frontend\Styles_Handler;
+use WebberZone\WFP\Util\Hook_Registry;
 
 if ( ! defined( 'WPINC' ) ) {
 	die;
@@ -25,8 +26,8 @@ class Blocks {
 	 * Register widget with WordPress.
 	 */
 	public function __construct() {
-		add_action( 'init', array( $this, 'register_blocks' ) );
-		add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_block_editor_assets' ), 99 );
+		Hook_Registry::add_action( 'init', array( $this, 'register_blocks' ) );
+		Hook_Registry::add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_block_editor_assets' ), 99 );
 	}
 
 	/**

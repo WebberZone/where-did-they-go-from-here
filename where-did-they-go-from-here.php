@@ -8,20 +8,19 @@
  * @author    Ajay D'Souza
  * @license   GPL-2.0+
  * @link      https://webberzone.com
- * @copyright 2008-2025 Ajay D'Souza
+ * @copyright 2008-2026 Ajay D'Souza
  *
  * @wordpress-plugin
  * Plugin Name: WebberZone Followed Posts
  * Plugin URI:  https://webberzone.com/plugins/webberzone-followed-posts/
  * Description: Effortlessly showcase the posts that users follow on your WordPress site.
- * Version:     3.1.2
+ * Version:     3.2.0
  * Author:      Ajay D'Souza
  * Author URI:  https://webberzone.com
  * License:     GPL-2.0+
- * License URI: https://www.gnu.org/licenses/gpl-2.0.txt
+ * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain: where-did-they-go-from-here
  * Domain Path: /languages
- * GitHub Plugin URI: https://github.com/WebberZone/where-did-they-go-from-here/
  */
 
 namespace WebberZone\WFP;
@@ -37,7 +36,7 @@ if ( ! defined( 'WPINC' ) ) {
  * @since 3.0.0
  */
 if ( ! defined( 'WFP_VERSION' ) ) {
-	define( 'WFP_VERSION', '3.1.2' );
+	define( 'WFP_VERSION', '3.2.0' );
 }
 
 /**
@@ -88,18 +87,32 @@ require_once WHEREGO_PLUGIN_DIR . 'includes/autoloader.php';
  */
 function activate_wfp( $network_wide ) {
 	\WebberZone\WFP\Admin\Activator::activation_hook( $network_wide );
+	do_action( 'wherego_activate' );
 }
 register_activation_hook( __FILE__, __NAMESPACE__ . '\activate_wfp' );
 
 /**
  * The main function responsible for returning the one true WebberZone Snippetz instance to functions everywhere.
  *
- * @since 3.1.0
+ * @since 3.2.0
  */
-function load_wfp() {
+function load() {
 	\WebberZone\WFP\Main::get_instance();
 }
-add_action( 'plugins_loaded', __NAMESPACE__ . '\load_wfp' );
+add_action( 'plugins_loaded', __NAMESPACE__ . '\load' );
+
+if ( ! function_exists( 'wz_wfp' ) ) {
+	/**
+	 * Get the main WebberZone Followed Posts instance.
+	 *
+	 * @since 3.0.0
+	 * @return Main Main instance.
+	 */
+	function wz_wfp() {
+		return Main::get_instance();
+	}
+}
+
 
 /*
  *----------------------------------------------------------------------------
@@ -110,11 +123,18 @@ require_once WHEREGO_PLUGIN_DIR . 'includes/options-api.php';
 require_once WHEREGO_PLUGIN_DIR . 'includes/functions.php';
 
 /**
+ * Initialize the Options API.
+ *
+ * @since 3.2.0
+ */
+\WebberZone\WFP\Options_API::init();
+
+/**
  * Plugin settings.
  *
  * @since 1.6
  *
- * @var string
+ * @var array
  */
-global  $wherego_settings;
+global $wherego_settings;
 $wherego_settings = wherego_get_settings();

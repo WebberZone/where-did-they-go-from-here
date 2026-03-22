@@ -1,11 +1,11 @@
 === WZ Followed Posts - Display what visitors are reading ===
 Tags: followed posts, related posts, where did they go from here
 Contributors: Ajay, webberzone
-Donate link: https://ajaydsouza.com/donate/
-Stable tag: 3.1.2
-Requires at least: 6.3
+Donate link: https://wzn.io/donate-wz
+Stable tag: 3.2.0
+Requires at least: 6.6
 Requires PHP: 7.4
-Tested up to: 6.8
+Tested up to: 6.9
 License: GPLv2 or later
 
 Show "Readers who viewed this page, also viewed" a.k.a. followed posts on your page. Much like Amazon.com's product pages.
@@ -53,6 +53,17 @@ __If you're looking for a plugin that displays posts related to the content, loo
 4. Go to **Settings &raquo; Followed Posts** to configure
 
 
+== Plugins by WebberZone ==
+
+* [Contextual Related Posts](https://wordpress.org/plugins/contextual-related-posts/) - Display related posts on your WordPress blog and feed
+* [Top 10](https://wordpress.org/plugins/top-10/) - Track daily and total visits to your blog posts and display the popular and trending posts
+* [Better Search](https://wordpress.org/plugins/better-search/) - Enhance the default WordPress search with contextual results sorted by relevance
+* [Knowledge Base](https://wordpress.org/plugins/knowledgebase/) - Create a knowledge base or FAQ section on your WordPress site
+* [WebberZone Snippetz](https://wordpress.org/plugins/add-to-all/) - Manage custom HTML, CSS, and JavaScript snippets
+* [Auto-Close](https://wordpress.org/plugins/autoclose/) - Automatically close comments, pingbacks and trackbacks and manage revisions on your WordPress site
+* [Popular Authors](https://wordpress.org/plugins/popular-authors/) - Calculate and display popular authors
+* [WebberZone Link Warnings](https://wordpress.org/plugins/webberzone-link-warnings/) - Add accessible warnings for external links and target="_blank" links
+
 == Screenshots ==
 
 1. Frontend view of the Followed Posts (Grid mode)
@@ -98,49 +109,39 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 == Changelog ==
 
-= 3.1.2 =
+= 3.2.0 =
 
-* Bug fix: Check if post is empty before processing.
+* New:
+	* REST API support for getting followed posts
+		* Added `GET /wp-json/wfp/v1/followed-posts/{id}` endpoint
+		* Added `POST /wp-json/wfp/v1/tracker` endpoint for tracking
+	* Modern admin interface matching other WebberZone plugins
+		* Updated sidebar with improved organization and navigation
+		* New admin banner with sections-based navigation
+	* CRP Integration - Feed followed posts to Contextual Related Posts plugin for enhanced related posts display
+	* Vanilla JavaScript tracker - Complete rewrite with no jQuery dependency
+	* New display styles - Added 'Left thumbnails' and 'Text only' layouts
+	* Dashboard widget - Quick overview of posts with the most followed links
+	* Hook Registry system - Centralized hook management for better code organization
 
-= 3.1.1 =
+* Improvements:
+	* Enhanced PHP and WordPress compatibility testing
+	* Better dependency management and build processes
+	* JavaScript tracker now auto-detects REST API vs AJAX mode
+	* Added pagination support to REST API endpoint
+	* Improved cache management with AJAX handler for clearing cache
+	* Tools page UI redesigned with postbox styling for better WordPress consistency
+	* Settings API refactored to use static methods for better performance
+	* Media Handler now supports the FIFU WordPress plugin for featured image detection.
 
-* Bug fix: Sanitize args.
-
-= 3.1.0 =
-
-Release post: [https://webberzone.com/announcements/followed-posts-v3-1-0/](https://webberzone.com/announcements/followed-posts-v3-1-0/)
-
-Complete plugin rewrite to use classes and autoloading.
-
-* Features
-	* New block for the block editor. Find it under widgets or using "followed posts" or "where did they go from here"
-	* New functions `get_wfp()` and `the_wfp()` replace `get_wherego()` and `echo_wherego()`. The latter two will throw deprecated notices
-	* New shortcode `[wfp]` replaces `[wherego]`. The latter will continue to work but it is recommended that you replace the shortcode
-	* New tools page can be found under Tools > WFP Tools. Import/Export settings and clear the cache from there
-
-* Enhancements:
-	* Caching enabled by default - this will apply to new installs and if you reset the settings
-
-* Bug fix:
-	* PHP warning if a post was not found
-
-= 3.0.0 =
-
-Release post: [https://webberzone.com/blog/followed-posts-v3-0-0/](https://webberzone.com/blog/followed-posts-v3-0-0/)
-
-* Features:
-	* Support for PolyLang and WPML
-	* New options to stop tracking logged in users, authors, editors or admins
-
-* Enhancements:
-    * Improved caching with inbuilt expiry. Use WFP_CACHE_TIME in your wp-config.php to set how long the cache should be set for. Default is one week. Setting it to `false` will disable expiry
-	* Upgraded post thumbnail handling: Select the thumbnail size. The plugin will also check for site icons before the default thumbnail is selected
-	* Upgraded settings to new Settings_API class
-	* Grid thumbnail style has been redone to use CSS grid and flexbox. Please pick the correct thumbnail size in the Thumbnail settings
+* Bug fixes:
+	* Resolved PHP warnings when accessing null post properties
+	* Fixed WordPress compatibility issues with latest versions
+	* Fixed WordPress compatibility issues
 
 For previous changelog entries check out the changelog.txt file included with the plugin or [view the releases on Github](https://github.com/WebberZone/where-did-they-go-from-here/releases).
 
 == Upgrade Notice ==
 
-= 3.1.2 =
-* Bug fix: Check if post is empty before processing.
+= 3.2.0 =
+Major release; see changelog for further information.

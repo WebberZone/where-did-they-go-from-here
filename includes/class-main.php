@@ -1,82 +1,113 @@
 <?php
 /**
- * Main plugin class.
+ * Main class.
  *
  * @package WebberZone\WFP
  */
 
 namespace WebberZone\WFP;
 
+use WebberZone\WFP\Admin\Admin;
+use WebberZone\WFP\Frontend\Blocks\Blocks;
+use WebberZone\WFP\Frontend\Language_Handler;
+use WebberZone\WFP\Frontend\REST_API;
+use WebberZone\WFP\Frontend\Shortcodes;
+use WebberZone\WFP\Frontend\Styles_Handler;
+use WebberZone\WFP\Util\Hook_Registry;
+use WebberZone\WFP\CRP_Integration;
+
+// If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
-	exit;
+	die;
 }
 
 /**
- * Main plugin class.
+ * Main class.
  *
  * @since 3.1.0
  */
-final class Main {
+class Main {
+
 	/**
-	 * The single instance of the class.
+	 * Single instance of the class.
+	 *
+	 * @since 3.1.0
 	 *
 	 * @var Main
 	 */
 	private static $instance;
 
 	/**
-	 * Admin.
+	 * Language Handler.
 	 *
 	 * @since 3.1.0
 	 *
-	 * @var object Admin.
+	 * @var Language_Handler Language handler.
 	 */
-	public $admin;
-
-	/**
-	 * Shortcodes.
-	 *
-	 * @since 3.1.0
-	 *
-	 * @var object Shortcodes.
-	 */
-	public $shortcodes;
-
-	/**
-	 * Counter.
-	 *
-	 * @since 3.1.0
-	 *
-	 * @var object Language Handler.
-	 */
-	public $language;
+	public Language_Handler $language;
 
 	/**
 	 * Tracker.
 	 *
 	 * @since 3.1.0
 	 *
-	 * @var object Tracker.
+	 * @var Tracker Tracker handler.
 	 */
-	public $tracker;
+	public Tracker $tracker;
+
+	/**
+	 * Shortcodes.
+	 *
+	 * @since 3.1.0
+	 *
+	 * @var Shortcodes Shortcodes handler.
+	 */
+	public Shortcodes $shortcodes;
 
 	/**
 	 * Blocks.
 	 *
 	 * @since 3.1.0
 	 *
-	 * @var object Blocks.
+	 * @var Blocks Blocks handler.
 	 */
-	public $blocks;
+	public Blocks $blocks;
 
 	/**
 	 * Styles.
 	 *
 	 * @since 3.1.0
 	 *
-	 * @var object Styles.
+	 * @var Styles_Handler Styles handler.
 	 */
-	public $styles;
+	public Styles_Handler $styles;
+
+	/**
+	 * Admin.
+	 *
+	 * @since 3.2.0
+	 *
+	 * @var Admin Admin handler.
+	 */
+	public Admin $admin;
+
+	/**
+	 * REST API.
+	 *
+	 * @since 3.2.0
+	 *
+	 * @var REST_API REST API handler.
+	 */
+	public REST_API $rest_api;
+
+	/**
+	 * CRP Integration.
+	 *
+	 * @since 3.2.0
+	 *
+	 * @var CRP_Integration CRP Integration handler.
+	 */
+	public ?CRP_Integration $crp_integration = null;
 
 	/**
 	 * Gets the instance of the class.
@@ -109,16 +140,28 @@ final class Main {
 	 * @since 3.1.0
 	 */
 	private function init() {
-		$this->language   = new Frontend\Language_Handler();
-		$this->styles     = new Frontend\Styles_Handler();
-		$this->tracker    = new Tracker();
-		$this->shortcodes = new Frontend\Shortcodes();
-		$this->blocks     = new Frontend\Blocks\Blocks();
+		$this->language        = new Language_Handler();
+		$this->styles          = new Styles_Handler();
+		$this->tracker         = new Tracker();
+		$this->shortcodes      = new Shortcodes();
+		$this->blocks          = new Blocks();
+		$this->rest_api        = new REST_API();
+		$this->crp_integration = new CRP_Integration();
 
 		$this->hooks();
 
+		// Initialize admin on init action to ensure translations are loaded.
+		Hook_Registry::add_action( 'init', array( $this, 'init_admin' ) );
+	}
+
+	/**
+	 * Initialize admin components.
+	 *
+	 * @since 3.2.0
+	 */
+	public function init_admin(): void {
 		if ( is_admin() ) {
-			$this->admin = new Admin\Admin();
+			$this->admin = new Admin();
 		}
 	}
 
@@ -128,11 +171,12 @@ final class Main {
 	 * @since 3.1.0
 	 */
 	public function hooks() {
-		add_action( 'init', array( $this, 'initiate_plugin' ) );
-		add_action( 'widgets_init', array( $this, 'register_widgets' ) );
-		add_filter( 'the_content', array( $this, 'the_content' ) );
-		add_filter( 'the_excerpt_rss', array( $this, 'add_to_feed' ) );
-		add_filter( 'the_content_feed', array( $this, 'add_to_feed' ) );
+		Hook_Registry::add_action( 'init', array( $this, 'initiate_plugin' ) );
+		Hook_Registry::add_action( 'widgets_init', array( $this, 'register_widgets' ) );
+		Hook_Registry::add_action( 'rest_api_init', array( $this, 'register_rest_routes' ) );
+		Hook_Registry::add_filter( 'the_content', array( $this, 'the_content' ) );
+		Hook_Registry::add_filter( 'the_excerpt_rss', array( $this, 'add_to_feed' ) );
+		Hook_Registry::add_filter( 'the_content_feed', array( $this, 'add_to_feed' ) );
 	}
 
 	/**
@@ -154,6 +198,15 @@ final class Main {
 	}
 
 	/**
+	 * Register REST API routes.
+	 *
+	 * @since 3.2.0
+	 */
+	public function register_rest_routes() {
+		$this->rest_api->register_routes();
+	}
+
+	/**
 	 * Filter `the_content` to add the followed posts.
 	 *
 	 * @since 3.1.0
@@ -165,8 +218,9 @@ final class Main {
 		global $post, $wherego_id;
 		$wherego_id = absint( $post->ID );
 
-		$add_to              = \wherego_get_option( 'add_to', false );
-		$exclude_on_post_ids = explode( ',', \wherego_get_option( 'exclude_on_post_ids' ) );
+		$add_to = wp_parse_list( \wherego_get_option( 'add_to', false ) );
+
+		$exclude_on_post_ids = wp_parse_id_list( \wherego_get_option( 'exclude_on_post_ids' ) );
 
 		// Exit if the post is in the exclusion list.
 		if ( in_array( $post->ID, $exclude_on_post_ids, true ) ) {
@@ -182,12 +236,12 @@ final class Main {
 		);
 
 		foreach ( $conditions as $condition => $option ) {
-			if ( call_user_func( $condition ) && ! empty( $add_to[ $option ] ) ) {
+			if ( call_user_func( $condition ) && in_array( $option, $add_to, true ) ) {
 				return $content . get_wfp();
 			}
 		}
 
-		if ( ( is_tax() || is_author() || is_date() ) && ! empty( $add_to['archives'] ) ) {
+		if ( ( is_tax() || is_author() || is_date() ) && in_array( 'archives', $add_to, true ) ) {
 			return $content . get_wfp();
 		}
 
