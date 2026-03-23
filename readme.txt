@@ -109,6 +109,10 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 == Changelog ==
 
+= 3.2.2 =
+
+* Fixed: Dashboard Top Tracked widget has been fixed.
+
 = 3.2.1 =
 
 * Fixed: Issue with the zip package missing files.
