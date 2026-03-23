@@ -2,7 +2,7 @@
 Tags: followed posts, related posts, where did they go from here
 Contributors: Ajay, webberzone
 Donate link: https://wzn.io/donate-wz
-Stable tag: 3.2.1
+Stable tag: 3.2.2
 Requires at least: 6.6
 Requires PHP: 7.4
 Tested up to: 6.9
@@ -151,5 +151,5 @@ For previous changelog entries check out the changelog.txt file included with th
 
 == Upgrade Notice ==
 
-= 3.2.1 =
+= 3.2.2 =
 Major release; see changelog for further information.
