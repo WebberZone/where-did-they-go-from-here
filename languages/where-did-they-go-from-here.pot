@@ -811,7 +811,7 @@ msgstr ""
 msgid "Select a style to display the posts. Enter any custom CSS which will be added in the header of the site."
 msgstr ""
 
-#. translators: 1: Opening achor tag with Plugin page link, 2: Closing anchor tag, 3: Opening anchor tag with review link.
+#. translators: 1: Opening anchor tag with Plugin page link, 2: Closing anchor tag, 3: Opening anchor tag with review link.
 #: includes/admin/class-settings.php:1039
 #, php-format
 msgid "Thank you for using %1$sWebberZone Followed Posts%2$s! Please %3$srate us%2$s on %3$sWordPress.org%2$s"
