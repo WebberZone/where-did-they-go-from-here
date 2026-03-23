@@ -7,7 +7,7 @@
 
 namespace WebberZone\WFP\Admin;
 
-use WebberZone\WFP\Util\Helpers;
+use WebberZone\WFP\Top_Tracked;
 
 if ( ! defined( 'WPINC' ) ) {
 	die;
@@ -72,14 +72,45 @@ class Dashboard_Widgets {
 	 */
 	public static function dashboard_widget_function() {
 		$settings = get_option( 'wherego_dashboard_widget', array() );
-		$number   = isset( $settings['number'] ) ? absint( $settings['number'] ) : 5;
+		$number   = isset( $settings['number'] ) ? absint( $settings['number'] ) : 10;
 
-		$args = array(
-			'number' => $number,
-			'stats'  => true,
+		if ( $number < 1 ) {
+			$number = 5;
+		}
+
+		$tracked_posts = Top_Tracked::get_posts( $number );
+
+		if ( empty( $tracked_posts ) ) {
+			echo '<p>' . esc_html__( 'No tracked posts found yet.', 'where-did-they-go-from-here' ) . '</p>';
+			return;
+		}
+
+		echo '<ol class="wherego-dashboard-top-tracked">';
+		foreach ( $tracked_posts as $tracked_post ) {
+			$title = get_the_title( $tracked_post['post_id'] );
+			$title = '' !== $title ? $title : __( '(no title)', 'where-did-they-go-from-here' );
+			echo '<li>';
+			echo '<a href="' . esc_url( get_permalink( $tracked_post['post_id'] ) ) . '">' . esc_html( $title ) . '</a> ';
+			echo '<span class="wherego-dashboard-count">(' . esc_html( self::format_count( $tracked_post['count'] ) ) . ')</span>';
+			echo '</li>';
+		}
+		echo '</ol>';
+	}
+
+	/**
+	 * Format tracked count label.
+	 *
+	 * @since 3.2.0
+	 *
+	 * @param int $count Track count.
+	 * @return string Formatted tracked count text.
+	 */
+	private static function format_count( int $count ): string {
+		return sprintf(
+			/* translators: %d: Number of source posts where this destination is tracked. */
+			_n( '%d source post', '%d source posts', $count, 'where-did-they-go-from-here' ),
+			$count
 		);
-
-		echo esc_html( get_wfp( $args ) );
 	}
 
 	/**

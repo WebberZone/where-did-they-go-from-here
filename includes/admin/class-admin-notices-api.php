@@ -36,7 +36,7 @@ class Admin_Notices_API {
 	/**
 	 * Constructor class.
 	 *
-	 * @param string $prefix Plugin prefix for AJAX actions, nonces, and storage keys. Default 'wzkb'.
+	 * @param string $prefix Plugin prefix for AJAX actions, nonces, and storage keys. Default 'wherego'.
 	 */
 	public function __construct( string $prefix = 'wherego' ) {
 		$this->prefix = $prefix;
