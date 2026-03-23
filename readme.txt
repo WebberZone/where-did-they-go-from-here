@@ -24,7 +24,7 @@ __If you're looking for a plugin that displays posts related to the content, loo
 
 * **Automatic**: The plugin will start displaying visited posts on your posts and pages automatically after the content when you activate the plugin
 * **Block editor support**: Easy to use block for the block editor. Find it under widgets or using "followed posts" or "where did they go from here"
-* **Shortcode**: Use `[wherego]` to display the followed posts
+* **Shortcode**: Use `[wfp]` to display the followed posts
 * **Multi-Widget support**: Find the __Followed posts__ widget to display the posts in your theme's sidebar or any other area that supports widgets. You can use the widget multiple times with different settings for each
 * **Manual install**: Want more control over placement? Check the [FAQ](https://wordpress.org/plugins/where-did-they-go-from-here/#faq) on which functions are available for manual install
 * **Exclusions**: Exclude select posts and pages from the list of posts. Exclude posts from select categories from the list of posts
