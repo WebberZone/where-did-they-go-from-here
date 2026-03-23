@@ -50,102 +50,81 @@ msgid "Followed posts:"
 msgstr ""
 
 #: includes/admin/class-tools-page.php:55
-#: includes/admin/class-tools-page.php:116
+#: includes/admin/class-tools-page.php:106
 msgid "WebberZone Followed Posts Tools"
 msgstr ""
 
-#: includes/admin/class-tools-page.php:102
-msgid "Old settings key has been deleted"
-msgstr ""
-
-#: includes/admin/class-tools-page.php:110
+#: includes/admin/class-tools-page.php:100
 msgid "Settings have been imported successfully"
 msgstr ""
 
 #: includes/admin/class-admin.php:186
 #: includes/admin/class-settings.php:1067
-#: includes/admin/class-settings.php:1242
+#: includes/admin/class-settings.php:1317
 #: includes/admin/class-tools-page.php:81
-#: includes/admin/class-tools-page.php:128
-#: includes/admin/class-tools-page.php:131
+#: includes/admin/class-tools-page.php:116
+#: includes/admin/class-tools-page.php:119
 msgid "Clear cache"
 msgstr ""
 
-#: includes/admin/class-tools-page.php:134
+#: includes/admin/class-tools-page.php:122
 msgid "Clear the Followed Posts cache. This will also be cleared automatically when you save the settings page."
 msgstr ""
 
-#: includes/admin/class-tools-page.php:143
+#: includes/admin/class-tools-page.php:132
 msgid "Export the plugin settings for this site as a .json file. This allows you to easily import the configuration into another site."
 msgstr ""
 
-#: includes/admin/class-tools-page.php:147
+#: includes/admin/class-tools-page.php:136
 msgid "Export Settings"
 msgstr ""
 
-#: includes/admin/class-tools-page.php:158
+#: includes/admin/class-tools-page.php:148
 msgid "Import the plugin settings from a .json file. This file can be obtained by exporting the settings on this or another site using the form above. Please ensure that this file has not been edited, as importing an incorrect file can break your installation!"
 msgstr ""
 
-#: includes/admin/class-tools-page.php:164
+#: includes/admin/class-tools-page.php:154
 msgid "Import Settings"
 msgstr ""
 
-#: includes/admin/class-tools-page.php:173
-msgid "Other tools"
-msgstr ""
-
-#: includes/admin/class-tools-page.php:176
-msgid "From v2, Followed Posts stores the settings in a new key in the database. This will delete the old settings for the current blog."
-msgstr ""
-
-#: includes/admin/class-tools-page.php:179
-msgid "Delete old settings"
-msgstr ""
-
-#: includes/admin/class-tools-page.php:179
-msgid "This will delete the settings before v2.5.x. Proceed?"
-msgstr ""
-
-#: includes/admin/class-tools-page.php:261
+#: includes/admin/class-tools-page.php:237
 msgid "Please upload a valid .json file"
 msgstr ""
 
-#: includes/admin/class-tools-page.php:267
+#: includes/admin/class-tools-page.php:243
 msgid "Please upload a file to import"
 msgstr ""
 
 #. translators: 1: Support link.
-#: includes/admin/class-tools-page.php:296
+#: includes/admin/class-tools-page.php:272
 #, php-format
 msgid "For more information or how to get support visit the <a href=\"%1$s\">WebberZone support site</a>."
 msgstr ""
 
 #. translators: 1: Forum link.
-#: includes/admin/class-tools-page.php:298
+#: includes/admin/class-tools-page.php:274
 #, php-format
 msgid "Support queries should be posted in the <a href=\"%1$s\">WordPress.org support forums</a>."
 msgstr ""
 
-#. translators: 1: Github issues link, 2: Github plugin page link.
 #. translators: 1: Github Issues link, 2: Github page.
 #: includes/admin/class-settings.php:962
-#: includes/admin/class-tools-page.php:301
+#: includes/admin/class-tools-page.php:277
 #, php-format
 msgid "<a href=\"%1$s\">Post an issue</a> on <a href=\"%2$s\">GitHub</a> (bug reports only)."
 msgstr ""
 
 #: includes/admin/class-settings.php:262
 #: includes/admin/class-settings.php:986
-#: includes/admin/class-tools-page.php:310
+#: includes/admin/class-tools-page.php:286
 msgid "General"
 msgstr ""
 
-#: includes/admin/class-tools-page.php:312
+#: includes/admin/class-tools-page.php:288
 msgid "This screen provides some tools that help maintain certain features of Followed Posts."
 msgstr ""
 
-#: includes/admin/class-tools-page.php:313
+#: includes/admin/class-tools-page.php:289
 msgid "Clear the cache and import/export the Followed Posts settings."
 msgstr ""
 
@@ -531,7 +510,7 @@ msgid "If checked, when no thumbnail is found, show a default one from the URL b
 msgstr ""
 
 #: includes/admin/class-settings.php:740
-#: includes/admin/class-settings.php:1210
+#: includes/admin/class-settings.php:1285
 msgid "Default thumbnail"
 msgstr ""
 
@@ -679,10 +658,6 @@ msgstr ""
 
 #: includes/admin/sidebar.php:44
 msgid "Ajay's blog"
-msgstr ""
-
-#: includes/admin/sidebar.php:73
-msgid "Follow me"
 msgstr ""
 
 #: includes/frontend/blocks/followed-posts/build/index.js:1
@@ -867,15 +842,9 @@ msgstr ""
 msgid "Thumbnails only"
 msgstr ""
 
-#: includes/admin/class-settings.php:1140
-#: includes/class-options-api.php:297
+#: includes/admin/class-settings.php:1138
 msgctxt "tag delimiter"
 msgid ","
-msgstr ""
-
-#. translators: 1: Number of entries.
-#: includes/util/class-cache.php:49
-msgid "Cache cleared"
 msgstr ""
 
 #. Plugin URI of the plugin
@@ -958,7 +927,7 @@ msgstr ""
 msgid "WebberZone Followed Posts - Top Tracked"
 msgstr ""
 
-#: includes/admin/class-dashboard-widgets.php:104
+#: includes/admin/class-dashboard-widgets.php:135
 msgid "Number of posts to display:"
 msgstr ""
 
@@ -1104,11 +1073,11 @@ msgstr ""
 msgid "Followed Posts Tools"
 msgstr ""
 
-#: includes/admin/class-tools-page.php:140
+#: includes/admin/class-tools-page.php:129
 msgid "Export settings"
 msgstr ""
 
-#: includes/admin/class-tools-page.php:155
+#: includes/admin/class-tools-page.php:145
 msgid "Import settings"
 msgstr ""
 
@@ -1152,14 +1121,6 @@ msgstr ""
 msgid "Auto Close"
 msgstr ""
 
-#: includes/admin/sidebar.php:76
-msgid "Follow WebberZone on X"
-msgstr ""
-
-#: includes/admin/sidebar.php:77
-msgid "Follow WebberZone on Facebook"
-msgstr ""
-
 #: includes/class-crp-integration.php:180
 msgid "WFP CRP Integration is enabled but Contextual Related Posts is not active. Please install and activate CRP to use this feature."
 msgstr ""
@@ -1188,27 +1149,27 @@ msgstr ""
 msgid "Maximum number of followed posts to feed to CRP. Set to 0 for no limit."
 msgstr ""
 
-#: includes/frontend/class-rest-api.php:77
+#: includes/frontend/class-rest-api.php:99
 msgid "Current post ID."
 msgstr ""
 
-#: includes/frontend/class-rest-api.php:83
+#: includes/frontend/class-rest-api.php:105
 msgid "Referrer URL."
 msgstr ""
 
-#: includes/frontend/class-rest-api.php:89
+#: includes/frontend/class-rest-api.php:111
 msgid "Debug mode."
 msgstr ""
 
-#: includes/frontend/class-rest-api.php:107
+#: includes/frontend/class-rest-api.php:129
 msgid "Post ID to get followed posts for."
 msgstr ""
 
-#: includes/frontend/class-rest-api.php:116
+#: includes/frontend/class-rest-api.php:138
 msgid "Maximum number of items to return."
 msgstr ""
 
-#: includes/frontend/class-rest-api.php:174
+#: includes/frontend/class-rest-api.php:202
 msgid "Invalid post ID."
 msgstr ""
 
@@ -1235,4 +1196,44 @@ msgstr ""
 #: includes/frontend/blocks/followed-posts/block.json
 msgctxt "block description"
 msgid "Display the Followed Posts"
+msgstr ""
+
+#: includes/admin/class-dashboard-widgets.php:84
+msgid "No tracked posts found yet."
+msgstr ""
+
+#: includes/admin/class-dashboard-widgets.php:91
+msgid "(no title)"
+msgstr ""
+
+#. translators: %d: Number of source posts where this destination is tracked.
+#: includes/admin/class-dashboard-widgets.php:111
+#, php-format
+msgid "%d source post"
+msgid_plural "%d source posts"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/admin/sidebar.php:17
+msgid "Support WebberZone Followed Posts"
+msgstr ""
+
+#: includes/admin/sidebar.php:64
+msgid "Link Warnings"
+msgstr ""
+
+#: includes/admin/sidebar.php:74
+msgid "Follow us"
+msgstr ""
+
+#: includes/frontend/class-display.php:610
+msgid "There is no excerpt because this is a protected post."
+msgstr ""
+
+#: includes/frontend/class-rest-api.php:81
+msgid "Sorry, you are not allowed to view this context."
+msgstr ""
+
+#: includes/frontend/class-rest-api.php:146
+msgid "Scope under which the request is made."
 msgstr ""
