@@ -126,7 +126,10 @@ class Top_Tracked {
 			return false;
 		}
 
-		return ! in_array( $post->post_status, array( 'trash', 'auto-draft', 'inherit' ), true )
-			&& 'revision' !== $post->post_type;
+		if ( 'revision' === $post->post_type ) {
+			return false;
+		}
+
+		return ! in_array( $post->post_status, array( 'trash', 'auto-draft', 'inherit' ), true );
 	}
 }
