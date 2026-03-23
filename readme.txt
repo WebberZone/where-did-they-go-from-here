@@ -2,7 +2,7 @@
 Tags: followed posts, related posts, where did they go from here
 Contributors: Ajay, webberzone
 Donate link: https://wzn.io/donate-wz
-Stable tag: 3.2.0
+Stable tag: 3.2.1
 Requires at least: 6.6
 Requires PHP: 7.4
 Tested up to: 6.9
@@ -109,6 +109,10 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 == Changelog ==
 
+= 3.2.1 =
+
+* Fixed: Issue with the zip package missing files.
+
 = 3.2.0 =
 
 * New:
@@ -143,5 +147,5 @@ For previous changelog entries check out the changelog.txt file included with th
 
 == Upgrade Notice ==
 
-= 3.2.0 =
+= 3.2.1 =
 Major release; see changelog for further information.
