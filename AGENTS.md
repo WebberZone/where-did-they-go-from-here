@@ -4,7 +4,7 @@ This file provides guidance to Codex (Codex.ai/code) when working with code in t
 
 ## Plugin Overview
 
-WebberZone Followed Posts (v3.2.0) tracks which posts visitors navigate to from any given post, then displays that list as "followed posts." Tracking is done client-side via an AJAX or REST-based beacon that resolves the referrer URL to a post ID and stores the list in `wheredidtheycomefrom` post meta. Namespace: `WebberZone\WFP`. Constants: `WFP_VERSION`, `WHEREGO_PLUGIN_FILE`, `WHEREGO_PLUGIN_DIR`, `WHEREGO_PLUGIN_URL`, `WFP_CACHE_TIME`. Settings option key: `wherego_settings`. Requires WordPress 6.6+, PHP 7.4+. No Freemius.
+WebberZone Followed Posts (v3.2.2) tracks which posts visitors navigate to from any given post, then displays that list as "followed posts." Tracking is done client-side via an AJAX or REST-based beacon that resolves the referrer URL to a post ID and stores the list in `wheredidtheycomefrom` post meta. Namespace: `WebberZone\WFP`. Constants: `WFP_VERSION`, `WHEREGO_PLUGIN_FILE`, `WHEREGO_PLUGIN_DIR`, `WHEREGO_PLUGIN_URL`, `WFP_CACHE_TIME`. Settings option key: `wherego_settings`. Requires WordPress 6.6+, PHP 7.4+. No Freemius.
 
 ## Commands
 
@@ -28,7 +28,7 @@ No `npm run build` — this plugin has no wp-scripts block build step. The block
 ## Architecture
 
 ### Entry Point
-`where-did-they-go-from-here.php` defines constants, registers the custom autoloader (`includes/autoloader.php`), then calls `\WebberZone\WFP\load()` on `plugins_loaded`, which instantiates the singleton `Main`.
+`where-did-they-go-from-here.php` defines constants, registers the custom autoloader (`includes/autoloader.php`), and directly requires `includes/options-api.php` and `includes/functions.php`, then calls `\WebberZone\WFP\load()` on `plugins_loaded`, which instantiates the singleton `Main`.
 
 ### Key Components
 - **`includes/class-main.php`** — Singleton. Wires up `Tracker`, `Shortcodes`, `Blocks`, `Styles_Handler`, `Language_Handler`, `REST_API`, `CRP_Integration`, and (on `is_admin()`) `Admin`. Also hooks `the_content` and feed filters to auto-append the followed-posts list.
