@@ -6,6 +6,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 WebberZone Followed Posts (v3.2.2) tracks which posts visitors navigate to from any given post, then displays that list as "followed posts." Tracking is done client-side via an AJAX or REST-based beacon that resolves the referrer URL to a post ID and stores the list in `wheredidtheycomefrom` post meta. Namespace: `WebberZone\WFP`. Constants: `WFP_VERSION`, `WHEREGO_PLUGIN_FILE`, `WHEREGO_PLUGIN_DIR`, `WHEREGO_PLUGIN_URL`, `WFP_CACHE_TIME`. Settings option key: `wherego_settings`. Requires WordPress 6.6+, PHP 7.4+. No Freemius.
 
+WordPress.org: https://wordpress.org/plugins/where-did-they-go-from-here/
+webberzone.com: https://webberzone.com/plugins/webberzone-followed-posts/
+
 ## Commands
 
 ### PHP
