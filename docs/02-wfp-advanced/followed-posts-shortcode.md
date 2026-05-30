@@ -1,9 +1,9 @@
 ---
-id: 452
 slug: followed-posts-shortcode
 title: "Followed Posts shortcode"
 products: [followed-posts]
 sections: [02-wfp-advanced]
+tags: [followed-posts,shortcode]
 status: publish
 order: 0
 ---
