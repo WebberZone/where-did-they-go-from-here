@@ -1,9 +1,9 @@
 ---
-id: 221
 slug: installing-webberzone-followed-posts
 title: "Installing WebberZone Followed Posts"
 products: [followed-posts]
 sections: [01-wzp-getting-started]
+tags: [followed-posts,installation]
 status: publish
 order: 0
 ---
