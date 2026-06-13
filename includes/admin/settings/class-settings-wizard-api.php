@@ -5,7 +5,7 @@
  * A reusable API class for creating multi-step settings wizards.
  * This class provides the framework for creating guided setup experiences.
  *
- * @package    WebberZone\WFP
+ * @package WebberZone\WFP
  */
 
 namespace WebberZone\WFP\Admin\Settings;
