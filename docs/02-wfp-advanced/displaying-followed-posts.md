@@ -30,13 +30,13 @@ Deselecting all locations disables automatic insertion entirely.
 
 Use `[wfp]` or the alias `[wherego]` to insert the list anywhere in post content or a page builder. All global settings are used as defaults and can be overridden per-instance with shortcode attributes.
 
-See the [Followed Posts shortcode](https://webberzone.com/plugins/webberzone-followed-posts/) article for the full attribute list.
+See the [Followed Posts shortcode](https://webberzone.com/support/knowledgebase/followed-posts-shortcode/) article for the full attribute list.
 
 ## Gutenberg block
 
 The **WebberZone Followed Posts** block is available in the **Widgets** category of the block inserter. Add it to any post or page to display the followed posts list at that position.
 
-See the [Followed Posts block](https://webberzone.com/plugins/webberzone-followed-posts/) article for the block settings.
+See the [Followed Posts block](https://webberzone.com/support/knowledgebase/followed-posts-block/) article for the block settings.
 
 ## Legacy widget
 
