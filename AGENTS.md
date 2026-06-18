@@ -41,3 +41,10 @@ No `npm run build` — this plugin has no wp-scripts block build step. The block
 
 ### Settings
 Access settings via `wherego_get_option( $key, $default )`. The filter prefix used by `Options_API` is `wherego` (e.g., `wherego_settings_general` to extend the General tab's fields).
+
+## Key Patterns
+
+- **Settings access:** Always use `wherego_get_option($key, $default)` rather than accessing `wherego_settings` directly.
+- **Hook registration:** Add hooks through `Hook_Registry::add_action()` / `Hook_Registry::add_filter()` (not directly via WordPress functions) so they're tracked and deduplication is handled.
+- **CRP integration:** `CRP_Integration` is opt-in, controlled by the `crp_integration_enabled` setting. When active it injects followed-post IDs into CRP's `manual_related` argument. Do not call CRP functions directly from other parts of this plugin.
+- **No block build step:** The block at `includes/frontend/blocks/followed-posts/` ships pre-built. Source lives under `src/` inside that directory but there is no npm build script wired up — do not run `npm run build`.
