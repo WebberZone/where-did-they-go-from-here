@@ -2,7 +2,7 @@
 Tags: followed posts, related posts, where did they go from here
 Contributors: Ajay, webberzone
 Donate link: https://wzn.io/donate-wz
-Stable tag: 3.2.2
+Stable tag: 3.3.0
 Requires at least: 6.6
 Requires PHP: 7.4
 Tested up to: 7.0
@@ -11,6 +11,15 @@ License: GPLv2 or later
 Show "Readers who viewed this page, also viewed" a.k.a. followed posts on your page. Much like Amazon.com's product pages.
 
 == Description ==
+
+**This plugin has been retired and is no longer under active development.**
+
+Existing installs will keep working, but there will be no further updates or support. For content recommendations, I suggest one of my other plugins instead:
+
+* [Contextual Related Posts](https://wordpress.org/plugins/contextual-related-posts/) recommends posts based on title and content relevance.
+* [Top 10](https://wordpress.org/plugins/top-10/) tracks page views and displays your most popular posts.
+
+Both are actively developed and cover the same goal of keeping visitors on your site.
 
 Have you seen Amazon's product pages? Amazon is a great example of visitor retention through recommendations. All of Amazon's pages have a "Customers who viewed this item also viewed". And how many times have you clicked those links? I know I have!
 
@@ -109,6 +118,13 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 == Changelog ==
 
+= 3.3.0 =
+
+* This is the final release of WebberZone Followed Posts. The plugin will continue to work but will no longer receive updates or support.
+* For related content recommendations, see Contextual Related Posts: https://wordpress.org/plugins/contextual-related-posts/
+* For popularity-based recommendations, see Top 10: https://wordpress.org/plugins/top-10/
+* Modified: Compatibility bump for the latest versions of WordPress and PHP.
+
 = 3.2.2 =
 
 * Fixed: Dashboard Top Tracked widget has been fixed.
@@ -150,6 +166,9 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 For previous changelog entries check out the changelog.txt file included with the plugin or [view the releases on Github](https://github.com/WebberZone/where-did-they-go-from-here/releases).
 
 == Upgrade Notice ==
+
+= 3.3.0 =
+Final release. The plugin will continue to work but will no longer receive updates or support. See changelog for recommended alternatives.
 
 = 3.2.2 =
 Major release; see changelog for further information.

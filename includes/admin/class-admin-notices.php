@@ -48,8 +48,36 @@ class Admin_Notices {
 	 * @since 3.2.0
 	 */
 	public function init() {
+		$this->register_deprecation_notice();
 		$this->register_cache_notice();
 		$this->register_tracking_disabled_notice();
+	}
+
+	/**
+	 * Register the deprecation (final release) notice.
+	 *
+	 * @since 3.3.0
+	 */
+	private function register_deprecation_notice() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
+		$this->admin_notices_api->register_notice(
+			array(
+				'id'          => 'wfp_deprecation',
+				'type'        => 'warning',
+				'message'     => sprintf(
+					/* translators: 1: Plugin name, 2: Contextual Related Posts link, 3: Top 10 link, 4: Learn more link. */
+					esc_html__( '%1$s has reached its final release and will no longer receive updates. Your site is unaffected, but for actively supported content recommendations, consider %2$s or %3$s. %4$s', 'where-did-they-go-from-here' ),
+					'<strong>WebberZone Followed Posts</strong>',
+					'<a href="https://wordpress.org/plugins/contextual-related-posts/" target="_blank" rel="noopener">' . esc_html__( 'Contextual Related Posts', 'where-did-they-go-from-here' ) . '</a>',
+					'<a href="https://wordpress.org/plugins/top-10/" target="_blank" rel="noopener">' . esc_html__( 'Top 10', 'where-did-they-go-from-here' ) . '</a>',
+					'<a href="https://webberzone.com/plugins/webberzone-followed-posts/" target="_blank" rel="noopener">' . esc_html__( 'Learn more', 'where-did-they-go-from-here' ) . '</a>'
+				),
+				'dismissible' => true,
+			)
+		);
 	}
 
 	/**
