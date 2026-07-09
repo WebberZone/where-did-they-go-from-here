@@ -868,13 +868,13 @@ msgid "https://webberzone.com"
 msgstr ""
 
 #. translators: 1: Plugin name, 2: Opening anchor tag, 3: Closing anchor tag
-#: includes/admin/class-admin-notices.php:72
+#: includes/admin/class-admin-notices.php:100
 #, php-format
 msgid "%1$s: Caching is disabled. %2$sEnable caching%3$s for better performance."
 msgstr ""
 
 #. translators: 1: Plugin name, 2: Opening anchor tag, 3: Closing anchor tag
-#: includes/admin/class-admin-notices.php:103
+#: includes/admin/class-admin-notices.php:131
 #, php-format
 msgid "%1$s: Tracking is disabled for all users. No tracking data will be collected. %2$sReview tracking settings%3$s."
 msgstr ""
@@ -1093,10 +1093,12 @@ msgstr ""
 msgid "WebberZone plugins"
 msgstr ""
 
+#: includes/admin/class-admin-notices.php:74
 #: includes/admin/sidebar.php:57
 msgid "Contextual Related Posts"
 msgstr ""
 
+#: includes/admin/class-admin-notices.php:75
 #: includes/admin/sidebar.php:58
 msgid "Top 10"
 msgstr ""
@@ -1236,4 +1238,14 @@ msgstr ""
 
 #: includes/frontend/class-rest-api.php:146
 msgid "Scope under which the request is made."
+msgstr ""
+
+#. translators: 1: Plugin name, 2: Contextual Related Posts link, 3: Top 10 link, 4: Learn more link.
+#: includes/admin/class-admin-notices.php:72
+#, php-format
+msgid "%1$s has reached its final release and will no longer receive updates. Your site is unaffected, but for actively supported content recommendations, consider %2$s or %3$s. %4$s"
+msgstr ""
+
+#: includes/admin/class-admin-notices.php:76
+msgid "Learn more"
 msgstr ""
