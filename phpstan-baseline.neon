@@ -1,6 +1,11 @@
 parameters:
 	ignoreErrors:
 		-
+			message: "#^Function get_field not found\\.$#"
+			count: 1
+			path: includes/frontend/class-media-handler.php
+
+		-
 			message: "#^Comparison operation \"\\<\\=\" between 604800 and 0 is always false\\.$#"
 			count: 1
 			path: includes/util/class-cache.php
