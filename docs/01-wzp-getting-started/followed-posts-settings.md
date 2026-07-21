@@ -89,6 +89,18 @@ Comma-separated list of category slugs to exclude. The field has autocomplete su
 
 The **Exclude category IDs** field below it is read-only and is automatically populated with the corresponding category IDs when you save the settings. You do not need to edit it manually.
 
+### CRP Integration
+
+Configure integration with [Contextual Related Posts](https://webberzone.com/plugins/contextual-related-posts/) to feed followed posts data into the related posts system.
+
+#### Enable CRP Integration
+
+Feed followed posts data to Contextual Related Posts. This allows CRP to display posts that users actually clicked on from the current post. Requires Contextual Related Posts to be installed and active. Default: disabled.
+
+#### Maximum Followed Posts
+
+Maximum number of followed posts to feed to CRP. Set to `0` for no limit. Default: `3`.
+
 ---
 
 ## Output tab
