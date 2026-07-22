@@ -58,3 +58,21 @@ Access settings via `wherego_get_option( $key, $default )`. The filter prefix us
 - **Hook registration:** Add hooks through `Hook_Registry::add_action()` / `Hook_Registry::add_filter()` (not directly via WordPress functions) so they're tracked and deduplication is handled.
 - **CRP integration:** `CRP_Integration` is opt-in, controlled by the `crp_integration_enabled` setting. When active it injects followed-post IDs into CRP's `manual_related` argument. Do not call CRP functions directly from other parts of this plugin.
 - **No block build step:** The block at `includes/frontend/blocks/followed-posts/` ships pre-built. Source lives under `src/` inside that directory but there is no npm build script wired up — do not run `npm run build`.
+
+## Shared framework files: `@since` convention
+
+The Settings API (`includes/admin/settings/*.php`) and the Admin Banner (`includes/admin/class-admin-banner.php`) are copy-pasted, shared framework files whose canonical source is the `Settings_API` repo. To keep `@since` tags meaningful and stable across syncs, these files follow special rules:
+
+- Each file carries **exactly one** `@since` tag, on its **class docblock**, set to the plugin version at which that class was **first introduced into this plugin**. This is per-file (the wizard, metabox and banner classes were generally added later than the core Settings API classes).
+- **Do not** add `@since` to methods, functions or properties in these files.
+- When syncing/updating these files from another plugin or the canonical `Settings_API` repo, **do not overwrite the class-level `@since`** — it is plugin-specific. Re-apply the values below after any sync.
+
+| File | `@since` |
+|---|---|
+| `includes/admin/settings/class-settings-api.php` | 3.1.0 |
+| `includes/admin/settings/class-settings-form.php` | 3.1.0 |
+| `includes/admin/settings/class-settings-sanitize.php` | 3.1.0 |
+| `includes/admin/settings/class-settings-wizard-api.php` | 3.2.0 |
+| `includes/admin/settings/class-metabox-api.php` | 3.1.0 |
+| `includes/admin/class-admin-banner.php` | 3.2.0 |
+
