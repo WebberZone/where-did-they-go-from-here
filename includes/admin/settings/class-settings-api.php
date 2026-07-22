@@ -19,6 +19,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Settings API wrapper class
  *
  * @version 2.9.0
+ * @since 3.1.0
  */
 class Settings_API {
 
@@ -124,8 +125,6 @@ class Settings_API {
 
 	/**
 	 * Settings form.
-	 *
-	 * @since 2.0.0
 	 *
 	 * @var object Settings form.
 	 */
