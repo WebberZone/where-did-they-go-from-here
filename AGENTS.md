@@ -11,6 +11,13 @@ This file provides guidance to Codex (Codex.ai/code) when working with code in t
 
 > **DEPRECATED:** This plugin is no longer maintained. There is no replacement plugin — treat any work here as maintenance-only unless the user says otherwise.
 
+## Links
+
+- GitHub: <https://github.com/WebberZone/where-did-they-go-from-here>
+- WordPress.org: <https://wordpress.org/plugins/where-did-they-go-from-here/>
+- Documentation: <https://webberzone.com/support/product/followed-posts/>
+- webberzone.com: <https://webberzone.com/plugins/followed-posts/>
+
 ## Plugin Overview
 
 WebberZone Followed Posts (v3.3.0) tracks which posts visitors navigate to from any given post, then displays that list as "followed posts." Tracking is done client-side via an AJAX or REST-based beacon that resolves the referrer URL to a post ID and stores the list in `wheredidtheycomefrom` post meta. Namespace: `WebberZone\WFP`. Constants: `WFP_VERSION`, `WHEREGO_PLUGIN_FILE`, `WHEREGO_PLUGIN_DIR`, `WHEREGO_PLUGIN_URL`, `WFP_CACHE_TIME`. Settings option key: `wherego_settings`. Text domain: `where-did-they-go-from-here`. Requires WordPress 6.6+, PHP 7.4+. No Freemius.
