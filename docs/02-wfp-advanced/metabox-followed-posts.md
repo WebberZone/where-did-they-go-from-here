@@ -31,4 +31,9 @@ To remove all followed posts from a post, clear the **Followed posts' IDs** fiel
 ## Notes
 
 - Saving the post via the metabox also clears the plugin's HTML cache for that post, so the updated list is displayed immediately.
-- The metabox appears on all public post types by default. You can control this with the `wherego_show_meta_box` and `wherego_meta_box_post_types` filters.
+- The metabox appears on all public post types by default. You can control this with the [`wherego_show_meta_box`](https://webberzone.dev/where-did-they-go-from-here/hooks/wherego_show_meta_box/) and [`wherego_meta_box_post_types`](https://webberzone.dev/where-did-they-go-from-here/hooks/wherego_meta_box_post_types/) filters.
+
+## See also
+
+- [`wherego_show_meta_box`](https://webberzone.dev/where-did-they-go-from-here/hooks/wherego_show_meta_box/)
+- [`wherego_meta_box_post_types`](https://webberzone.dev/where-did-they-go-from-here/hooks/wherego_meta_box_post_types/)

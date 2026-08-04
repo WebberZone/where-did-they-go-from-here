@@ -87,4 +87,8 @@ echo $output;
 
 ### Deprecated functions
 
-`echo_wherego()` and `get_wherego()` still work but are deprecated as of version 3.1.0. Use `the_wfp()` and `get_wfp()` instead.
+`echo_wherego()` and [`get_wherego()`](https://webberzone.dev/where-did-they-go-from-here/hooks/get_wherego/) still work but are deprecated as of version 3.1.0. Use `the_wfp()` and `get_wfp()` instead.
+
+## See also
+
+- [`get_wherego`](https://webberzone.dev/where-did-they-go-from-here/hooks/get_wherego/)

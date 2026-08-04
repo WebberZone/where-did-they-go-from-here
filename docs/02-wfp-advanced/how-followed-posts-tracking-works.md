@@ -33,7 +33,7 @@ Two tracker types are available, set under **Settings > Followed Posts > General
 
 ## Maximum tracked posts per page
 
-Each post stores up to 100 followed post IDs by default. Once that limit is reached, the oldest entries are dropped to make room for new ones. You can change this limit using the `wherego_max_followed_posts` filter:
+Each post stores up to 100 followed post IDs by default. Once that limit is reached, the oldest entries are dropped to make room for new ones. You can change this limit using the [`wherego_max_followed_posts`](https://webberzone.dev/where-did-they-go-from-here/hooks/wherego_max_followed_posts/) filter:
 
 ```php
 add_filter( 'wherego_max_followed_posts', function( $max ) {
@@ -73,3 +73,7 @@ The beacon is not enqueued in the following situations:
 - The page is a Customizer preview.
 - The current user's role is excluded by the **Track user groups** setting.
 - The current user is logged in and **Track logged-in users** is disabled.
+
+## See also
+
+- [`wherego_max_followed_posts`](https://webberzone.dev/where-did-they-go-from-here/hooks/wherego_max_followed_posts/)
