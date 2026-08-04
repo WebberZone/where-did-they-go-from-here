@@ -18,7 +18,7 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 /**
- * Class to register the settings.
+ * Bootstraps the Followed Posts admin area and its sub-classes.
  *
  * @since   3.1.0
  */

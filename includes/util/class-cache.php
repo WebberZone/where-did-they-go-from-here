@@ -13,7 +13,7 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 /**
- * Admin Columns Class.
+ * Manages the Followed Posts transient cache.
  *
  * @since 3.1.0
  */

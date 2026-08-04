@@ -12,7 +12,7 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 /**
- * Admin Columns Class.
+ * Static utility helpers used throughout Followed Posts.
  *
  * @since 3.1.0
  */
