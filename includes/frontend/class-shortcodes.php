@@ -13,7 +13,7 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 /**
- * Admin Columns Class.
+ * Registers the Followed Posts shortcodes.
  *
  * @since 3.1.0
  */

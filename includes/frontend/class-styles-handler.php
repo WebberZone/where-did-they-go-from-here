@@ -15,7 +15,7 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 /**
- * Admin Columns Class.
+ * Registers and enqueues the Followed Posts front-end styles.
  *
  * @since 3.1.0
  */
