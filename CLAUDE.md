@@ -39,11 +39,12 @@ composer zip            # Create distribution zip
 
 ```bash
 node build-assets.js        # Minify CSS/JS, generate RTL CSS
-npm run build:assets        # Same as above (alias in package.json)
-npm run zip                 # Create distribution zip via wp-scripts
+pnpm run build:assets        # Same as above (alias in package.json)
+pnpm run zip                 # Create distribution zip via wp-scripts
+ncu -u && pnpm install   # Update dependencies to latest and reinstall
 ```
 
-No `npm run build` — this plugin has no wp-scripts block build step. The block at `includes/frontend/blocks/followed-posts/` ships pre-built; its source lives under `src/` inside that directory but there is no npm build script wired up for it. `build-assets.js` handles the CSS/JS minification for the legacy assets in `includes/css/` and `includes/js/`.
+No `pnpm run build` — this plugin has no wp-scripts block build step. The block at `includes/frontend/blocks/followed-posts/` ships pre-built; its source lives under `src/` inside that directory but there is no pnpm build script wired up for it. `build-assets.js` handles the CSS/JS minification for the legacy assets in `includes/css/` and `includes/js/`.
 
 ## Architecture
 
@@ -71,7 +72,7 @@ Access settings via `wherego_get_option( $key, $default )`. The filter prefix us
 - **Settings access:** Always use `wherego_get_option($key, $default)` rather than accessing `wherego_settings` directly.
 - **Hook registration:** Add hooks through `Hook_Registry::add_action()` / `Hook_Registry::add_filter()` (not directly via WordPress functions) so they're tracked and deduplication is handled.
 - **CRP integration:** `CRP_Integration` is opt-in, controlled by the `crp_integration_enabled` setting. When active it injects followed-post IDs into CRP's `manual_related` argument. Do not call CRP functions directly from other parts of this plugin.
-- **No block build step:** The block at `includes/frontend/blocks/followed-posts/` ships pre-built. Source lives under `src/` inside that directory but there is no npm build script wired up — do not run `npm run build`.
+- **No block build step:** The block at `includes/frontend/blocks/followed-posts/` ships pre-built. Source lives under `src/` inside that directory but there is no pnpm build script wired up — do not run `pnpm run build`.
 
 ## Shared framework files: `@since` convention
 
