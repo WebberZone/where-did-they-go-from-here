@@ -1,8 +1,3 @@
-/* Tabs */
-#post-body-content .ui-tabs-nav {
-	border-bottom: 1px solid #c3c4c7;
-}
-
 /* General styles for the repeater wrapper */
 .wz-repeater-wrapper {
 	position: relative;
@@ -109,6 +104,20 @@
 /* Template styling for new items (hidden template) */
 .repeater-template {
 	display: none;
+}
+
+/* Disabled / pro-gated repeater: the subfields and the repeater's own buttons each
+   carry a disabled attribute, which is what actually blocks interaction. These rules
+   only supply the matching visual affordance on the wrapper, which cannot be disabled. */
+.wz-repeater-disabled .add-item,
+.wz-repeater-disabled .repeater-item-actions .button {
+	pointer-events: none;
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+
+.wz-repeater-disabled .add-item:hover {
+	background-color: #0073aa;
 }
 
 /* Responsiveness for smaller screens */
@@ -278,4 +287,376 @@
 	left: 8px;
 	transform: translateY(-50%);
 	font-size: 2em;
+}
+/* Toggle switch field type. */
+.wz-toggle {
+	position: relative;
+	display: inline-block;
+	width: 40px;
+	height: 22px;
+	vertical-align: middle;
+}
+
+.wz-toggle input[type="checkbox"] {
+	position: absolute;
+	opacity: 0;
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	cursor: pointer;
+}
+
+.wz-toggle .wz-toggle-slider {
+	position: absolute;
+	inset: 0;
+	background-color: #8c8f94;
+	border-radius: 11px;
+	transition: background-color 0.2s ease;
+	pointer-events: none;
+}
+
+.wz-toggle .wz-toggle-slider::before {
+	content: "";
+	position: absolute;
+	top: 2px;
+	right: 2px;
+	width: 18px;
+	height: 18px;
+	background-color: #fff;
+	border-radius: 50%;
+	transition: transform 0.2s ease;
+}
+
+.wz-toggle input[type="checkbox"]:checked + .wz-toggle-slider {
+	background-color: #2271b1;
+}
+
+.wz-toggle input[type="checkbox"]:checked + .wz-toggle-slider::before {
+	transform: translateX(-18px);
+}
+
+.wz-toggle input[type="checkbox"]:focus-visible + .wz-toggle-slider {
+	outline: 2px solid #2271b1;
+	outline-offset: 2px;
+}
+
+.wz-toggle input[type="checkbox"]:disabled {
+	cursor: not-allowed;
+}
+
+.wz-toggle input[type="checkbox"]:disabled + .wz-toggle-slider {
+	opacity: 0.5;
+}
+
+/*
+ * Settings page layout: content + sidebar, side by side.
+ *
+ * WP core lays out #post-body-content and #postbox-container-1 via floats, but a float can
+ * only avoid floats that precede it in source order — #post-body-content comes first, so it
+ * has nothing to avoid and renders at full width, overlapping the sidebar that floats beside
+ * it. Flexbox sidesteps the ordering problem entirely and (with align-items: flex-start) still
+ * lets the sidebar be shorter than the tab content, matching the old float layout's look.
+ */
+#post-body.wz-settings-post-body {
+	display: flex;
+	align-items: flex-start;
+	gap: 24px;
+}
+
+#post-body.wz-settings-post-body > #postbox-container-1 {
+	flex: 0 0 280px;
+	width: 280px;
+}
+
+/* Vertical settings tabs. */
+.wz-vertical-tabs {
+	display: flex;
+	align-items: flex-start;
+	flex: 1 1 auto;
+	min-width: 0;
+	gap: 24px;
+}
+
+.wz-vertical-tabs > ul.nav-tab-wrapper {
+	flex: 0 0 auto;
+	width: fit-content;
+	min-width: 160px;
+	max-width: 260px;
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	align-self: flex-start;
+	margin: 0;
+	padding: 8px;
+	background: #fff;
+	border: 1px solid #c3c4c7;
+	border-radius: 4px;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+	position: sticky;
+	top: 46px;
+}
+
+.wz-vertical-tabs > ul.nav-tab-wrapper li {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	background: transparent;
+	list-style: none;
+}
+
+.wz-vertical-tabs > ul.nav-tab-wrapper .nav-tab {
+	display: block;
+	float: none;
+	margin: 0;
+	padding: 8px 12px;
+	border: none;
+	border-radius: 3px;
+	background: transparent;
+	color: #2c3338;
+	font-weight: 500;
+	transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.wz-vertical-tabs > ul.nav-tab-wrapper .nav-tab:hover {
+	background-color: #f0f0f1;
+	color: #2271b1;
+	box-shadow: none;
+}
+
+.wz-vertical-tabs > ul.nav-tab-wrapper .nav-tab:focus-visible {
+	outline: 2px solid #2271b1;
+	outline-offset: -2px;
+	box-shadow: none;
+}
+
+.wz-vertical-tabs > ul.nav-tab-wrapper .nav-tab-active,
+.wz-vertical-tabs > ul.nav-tab-wrapper .nav-tab-active:hover,
+.wz-vertical-tabs > ul.nav-tab-wrapper .nav-tab-active:focus {
+	background-color: #2271b1;
+	color: #fff;
+}
+
+.wz-vertical-tabs > form {
+	flex: 1;
+	min-width: 0;
+	margin-top: 0;
+}
+
+/* Keep the CodeMirror CSS editor within its column on narrow screens. */
+.wz-vertical-tabs .CodeMirror {
+	max-width: 100%;
+}
+
+/* Horizontal tabs on small screens (WP admin breakpoint); pills keep their style. */
+@media screen and (max-width: 782px) {
+	#post-body.wz-settings-post-body {
+		display: block;
+	}
+
+	.wz-vertical-tabs {
+		display: block;
+	}
+
+	.wz-vertical-tabs > ul.nav-tab-wrapper {
+		flex-direction: row;
+		flex-wrap: wrap;
+		width: auto;
+		max-width: none;
+		position: static;
+		margin-bottom: 16px;
+	}
+
+	.wz-vertical-tabs > ul.nav-tab-wrapper .wz-settings-search-wrap {
+		flex: 1 1 100%;
+	}
+}
+
+/* Settings search. */
+.wz-vertical-tabs > ul.nav-tab-wrapper .wz-settings-search-wrap {
+	margin: 0 0 8px;
+	padding: 0;
+}
+
+.wz-settings-search-box {
+	position: relative;
+	display: block;
+}
+
+.wz-settings-search {
+	width: 100%;
+	margin: 0;
+	padding: 4px 8px 4px 28px;
+	border: 1px solid #8c8f94;
+	border-radius: 3px;
+	font-size: 13px;
+	line-height: 1.6;
+}
+
+.wz-settings-search:focus {
+	border-color: #2271b1;
+	box-shadow: 0 0 0 1px #2271b1;
+	outline: none;
+}
+
+/* Hide the native WebKit clear control; the plugin renders its own clear button. */
+.wz-settings-search::-webkit-search-cancel-button {
+	-webkit-appearance: none;
+	appearance: none;
+}
+
+.wz-settings-search-clear {
+	position: absolute;
+	top: 50%;
+	left: 4px;
+	transform: translateY(-50%);
+	margin: 0;
+	padding: 0 6px;
+	border: 0;
+	border-radius: 2px;
+	background: transparent;
+	color: #646970;
+	cursor: pointer;
+	font-size: 18px;
+	line-height: 1.2;
+}
+
+.wz-settings-search-clear:hover {
+	color: #d63638;
+}
+
+.wz-settings-search-clear:focus-visible {
+	outline: 2px solid #2271b1;
+	outline-offset: 1px;
+}
+
+.wz-settings-search-clear[hidden] {
+	display: none;
+}
+
+/* Rows filtered out by the search. */
+.wz-search-hidden {
+	display: none !important;
+}
+
+/* While searching, show every tab panel that has matches and hide the rest. */
+.wz-vertical-tabs.wz-searching > form > div {
+	display: none !important;
+}
+
+.wz-vertical-tabs.wz-searching > form > div.wz-has-matches {
+	display: block !important;
+	margin-bottom: 24px;
+}
+
+/* Hide the per-tab button rows and legends while searching; a single save bar is shown instead. */
+.wz-vertical-tabs.wz-searching > form > div.wz-has-matches > p {
+	display: none;
+}
+
+.wz-vertical-tabs.wz-searching > form > div.wz-has-matches > table.form-table {
+	margin-top: 0;
+}
+
+/* Per-tab section title: hidden normally, shown while searching to identify each group of results. */
+.wz-section-title {
+	display: none;
+}
+
+.wz-vertical-tabs.wz-searching .wz-section-title {
+	display: block;
+	margin: 0;
+	padding: 6px 10px;
+	background: #f0f0f1;
+	border-right: 4px solid #2271b1;
+	color: #50575e;
+	font-size: 13px;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+}
+
+/* Single sticky save bar shown while search results are displayed. */
+.wz-search-actions {
+	position: sticky;
+	bottom: 0;
+	margin: 0;
+	padding: 12px 0;
+	background: linear-gradient(to bottom, rgba(240, 240, 241, 0), #f0f0f1 40%);
+}
+
+/* Match-count badge on the navigation tabs. */
+.wz-tab-count {
+	display: inline-block;
+	margin-right: 6px;
+	padding: 0 6px;
+	border-radius: 9px;
+	background-color: #2271b1;
+	color: #fff;
+	font-size: 11px;
+	line-height: 18px;
+	vertical-align: middle;
+}
+
+.wz-vertical-tabs > ul.nav-tab-wrapper .nav-tab-active .wz-tab-count {
+	background-color: #fff;
+	color: #2271b1;
+}
+
+.wz-vertical-tabs > ul.nav-tab-wrapper .wz-tab-no-matches {
+	opacity: 0.45;
+}
+
+/* Highlighted search term in row labels. */
+mark.wz-search-mark {
+	padding: 0;
+	background-color: #fff3ad;
+	color: inherit;
+}
+
+/* No results message. */
+.wz-search-no-results {
+	margin: 16px 0;
+	padding: 12px;
+	background: #fff;
+	border-right: 4px solid #dba617;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+}
+
+/* Modified-from-default indicator. */
+.wz-modified-dot {
+	display: inline-block;
+	width: 8px;
+	height: 8px;
+	margin: 0 2px 0 6px;
+	border-radius: 50%;
+	background-color: #dba617;
+	vertical-align: middle;
+}
+
+.wz-modified-legend {
+	margin-top: 4px;
+	color: #646970;
+	font-size: 12px;
+}
+
+.wz-modified-legend .wz-modified-dot {
+	margin-right: 0;
+}
+
+/* Hide the legend on tabs where nothing is modified. */
+form > div:not(:has(.form-table .wz-modified-dot)) .wz-modified-legend {
+	display: none;
+}
+
+/* Default value note below field descriptions. */
+.wz-default-value {
+	color: #646970;
+	font-size: 12px;
+}
+
+.wz-default-value code {
+	font-size: 11px;
+	padding: 1px 5px;
+	overflow-wrap: anywhere;
+	word-break: break-word;
 }
