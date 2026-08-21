@@ -2,7 +2,7 @@
 Tags: followed posts, related posts, where did they go from here
 Contributors: Ajay, webberzone
 Donate link: https://wzn.io/donate-wz
-Stable tag: 3.3.0
+Stable tag: 3.4.0
 Requires at least: 6.6
 Requires PHP: 7.4
 Tested up to: 7.1
@@ -118,6 +118,11 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 == Changelog ==
 
+= 3.4.0 =
+
+* Security: Settings fields whose type had no matching sanitize callback were saved without sanitization. Radio, radio-with-description, thumbnail size and file fields are now validated against the choices they actually offer, and any remaining type falls back to a sanitizing callback instead of storing raw input. This warranted a release despite 3.3.0 being announced as the last one.
+* Modified: The bundled settings framework has been brought up to date (Settings API 3.0.0).
+
 = 3.3.0 =
 
 * This is the final release of WebberZone Followed Posts. The plugin will continue to work but will no longer receive updates or support.
@@ -166,6 +171,9 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 For previous changelog entries check out the changelog.txt file included with the plugin or [view the releases on Github](https://github.com/WebberZone/where-did-they-go-from-here/releases).
 
 == Upgrade Notice ==
+
+= 3.4.0 =
+Security release. Settings fields of certain types were saved without sanitization; please update.
 
 = 3.3.0 =
 Final release. The plugin will continue to work but will no longer receive updates or support. See changelog for recommended alternatives.
