@@ -120,8 +120,7 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 = 3.4.0 =
 
-* Security: Settings fields whose type had no matching sanitize callback were saved without sanitization. Radio, radio-with-description, thumbnail size and file fields are now validated against the choices they actually offer, and any remaining type falls back to a sanitizing callback instead of storing raw input. This warranted a release despite 3.3.0 being announced as the last one.
-* Modified: The bundled settings framework has been brought up to date (Settings API 3.0.0).
+* Modified: Updated the bundled settings framework to Settings API 3.0.0. Radio, thumbnail size and file settings are now validated against the choices they offer on save.
 
 = 3.3.0 =
 
@@ -173,7 +172,7 @@ For previous changelog entries check out the changelog.txt file included with th
 == Upgrade Notice ==
 
 = 3.4.0 =
-Security release. Settings fields of certain types were saved without sanitization; please update.
+Maintenance release; the bundled settings framework has been updated.
 
 = 3.3.0 =
 Final release. The plugin will continue to work but will no longer receive updates or support. See changelog for recommended alternatives.
