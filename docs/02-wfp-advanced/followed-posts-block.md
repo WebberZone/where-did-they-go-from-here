@@ -2,10 +2,9 @@
 slug: followed-posts-block
 title: "Followed Posts block"
 products: [followed-posts]
-sections: [02-wfp-advanced]
-tags: [followed-posts, block, gutenberg]
+sections: ["02-wfp-advanced"]
+tags: [block, followed-posts, gutenberg]
 status: publish
-order: 0
 ---
 
 [WebberZone Followed Posts](https://webberzone.com/plugins/webberzone-followed-posts/) includes a Gutenberg block that lets you insert the followed posts list at any position within a post or page using the block editor.

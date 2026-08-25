@@ -2,13 +2,13 @@
 slug: how-followed-posts-tracking-works
 title: "How followed posts tracking works"
 products: [followed-posts]
-sections: [02-wfp-advanced]
-tags: [followed-posts, tracking, rest-api, ajax]
+sections: ["02-wfp-advanced"]
+tags: [ajax, followed-posts, rest-api, tracking]
 status: publish
-order: 0
+toc: true
 ---
 
-[kbtoc]
+[toc]
 
 [WebberZone Followed Posts](https://webberzone.com/plugins/webberzone-followed-posts/) tracks real visitor navigation: when a visitor lands on a post, the plugin records which post they came from. Over time this builds a per-post list of "followed posts" — the posts that readers actually navigated to from that page.
 

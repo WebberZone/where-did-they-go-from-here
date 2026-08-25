@@ -2,15 +2,15 @@
 slug: displaying-followed-posts
 title: "Displaying followed posts"
 products: [followed-posts]
-sections: [02-wfp-advanced]
-tags: [followed-posts, display, shortcode, widget, block, template]
+sections: ["02-wfp-advanced"]
+tags: [block, display, followed-posts, shortcode, template, widget]
 status: publish
-order: 0
+toc: true
 ---
 
-[kbtoc]
+[toc]
 
-[WebberZone Followed Posts](https://webberzone.com/plugins/webberzone-followed-posts/) offers five ways to display the followed posts list: automatic insertion into post content, the `[wfp]` shortcode, a Gutenberg block, a legacy widget, and PHP template functions.
+[WebberZone Followed Posts](https://webberzone.com/plugins/webberzone-followed-posts/) offers five ways to display the followed posts list: automatic insertion into post content, the `[[wfp]]` shortcode, a Gutenberg block, a legacy widget, and PHP template functions.
 
 ## Automatic insertion
 
@@ -28,7 +28,7 @@ Deselecting all locations disables automatic insertion entirely.
 
 ## Shortcode
 
-Use `[wfp]` or the alias `[wherego]` to insert the list anywhere in post content or a page builder. All global settings are used as defaults and can be overridden per-instance with shortcode attributes.
+Use `[[wfp]]` or the alias `[[wherego]]` to insert the list anywhere in post content or a page builder. All global settings are used as defaults and can be overridden per-instance with shortcode attributes.
 
 See the [Followed Posts shortcode](https://webberzone.com/support/knowledgebase/followed-posts-shortcode/) article for the full attribute list.
 

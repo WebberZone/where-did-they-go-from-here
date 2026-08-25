@@ -2,10 +2,9 @@
 slug: installing-webberzone-followed-posts
 title: "Installing WebberZone Followed Posts"
 products: [followed-posts]
-sections: [01-wzp-getting-started]
+sections: ["01-wzp-getting-started"]
 tags: [followed-posts, installation]
 status: publish
-order: 0
 ---
 
 [WebberZone Followed Posts](https://webberzone.com/plugins/webberzone-followed-posts/) is a free plugin available on WordPress.org that tracks which posts visitors navigate to from any given post and displays that list as "followed posts." It requires WordPress 6.6 or higher and PHP 7.4 or higher.

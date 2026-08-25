@@ -2,13 +2,13 @@
 slug: crp-integration
 title: "Contextual Related Posts integration"
 products: [followed-posts]
-sections: [02-wfp-advanced]
-tags: [followed-posts, crp, contextual-related-posts, integration]
+sections: ["02-wfp-advanced"]
+tags: [contextual-related-posts, crp, followed-posts, integration]
 status: publish
-order: 0
+toc: true
 ---
 
-[kbtoc]
+[toc]
 
 [WebberZone Followed Posts](https://webberzone.com/plugins/webberzone-followed-posts/) can feed its tracking data directly into [Contextual Related Posts](https://webberzone.com/plugins/contextual-related-posts/). When the integration is active, followed post IDs are injected into CRP's `manual_related` argument, so CRP surfaces posts that real visitors actually navigated to from the current post.
 
