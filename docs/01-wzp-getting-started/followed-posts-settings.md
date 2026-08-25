@@ -2,13 +2,13 @@
 slug: followed-posts-settings
 title: "Followed Posts settings"
 products: [followed-posts]
-sections: [01-wzp-getting-started]
+sections: ["01-wzp-getting-started"]
 tags: [followed-posts, settings]
 status: publish
-order: 0
+toc: true
 ---
 
-[kbtoc]
+[toc]
 
 The [WebberZone Followed Posts](https://webberzone.com/plugins/webberzone-followed-posts/) settings page is at **Settings > Followed Posts**. Settings are organized across five tabs: General, Output, Thumbnail, Styles, and Feed.
 

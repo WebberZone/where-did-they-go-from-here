@@ -2,10 +2,9 @@
 slug: metabox-followed-posts
 title: "Manually setting followed posts"
 products: [followed-posts]
-sections: [02-wfp-advanced]
+sections: ["02-wfp-advanced"]
 tags: [followed-posts, metabox]
 status: publish
-order: 0
 ---
 
 [WebberZone Followed Posts](https://webberzone.com/plugins/webberzone-followed-posts/) adds a metabox to every post, page, and public custom post type edit screen. This lets you manually define or override the followed posts list for any individual post, without waiting for real visitor tracking data to accumulate.

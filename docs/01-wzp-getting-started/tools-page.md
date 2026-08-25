@@ -2,10 +2,9 @@
 slug: tools-page
 title: "Tools page"
 products: [followed-posts]
-sections: [01-wzp-getting-started]
-tags: [followed-posts, tools, cache, import, export]
+sections: ["01-wzp-getting-started"]
+tags: [cache, export, followed-posts, import, tools]
 status: publish
-order: 0
 ---
 
 The [WebberZone Followed Posts](https://webberzone.com/plugins/webberzone-followed-posts/) Tools page is at **Tools > Followed Posts Tools**. It provides three utilities: clearing the cache, exporting settings, and importing settings.
