@@ -5,6 +5,7 @@ products: [followed-posts]
 sections: ["02-wfp-advanced"]
 tags: [block, display, followed-posts, shortcode, template, widget]
 status: publish
+order: 0
 toc: true
 ---
 

@@ -5,6 +5,7 @@ products: [followed-posts]
 sections: ["01-wzp-getting-started"]
 tags: [followed-posts, settings]
 status: publish
+order: 0
 toc: true
 ---
 

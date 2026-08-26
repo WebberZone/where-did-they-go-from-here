@@ -5,6 +5,7 @@ products: [followed-posts]
 sections: ["02-wfp-advanced"]
 tags: [ajax, followed-posts, rest-api, tracking]
 status: publish
+order: 0
 toc: true
 ---
 

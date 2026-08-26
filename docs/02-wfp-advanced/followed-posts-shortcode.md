@@ -5,6 +5,7 @@ products: [followed-posts]
 sections: ["02-wfp-advanced"]
 tags: [followed-posts, shortcode]
 status: publish
+order: 0
 ---
 
 [WebberZone Followed Posts](https://webberzone.com/plugins/webberzone-followed-posts/) provides a shortcode that lets you insert the followed posts list anywhere in your post content or in a page builder. Two aliases are registered and behave identically:
