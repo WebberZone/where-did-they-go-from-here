@@ -5,6 +5,7 @@ products: [followed-posts]
 sections: ["02-wfp-advanced"]
 tags: [contextual-related-posts, crp, followed-posts, integration]
 status: publish
+order: 0
 toc: true
 ---
 
