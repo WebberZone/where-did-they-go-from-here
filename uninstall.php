@@ -9,6 +9,9 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit;
 }
 
+// The plugin is not loaded during uninstall, so pull in the eraser directly.
+require_once __DIR__ . '/includes/util/class-data.php';
+
 if ( ! is_multisite() ) {
 	wherego_delete_data();
 } else {
@@ -35,16 +38,5 @@ if ( ! is_multisite() ) {
  * @since 2.3.0
  */
 function wherego_delete_data() {
-	global $wpdb;
-
-	$wpdb->query( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching
-		"
-		DELETE FROM {$wpdb->postmeta}
-		WHERE meta_key LIKE 'wheredidtheycomefrom'
-		OR `meta_key` LIKE '_wherego_cache_%'
-		"
-	);
-
-	delete_option( 'ald_wherego_settings' );
-	delete_option( 'wherego_settings' );
+	\WebberZone\WFP\Util\Data::delete_all_data();
 }

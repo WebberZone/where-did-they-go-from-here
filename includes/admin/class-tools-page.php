@@ -10,6 +10,7 @@
 
 namespace WebberZone\WFP\Admin;
 
+use WebberZone\WFP\Util\Data;
 use WebberZone\WFP\Util\Hook_Registry;
 
 if ( ! defined( 'WPINC' ) ) {
@@ -42,6 +43,9 @@ class Tools_Page {
 		Hook_Registry::add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ), 99 );
 		Hook_Registry::add_filter( 'admin_init', array( $this, 'process_settings_import' ), 9 );
 		Hook_Registry::add_filter( 'admin_init', array( $this, 'process_settings_export' ) );
+		Hook_Registry::add_action( 'admin_init', array( $this, 'process_data_export' ) );
+		Hook_Registry::add_action( 'admin_init', array( $this, 'process_delete_tracking_data' ) );
+		Hook_Registry::add_action( 'admin_init', array( $this, 'process_delete_all_data' ) );
 	}
 
 	/**
@@ -100,6 +104,8 @@ class Tools_Page {
 			add_settings_error( 'wherego-notices', '', esc_html__( 'Settings have been imported successfully', 'where-did-they-go-from-here' ), 'success' );
 		}
 
+		self::maintenance_notices();
+
 		ob_start();
 		?>
 	<div class="wrap">
@@ -111,6 +117,39 @@ class Tools_Page {
 		<div id="poststuff">
 		<div id="post-body" class="metabox-holder columns-2">
 		<div id="post-body-content">
+
+				<form method="post">
+				<div class="postbox">
+					<h2><span><?php esc_html_e( 'Export tracking data', 'where-did-they-go-from-here' ); ?></span></h2>
+					<div class="inside">
+						<p class="description">
+							<?php esc_html_e( 'Download the followed posts data for this site as a .csv file. This plugin is retired, so export anything you want to keep before you remove it.', 'where-did-they-go-from-here' ); ?>
+						</p>
+						<fieldset>
+							<legend class="screen-reader-text"><?php esc_html_e( 'Export format', 'where-did-they-go-from-here' ); ?></legend>
+							<p>
+								<label>
+									<input type="radio" name="wherego_export_format" value="detailed" checked="checked" />
+									<strong><?php esc_html_e( 'Detailed', 'where-did-they-go-from-here' ); ?></strong>
+									&mdash; <?php esc_html_e( 'one row for every source post and followed post pair, in the order they were tracked. This is the complete data set.', 'where-did-they-go-from-here' ); ?>
+								</label>
+							</p>
+							<p>
+								<label>
+									<input type="radio" name="wherego_export_format" value="summary" />
+									<strong><?php esc_html_e( 'Summary', 'where-did-they-go-from-here' ); ?></strong>
+									&mdash; <?php esc_html_e( 'one row for every followed post, with the number of source posts it was followed from. Most followed first.', 'where-did-they-go-from-here' ); ?>
+								</label>
+							</p>
+						</fieldset>
+						<input type="hidden" name="wherego_action" value="export_data" />
+						<p>
+							<?php submit_button( esc_html__( 'Export CSV', 'where-did-they-go-from-here' ), 'primary', 'wherego_export_data', false ); ?>
+						</p>
+						<?php wp_nonce_field( 'wherego_export_data_nonce', 'wherego_export_data_nonce' ); ?>
+					</div>
+				</div>
+				</form>
 
 			<div class="postbox">
 					<h2><span><?php esc_html_e( 'Clear cache', 'where-did-they-go-from-here' ); ?></span></h2>
@@ -158,6 +197,59 @@ class Tools_Page {
 					</div>
 				</div>
 				</form>
+
+				<div class="postbox" style="border-left: 4px solid #d63638;">
+					<h2><span><?php esc_html_e( 'Danger zone', 'where-did-they-go-from-here' ); ?></span></h2>
+					<div class="inside">
+						<?php if ( is_multisite() ) : ?>
+							<p class="description">
+								<em><?php esc_html_e( 'These actions apply to the current site only.', 'where-did-they-go-from-here' ); ?></em>
+							</p>
+						<?php endif; ?>
+
+						<h3><?php esc_html_e( 'Delete tracking data', 'where-did-they-go-from-here' ); ?></h3>
+						<form method="post">
+							<p class="description">
+								<?php esc_html_e( 'Deletes every followed posts record and the cached output built from it. Your settings are kept and the plugin carries on tracking from scratch.', 'where-did-they-go-from-here' ); ?>
+							</p>
+							<input type="hidden" name="wherego_action" value="delete_tracking_data" />
+							<p>
+								<input type="submit" name="wherego_delete_tracking_data" class="button button-secondary delete" value="<?php esc_attr_e( 'Delete tracking data', 'where-did-they-go-from-here' ); ?>" onclick="return confirm('<?php echo esc_js( __( 'This permanently deletes all followed posts data on this site. Continue?', 'where-did-they-go-from-here' ) ); ?>');" />
+							</p>
+							<?php wp_nonce_field( 'wherego_delete_tracking_data_nonce', 'wherego_delete_tracking_data_nonce' ); ?>
+						</form>
+
+						<hr />
+
+						<h3><?php esc_html_e( 'Delete all plugin data and deactivate', 'where-did-they-go-from-here' ); ?></h3>
+						<form method="post">
+							<p class="description">
+								<?php esc_html_e( 'Deletes everything this plugin has stored on this site: tracking data, cached output, settings and dismissed notices. This is the same data that is removed when you delete the plugin from the Plugins screen.', 'where-did-they-go-from-here' ); ?>
+							</p>
+							<p class="description">
+								<?php esc_html_e( 'The plugin is deactivated at the same time, because an active plugin recreates its settings on the very next page load. Export your data first: this cannot be undone.', 'where-did-they-go-from-here' ); ?>
+							</p>
+							<p>
+								<label for="wherego_delete_confirm">
+									<?php
+									printf(
+										/* translators: %s: The word the user has to type to confirm, wrapped in a code tag. */
+										esc_html__( 'Type %s to confirm', 'where-did-they-go-from-here' ),
+										'<code>' . esc_html( self::get_delete_keyword() ) . '</code>'
+									);
+									?>
+								</label>
+								<br />
+								<input type="text" id="wherego_delete_confirm" name="wherego_delete_confirm" value="" class="regular-text" autocomplete="off" />
+							</p>
+							<input type="hidden" name="wherego_action" value="delete_all_data" />
+							<p>
+								<input type="submit" name="wherego_delete_all_data" class="button button-secondary delete" value="<?php esc_attr_e( 'Delete all data and deactivate', 'where-did-they-go-from-here' ); ?>" onclick="return confirm('<?php echo esc_js( __( 'This permanently deletes all WebberZone Followed Posts data on this site and deactivates the plugin. Continue?', 'where-did-they-go-from-here' ) ); ?>');" />
+							</p>
+							<?php wp_nonce_field( 'wherego_delete_all_data_nonce', 'wherego_delete_all_data_nonce' ); ?>
+						</form>
+					</div>
+				</div>
 
 
 		</div><!-- /#post-body-content -->
@@ -259,6 +351,330 @@ class Tools_Page {
 		);
 		exit;
 	}
+
+	/**
+	 * Process a tracking data export that streams a .csv file of the followed posts data.
+	 *
+	 * @since 3.4.0
+	 *
+	 * @return void
+	 */
+	public static function process_data_export() {
+
+		if ( empty( $_POST['wherego_action'] ) || 'export_data' !== $_POST['wherego_action'] ) {
+			return;
+		}
+
+		if ( ! isset( $_POST['wherego_export_data_nonce'] ) || ! wp_verify_nonce( sanitize_key( $_POST['wherego_export_data_nonce'] ), 'wherego_export_data_nonce' ) ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated
+			return;
+		}
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
+		$format = isset( $_POST['wherego_export_format'] ) ? sanitize_key( wp_unslash( $_POST['wherego_export_format'] ) ) : 'detailed';
+
+		if ( ! in_array( $format, array( 'detailed', 'summary' ), true ) ) {
+			$format = 'detailed';
+		}
+
+		self::stream_csv( $format );
+	}
+
+	/**
+	 * Stream the tracking data to the browser as a .csv file.
+	 *
+	 * The file is written straight to the output stream in batches rather than
+	 * built in memory, so that a site with a lot of tracking data can still be
+	 * exported.
+	 *
+	 * @since 3.4.0
+	 *
+	 * @param string $format Either `detailed` or `summary`.
+	 * @return void
+	 */
+	protected static function stream_csv( $format ) {
+
+		$host = (string) wp_parse_url( home_url(), PHP_URL_HOST );
+		$site = sanitize_title( $host );
+
+		if ( '' === $site ) {
+			$site = 'site';
+		}
+
+		$filename = sprintf( 'wherego-%1$s-%2$s-%3$s.csv', $format, $site, gmdate( 'Y-m-d' ) );
+
+		ignore_user_abort( true );
+
+		if ( function_exists( 'set_time_limit' ) ) {
+			set_time_limit( 0 );
+		}
+
+		// Opened before the headers go out, so that a failure can still be reported as a page.
+		$handle = fopen( 'php://output', 'w' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fopen -- Writing to the output stream, not the filesystem.
+
+		if ( false === $handle ) {
+			wp_die( esc_html__( 'Could not open the output stream to write the export.', 'where-did-they-go-from-here' ) );
+		}
+
+		nocache_headers();
+		header( 'Content-Type: text/csv; charset=utf-8' );
+		header( 'Content-Disposition: attachment; filename=' . $filename );
+		header( 'Expires: 0' );
+
+		// Drop any output buffering so that the rows reach the browser as they are written.
+		while ( ob_get_level() > 0 ) {
+			ob_end_clean();
+		}
+
+		self::write_csv( $handle, $format, true );
+
+		fclose( $handle ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose -- Writing to the output stream, not the filesystem.
+		exit;
+	}
+
+	/**
+	 * Write the tracking data to a stream as CSV.
+	 *
+	 * Reads the data in batches so that memory use stays flat however much
+	 * tracking data the site holds.
+	 *
+	 * @since 3.4.0
+	 *
+	 * @param resource $handle Open stream to write to.
+	 * @param string   $format Either `detailed` or `summary`.
+	 * @param bool     $flush  Whether to flush the output buffer after each batch. Only useful when streaming to the browser.
+	 * @return int Number of data rows written, not counting the heading row.
+	 */
+	public static function write_csv( $handle, $format = 'detailed', $flush = false ) {
+
+		// Byte order mark, so that spreadsheets read the file as UTF-8.
+		fwrite( $handle, "\xEF\xBB\xBF" ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fwrite -- The stream is supplied by the caller.
+
+		self::write_csv_row( $handle, Data::get_export_columns( $format ) );
+
+		$after_post_id = 0;
+		$rows_written  = 0;
+		$counts        = array();
+
+		while ( true ) {
+			$batch = Data::get_tracking_batch( $after_post_id );
+
+			if ( 0 === $batch['raw_count'] ) {
+				break;
+			}
+
+			$after_post_id = $batch['last_id'];
+
+			if ( 'summary' === $format ) {
+				Data::tally_summary( $batch['posts'], $counts );
+				continue;
+			}
+
+			$primed = Data::prime_batch_caches( $batch['posts'] );
+
+			foreach ( Data::build_detailed_rows( $batch['posts'] ) as $row ) {
+				self::write_csv_row( $handle, $row );
+				++$rows_written;
+			}
+
+			// Let the batch go, so that memory does not grow with the size of the site.
+			Data::forget_post_ids( $primed );
+
+			if ( $flush ) {
+				flush();
+			}
+		}
+
+		if ( 'summary' === $format ) {
+			foreach ( Data::build_summary_rows( $counts ) as $row ) {
+				self::write_csv_row( $handle, $row );
+				++$rows_written;
+			}
+		}
+
+		return $rows_written;
+	}
+
+	/**
+	 * Write a single CSV row.
+	 *
+	 * The escape character is passed explicitly and set to none: PHP 8.4
+	 * deprecates relying on the default, and disabling the backslash escaping
+	 * is what produces standard RFC 4180 output that spreadsheets read back
+	 * correctly.
+	 *
+	 * @since 3.4.0
+	 *
+	 * @param resource               $handle Open stream to write to.
+	 * @param array<int, int|string> $row    Row of values.
+	 * @return void
+	 */
+	protected static function write_csv_row( $handle, array $row ) {
+		fputcsv( $handle, $row, ',', '"', '' );
+	}
+
+	/**
+	 * Process a request to delete the tracking data, keeping the settings.
+	 *
+	 * @since 3.4.0
+	 *
+	 * @return void
+	 */
+	public static function process_delete_tracking_data() {
+
+		if ( empty( $_POST['wherego_action'] ) || 'delete_tracking_data' !== $_POST['wherego_action'] ) {
+			return;
+		}
+
+		if ( ! isset( $_POST['wherego_delete_tracking_data_nonce'] ) || ! wp_verify_nonce( sanitize_key( $_POST['wherego_delete_tracking_data_nonce'] ), 'wherego_delete_tracking_data_nonce' ) ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated
+			return;
+		}
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
+		$count = Data::delete_tracking_data();
+
+		wp_safe_redirect(
+			add_query_arg(
+				array(
+					'page'            => 'wherego_tools_page',
+					'wherego_message' => 'tracking_deleted',
+					'wherego_count'   => $count,
+				),
+				admin_url( 'tools.php' )
+			)
+		);
+		exit;
+	}
+
+	/**
+	 * Process a request to delete every trace of the plugin and deactivate it.
+	 *
+	 * The plugin has to be deactivated in the same request: while it is active
+	 * it recreates its settings on the next page load, which would make the
+	 * deletion look as though it had failed.
+	 *
+	 * @since 3.4.0
+	 *
+	 * @return void
+	 */
+	public static function process_delete_all_data() {
+
+		if ( empty( $_POST['wherego_action'] ) || 'delete_all_data' !== $_POST['wherego_action'] ) {
+			return;
+		}
+
+		if ( ! isset( $_POST['wherego_delete_all_data_nonce'] ) || ! wp_verify_nonce( sanitize_key( $_POST['wherego_delete_all_data_nonce'] ), 'wherego_delete_all_data_nonce' ) ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated
+			return;
+		}
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
+		$confirm = isset( $_POST['wherego_delete_confirm'] ) ? sanitize_text_field( wp_unslash( $_POST['wherego_delete_confirm'] ) ) : '';
+
+		if ( ! self::is_delete_confirmed( $confirm ) ) {
+			wp_safe_redirect(
+				add_query_arg(
+					array(
+						'page'            => 'wherego_tools_page',
+						'wherego_message' => 'confirm_failed',
+					),
+					admin_url( 'tools.php' )
+				)
+			);
+			exit;
+		}
+
+		Data::delete_all_data();
+
+		if ( ! function_exists( 'deactivate_plugins' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/plugin.php';
+		}
+
+		deactivate_plugins( plugin_basename( WHEREGO_PLUGIN_FILE ) );
+
+		wp_safe_redirect( admin_url( 'plugins.php?deactivate=true' ) );
+		exit;
+	}
+
+	/**
+	 * The keyword the user has to type to confirm deleting all the plugin data.
+	 *
+	 * @since 3.4.0
+	 *
+	 * @return string Confirmation keyword.
+	 */
+	public static function get_delete_keyword() {
+		return _x( 'DELETE', 'keyword typed to confirm deleting all plugin data', 'where-did-they-go-from-here' );
+	}
+
+	/**
+	 * Check whether the typed confirmation matches the delete keyword.
+	 *
+	 * Accepts the translated keyword, and always the English one, so that the
+	 * documented instruction works whatever the site language is.
+	 *
+	 * @since 3.4.0
+	 *
+	 * @param string $input What the user typed.
+	 * @return bool True if the deletion is confirmed.
+	 */
+	public static function is_delete_confirmed( $input ) {
+		$input = trim( (string) $input );
+
+		if ( '' === $input ) {
+			return false;
+		}
+
+		return 0 === strcasecmp( $input, self::get_delete_keyword() ) || 0 === strcasecmp( $input, 'DELETE' );
+	}
+
+	/**
+	 * Queue the notices for the danger zone actions.
+	 *
+	 * @since 3.4.0
+	 *
+	 * @return void
+	 */
+	protected static function maintenance_notices() {
+
+		$message = isset( $_GET['wherego_message'] ) ? sanitize_key( wp_unslash( $_GET['wherego_message'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+
+		if ( 'tracking_deleted' === $message ) {
+			$count = isset( $_GET['wherego_count'] ) ? absint( $_GET['wherego_count'] ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+
+			add_settings_error(
+				'wherego-notices',
+				'',
+				sprintf(
+					/* translators: %s: Number of posts the tracking data was deleted from. */
+					esc_html( _n( 'Tracking data deleted from %s post.', 'Tracking data deleted from %s posts.', $count, 'where-did-they-go-from-here' ) ),
+					esc_html( number_format_i18n( $count ) )
+				),
+				'success'
+			);
+		}
+
+		if ( 'confirm_failed' === $message ) {
+			add_settings_error(
+				'wherego-notices',
+				'',
+				sprintf(
+					/* translators: %s: The word the user has to type to confirm. */
+					esc_html__( 'Nothing was deleted. Type %s in the confirmation box to delete all the plugin data.', 'where-did-they-go-from-here' ),
+					esc_html( self::get_delete_keyword() )
+				),
+				'error'
+			);
+		}
+	}
+
 	/**
 	 * Generates the Tools help page.
 	 *
@@ -286,7 +702,8 @@ class Tools_Page {
 				'title'   => __( 'General', 'where-did-they-go-from-here' ),
 				'content' =>
 				'<p>' . __( 'This screen provides some tools that help maintain certain features of Followed Posts.', 'where-did-they-go-from-here' ) . '</p>' .
-					'<p>' . __( 'Clear the cache and import/export the Followed Posts settings.', 'where-did-they-go-from-here' ) . '</p>',
+					'<p>' . __( 'Export the tracking data as a .csv file, clear the cache, and import/export the Followed Posts settings.', 'where-did-they-go-from-here' ) . '</p>' .
+					'<p>' . __( 'The danger zone deletes the tracking data, or every trace of the plugin on this site. Neither can be undone, so export first.', 'where-did-they-go-from-here' ) . '</p>',
 			)
 		);
 
