@@ -130,8 +130,8 @@ Release date: 7 September 2026
 
 **Added**
 
-* Export your tracking data as a CSV file from Tools > Followed Posts Tools. Pick the detailed format for one row per source post and followed post pair, or the summary format to rank every followed post by how often it was followed.
-* Danger zone on the Tools page to delete the tracking data on its own, or to delete every trace of the plugin and deactivate it in one step.
+* CSV export of the tracking data at Tools > Followed Posts Tools, in a detailed format with one row per source post and followed post pair, or a summary ranking each followed post by how often it was followed.
+* Danger zone at Tools > Followed Posts Tools to delete the tracking data on its own, or to delete every trace of the plugin and deactivate it in one step.
 
 **Changed**
 
@@ -139,54 +139,11 @@ Release date: 7 September 2026
 
 **Fixed**
 
-* Uninstalling the plugin left behind the dashboard widget, setup wizard and widget options, along with dismissed notice flags stored in user meta and transients.
+* Uninstalling the plugin left behind the `wherego_dashboard_widget`, setup wizard and `widget_wherego_widget` options, along with dismissed notice flags in user meta and transients.
 
-= 3.3.0 =
+= Earlier versions =
 
-* This is the final release of WebberZone Followed Posts. The plugin will continue to work but will no longer receive updates or support.
-* For related content recommendations, see Contextual Related Posts: https://wordpress.org/plugins/contextual-related-posts/
-* For popularity-based recommendations, see Top 10: https://wordpress.org/plugins/top-10/
-* Modified: Compatibility bump for the latest versions of WordPress and PHP.
-
-= 3.2.2 =
-
-* Fixed: Dashboard Top Tracked widget has been fixed.
-
-= 3.2.1 =
-
-* Fixed: Issue with the zip package missing files.
-
-= 3.2.0 =
-
-* New:
-	* REST API support for getting followed posts
-		* Added `GET /wp-json/wfp/v1/followed-posts/{id}` endpoint
-		* Added `POST /wp-json/wfp/v1/tracker` endpoint for tracking
-	* Modern admin interface matching other WebberZone plugins
-		* Updated sidebar with improved organization and navigation
-		* New admin banner with sections-based navigation
-	* CRP Integration - Feed followed posts to Contextual Related Posts plugin for enhanced related posts display
-	* Vanilla JavaScript tracker - Complete rewrite with no jQuery dependency
-	* New display styles - Added 'Left thumbnails' and 'Text only' layouts
-	* Dashboard widget - Quick overview of posts with the most followed links
-	* Hook Registry system - Centralized hook management for better code organization
-
-* Improvements:
-	* Enhanced PHP and WordPress compatibility testing
-	* Better dependency management and build processes
-	* JavaScript tracker now auto-detects REST API vs AJAX mode
-	* Added pagination support to REST API endpoint
-	* Improved cache management with AJAX handler for clearing cache
-	* Tools page UI redesigned with postbox styling for better WordPress consistency
-	* Settings API refactored to use static methods for better performance
-	* Media Handler now supports the FIFU WordPress plugin for featured image detection.
-
-* Bug fixes:
-	* Resolved PHP warnings when accessing null post properties
-	* Fixed WordPress compatibility issues with latest versions
-	* Fixed WordPress compatibility issues
-
-For previous changelog entries check out the changelog.txt file included with the plugin or [view the releases on Github](https://github.com/WebberZone/where-did-they-go-from-here/releases).
+For the changelog of earlier versions, please refer to the [releases page on GitHub](https://github.com/WebberZone/where-did-they-go-from-here/releases).
 
 == Upgrade Notice ==
 
