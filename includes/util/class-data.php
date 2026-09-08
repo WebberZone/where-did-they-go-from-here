@@ -232,23 +232,13 @@ class Data {
 	}
 
 	/**
-	 * Column headings for an export format.
+	 * Column headings for the detailed export.
 	 *
 	 * @since 3.4.0
 	 *
-	 * @param string $format Either `detailed` or `summary`.
 	 * @return string[] Array of column headings.
 	 */
-	public static function get_export_columns( string $format ): array {
-		if ( 'summary' === $format ) {
-			return array(
-				'followed_post_id',
-				'followed_post_title',
-				'followed_post_url',
-				'source_post_count',
-			);
-		}
-
+	public static function get_export_columns(): array {
 		return array(
 			'source_post_id',
 			'source_post_title',
@@ -303,84 +293,6 @@ class Data {
 		}
 
 		return $rows;
-	}
-
-	/**
-	 * Add a batch to a running summary tally.
-	 *
-	 * @since 3.4.0
-	 *
-	 * @param array<int, int[]> $posts  Map of source post ID to followed post IDs.
-	 * @param array<int, int>   $counts Running tally, keyed by followed post ID. Passed by reference.
-	 * @return void
-	 */
-	public static function tally_summary( array $posts, array &$counts ) {
-		foreach ( $posts as $followed_ids ) {
-			foreach ( $followed_ids as $followed_id ) {
-				$followed_id = (int) $followed_id;
-
-				if ( ! isset( $counts[ $followed_id ] ) ) {
-					$counts[ $followed_id ] = 0;
-				}
-
-				++$counts[ $followed_id ];
-			}
-		}
-	}
-
-	/**
-	 * Build the summary export rows from a completed tally.
-	 *
-	 * @since 3.4.0
-	 *
-	 * @param array<int, int> $counts Tally keyed by followed post ID.
-	 * @return array<int, array<int, int|string>> Rows ready to be written as CSV, most followed first.
-	 */
-	public static function build_summary_rows( array $counts ): array {
-		$rows = array();
-
-		foreach ( self::build_summary_row_batches( $counts ) as $batch ) {
-			foreach ( $batch as $row ) {
-				$rows[] = $row;
-			}
-		}
-
-		return $rows;
-	}
-
-	/**
-	 * Build summary rows in bounded batches.
-	 *
-	 * @since 3.4.0
-	 *
-	 * @param array<int, int> $counts Tally keyed by followed post ID.
-	 * @return \Generator<int, array<int, array<int, int|string>>> Batches of rows ready to be written as CSV.
-	 */
-	public static function build_summary_row_batches( array $counts ): \Generator {
-		arsort( $counts );
-
-		foreach ( array_chunk( $counts, self::EXPORT_BATCH_SIZE, true ) as $chunk ) {
-			$primed = self::prime_post_ids( array_keys( $chunk ) );
-
-			try {
-				$rows = array();
-
-				foreach ( $chunk as $followed_id => $count ) {
-					$followed = self::describe_post( (int) $followed_id );
-
-					$rows[] = array(
-						$followed['id'],
-						$followed['title'],
-						$followed['url'],
-						(int) $count,
-					);
-				}
-
-				yield $rows;
-			} finally {
-				self::forget_post_ids( $primed );
-			}
-		}
 	}
 
 	/**

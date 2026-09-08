@@ -163,7 +163,7 @@ class DataTest extends WP_UnitTestCase {
 		$this->assertSame( $second, $rows[1][6] );
 		$this->assertSame( 'Second', $rows[1][7] );
 
-		$this->assertCount( count( Data::get_export_columns( 'detailed' ) ), $rows[0] );
+		$this->assertCount( count( Data::get_export_columns() ), $rows[0] );
 	}
 
 	/**
@@ -183,40 +183,6 @@ class DataTest extends WP_UnitTestCase {
 		$this->assertSame( '', $rows[0][8] );
 		$this->assertSame( '', $rows[0][9] );
 		$this->assertSame( 'deleted', $rows[0][10] );
-	}
-
-	/**
-	 * The summary tallies every appearance and sorts by the count.
-	 */
-	public function test_summary_rows_are_ranked() {
-		$popular = self::factory()->post->create( array( 'post_title' => 'Popular' ) );
-		$quiet   = self::factory()->post->create( array( 'post_title' => 'Quiet' ) );
-		$sources = self::factory()->post->create_many( 3 );
-
-		$counts = array();
-		Data::tally_summary(
-			array(
-				$sources[0] => array( $popular, $quiet ),
-				$sources[1] => array( $popular ),
-			),
-			$counts
-		);
-		Data::tally_summary( array( $sources[2] => array( $popular ) ), $counts );
-
-		$this->assertSame(
-			array(
-				$popular => 3,
-				$quiet   => 1,
-			),
-			$counts
-		);
-
-		$rows = Data::build_summary_rows( $counts );
-
-		$this->assertCount( 2, $rows );
-		$this->assertSame( array( $popular, 'Popular', get_permalink( $popular ), 3 ), $rows[0] );
-		$this->assertSame( array( $quiet, 'Quiet', get_permalink( $quiet ), 1 ), $rows[1] );
-		$this->assertCount( count( Data::get_export_columns( 'summary' ) ), $rows[0] );
 	}
 
 	/**

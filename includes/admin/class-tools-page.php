@@ -125,23 +125,9 @@ class Tools_Page {
 						<p class="description">
 							<?php esc_html_e( 'Download the followed posts data for this site as a .csv file. This plugin is retired, so export anything you want to keep before you remove it.', 'where-did-they-go-from-here' ); ?>
 						</p>
-						<fieldset>
-							<legend class="screen-reader-text"><?php esc_html_e( 'Export format', 'where-did-they-go-from-here' ); ?></legend>
-							<p>
-								<label>
-									<input type="radio" name="wherego_export_format" value="detailed" checked="checked" />
-									<strong><?php esc_html_e( 'Detailed', 'where-did-they-go-from-here' ); ?></strong>
-									&mdash; <?php esc_html_e( 'one row for every source post and followed post pair, in the order they were tracked. This is the complete data set.', 'where-did-they-go-from-here' ); ?>
-								</label>
-							</p>
-							<p>
-								<label>
-									<input type="radio" name="wherego_export_format" value="summary" />
-									<strong><?php esc_html_e( 'Summary', 'where-did-they-go-from-here' ); ?></strong>
-									&mdash; <?php esc_html_e( 'one row for every followed post, with the number of source posts it was followed from. Most followed first.', 'where-did-they-go-from-here' ); ?>
-								</label>
-							</p>
-						</fieldset>
+						<p>
+							<?php esc_html_e( 'One row for every source post and followed post pair, in the order they were tracked. This is the complete data set.', 'where-did-they-go-from-here' ); ?>
+						</p>
 						<input type="hidden" name="wherego_action" value="export_data" />
 						<p>
 							<?php submit_button( esc_html__( 'Export CSV', 'where-did-they-go-from-here' ), 'primary', 'wherego_export_data', false ); ?>
@@ -357,9 +343,7 @@ class Tools_Page {
 			return;
 		}
 
-		$format = sanitize_key( self::get_posted_string( 'wherego_export_format' ) );
-
-		self::stream_csv( in_array( $format, array( 'detailed', 'summary' ), true ) ? $format : 'detailed' );
+		self::stream_csv();
 	}
 
 	/**
@@ -371,10 +355,9 @@ class Tools_Page {
 	 *
 	 * @since 3.4.0
 	 *
-	 * @param string $format Either `detailed` or `summary`.
 	 * @return void
 	 */
-	protected static function stream_csv( $format ) {
+	protected static function stream_csv() {
 
 		$host = (string) wp_parse_url( home_url(), PHP_URL_HOST );
 		$site = sanitize_title( $host );
@@ -383,7 +366,7 @@ class Tools_Page {
 			$site = 'site';
 		}
 
-		$filename = sprintf( 'wherego-%1$s-%2$s-%3$s.csv', $format, $site, gmdate( 'Y-m-d' ) );
+		$filename = sprintf( 'wherego-detailed-%1$s-%2$s.csv', $site, gmdate( 'Y-m-d' ) );
 
 		ignore_user_abort( true );
 
@@ -408,7 +391,7 @@ class Tools_Page {
 			ob_end_clean();
 		}
 
-		self::write_csv( $handle, $format, true );
+		self::write_csv( $handle, true );
 
 		fclose( $handle ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose -- Writing to the output stream, not the filesystem.
 		exit;
@@ -423,20 +406,18 @@ class Tools_Page {
 	 * @since 3.4.0
 	 *
 	 * @param resource $handle Open stream to write to.
-	 * @param string   $format Either `detailed` or `summary`.
 	 * @param bool     $flush  Whether to flush the output buffer after each batch. Only useful when streaming to the browser.
 	 * @return int Number of data rows written, not counting the heading row.
 	 */
-	public static function write_csv( $handle, $format = 'detailed', $flush = false ) {
+	public static function write_csv( $handle, $flush = false ) {
 
 		// Byte order mark, so that spreadsheets read the file as UTF-8.
 		fwrite( $handle, "\xEF\xBB\xBF" ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fwrite -- The stream is supplied by the caller.
 
-		self::write_csv_row( $handle, Data::get_export_columns( $format ) );
+		self::write_csv_row( $handle, Data::get_export_columns() );
 
 		$after_post_id = 0;
 		$rows_written  = 0;
-		$counts        = array();
 
 		while ( true ) {
 			$batch = Data::get_tracking_batch( $after_post_id );
@@ -446,11 +427,6 @@ class Tools_Page {
 			}
 
 			$after_post_id = $batch['last_id'];
-
-			if ( 'summary' === $format ) {
-				Data::tally_summary( $batch['posts'], $counts );
-				continue;
-			}
 
 			$primed = Data::prime_batch_caches( $batch['posts'] );
 
@@ -464,19 +440,6 @@ class Tools_Page {
 
 			if ( $flush ) {
 				flush();
-			}
-		}
-
-		if ( 'summary' === $format ) {
-			foreach ( Data::build_summary_row_batches( $counts ) as $rows ) {
-				foreach ( $rows as $row ) {
-					self::write_csv_row( $handle, $row );
-					++$rows_written;
-				}
-
-				if ( $flush ) {
-					flush();
-				}
 			}
 		}
 
