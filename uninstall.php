@@ -18,6 +18,7 @@ if ( ! is_multisite() ) {
 
 	$sites = get_sites(
 		array(
+			'number'   => 0,
 			'archived' => 0,
 			'spam'     => 0,
 			'deleted'  => 0,
@@ -27,9 +28,8 @@ if ( ! is_multisite() ) {
 	foreach ( $sites as $site ) {
 		switch_to_blog( (int) $site->blog_id );
 		wherego_delete_data();
+		restore_current_blog();
 	}
-
-	restore_current_blog();
 }
 
 /**

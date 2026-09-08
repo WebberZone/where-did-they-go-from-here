@@ -94,7 +94,7 @@ class Data {
 
 		return (int) $wpdb->get_var( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Maintenance query, no cache to prime.
 			$wpdb->prepare(
-				"SELECT COUNT(*) FROM {$wpdb->postmeta} WHERE meta_key = %s",
+				"SELECT COUNT(DISTINCT post_id) FROM {$wpdb->postmeta} WHERE meta_key = %s",
 				self::TRACKING_META_KEY
 			)
 		);
@@ -115,31 +115,48 @@ class Data {
 	public static function get_tracking_batch( int $after_post_id = 0, int $limit = self::EXPORT_BATCH_SIZE ): array {
 		global $wpdb;
 
-		$results = $wpdb->get_results( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Batched export query, caching the whole table would defeat the batching.
-			$wpdb->prepare(
-				"SELECT post_id, meta_value FROM {$wpdb->postmeta} WHERE meta_key = %s AND post_id > %d ORDER BY post_id ASC LIMIT %d",
-				self::TRACKING_META_KEY,
-				$after_post_id,
-				$limit
-			)
-		);
-
 		$batch = array(
-			'raw_count' => is_array( $results ) ? count( $results ) : 0,
+			'raw_count' => 0,
 			'last_id'   => $after_post_id,
 			'posts'     => array(),
 		);
 
-		if ( empty( $results ) ) {
+		if ( $limit < 1 ) {
+			return $batch;
+		}
+
+		$source_ids = $wpdb->get_col( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Batched export query, caching the whole table would defeat the batching.
+			$wpdb->prepare(
+				"SELECT DISTINCT post_id FROM {$wpdb->postmeta} WHERE meta_key = %s AND post_id > %d ORDER BY post_id ASC LIMIT %d",
+				self::TRACKING_META_KEY,
+				max( 0, $after_post_id ),
+				$limit
+			)
+		);
+
+		if ( empty( $source_ids ) ) {
+			return $batch;
+		}
+
+		$source_ids         = array_values( array_map( 'intval', $source_ids ) );
+		$batch['raw_count'] = count( $source_ids );
+		$batch['last_id']   = max( $source_ids );
+
+		$placeholders = implode( ', ', array_fill( 0, count( $source_ids ), '%d' ) );
+		$results      = $wpdb->get_results( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Batched export query, caching the whole table would defeat the batching.
+			$wpdb->prepare(
+				// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- The IN clause contains a generated list of placeholders, and every value is still prepared below.
+				"SELECT post_id, meta_value FROM {$wpdb->postmeta} WHERE meta_key = %s AND post_id IN ({$placeholders}) ORDER BY post_id ASC, meta_id ASC",
+				array_merge( array( self::TRACKING_META_KEY ), $source_ids )
+			)
+		);
+
+		if ( ! is_array( $results ) ) {
 			return $batch;
 		}
 
 		foreach ( $results as $result ) {
 			$post_id = (int) $result->post_id;
-
-			if ( $post_id > $batch['last_id'] ) {
-				$batch['last_id'] = $post_id;
-			}
 
 			$followed_ids = maybe_unserialize( $result->meta_value );
 
@@ -153,10 +170,13 @@ class Data {
 				continue;
 			}
 
-			// A post should only ever hold one row, but merge defensively rather than drop data.
-			$batch['posts'][ $post_id ] = isset( $batch['posts'][ $post_id ] )
-				? array_merge( $batch['posts'][ $post_id ], $followed_ids )
-				: $followed_ids;
+			// A post should only ever hold one row, but merge duplicate rows defensively without counting a destination twice.
+			$batch['posts'][ $post_id ] = array_values(
+				array_unique(
+					array_merge( $batch['posts'][ $post_id ] ?? array(), $followed_ids ),
+					SORT_NUMERIC
+				)
+			);
 		}
 
 		return $batch;
@@ -173,13 +193,7 @@ class Data {
 	 * @return int[] The post IDs that were primed, to hand back to `forget_post_ids()`.
 	 */
 	public static function prime_batch_caches( array $posts ): array {
-		$ids = array_keys( $posts );
-
-		foreach ( $posts as $followed_ids ) {
-			$ids = array_merge( $ids, $followed_ids );
-		}
-
-		return self::prime_post_ids( $ids );
+		return self::prime_post_ids( array_merge( array_keys( $posts ), ...array_values( $posts ) ) );
 	}
 
 	/**
@@ -231,7 +245,7 @@ class Data {
 				'followed_post_id',
 				'followed_post_title',
 				'followed_post_url',
-				'times_followed',
+				'source_post_count',
 			);
 		}
 
@@ -323,28 +337,50 @@ class Data {
 	 * @return array<int, array<int, int|string>> Rows ready to be written as CSV, most followed first.
 	 */
 	public static function build_summary_rows( array $counts ): array {
-		arsort( $counts );
-
 		$rows = array();
+
+		foreach ( self::build_summary_row_batches( $counts ) as $batch ) {
+			foreach ( $batch as $row ) {
+				$rows[] = $row;
+			}
+		}
+
+		return $rows;
+	}
+
+	/**
+	 * Build summary rows in bounded batches.
+	 *
+	 * @since 3.4.0
+	 *
+	 * @param array<int, int> $counts Tally keyed by followed post ID.
+	 * @return \Generator<int, array<int, array<int, int|string>>> Batches of rows ready to be written as CSV.
+	 */
+	public static function build_summary_row_batches( array $counts ): \Generator {
+		arsort( $counts );
 
 		foreach ( array_chunk( $counts, self::EXPORT_BATCH_SIZE, true ) as $chunk ) {
 			$primed = self::prime_post_ids( array_keys( $chunk ) );
 
-			foreach ( $chunk as $followed_id => $count ) {
-				$followed = self::describe_post( (int) $followed_id );
+			try {
+				$rows = array();
 
-				$rows[] = array(
-					$followed['id'],
-					$followed['title'],
-					$followed['url'],
-					(int) $count,
-				);
+				foreach ( $chunk as $followed_id => $count ) {
+					$followed = self::describe_post( (int) $followed_id );
+
+					$rows[] = array(
+						$followed['id'],
+						$followed['title'],
+						$followed['url'],
+						(int) $count,
+					);
+				}
+
+				yield $rows;
+			} finally {
+				self::forget_post_ids( $primed );
 			}
-
-			self::forget_post_ids( $primed );
 		}
-
-		return $rows;
 	}
 
 	/**

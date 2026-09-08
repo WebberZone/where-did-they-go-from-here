@@ -95,6 +95,24 @@ class DataTest extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Duplicate metadata rows are merged even when they meet a batch boundary.
+	 */
+	public function test_get_tracking_batch_merges_duplicate_rows_without_dropping_data() {
+		$source   = self::factory()->post->create();
+		$followed = self::factory()->post->create_many( 2 );
+
+		add_post_meta( $source, Data::TRACKING_META_KEY, array( $followed[0] ), false );
+		add_post_meta( $source, Data::TRACKING_META_KEY, array( $followed[1] ), false );
+
+		$batch = Data::get_tracking_batch( 0, 1 );
+
+		$this->assertSame( 1, $batch['raw_count'] );
+		$this->assertSame( $source, $batch['last_id'] );
+		$this->assertSame( $followed, $batch['posts'][ $source ] );
+		$this->assertSame( 1, Data::count_tracked_posts() );
+	}
+
+	/**
 	 * A row whose value is not an array must not end the export early.
 	 *
 	 * The loop stops on the raw row count, not on the number of usable rows, so

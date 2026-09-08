@@ -14,6 +14,15 @@ use WebberZone\WFP\Util\Data;
 class ToolsPageTest extends WP_UnitTestCase {
 
 	/**
+	 * Start every test logged out, so that the capability checks are not
+	 * satisfied by a user a previous test left behind.
+	 */
+	public function set_up() {
+		parent::set_up();
+		wp_set_current_user( 0 );
+	}
+
+	/**
 	 * Write an export to a temporary stream and return it as a string.
 	 *
 	 * @param string $format Either `detailed` or `summary`.
@@ -148,6 +157,20 @@ class ToolsPageTest extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Formula-like values are marked as text for spreadsheet applications.
+	 */
+	public function test_export_neutralizes_formula_titles() {
+		$source   = self::factory()->post->create();
+		$followed = self::factory()->post->create( array( 'post_title' => '=SUM(1,1)' ) );
+
+		update_post_meta( $source, Data::TRACKING_META_KEY, array( $followed ) );
+
+		$rows = $this->export_rows( 'detailed' );
+
+		$this->assertSame( "'=SUM(1,1)", $rows[1][7] );
+	}
+
+	/**
 	 * A protected post is exported under its own title, without the display prefix.
 	 */
 	public function test_export_does_not_add_the_protected_prefix() {
@@ -254,18 +277,78 @@ class ToolsPageTest extends WP_UnitTestCase {
 	}
 
 	/**
-	 * The export handler ignores a request without a valid nonce.
+	 * A user without the capability is ignored silently, whatever the nonce says.
 	 */
-	public function test_export_handler_requires_a_nonce() {
-		$_POST['wherego_action'] = 'export_data';
-
-		// No nonce: the handler must return rather than stream and exit.
-		Tools_Page::process_data_export();
-
+	public function test_export_handler_requires_the_capability() {
+		$_POST['wherego_action']            = 'export_data';
 		$_POST['wherego_export_data_nonce'] = 'not-a-real-nonce';
+
 		Tools_Page::process_data_export();
 
 		$this->assertTrue( true, 'The handler returned instead of streaming a file.' );
+
+		unset( $_POST['wherego_action'], $_POST['wherego_export_data_nonce'] );
+	}
+
+	/**
+	 * An administrator with a stale nonce is told so, rather than getting a silent no-op.
+	 */
+	public function test_export_handler_reports_a_bad_nonce() {
+		wp_set_current_user( self::factory()->user->create( array( 'role' => 'administrator' ) ) );
+
+		$_POST['wherego_action']            = 'export_data';
+		$_POST['wherego_export_data_nonce'] = 'not-a-real-nonce';
+
+		$this->expectException( WPDieException::class );
+
+		try {
+			Tools_Page::process_data_export();
+		} finally {
+			unset( $_POST['wherego_action'], $_POST['wherego_export_data_nonce'] );
+		}
+	}
+
+	/**
+	 * A malformed settings file must be rejected rather than blanking the settings.
+	 */
+	public function test_import_rejects_a_file_that_is_not_json() {
+		wp_set_current_user( self::factory()->user->create( array( 'role' => 'administrator' ) ) );
+
+		$settings = array( 'limit' => 7 );
+		update_option( 'wherego_settings', $settings );
+
+		$path = wp_tempnam( 'wherego-import.json' );
+		file_put_contents( $path, 'not json at all' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_put_contents_file_put_contents
+
+		$_POST['wherego_action']                 = 'import_settings';
+		$_POST['wherego_import_settings_nonce']  = wp_create_nonce( 'wherego_import_settings_nonce' );
+		$_FILES['import_settings_file']          = array(
+			'name'     => 'wherego-settings.json',
+			'tmp_name' => $path,
+			'error'    => 0,
+		);
+
+		try {
+			Tools_Page::process_settings_import();
+			$this->fail( 'A malformed settings file should have been rejected.' );
+		} catch ( WPDieException $e ) {
+			$this->assertSame( $settings, get_option( 'wherego_settings' ), 'The settings must survive a malformed import.' );
+		} finally {
+			unlink( $path ); // phpcs:ignore WordPress.WP.AlternativeFunctions.unlink_unlink
+			unset( $_POST['wherego_action'], $_POST['wherego_import_settings_nonce'], $_FILES['import_settings_file'] );
+		}
+	}
+
+	/**
+	 * Malformed array input must be ignored without reaching string sanitizers.
+	 */
+	public function test_handlers_ignore_array_input() {
+		$_POST['wherego_action']            = array( 'export_data' );
+		$_POST['wherego_export_data_nonce'] = array( 'nonce' );
+
+		Tools_Page::process_data_export();
+
+		$this->assertTrue( true, 'Malformed input should be ignored.' );
 
 		unset( $_POST['wherego_action'], $_POST['wherego_export_data_nonce'] );
 	}
