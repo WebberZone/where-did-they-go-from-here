@@ -41,8 +41,8 @@ class Tools_Page {
 	public function __construct() {
 		Hook_Registry::add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 		Hook_Registry::add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ), 99 );
-		Hook_Registry::add_filter( 'admin_init', array( $this, 'process_settings_import' ), 9 );
-		Hook_Registry::add_filter( 'admin_init', array( $this, 'process_settings_export' ) );
+		Hook_Registry::add_action( 'admin_init', array( $this, 'process_settings_import' ), 9 );
+		Hook_Registry::add_action( 'admin_init', array( $this, 'process_settings_export' ) );
 		Hook_Registry::add_action( 'admin_init', array( $this, 'process_data_export' ) );
 		Hook_Registry::add_action( 'admin_init', array( $this, 'process_delete_tracking_data' ) );
 		Hook_Registry::add_action( 'admin_init', array( $this, 'process_delete_all_data' ) );
@@ -203,7 +203,7 @@ class Tools_Page {
 					<div class="inside">
 						<?php if ( is_multisite() ) : ?>
 							<p class="description">
-								<em><?php esc_html_e( 'These actions apply to the current site only.', 'where-did-they-go-from-here' ); ?></em>
+								<em><?php esc_html_e( 'Tracking, cache, settings and widget data apply to the current site only. Dismissed admin notices are user-level flags shared across the network.', 'where-did-they-go-from-here' ); ?></em>
 							</p>
 						<?php endif; ?>
 
@@ -278,19 +278,11 @@ class Tools_Page {
 	 */
 	public static function process_settings_export() {
 
-		if ( empty( $_POST['wherego_action'] ) || 'export_settings' !== $_POST['wherego_action'] ) {
+		if ( ! self::is_request( 'export_settings', 'wherego_export_settings_nonce' ) ) {
 			return;
 		}
 
-		if ( ! isset( $_POST['wherego_export_settings_nonce'] ) || ! wp_verify_nonce( sanitize_key( $_POST['wherego_export_settings_nonce'] ), 'wherego_export_settings_nonce' ) ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated
-			return;
-		}
-
-		if ( ! current_user_can( 'manage_options' ) ) {
-			return;
-		}
-
-		$settings = get_option( 'wherego_settings' );
+		$settings = (array) get_option( 'wherego_settings', array() );
 
 		ignore_user_abort( true );
 
@@ -310,18 +302,11 @@ class Tools_Page {
 	 */
 	public static function process_settings_import() {
 
-		if ( empty( $_POST['wherego_action'] ) || 'import_settings' !== $_POST['wherego_action'] ) {
+		if ( ! self::is_request( 'import_settings', 'wherego_import_settings_nonce' ) ) {
 			return;
 		}
 
-		if ( ! isset( $_POST['wherego_import_settings_nonce'] ) || ! wp_verify_nonce( sanitize_key( $_POST['wherego_import_settings_nonce'] ), 'wherego_import_settings_nonce' ) ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated
-			return;
-		}
-
-		if ( ! current_user_can( 'manage_options' ) ) {
-			return;
-		}
-
+		// phpcs:disable WordPress.Security.NonceVerification.Missing -- The nonce is verified by is_request() above.
 		$filename  = 'import_settings_file';
 		$extension = isset( $_FILES[ $filename ]['name'] ) ? pathinfo( sanitize_file_name( wp_unslash( $_FILES[ $filename ]['name'] ) ), PATHINFO_EXTENSION ) : '';
 
@@ -329,14 +314,21 @@ class Tools_Page {
 			wp_die( esc_html__( 'Please upload a valid .json file', 'where-did-they-go-from-here' ) );
 		}
 
-		$import_file = isset( $_FILES[ $filename ]['tmp_name'] ) ? ( wp_unslash( $_FILES[ $filename ]['tmp_name'] ) ) : ''; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		$import_file = isset( $_FILES[ $filename ]['tmp_name'] ) ? wp_unslash( $_FILES[ $filename ]['tmp_name'] ) : ''; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		// phpcs:enable WordPress.Security.NonceVerification.Missing
 
 		if ( empty( $import_file ) ) {
 			wp_die( esc_html__( 'Please upload a file to import', 'where-did-they-go-from-here' ) );
 		}
 
 		// Retrieve the settings from the file and convert the json object to an array.
-		$settings = (array) json_decode( file_get_contents( $import_file ), true ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+		$contents = file_get_contents( $import_file ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+		$settings = false === $contents ? null : json_decode( $contents, true );
+
+		// Without this an unreadable or malformed file decodes to null and blanks the settings.
+		if ( ! is_array( $settings ) ) {
+			wp_die( esc_html__( 'The settings file could not be read. Please upload a .json file exported from this plugin.', 'where-did-they-go-from-here' ) );
+		}
 
 		update_option( 'wherego_settings', $settings );
 
@@ -361,25 +353,13 @@ class Tools_Page {
 	 */
 	public static function process_data_export() {
 
-		if ( empty( $_POST['wherego_action'] ) || 'export_data' !== $_POST['wherego_action'] ) {
+		if ( ! self::is_request( 'export_data', 'wherego_export_data_nonce' ) ) {
 			return;
 		}
 
-		if ( ! isset( $_POST['wherego_export_data_nonce'] ) || ! wp_verify_nonce( sanitize_key( $_POST['wherego_export_data_nonce'] ), 'wherego_export_data_nonce' ) ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated
-			return;
-		}
+		$format = sanitize_key( self::get_posted_string( 'wherego_export_format' ) );
 
-		if ( ! current_user_can( 'manage_options' ) ) {
-			return;
-		}
-
-		$format = isset( $_POST['wherego_export_format'] ) ? sanitize_key( wp_unslash( $_POST['wherego_export_format'] ) ) : 'detailed';
-
-		if ( ! in_array( $format, array( 'detailed', 'summary' ), true ) ) {
-			$format = 'detailed';
-		}
-
-		self::stream_csv( $format );
+		self::stream_csv( in_array( $format, array( 'detailed', 'summary' ), true ) ? $format : 'detailed' );
 	}
 
 	/**
@@ -488,9 +468,15 @@ class Tools_Page {
 		}
 
 		if ( 'summary' === $format ) {
-			foreach ( Data::build_summary_rows( $counts ) as $row ) {
-				self::write_csv_row( $handle, $row );
-				++$rows_written;
+			foreach ( Data::build_summary_row_batches( $counts ) as $rows ) {
+				foreach ( $rows as $row ) {
+					self::write_csv_row( $handle, $row );
+					++$rows_written;
+				}
+
+				if ( $flush ) {
+					flush();
+				}
 			}
 		}
 
@@ -512,6 +498,18 @@ class Tools_Page {
 	 * @return void
 	 */
 	protected static function write_csv_row( $handle, array $row ) {
+		$row = array_map(
+			static function ( $value ) {
+				// Prevent spreadsheet formula injection from an untrusted post title or URL.
+				if ( is_string( $value ) && preg_match( '/^[\x09\x0A\x0D ]*[=+\-@]/', $value ) ) {
+					return "'" . $value;
+				}
+
+				return $value;
+			},
+			$row
+		);
+
 		fputcsv( $handle, $row, ',', '"', '' );
 	}
 
@@ -524,31 +522,11 @@ class Tools_Page {
 	 */
 	public static function process_delete_tracking_data() {
 
-		if ( empty( $_POST['wherego_action'] ) || 'delete_tracking_data' !== $_POST['wherego_action'] ) {
+		if ( ! self::is_request( 'delete_tracking_data', 'wherego_delete_tracking_data_nonce' ) ) {
 			return;
 		}
 
-		if ( ! isset( $_POST['wherego_delete_tracking_data_nonce'] ) || ! wp_verify_nonce( sanitize_key( $_POST['wherego_delete_tracking_data_nonce'] ), 'wherego_delete_tracking_data_nonce' ) ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated
-			return;
-		}
-
-		if ( ! current_user_can( 'manage_options' ) ) {
-			return;
-		}
-
-		$count = Data::delete_tracking_data();
-
-		wp_safe_redirect(
-			add_query_arg(
-				array(
-					'page'            => 'wherego_tools_page',
-					'wherego_message' => 'tracking_deleted',
-					'wherego_count'   => $count,
-				),
-				admin_url( 'tools.php' )
-			)
-		);
-		exit;
+		self::redirect_with_message( 'tracking_deleted', array( 'wherego_count' => Data::delete_tracking_data() ) );
 	}
 
 	/**
@@ -564,40 +542,26 @@ class Tools_Page {
 	 */
 	public static function process_delete_all_data() {
 
-		if ( empty( $_POST['wherego_action'] ) || 'delete_all_data' !== $_POST['wherego_action'] ) {
+		if ( ! self::is_request( 'delete_all_data', 'wherego_delete_all_data_nonce' ) ) {
 			return;
 		}
 
-		if ( ! isset( $_POST['wherego_delete_all_data_nonce'] ) || ! wp_verify_nonce( sanitize_key( $_POST['wherego_delete_all_data_nonce'] ), 'wherego_delete_all_data_nonce' ) ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated
-			return;
+		if ( ! self::is_delete_confirmed( sanitize_text_field( self::get_posted_string( 'wherego_delete_confirm' ) ) ) ) {
+			self::redirect_with_message( 'confirm_failed' );
 		}
 
-		if ( ! current_user_can( 'manage_options' ) ) {
-			return;
-		}
-
-		$confirm = isset( $_POST['wherego_delete_confirm'] ) ? sanitize_text_field( wp_unslash( $_POST['wherego_delete_confirm'] ) ) : '';
-
-		if ( ! self::is_delete_confirmed( $confirm ) ) {
-			wp_safe_redirect(
-				add_query_arg(
-					array(
-						'page'            => 'wherego_tools_page',
-						'wherego_message' => 'confirm_failed',
-					),
-					admin_url( 'tools.php' )
-				)
-			);
-			exit;
-		}
-
-		Data::delete_all_data();
-
-		if ( ! function_exists( 'deactivate_plugins' ) ) {
+		if ( ! function_exists( 'deactivate_plugins' ) || ! function_exists( 'is_plugin_active_for_network' ) ) {
 			require_once ABSPATH . 'wp-admin/includes/plugin.php';
 		}
 
-		deactivate_plugins( plugin_basename( WHEREGO_PLUGIN_FILE ) );
+		$plugin = plugin_basename( WHEREGO_PLUGIN_FILE );
+
+		if ( is_multisite() && is_plugin_active_for_network( $plugin ) ) {
+			self::redirect_with_message( 'network_active' );
+		}
+
+		Data::delete_all_data();
+		deactivate_plugins( $plugin, false, false );
 
 		wp_safe_redirect( admin_url( 'plugins.php?deactivate=true' ) );
 		exit;
@@ -644,10 +608,10 @@ class Tools_Page {
 	 */
 	protected static function maintenance_notices() {
 
-		$message = isset( $_GET['wherego_message'] ) ? sanitize_key( wp_unslash( $_GET['wherego_message'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$message = sanitize_key( self::get_query_string( 'wherego_message' ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
 		if ( 'tracking_deleted' === $message ) {
-			$count = isset( $_GET['wherego_count'] ) ? absint( $_GET['wherego_count'] ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$count = absint( self::get_query_string( 'wherego_count' ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
 			add_settings_error(
 				'wherego-notices',
@@ -673,6 +637,98 @@ class Tools_Page {
 				'error'
 			);
 		}
+
+		if ( 'network_active' === $message ) {
+			add_settings_error(
+				'wherego-notices',
+				'',
+				esc_html__( 'Nothing was deleted. This plugin is network-activated; network-deactivate it first, then repeat this action from the site Tools page.', 'where-did-they-go-from-here' ),
+				'error'
+			);
+		}
+	}
+
+	/**
+	 * Check whether the current request is a permitted submission of a Tools page action.
+	 *
+	 * The capability is checked before the nonce so that a user who may not run
+	 * the action is never told whether their nonce was valid.
+	 *
+	 * @since 3.4.0
+	 *
+	 * @param string $action    Value of the `wherego_action` field to match.
+	 * @param string $nonce_key Name of the nonce field, also used as the nonce action.
+	 * @return bool True when the request should be handled.
+	 */
+	private static function is_request( $action, $nonce_key ) {
+		if ( self::get_posted_string( 'wherego_action' ) !== $action || ! current_user_can( 'manage_options' ) ) {
+			return false;
+		}
+
+		if ( ! wp_verify_nonce( sanitize_key( self::get_posted_string( $nonce_key ) ), $nonce_key ) ) {
+			wp_nonce_ays( $nonce_key );
+		}
+
+		return true;
+	}
+
+	/**
+	 * Redirect back to the Tools page with a notice to display, and stop.
+	 *
+	 * @since 3.4.0
+	 *
+	 * @param string               $message Message key read back by `maintenance_notices()`.
+	 * @param array<string, mixed> $args    Extra query arguments.
+	 * @return void
+	 */
+	private static function redirect_with_message( $message, array $args = array() ) {
+		wp_safe_redirect(
+			add_query_arg(
+				array_merge(
+					array(
+						'page'            => 'wherego_tools_page',
+						'wherego_message' => $message,
+					),
+					$args
+				),
+				admin_url( 'tools.php' )
+			)
+		);
+		exit;
+	}
+
+	/**
+	 * Read a scalar POST value without allowing malformed array input to reach
+	 * string sanitizers.
+	 *
+	 * @since 3.4.0
+	 *
+	 * @param string $key POST key.
+	 * @return string Unslashed value, or an empty string when it is not scalar.
+	 */
+	private static function get_posted_string( $key ) {
+		if ( ! isset( $_POST[ $key ] ) || ! is_scalar( $_POST[ $key ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- The helper validates scalar input before returning it to a handler.
+			return '';
+		}
+
+		return wp_unslash( (string) $_POST[ $key ] ); // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- The helper only returns a scalar value.
+	}
+
+	/**
+	 * Read a scalar query-string value without allowing malformed array input to
+	 * reach string sanitizers.
+	 *
+	 * @since 3.4.0
+	 *
+	 * @param string $key GET key.
+	 * @return string Unslashed value, or an empty string when it is not scalar.
+	 */
+	private static function get_query_string( $key ) {
+		if ( ! isset( $_GET[ $key ] ) || ! is_scalar( $_GET[ $key ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- This helper reads redirect status values only.
+			return '';
+		}
+
+		return wp_unslash( (string) $_GET[ $key ] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- The helper only returns a scalar value.
 	}
 
 	/**
