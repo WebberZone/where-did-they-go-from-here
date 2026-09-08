@@ -14,7 +14,7 @@ The [WebberZone Followed Posts](https://webberzone.com/plugins/webberzone-follow
 
 This plugin is retired. Export anything you want to keep before you remove it.
 
-Choose a format, then click **Export CSV** to download the followed posts data for the current site. The file is UTF-8 with a byte order mark, so it opens correctly in Excel, Numbers and Google Sheets.
+Click **Export CSV** to download the complete followed posts data for the current site. The file is UTF-8 with a byte order mark, so it opens correctly in Excel, Numbers and Google Sheets.
 
 ### Detailed
 
@@ -35,10 +35,6 @@ One row for every source post and followed post pair. This is the complete data 
 | `followed_post_status` | `deleted` if the post no longer exists |
 
 A followed post that has since been deleted still gets a row, with its ID and a status of `deleted`, so the row count always matches what is actually stored.
-
-### Summary
-
-One row for every followed post, with the number of source posts it was followed from, ranked most followed first: `followed_post_id`, `followed_post_title`, `followed_post_url`, `source_post_count`. This is the site-wide version of the Top Tracked dashboard widget, with no limit on the number of rows.
 
 The export streams to the browser in batches, so it does not run out of memory on a site with a lot of tracking data.
 

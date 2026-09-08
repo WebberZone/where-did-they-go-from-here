@@ -25,13 +25,12 @@ class ToolsPageTest extends WP_UnitTestCase {
 	/**
 	 * Write an export to a temporary stream and return it as a string.
 	 *
-	 * @param string $format Either `detailed` or `summary`.
 	 * @return string The CSV file, byte for byte.
 	 */
-	private function export( $format ) {
+	private function export() {
 		$handle = fopen( 'php://temp', 'r+' );
 
-		Tools_Page::write_csv( $handle, $format );
+		Tools_Page::write_csv( $handle );
 
 		rewind( $handle );
 		$csv = stream_get_contents( $handle );
@@ -43,11 +42,10 @@ class ToolsPageTest extends WP_UnitTestCase {
 	/**
 	 * Parse an export back into rows, dropping the byte order mark.
 	 *
-	 * @param string $format Either `detailed` or `summary`.
 	 * @return array<int, string[]> Parsed rows, heading row first.
 	 */
-	private function export_rows( $format ) {
-		$csv = $this->export( $format );
+	private function export_rows() {
+		$csv = $this->export();
 
 		$this->assertStringStartsWith( "\xEF\xBB\xBF", $csv, 'The export should start with a UTF-8 byte order mark.' );
 
@@ -68,10 +66,10 @@ class ToolsPageTest extends WP_UnitTestCase {
 	 * With no data the export is a heading row and nothing else.
 	 */
 	public function test_export_with_no_data_writes_only_the_heading() {
-		$rows = $this->export_rows( 'detailed' );
+		$rows = $this->export_rows();
 
 		$this->assertCount( 1, $rows );
-		$this->assertSame( Data::get_export_columns( 'detailed' ), $rows[0] );
+		$this->assertSame( Data::get_export_columns(), $rows[0] );
 	}
 
 	/**
@@ -84,37 +82,15 @@ class ToolsPageTest extends WP_UnitTestCase {
 		update_post_meta( $sources[0], Data::TRACKING_META_KEY, $followed );
 		update_post_meta( $sources[1], Data::TRACKING_META_KEY, array( $followed[0] ) );
 
-		$rows = $this->export_rows( 'detailed' );
+		$rows = $this->export_rows();
 
 		// Heading plus 3 + 1 pairs.
 		$this->assertCount( 5, $rows );
-		$this->assertSame( Data::get_export_columns( 'detailed' ), $rows[0] );
+		$this->assertSame( Data::get_export_columns(), $rows[0] );
 
 		$positions = array( $rows[1][5], $rows[2][5], $rows[3][5] );
 		$this->assertSame( array( '1', '2', '3' ), $positions );
 		$this->assertSame( '1', $rows[4][5] );
-	}
-
-	/**
-	 * The summary export ranks destinations by how often they were followed.
-	 */
-	public function test_summary_export_ranks_destinations() {
-		$sources = self::factory()->post->create_many( 3 );
-		$popular = self::factory()->post->create( array( 'post_title' => 'Popular' ) );
-		$quiet   = self::factory()->post->create( array( 'post_title' => 'Quiet' ) );
-
-		update_post_meta( $sources[0], Data::TRACKING_META_KEY, array( $popular, $quiet ) );
-		update_post_meta( $sources[1], Data::TRACKING_META_KEY, array( $popular ) );
-		update_post_meta( $sources[2], Data::TRACKING_META_KEY, array( $popular ) );
-
-		$rows = $this->export_rows( 'summary' );
-
-		$this->assertCount( 3, $rows );
-		$this->assertSame( Data::get_export_columns( 'summary' ), $rows[0] );
-		$this->assertSame( 'Popular', $rows[1][1] );
-		$this->assertSame( '3', $rows[1][3] );
-		$this->assertSame( 'Quiet', $rows[2][1] );
-		$this->assertSame( '1', $rows[2][3] );
 	}
 
 	/**
@@ -128,7 +104,7 @@ class ToolsPageTest extends WP_UnitTestCase {
 
 		update_post_meta( $source, Data::TRACKING_META_KEY, array( $followed ) );
 
-		$rows = $this->export_rows( 'detailed' );
+		$rows = $this->export_rows();
 
 		$this->assertCount( 2, $rows );
 		$this->assertSame( $title, $rows[1][1], 'The title should survive the CSV round trip.' );
@@ -149,7 +125,7 @@ class ToolsPageTest extends WP_UnitTestCase {
 		// WordPress really does store the encoded form.
 		$this->assertStringContainsString( '&amp;', get_post( $followed )->post_title );
 
-		$rows = $this->export_rows( 'detailed' );
+		$rows = $this->export_rows();
 
 		$this->assertSame( 'Fish & "chips"', $rows[1][7] );
 		$this->assertStringNotContainsString( '&amp;', $rows[1][7] );
@@ -165,7 +141,7 @@ class ToolsPageTest extends WP_UnitTestCase {
 
 		update_post_meta( $source, Data::TRACKING_META_KEY, array( $followed ) );
 
-		$rows = $this->export_rows( 'detailed' );
+		$rows = $this->export_rows();
 
 		$this->assertSame( "'=SUM(1,1)", $rows[1][7] );
 	}
@@ -184,7 +160,7 @@ class ToolsPageTest extends WP_UnitTestCase {
 
 		update_post_meta( $source, Data::TRACKING_META_KEY, array( $protected ) );
 
-		$rows = $this->export_rows( 'detailed' );
+		$rows = $this->export_rows();
 
 		$this->assertSame( 'Secret plans', $rows[1][7] );
 		$this->assertStringNotContainsString( 'Protected:', $rows[1][7] );
@@ -217,24 +193,6 @@ class ToolsPageTest extends WP_UnitTestCase {
 		sort( $exported );
 
 		$this->assertSame( $sources, $exported, 'Every source post should appear exactly once.' );
-	}
-
-	/**
-	 * The summary export also crosses batch boundaries.
-	 */
-	public function test_summary_export_crosses_batch_boundaries() {
-		$followed = self::factory()->post->create();
-		$sources  = self::factory()->post->create_many( Data::EXPORT_BATCH_SIZE + 5 );
-
-		foreach ( $sources as $source ) {
-			update_post_meta( $source, Data::TRACKING_META_KEY, array( $followed ) );
-		}
-
-		$rows = $this->export_rows( 'summary' );
-
-		$this->assertCount( 2, $rows );
-		$this->assertSame( (string) $followed, $rows[1][0] );
-		$this->assertSame( (string) count( $sources ), $rows[1][3] );
 	}
 
 	/**
