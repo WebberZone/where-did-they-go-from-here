@@ -49,83 +49,79 @@ msgstr ""
 msgid "Followed posts:"
 msgstr ""
 
-#: includes/admin/class-tools-page.php:55
-#: includes/admin/class-tools-page.php:106
+#: includes/admin/class-tools-page.php:59
+#: includes/admin/class-tools-page.php:112
 msgid "WebberZone Followed Posts Tools"
 msgstr ""
 
-#: includes/admin/class-tools-page.php:100
+#: includes/admin/class-tools-page.php:104
 msgid "Settings have been imported successfully"
 msgstr ""
 
 #: includes/admin/class-admin.php:186
 #: includes/admin/class-settings.php:1067
 #: includes/admin/class-settings.php:1317
-#: includes/admin/class-tools-page.php:81
-#: includes/admin/class-tools-page.php:116
-#: includes/admin/class-tools-page.php:119
+#: includes/admin/class-tools-page.php:85
+#: includes/admin/class-tools-page.php:141
+#: includes/admin/class-tools-page.php:144
 msgid "Clear cache"
 msgstr ""
 
-#: includes/admin/class-tools-page.php:122
+#: includes/admin/class-tools-page.php:147
 msgid "Clear the Followed Posts cache. This will also be cleared automatically when you save the settings page."
 msgstr ""
 
-#: includes/admin/class-tools-page.php:132
+#: includes/admin/class-tools-page.php:157
 msgid "Export the plugin settings for this site as a .json file. This allows you to easily import the configuration into another site."
 msgstr ""
 
-#: includes/admin/class-tools-page.php:136
+#: includes/admin/class-tools-page.php:161
 msgid "Export Settings"
 msgstr ""
 
-#: includes/admin/class-tools-page.php:148
+#: includes/admin/class-tools-page.php:173
 msgid "Import the plugin settings from a .json file. This file can be obtained by exporting the settings on this or another site using the form above. Please ensure that this file has not been edited, as importing an incorrect file can break your installation!"
 msgstr ""
 
-#: includes/admin/class-tools-page.php:154
+#: includes/admin/class-tools-page.php:179
 msgid "Import Settings"
 msgstr ""
 
-#: includes/admin/class-tools-page.php:237
+#: includes/admin/class-tools-page.php:300
 msgid "Please upload a valid .json file"
 msgstr ""
 
-#: includes/admin/class-tools-page.php:243
+#: includes/admin/class-tools-page.php:307
 msgid "Please upload a file to import"
 msgstr ""
 
 #. translators: 1: Support link.
-#: includes/admin/class-tools-page.php:272
+#: includes/admin/class-tools-page.php:707
 #, php-format
 msgid "For more information or how to get support visit the <a href=\"%1$s\">WebberZone support site</a>."
 msgstr ""
 
 #. translators: 1: Forum link.
-#: includes/admin/class-tools-page.php:274
+#: includes/admin/class-tools-page.php:709
 #, php-format
 msgid "Support queries should be posted in the <a href=\"%1$s\">WordPress.org support forums</a>."
 msgstr ""
 
 #. translators: 1: Github Issues link, 2: Github page.
 #: includes/admin/class-settings.php:962
-#: includes/admin/class-tools-page.php:277
+#: includes/admin/class-tools-page.php:712
 #, php-format
 msgid "<a href=\"%1$s\">Post an issue</a> on <a href=\"%2$s\">GitHub</a> (bug reports only)."
 msgstr ""
 
 #: includes/admin/class-settings.php:262
 #: includes/admin/class-settings.php:986
-#: includes/admin/class-tools-page.php:286
+#: includes/admin/class-tools-page.php:721
 msgid "General"
 msgstr ""
 
-#: includes/admin/class-tools-page.php:288
+#: includes/admin/class-tools-page.php:723
 msgid "This screen provides some tools that help maintain certain features of Followed Posts."
-msgstr ""
-
-#: includes/admin/class-tools-page.php:289
-msgid "Clear the cache and import/export the Followed Posts settings."
 msgstr ""
 
 #: includes/admin/class-settings.php:214
@@ -881,7 +877,7 @@ msgstr ""
 
 #: includes/admin/class-admin.php:187
 #: includes/admin/class-settings.php:1068
-#: includes/admin/class-tools-page.php:82
+#: includes/admin/class-tools-page.php:86
 msgid "Clearing cache"
 msgstr ""
 
@@ -1069,15 +1065,15 @@ msgstr ""
 msgid "Thumbnails displayed on the left with post details on the right."
 msgstr ""
 
-#: includes/admin/class-tools-page.php:56
+#: includes/admin/class-tools-page.php:60
 msgid "Followed Posts Tools"
 msgstr ""
 
-#: includes/admin/class-tools-page.php:129
+#: includes/admin/class-tools-page.php:154
 msgid "Export settings"
 msgstr ""
 
-#: includes/admin/class-tools-page.php:145
+#: includes/admin/class-tools-page.php:170
 msgid "Import settings"
 msgstr ""
 
@@ -1248,4 +1244,106 @@ msgstr ""
 
 #: includes/admin/class-admin-notices.php:76
 msgid "Learn more"
+msgstr ""
+
+#: includes/admin/class-tools-page.php:123
+msgid "Export tracking data"
+msgstr ""
+
+#: includes/admin/class-tools-page.php:126
+msgid "Download the followed posts data for this site as a .csv file. This plugin is retired, so export anything you want to keep before you remove it."
+msgstr ""
+
+#: includes/admin/class-tools-page.php:129
+msgid "One row for every source post and followed post pair, in the order they were tracked. This is the complete data set."
+msgstr ""
+
+#: includes/admin/class-tools-page.php:133
+msgid "Export CSV"
+msgstr ""
+
+#: includes/admin/class-tools-page.php:188
+msgid "Danger zone"
+msgstr ""
+
+#: includes/admin/class-tools-page.php:192
+msgid "Tracking, cache, settings and widget data apply to the current site only. Dismissed admin notices are user-level flags shared across the network."
+msgstr ""
+
+#: includes/admin/class-tools-page.php:196
+#: includes/admin/class-tools-page.php:203
+msgid "Delete tracking data"
+msgstr ""
+
+#: includes/admin/class-tools-page.php:199
+msgid "Deletes every followed posts record and the cached output built from it. Your settings are kept and the plugin carries on tracking from scratch."
+msgstr ""
+
+#: includes/admin/class-tools-page.php:203
+msgid "This permanently deletes all followed posts data on this site. Continue?"
+msgstr ""
+
+#: includes/admin/class-tools-page.php:210
+msgid "Delete all plugin data and deactivate"
+msgstr ""
+
+#: includes/admin/class-tools-page.php:213
+msgid "Deletes everything this plugin has stored on this site: tracking data, cached output, settings and dismissed notices. This is the same data that is removed when you delete the plugin from the Plugins screen."
+msgstr ""
+
+#: includes/admin/class-tools-page.php:216
+msgid "The plugin is deactivated at the same time, because an active plugin recreates its settings on the very next page load. Export your data first: this cannot be undone."
+msgstr ""
+
+#. translators: %s: The word the user has to type to confirm, wrapped in a code tag.
+#: includes/admin/class-tools-page.php:223
+#, php-format
+msgid "Type %s to confirm"
+msgstr ""
+
+#: includes/admin/class-tools-page.php:233
+msgid "Delete all data and deactivate"
+msgstr ""
+
+#: includes/admin/class-tools-page.php:233
+msgid "This permanently deletes all WebberZone Followed Posts data on this site and deactivates the plugin. Continue?"
+msgstr ""
+
+#: includes/admin/class-tools-page.php:316
+msgid "The settings file could not be read. Please upload a .json file exported from this plugin."
+msgstr ""
+
+#: includes/admin/class-tools-page.php:381
+msgid "Could not open the output stream to write the export."
+msgstr ""
+
+#: includes/admin/class-tools-page.php:541
+msgctxt "keyword typed to confirm deleting all plugin data"
+msgid "DELETE"
+msgstr ""
+
+#. translators: %s: Number of posts the tracking data was deleted from.
+#: includes/admin/class-tools-page.php:584
+#, php-format
+msgid "Tracking data deleted from %s post."
+msgid_plural "Tracking data deleted from %s posts."
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %s: The word the user has to type to confirm.
+#: includes/admin/class-tools-page.php:597
+#, php-format
+msgid "Nothing was deleted. Type %s in the confirmation box to delete all the plugin data."
+msgstr ""
+
+#: includes/admin/class-tools-page.php:608
+msgid "Nothing was deleted. This plugin is network-activated; network-deactivate it first, then repeat this action from the site Tools page."
+msgstr ""
+
+#: includes/admin/class-tools-page.php:724
+msgid "Export the tracking data as a .csv file, clear the cache, and import/export the Followed Posts settings."
+msgstr ""
+
+#: includes/admin/class-tools-page.php:725
+msgid "The danger zone deletes the tracking data, or every trace of the plugin on this site. Neither can be undone, so export first."
 msgstr ""
