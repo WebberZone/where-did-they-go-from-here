@@ -25,7 +25,7 @@ Guidance for AI coding agents working in this repository.
 
 ## Plugin Overview
 
-WebberZone Followed Posts (v3.3.0) tracks which posts visitors navigate to from a post and displays them as "followed posts." A client-side AJAX/REST beacon resolves the referrer URL to a post ID, stored in `wheredidtheycomefrom` post meta. Namespace: `WebberZone\WFP`. Constants: `WFP_VERSION`, `WHEREGO_PLUGIN_FILE`, `WHEREGO_PLUGIN_DIR`, `WHEREGO_PLUGIN_URL`, `WFP_CACHE_TIME`. Settings option key: `wherego_settings`. Text domain: `where-did-they-go-from-here`. Requires WordPress 6.6+, PHP 7.4+. No Freemius.
+WebberZone Followed Posts (v3.4.0) tracks which posts visitors navigate to from a post and displays them as "followed posts." A client-side AJAX/REST beacon resolves the referrer URL to a post ID, stored in `wheredidtheycomefrom` post meta. Namespace: `WebberZone\WFP`. Constants: `WFP_VERSION`, `WHEREGO_PLUGIN_FILE`, `WHEREGO_PLUGIN_DIR`, `WHEREGO_PLUGIN_URL`, `WFP_CACHE_TIME`. Settings option key: `wherego_settings`. Text domain: `where-did-they-go-from-here`. Requires WordPress 6.6+, PHP 7.4+. No Freemius.
 
 ## Commands
 

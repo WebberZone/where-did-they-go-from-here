@@ -4,7 +4,7 @@ This file holds the older changelog history for the plugin
 
 Release date: 9 July 2026
 
-* This is the final release of WebberZone Followed Posts. The plugin will continue to work but will no longer receive updates or support.
+* WebberZone Followed Posts has been retired. The plugin will continue to work but will no longer receive feature updates or support.
 * For related content recommendations, see Contextual Related Posts: https://wordpress.org/plugins/contextual-related-posts/
 * For popularity-based recommendations, see Top 10: https://wordpress.org/plugins/top-10/
 * Modified: Compatibility bump for the latest versions of WordPress and PHP.

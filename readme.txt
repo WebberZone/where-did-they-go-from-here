@@ -12,7 +12,9 @@ Show "Readers who viewed this page, also viewed" a.k.a. followed posts on your p
 
 == Description ==
 
-**This plugin has been retired and is no longer under active development.**
+**This plugin has been retired. Version 3.4.0 is the final release.**
+
+Version 3.4.0 adds a CSV export of your followed posts data, so you can take it with you, plus tools to delete that data or remove the plugin cleanly. Export anything you want to keep before you remove it.
 
 Existing installs will keep working, but there will be no further updates or support. For content recommendations, I suggest one of my other plugins instead:
 
@@ -126,7 +128,9 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 = 3.4.0 =
 
-Release date: 7 September 2026
+Release date: 8 September 2026
+
+This is the final release of WebberZone Followed Posts. It adds the tools to export your data and remove the plugin cleanly.
 
 **Added**
 
