@@ -8,9 +8,9 @@
 [![Required PHP](https://img.shields.io/wordpress/plugin/required-php/where-did-they-go-from-here?style=flat-square)](https://wordpress.org/plugins/where-did-they-go-from-here/)
 [![Active installs](https://img.shields.io/wordpress/plugin/installs/where-did-they-go-from-here?style=flat-square)](https://wordpress.org/plugins/where-did-they-go-from-here/)
 
-__Requires:__ 6.3
+__Requires:__ 6.6
 
-__Tested up to:__ 7.0
+__Tested up to:__ 7.1
 
 __Requires PHP:__ 7.4
 
