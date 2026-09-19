@@ -2,7 +2,7 @@
 Tags: followed posts, related posts, where did they go from here
 Contributors: Ajay, webberzone
 Donate link: https://wzn.io/donate-wz
-Stable tag: 3.4.0
+Stable tag: 3.4.1
 Requires at least: 6.6
 Requires PHP: 7.4
 Tested up to: 7.1
@@ -126,6 +126,13 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 == Changelog ==
 
+= 3.4.1 =
+
+*Release Date - 19 September 2026*
+
+* Fixed:
+	* Security: Hardened thumbnail dimension handling to prevent stored Cross-Site Scripting by an Author-level user via block attributes.
+
 = 3.4.0 =
 
 Release date: 8 September 2026
@@ -150,6 +157,9 @@ This is the final release of WebberZone Followed Posts. It adds the tools to exp
 For the changelog of earlier versions, please refer to the [releases page on GitHub](https://github.com/WebberZone/where-did-they-go-from-here/releases).
 
 == Upgrade Notice ==
+
+= 3.4.1 =
+Security release. Fixes a stored Cross-Site Scripting vulnerability that could be exploited by users with Author-level access or above. Update immediately.
 
 = 3.4.0 =
 Adds a CSV export of your followed posts data, and tools to delete that data or remove the plugin cleanly. This plugin is retired, so export anything you want to keep before you remove it.
