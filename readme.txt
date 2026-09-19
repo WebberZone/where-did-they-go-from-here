@@ -131,7 +131,7 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 *Release Date - 19 September 2026*
 
 * Fixed:
-	* Security: Hardened thumbnail dimension handling to prevent stored Cross-Site Scripting by an Author-level user via block attributes. Reported by Athiwat Tiprasaharn (Jitlada) and Itthidej Aramsri (Boeing777) via Wordfence.
+	* Security: Hardened thumbnail dimension handling to prevent stored Cross-Site Scripting by an Author-level user via block attributes.
 
 = 3.4.0 =
 
