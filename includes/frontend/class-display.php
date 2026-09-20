@@ -288,7 +288,8 @@ class Display {
 		$title = '';
 
 		if ( $args['heading'] && ! $args['is_widget'] ) {
-			$title = str_replace( '%postname%', esc_html( get_the_title( $post ) ), $args['title'] );    // Replace %postname% with the title of the current post.
+			$post_title = $post instanceof \WP_Post ? get_the_title( $post ) : '';
+			$title      = str_replace( '%postname%', esc_html( $post_title ), $args['title'] );    // Replace %postname% with the title of the current post.
 		}
 
 		/**

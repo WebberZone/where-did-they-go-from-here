@@ -2,7 +2,7 @@
 Tags: followed posts, related posts, where did they go from here
 Contributors: Ajay, webberzone
 Donate link: https://wzn.io/donate-wz
-Stable tag: 3.4.1
+Stable tag: 3.4.2
 Requires at least: 6.6
 Requires PHP: 7.4
 Tested up to: 7.1
@@ -126,12 +126,21 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 == Changelog ==
 
+= 3.4.2 =
+
+Release date: 20 September 2026
+
+**Fixed**
+
+* PHP warnings were logged when the followed posts content was filtered without a global post available, such as during WP-CLI or REST requests.
+
 = 3.4.1 =
 
-*Release Date - 19 September 2026*
+Release date: 19 September 2026
 
-* Fixed:
-	* Security: Hardened thumbnail dimension handling to prevent stored Cross-Site Scripting by an Author-level user via block attributes.
+**Security**
+
+* Hardened thumbnail dimension handling to prevent stored Cross-Site Scripting by an Author-level user via block attributes.
 
 = 3.4.0 =
 
@@ -158,8 +167,5 @@ For the changelog of earlier versions, please refer to the [releases page on Git
 
 == Upgrade Notice ==
 
-= 3.4.1 =
-Security release. Fixes a stored Cross-Site Scripting vulnerability that could be exploited by users with Author-level access or above. Update immediately.
-
-= 3.4.0 =
-Adds a CSV export of your followed posts data, and tools to delete that data or remove the plugin cleanly. This plugin is retired, so export anything you want to keep before you remove it.
+= 3.4.2 =
+Fixes PHP warnings logged on sites where post content is filtered without a global post, such as during WP-CLI or REST requests. No action needed on existing sites.
