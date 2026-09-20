@@ -45,6 +45,10 @@ class Shortcodes {
 			$wherego_settings = wherego_get_settings();
 		}
 
+		if ( ! is_array( $wherego_settings ) ) {
+			$wherego_settings = wherego_settings_defaults();
+		}
+
 		$atts = shortcode_atts(
 			array_merge(
 				$wherego_settings,

@@ -47,6 +47,10 @@ class Display {
 
 		$wherego_settings = wherego_get_settings();
 
+		if ( ! is_array( $wherego_settings ) ) {
+			$wherego_settings = array();
+		}
+
 		$defaults = array(
 			'is_widget'    => false,
 			'is_shortcode' => false,
