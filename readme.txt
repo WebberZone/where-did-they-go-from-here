@@ -133,6 +133,7 @@ Release date: 20 September 2026
 **Fixed**
 
 * PHP warnings were logged when the followed posts content was filtered without a global post available, such as during WP-CLI or REST requests.
+* The followed posts threw a fatal error on fresh installs when displayed before the settings were saved, because the settings option did not exist yet.
 
 = 3.4.1 =
 
@@ -168,4 +169,4 @@ For the changelog of earlier versions, please refer to the [releases page on Git
 == Upgrade Notice ==
 
 = 3.4.2 =
-Fixes PHP warnings logged on sites where post content is filtered without a global post, such as during WP-CLI or REST requests. No action needed on existing sites.
+Fixes PHP warnings logged on sites where post content is filtered without a global post, and a fatal error on fresh installs when settings had not been saved. No action needed on existing sites.
