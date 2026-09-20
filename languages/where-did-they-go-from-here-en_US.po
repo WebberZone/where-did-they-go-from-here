@@ -788,17 +788,17 @@ msgid "This is a placeholder for the followed posts block. Visit the front end o
 msgstr ""
 
 #. translators: %1$s: Opening a tag, %2$s: Closing a tag
-#: includes/frontend/class-display.php:197
+#: includes/frontend/class-display.php:201
 #, php-format
 msgid "Powered by %1$sWebberZone Followed Posts%2$s"
 msgstr ""
 
-#: includes/frontend/class-display.php:208
-#: includes/frontend/class-display.php:218
+#: includes/frontend/class-display.php:212
+#: includes/frontend/class-display.php:222
 msgid "This is a placeholder for the followed posts block. There are no followed posts to display."
 msgstr ""
 
-#: includes/frontend/class-display.php:458
+#: includes/frontend/class-display.php:462
 msgid " by "
 msgstr ""
 
@@ -1224,7 +1224,7 @@ msgstr ""
 msgid "Follow us"
 msgstr ""
 
-#: includes/frontend/class-display.php:611
+#: includes/frontend/class-display.php:615
 msgid "There is no excerpt because this is a protected post."
 msgstr ""
 
