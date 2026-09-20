@@ -37,15 +37,15 @@ msgstr ""
 msgid "WebberZone Followed Posts"
 msgstr ""
 
-#: includes/admin/class-metabox.php:104
+#: includes/admin/class-metabox.php:108
 msgid "Followed posts' IDs"
 msgstr ""
 
-#: includes/admin/class-metabox.php:106
+#: includes/admin/class-metabox.php:110
 msgid "Enter a comma separated list of valid post/page IDs. Save this post to see the updated list below."
 msgstr ""
 
-#: includes/admin/class-metabox.php:110
+#: includes/admin/class-metabox.php:114
 msgid "Followed posts:"
 msgstr ""
 
@@ -798,7 +798,7 @@ msgstr ""
 msgid "This is a placeholder for the followed posts block. There are no followed posts to display."
 msgstr ""
 
-#: includes/frontend/class-display.php:457
+#: includes/frontend/class-display.php:458
 msgid " by "
 msgstr ""
 
@@ -1224,7 +1224,7 @@ msgstr ""
 msgid "Follow us"
 msgstr ""
 
-#: includes/frontend/class-display.php:610
+#: includes/frontend/class-display.php:611
 msgid "There is no excerpt because this is a protected post."
 msgstr ""
 
