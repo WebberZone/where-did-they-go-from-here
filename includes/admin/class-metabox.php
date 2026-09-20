@@ -93,6 +93,10 @@ class Metabox {
 	public static function call_meta_box() {
 		global $post;
 
+		if ( ! $post instanceof \WP_Post ) {
+			return;
+		}
+
 		// Add an nonce field so we can check for it later.
 		wp_nonce_field( 'wherego_meta_box', 'wherego_meta_box_nonce' );
 
