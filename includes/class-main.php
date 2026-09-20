@@ -216,6 +216,11 @@ class Main {
 	 */
 	public static function the_content( $content ) {
 		global $post, $wherego_id;
+
+		if ( ! $post instanceof \WP_Post ) {
+			return $content;
+		}
+
 		$wherego_id = absint( $post->ID );
 
 		$add_to = wp_parse_list( \wherego_get_option( 'add_to', false ) );
