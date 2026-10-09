@@ -92,7 +92,7 @@ class CRP_Integration {
 	 * @return array Modified query arguments.
 	 */
 	public function feed_followed_posts_to_crp( $args, $source_post ) {
-		if ( ! $this->is_crp_active || ! $source_post instanceof \WP_Post ) {
+		if ( ! $this->is_crp_active ) {
 			return $args;
 		}
 

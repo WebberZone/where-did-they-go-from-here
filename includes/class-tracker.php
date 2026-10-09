@@ -93,7 +93,7 @@ class Tracker {
 				}
 
 				// Make sure we only keep max_links number of links.
-				if ( is_array( $linkpostids ) && count( $linkpostids ) > $max_links ) {
+				if ( count( $linkpostids ) > $max_links ) {
 					$linkpostids = array_slice( $linkpostids, 0, $max_links );
 				}
 

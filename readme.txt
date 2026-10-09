@@ -2,7 +2,7 @@
 Tags: followed posts, related posts, where did they go from here
 Contributors: Ajay, webberzone
 Donate link: https://wzn.io/donate-wz
-Stable tag: 3.4.2
+Stable tag: 3.4.3
 Requires at least: 6.6
 Requires PHP: 7.4
 Tested up to: 7.1
@@ -12,9 +12,9 @@ Show "Readers who viewed this page, also viewed" a.k.a. followed posts on your p
 
 == Description ==
 
-**This plugin has been retired. Version 3.4.0 is the final release.**
+**This plugin has been retired. Version 3.4 is the final release.**
 
-Version 3.4.0 adds a CSV export of your followed posts data, so you can take it with you, plus tools to delete that data or remove the plugin cleanly. Export anything you want to keep before you remove it.
+Version 3.4 adds a CSV export of your followed posts data, so you can take it with you, plus tools to delete that data or remove the plugin cleanly. Export anything you want to keep before you remove it.
 
 Existing installs will keep working, but there will be no further updates or support. For content recommendations, I suggest one of my other plugins instead:
 
@@ -126,6 +126,18 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 == Changelog ==
 
+= 3.4.3 =
+
+Release date: 10 October 2026
+
+**Fixed**
+
+* The plugin settings are now always read as an array, so a missing or corrupted settings option no longer causes errors.
+
+**Maintenance**
+
+* Removed unreachable code and redundant checks flagged by PHPStan 2.3.
+
 = 3.4.2 =
 
 Release date: 20 September 2026
@@ -167,6 +179,9 @@ This is the final release of WebberZone Followed Posts. It adds the tools to exp
 For the changelog of earlier versions, please refer to the [releases page on GitHub](https://github.com/WebberZone/where-did-they-go-from-here/releases).
 
 == Upgrade Notice ==
+
+= 3.4.3 =
+Hardens how the plugin reads its settings and removes unreachable code. No action needed on existing sites.
 
 = 3.4.2 =
 Fixes PHP warnings logged on sites where post content is filtered without a global post, and a fatal error on fresh installs when settings had not been saved. No action needed on existing sites.
