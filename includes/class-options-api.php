@@ -64,7 +64,10 @@ class Options_API {
 	 * @return array WFP settings.
 	 */
 	public static function get_settings() {
-		$settings = get_option( self::SETTINGS_OPTION );
+		$settings = get_option( self::SETTINGS_OPTION, array() );
+		if ( ! is_array( $settings ) ) {
+			$settings = array();
+		}
 
 		/**
 		 * Settings array.

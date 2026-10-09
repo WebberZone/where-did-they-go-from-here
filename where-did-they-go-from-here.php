@@ -14,7 +14,7 @@
  * Plugin Name: WebberZone Followed Posts
  * Plugin URI:  https://webberzone.com/plugins/webberzone-followed-posts/
  * Description: Effortlessly showcase the posts that users follow on your WordPress site.
- * Version:     3.4.2
+ * Version:     3.4.3
  * Author:      Ajay D'Souza
  * Author URI:  https://webberzone.com
  * License:     GPL-2.0+
@@ -36,7 +36,7 @@ if ( ! defined( 'WPINC' ) ) {
  * @since 3.0.0
  */
 if ( ! defined( 'WFP_VERSION' ) ) {
-	define( 'WFP_VERSION', '3.4.2' );
+	define( 'WFP_VERSION', '3.4.3' );
 }
 
 /**
@@ -121,13 +121,6 @@ if ( ! function_exists( 'wz_wfp' ) ) {
  */
 require_once WHEREGO_PLUGIN_DIR . 'includes/options-api.php';
 require_once WHEREGO_PLUGIN_DIR . 'includes/functions.php';
-
-/**
- * Initialize the Options API.
- *
- * @since 3.2.0
- */
-\WebberZone\WFP\Options_API::init();
 
 /**
  * Plugin settings.

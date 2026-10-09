@@ -1177,14 +1177,12 @@ class Settings {
 		}
 
 		if ( 'public_taxonomies' === $endpoint ) {
-			$taxonomies = (array) get_taxonomies( array( 'public' => true ), 'objects' );
+			$taxonomies = get_taxonomies( array( 'public' => true ), 'objects' );
 			$taxonomy   = array();
 			$tax        = null;
 
-			foreach ( $taxonomies as $taxonomy_name => $taxonomy_object ) {
-				if ( ! is_string( $taxonomy_name ) || '' === $taxonomy_name ) {
-					continue;
-				}
+			foreach ( $taxonomies as $taxonomy_object ) {
+				$taxonomy_name = $taxonomy_object->name;
 
 				if ( empty( $taxonomy_object->cap->assign_terms ) ) {
 					continue;
