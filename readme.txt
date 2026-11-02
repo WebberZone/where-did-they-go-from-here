@@ -2,7 +2,7 @@
 Tags: followed posts, related posts, where did they go from here
 Contributors: Ajay, webberzone
 Donate link: https://wzn.io/donate-wz
-Stable tag: 3.4.3
+Stable tag: 3.4.4
 Requires at least: 6.6
 Requires PHP: 7.4
 Tested up to: 7.1
@@ -126,6 +126,14 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 == Changelog ==
 
+= 3.4.4 =
+
+Release date: 2 November 2026
+
+**Security**
+
+* Hardened followed posts so they include only published posts that visitors can view.
+
 = 3.4.3 =
 
 Release date: 10 October 2026
@@ -180,8 +188,5 @@ For the changelog of earlier versions, please refer to the [releases page on Git
 
 == Upgrade Notice ==
 
-= 3.4.3 =
-Hardens how the plugin reads its settings and removes unreachable code. No action needed on existing sites.
-
-= 3.4.2 =
-Fixes PHP warnings logged on sites where post content is filtered without a global post, and a fatal error on fresh installs when settings had not been saved. No action needed on existing sites.
+= 3.4.4 =
+Security release. Update recommended.
