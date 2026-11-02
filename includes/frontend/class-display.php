@@ -67,7 +67,7 @@ class Display {
 
 		// Check the cache first.
 		if ( ! empty( $args['cache'] ) && ! ( is_preview() || is_admin() || ( defined( 'REST_REQUEST' ) && REST_REQUEST ) ) ) {
-			$meta_key = Cache::get_key( $args );
+			$meta_key = Cache::get_key( array_merge( $args, array( '_wfp_output_version' => 2 ) ) );
 
 			$output = Cache::get_cache( $post->ID, $meta_key );
 			if ( $output ) {
@@ -148,7 +148,7 @@ class Display {
 
 				$result = get_post( $result );
 
-				if ( ! $result || ! in_array( $result->post_type, $post_types, true ) ) {
+				if ( ! $result || ! in_array( $result->post_type, $post_types, true ) || ! \WebberZone\WFP\Tracker::is_trackable( $result->ID ) ) {
 					continue;
 				}
 

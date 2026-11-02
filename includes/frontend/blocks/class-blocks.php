@@ -57,16 +57,21 @@ class Blocks {
 	 */
 	public static function render_block( $attributes ) {
 
-		$attributes['extra_class'] = esc_attr( $attributes['className'] );
+		// Core passes attributes not declared in block.json through unchanged, so keep only declared ones.
+		$block_type = \WP_Block_Type_Registry::get_instance()->get_registered( 'webberzone/followed-posts' );
+		$attributes = array_intersect_key( (array) $attributes, ( $block_type && is_array( $block_type->attributes ) ) ? $block_type->attributes : array() );
 
-		$arguments = array_merge(
-			$attributes,
-			array(
-				'is_block' => 1,
-			)
-		);
+		$attributes['extra_class'] = esc_attr( $attributes['className'] ?? '' );
 
-		$arguments = wp_parse_args( $attributes['other_attributes'], $arguments );
+		$arguments = $attributes;
+
+		// Accept only settings keys and the heading flag from the free-text field.
+		if ( ! empty( $attributes['other_attributes'] ) && is_string( $attributes['other_attributes'] ) ) {
+			$allowed   = array_merge( wherego_settings_defaults(), array( 'heading' => 1 ) );
+			$arguments = array_merge( $arguments, array_intersect_key( wp_parse_args( $attributes['other_attributes'] ), $allowed ) );
+		}
+
+		$arguments['is_block'] = 1;
 
 		/**
 		 * Filters arguments passed to get_wfp for the block.

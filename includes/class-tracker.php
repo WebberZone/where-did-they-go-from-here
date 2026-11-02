@@ -81,6 +81,11 @@ class Tracker {
 			// Figure out the ID of the post the viewer came from.
 			$post_id_came_from = url_to_postid( $tempsitevar );
 
+			// Only record posts every visitor can read; the list is shown publicly and cached.
+			if ( ! self::is_trackable( $id ) || ! self::is_trackable( $post_id_came_from ) ) {
+				return 'nottracked:' . $post_id_came_from;
+			}
+
 			if ( ! empty( $post_id_came_from ) && (int) $id !== (int) $post_id_came_from ) {
 				// Note: This is a read-modify-write without locking. On high-traffic posts,
 				// concurrent requests may overwrite each other's data (last writer wins).
@@ -113,6 +118,20 @@ class Tracker {
 		}
 
 		return 'nottracked:' . $post_id_came_from;
+	}
+
+	/**
+	 * Whether a post can be recorded and shown as a followed post.
+	 *
+	 * @since 3.4.4
+	 *
+	 * @param int $post_id Post ID.
+	 * @return bool True if the post exists and is publicly viewable.
+	 */
+	public static function is_trackable( $post_id ): bool {
+		$post = $post_id ? get_post( (int) $post_id ) : null;
+
+		return $post instanceof \WP_Post && 'revision' !== $post->post_type && is_post_publicly_viewable( $post );
 	}
 
 	/**
