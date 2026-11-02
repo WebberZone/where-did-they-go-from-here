@@ -157,7 +157,6 @@ class Settings {
 		Hook_Registry::add_action( 'wherego_settings_form_buttons', array( $this, 'cache_button' ) );
 		Hook_Registry::add_action( 'wherego_settings_form_buttons', array( $this, 'add_wizard_button' ) );
 
-		Hook_Registry::add_action( 'wp_ajax_nopriv_' . self::$prefix . '_taxonomy_search_tom_select', array( __CLASS__, 'taxonomy_search_tom_select' ) );
 		Hook_Registry::add_action( 'wp_ajax_' . self::$prefix . '_taxonomy_search_tom_select', array( __CLASS__, 'taxonomy_search_tom_select' ) );
 	}
 
