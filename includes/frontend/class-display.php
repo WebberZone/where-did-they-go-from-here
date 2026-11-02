@@ -66,8 +66,9 @@ class Display {
 		$meta_key = '';
 
 		// Check the cache first.
-		if ( ! empty( $args['cache'] ) && ! ( is_preview() || is_admin() || ( defined( 'REST_REQUEST' ) && REST_REQUEST ) ) ) {
-			$meta_key = Cache::get_key( array_merge( $args, array( '_wfp_output_version' => 2 ) ) );
+		// Visitors who unlocked a protected post see its excerpt, so their output must not be shared.
+		if ( ! empty( $args['cache'] ) && empty( $_COOKIE[ 'wp-postpass_' . COOKIEHASH ] ) && ! ( is_preview() || is_admin() || ( defined( 'REST_REQUEST' ) && REST_REQUEST ) ) ) {
+			$meta_key = Cache::get_key( array_merge( $args, array( '_wfp_output_version' => 3 ) ) );
 
 			$output = Cache::get_cache( $post->ID, $meta_key );
 			if ( $output ) {
@@ -224,7 +225,8 @@ class Display {
 		$output .= '</div>'; // Closing div of 'wherego_related'.
 
 		// Support caching to speed up retrieval.
-		if ( ! empty( $args['cache'] ) && ! ( is_preview() || is_admin() || ( defined( 'REST_REQUEST' ) && REST_REQUEST ) ) ) {
+		// Visitors who unlocked a protected post see its excerpt, so their output must not be shared.
+		if ( ! empty( $args['cache'] ) && empty( $_COOKIE[ 'wp-postpass_' . COOKIEHASH ] ) && ! ( is_preview() || is_admin() || ( defined( 'REST_REQUEST' ) && REST_REQUEST ) ) ) {
 			Cache::set_cache( $post->ID, $meta_key, $output );
 		}
 
