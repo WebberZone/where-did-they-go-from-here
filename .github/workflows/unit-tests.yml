@@ -32,14 +32,22 @@ jobs:
     name: "PHP ${{ matrix.php }} - WP ${{ matrix.wp }} - MySQL ${{ matrix.mysql }}"
     continue-on-error: ${{ matrix.experimental == true }}
 
+    services:
+      mysql:
+        image: mysql:${{ matrix.mysql }}
+        env:
+          MYSQL_ROOT_PASSWORD: root
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -uroot -proot"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
-
-      - name: Setup MySQL
-        uses: ankane/setup-mysql@v1
-        with:
-          mysql-version: ${{ matrix.mysql }}
 
       - name: Install PHP
         uses: shivammathur/setup-php@v2
@@ -72,7 +80,7 @@ jobs:
       - name: Set up WordPress test environment
         run: |
           sudo apt-get install -y subversion
-          bash phpunit/install.sh wordpress_test root '' 127.0.0.1:3306 ${{ matrix.wp }}
+          bash phpunit/install.sh wordpress_test root root 127.0.0.1:3306 ${{ matrix.wp }}
 
       - name: Run tests (single site)
         run: vendor/bin/phpunit
