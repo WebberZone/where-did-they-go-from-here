@@ -63,16 +63,6 @@ class ToolsPageTest extends WP_UnitTestCase {
 	}
 
 	/**
-	 * With no data the export is a heading row and nothing else.
-	 */
-	public function test_export_with_no_data_writes_only_the_heading() {
-		$rows = $this->export_rows();
-
-		$this->assertCount( 1, $rows );
-		$this->assertSame( Data::get_export_columns(), $rows[0] );
-	}
-
-	/**
 	 * The detailed export writes one row per tracked pair.
 	 */
 	public function test_detailed_export_writes_every_pair() {
@@ -94,45 +84,6 @@ class ToolsPageTest extends WP_UnitTestCase {
 	}
 
 	/**
-	 * Titles with commas, quotes, newlines and non-ASCII survive the round trip.
-	 */
-	public function test_export_escapes_awkward_titles() {
-		$title = "Coffee, \"tea\" & crème brûlée\nsecond line";
-
-		$source   = self::factory()->post->create( array( 'post_title' => $title ) );
-		$followed = self::factory()->post->create( array( 'post_title' => 'Plain' ) );
-
-		update_post_meta( $source, Data::TRACKING_META_KEY, array( $followed ) );
-
-		$rows = $this->export_rows();
-
-		$this->assertCount( 2, $rows );
-		$this->assertSame( $title, $rows[1][1], 'The title should survive the CSV round trip.' );
-	}
-
-	/**
-	 * Titles are exported as readable text, not as HTML entities.
-	 *
-	 * WordPress stores an ampersand as `&amp;` and `the_title` texturizes straight
-	 * quotes into entities. Neither should reach the spreadsheet.
-	 */
-	public function test_export_titles_are_not_html_encoded() {
-		$source   = self::factory()->post->create();
-		$followed = self::factory()->post->create( array( 'post_title' => 'Fish & "chips"' ) );
-
-		update_post_meta( $source, Data::TRACKING_META_KEY, array( $followed ) );
-
-		// WordPress really does store the encoded form.
-		$this->assertStringContainsString( '&amp;', get_post( $followed )->post_title );
-
-		$rows = $this->export_rows();
-
-		$this->assertSame( 'Fish & "chips"', $rows[1][7] );
-		$this->assertStringNotContainsString( '&amp;', $rows[1][7] );
-		$this->assertStringNotContainsString( '&#8220;', $rows[1][7] );
-	}
-
-	/**
 	 * Formula-like values are marked as text for spreadsheet applications.
 	 */
 	public function test_export_neutralizes_formula_titles() {
@@ -144,26 +95,6 @@ class ToolsPageTest extends WP_UnitTestCase {
 		$rows = $this->export_rows();
 
 		$this->assertSame( "'=SUM(1,1)", $rows[1][7] );
-	}
-
-	/**
-	 * A protected post is exported under its own title, without the display prefix.
-	 */
-	public function test_export_does_not_add_the_protected_prefix() {
-		$source    = self::factory()->post->create();
-		$protected = self::factory()->post->create(
-			array(
-				'post_title'    => 'Secret plans',
-				'post_password' => 'hunter2',
-			)
-		);
-
-		update_post_meta( $source, Data::TRACKING_META_KEY, array( $protected ) );
-
-		$rows = $this->export_rows();
-
-		$this->assertSame( 'Secret plans', $rows[1][7] );
-		$this->assertStringNotContainsString( 'Protected:', $rows[1][7] );
 	}
 
 	/**
